@@ -5,6 +5,7 @@ function App() {
   return (
     <div className={styles.App}>
       <NavBar />
+      <h1>Welcome to Cheshire Captures</h1>
     </div>
   );
 }
