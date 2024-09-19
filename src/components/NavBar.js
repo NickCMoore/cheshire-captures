@@ -1,39 +1,47 @@
 import React from 'react';
-import { Navbar, Container, Nav } from 'react-bootstrap';
-import styles from '../styles/NavBar.module.css';
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import styles from './NavBar.module.css';
 
-const NavBar = () => {
+function NavBar() {
   return (
-    <Navbar className={styles.NavBar} expand="md" fixed="top">
-      <Container>
-        <Navbar.Brand>
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ml-auto">
-            <Nav.Link><i className="fas fa-home"></i> Home</Nav.Link>
-            <Nav.Link><i className="fas fa-home"></i> Feed</Nav.Link>
-            <Nav.Link><i className="fas fa-home"></i> My Events</Nav.Link>
-            <Nav.Link><i className="fas fa-home"></i>Reviews</Nav.Link>
-            <NavDropdown 
-              title={
-                <span>
-                    <i class="fas fa-user-alt"></i>
-                </span>
-              }
-              id="basic-nav-dropdown" 
-            >
-              <NavDropdown.Item>Profile</NavDropdown.Item>
-              <NavDropdown.Item><i className="fas fa-sign-in-alt"></i>Sign in</NavDropdown.Item>
-              <NavDropdown.Item><i className="fas fa-user-plus"></i>Sign up</NavDropdown.Item>
-              <NavDropdown.Item>Logout</NavDropdown.Item>
-              <NavDropdown.Divider />
-            </NavDropdown>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
+    <Navbar bg="light" expand="lg" className={styles.NavBar}>
+      <Navbar.Brand as={Link} to="/">
+        Cheshire Captures
+      </Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="ml-auto">
+          <Nav.Link as={Link} to="/">
+            Home
+          </Nav.Link>
+          <Nav.Link as={Link} to="/about">
+            About
+          </Nav.Link>
+          {/* Add your NavDropdown here */}
+          <NavDropdown title="Categories" id="basic-nav-dropdown">
+            <NavDropdown.Item as={Link} to="/category/nature">
+              Nature
+            </NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/category/landscape">
+              Landscape
+            </NavDropdown.Item>
+            <NavDropdown.Item as={Link} to="/category/cityscape">
+              Cityscape
+            </NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item as={Link} to="/category/other">
+              Other
+            </NavDropdown.Item>
+          </NavDropdown>
+          <Nav.Link as={Link} to="/contact">
+            Contact
+          </Nav.Link>
+        </Nav>
+      </Navbar.Collapse>
     </Navbar>
   );
-};
+}
 
 export default NavBar;
+
