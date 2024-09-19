@@ -4,14 +4,21 @@
     background-color: #ffffff;
     min-height: 100vh;
     color: #2e3b42;
+    padding-bottom: 20px; 
 }
 
 .Main {
-    padding-top: 81px;
+    padding-top: 81px; 
+    padding-bottom: 20px; 
 }
 
-* {
+/* Universal Box Sizing */
+*,
+*::before,
+*::after {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 a {
