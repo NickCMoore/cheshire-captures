@@ -8,3 +8,11 @@
     width: 100%; 
     z-index: 1000; 
 }
+
+.NavLink {
+    padding: 5px;
+}
+
+.Active i {
+    color: #db628e;
+}

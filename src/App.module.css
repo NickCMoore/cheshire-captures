@@ -6,6 +6,10 @@
     color: #2e3b42;
 }
 
+.Main {
+    padding-top: 81px;
+}
+
 * {
     box-sizing: border-box;
 }
