@@ -1,0 +1,78 @@
+/* Global Styles */
+.App {
+    font-family: "DM Sans", sans-serif;
+    background-color: #ffffff;
+    min-height: 100vh;
+    color: #2e3b42;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    color: #4a7c59; 
+    transition: color ease-in-out 0.3s;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:hover i {
+    color: #f4a261; 
+    transition: color ease-in-out 0.3s;
+}
+
+/* Icon Styles */
+i {
+    color: #4a7c59; 
+    font-size: 1.8rem; 
+    padding: 7px;
+    vertical-align: middle;
+}
+
+i:hover {
+    cursor: pointer;
+    transition: color ease-in-out 0.3s;
+    color: #f4a261; 
+}
+
+/* Navbar Dropdown */
+#basic-nav-dropdown {
+    color: #4a7c59;
+    font-size: 1.6rem;
+    padding: 7px;
+    vertical-align: middle;
+}
+
+/* Additional Styles for Photography Theme */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f1f1f1; 
+}
+
+.photo-frame {
+    border: 2px solid #e0e0e0; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    transition: transform 0.3s ease-in-out;
+}
+
+.photo-frame:hover {
+    transform: scale(1.02); /
+}
+
+.button-primary {
+    background-color: #4a7c59;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.button-primary:hover {
+    background-color: #3a5c49;
+}
