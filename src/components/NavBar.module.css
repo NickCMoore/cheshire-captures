@@ -2,15 +2,20 @@
     background-color: #ffffff; 
     border-bottom: 2px solid #dadadf; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 10px 20px; 
+    padding: 10px 40px; 
     position: fixed; 
     top: 0;
     width: 100%; 
     z-index: 1000; 
 }
 
+.Nav {
+    margin-right: 20px;
+    margin-left: auto; 
+}
+
 .NavLink {
-    padding: 5px;
+    padding: 5px 10px;
 }
 
 .Active i {
