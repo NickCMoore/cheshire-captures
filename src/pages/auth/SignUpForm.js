@@ -62,7 +62,7 @@ const SignUpForm = () => {
         <Image
           className={`${appStyles.FillerImage}`}
           src={
-            "https://res.cloudinary.com/dkolsfjkx/image/upload/v1682587597/poster-small_wobgy2.jpg"
+            "/src/assets/a-look-across-the-landscape-with-view-of-the-sea.jpg"
           }
         />
       </Col>
