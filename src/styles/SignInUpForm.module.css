@@ -1,0 +1,63 @@
+.Row {
+    height: calc(100vh - 81px);
+    background-color: #f1f1f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Input {
+    background: #ffffff;
+    border: 1px solid #dadadf;
+    border-radius: 4px;
+    color: #2e3b42;
+    text-align: center;
+    padding: 12px;
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 15px;
+}
+
+.Header {
+    font-weight: 700;
+    font-size: 1.5rem;
+    text-align: center;
+    text-transform: uppercase;
+    color: #db628e;
+    margin-bottom: 20px;
+}
+
+.Link {
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    color: #2e3b42;
+    font-size: 1rem;
+}
+
+.Link span {
+    color: #db628e;
+    font-weight: bold;
+}
+
+.Container {
+    background-color: #ffffff;
+    padding: 40px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+}
+
+.SignInCol {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.SignUpCol {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

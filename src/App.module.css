@@ -4,20 +4,21 @@
     background-color: #ffffff;
     min-height: 100vh;
     color: #2e3b42;
-    padding-bottom: 20px; 
+    padding-bottom: 20px;
 }
 
 /* Main Container Styling */
 .Main {
     display: flex;
     flex-direction: column;
-    justify-content: top;
+    justify-content: flex-start;
     align-items: center;
     padding-top: 81px;
     padding-bottom: 20px;
     height: calc(100vh - 101px);
 }
 
+/* Universal Box Sizing */
 *,
 *::before,
 *::after {
@@ -26,8 +27,9 @@
     padding: 0;
 }
 
+/* Anchor Link Styles */
 a {
-    color: #4a7c59; 
+    color: #4a7c59;
     transition: color ease-in-out 0.3s;
 }
 
@@ -36,14 +38,14 @@ a:hover {
 }
 
 a:hover i {
-    color: #f4a261; 
+    color: #f4a261;
     transition: color ease-in-out 0.3s;
 }
 
 /* Icon Styles */
 i {
-    color: #4a7c59; 
-    font-size: 1.8rem; 
+    color: #4a7c59;
+    font-size: 1.8rem;
     padding: 7px;
     vertical-align: middle;
 }
@@ -51,7 +53,7 @@ i {
 i:hover {
     cursor: pointer;
     transition: color ease-in-out 0.3s;
-    color: #f4a261; 
+    color: #f4a261;
 }
 
 /* Navbar Dropdown */
@@ -62,22 +64,25 @@ i:hover {
     vertical-align: middle;
 }
 
+/* Body Background Styling */
 body {
     margin: 0;
     padding: 0;
-    background-color: #f1f1f1; 
+    background-color: #f1f1f1;
 }
 
+/* Photo Frame Styles */
 .photo-frame {
-    border: 2px solid #e0e0e0; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    border: 2px solid #e0e0e0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
 }
 
 .photo-frame:hover {
-    transform: scale(1.02); 
+    transform: scale(1.02);
 }
 
+/* Primary Button Styling */
 .button-primary {
     background-color: #4a7c59;
     color: #fff;
@@ -92,6 +97,7 @@ body {
     background-color: #3a5c49;
 }
 
+/* Heading Styling */
 h1 {
     font-size: 2.5rem;
     font-weight: 700;
@@ -100,9 +106,75 @@ h1 {
     text-align: center;
 }
 
+/* Content Box Styling */
+.Content {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.Content:hover {
+    transform: scale(1.01);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Image Styling */
+.FillerImage {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.Image {
+    max-height: 40vh;
+    max-width: 100%;
+    object-fit: contain;
+    border: 2px solid #e0e0e0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px 0;
+    transition: transform 0.3s ease-in-out;
+}
+
+.Image:hover {
+    transform: scale(1.02);
+}
+
+/* Scrollbar Styles */
+*::-webkit-scrollbar {
+    width: 5px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Figure Styling */
+figure {
+    text-align: center;
+    display: inline-block;
+}
+
+/* File Input Styling */
+input[type="file"] {
+    display: none;
+}
+
 /* Additional Styling for Responsive Design */
 @media (max-width: 768px) {
-    .h1 {
+    h1 {
         font-size: 2rem;
     }
 

@@ -21,3 +21,17 @@
 .Active i {
     color: #db628e;
 }
+
+#basic-nav-dropdown {
+    color: #2e3b42;
+    font-size: 1.2rem;
+    padding: 8px 12px;
+    vertical-align: middle;
+    border-radius: 4px;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+#basic-nav-dropdown:hover {
+    background-color: #f4f4f4;
+    color: #db628e;
+}
