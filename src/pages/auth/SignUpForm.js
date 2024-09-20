@@ -62,7 +62,7 @@ const SignUpForm = () => {
         <Image
           className={`${appStyles.FillerImage}`}
           src={
-            "/src/assets/a-look-across-the-landscape-with-view-of-the-sea.jpg"
+            ""
           }
         />
       </Col>
