@@ -7,12 +7,17 @@
     padding-bottom: 20px; 
 }
 
+/* Main Container Styling */
 .Main {
-    padding-top: 81px; 
-    padding-bottom: 20px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: center;
+    padding-top: 81px;
+    padding-bottom: 20px;
+    height: calc(100vh - 101px);
 }
 
-/* Universal Box Sizing */
 *,
 *::before,
 *::after {
@@ -57,7 +62,6 @@ i:hover {
     vertical-align: middle;
 }
 
-/* Additional Styles for Photography Theme */
 body {
     margin: 0;
     padding: 0;
@@ -86,4 +90,23 @@ body {
 
 .button-primary:hover {
     background-color: #3a5c49;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2e3b42;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Additional Styling for Responsive Design */
+@media (max-width: 768px) {
+    .h1 {
+        font-size: 2rem;
+    }
+
+    .button-primary {
+        padding: 8px 16px;
+    }
 }
