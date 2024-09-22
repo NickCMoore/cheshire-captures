@@ -1,9 +1,10 @@
 .Row {
-    height: calc(100vh - 81px);
+    min-height: calc(100vh - 81px);
     background-color: #f1f1f1;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: center; 
+    justify-content: center; 
+    margin: 0;
 }
 
 .Input {
@@ -40,7 +41,7 @@
     font-weight: bold;
 }
 
-.Container {
+.FormContainer {
     background-color: #ffffff;
     padding: 40px 20px;
     border-radius: 8px;

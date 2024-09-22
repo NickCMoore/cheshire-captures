@@ -9,10 +9,6 @@
 
 /* Main Container Styling */
 .Main {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
     padding-top: 81px;
     padding-bottom: 20px;
     height: calc(100vh - 101px);
@@ -44,7 +40,6 @@ a:hover i {
 
 /* Icon Styles */
 i {
-    color: #4a7c59;
     font-size: 1.8rem;
     padding: 7px;
     vertical-align: middle;
@@ -66,8 +61,6 @@ i:hover {
 
 /* Body Background Styling */
 body {
-    margin: 0;
-    padding: 0;
     background-color: #f1f1f1;
 }
 
@@ -172,7 +165,7 @@ input[type="file"] {
     display: none;
 }
 
-/* Additional Styling for Responsive Design */
+/* Responsive Design */
 @media (max-width: 768px) {
     h1 {
         font-size: 2rem;
