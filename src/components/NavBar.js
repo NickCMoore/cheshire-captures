@@ -1,21 +1,33 @@
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 import styles from './NavBar.module.css';
+import { NavLink } from 'react-router-dom';
+import logo from '../assets/Screenshot 2024-09-23 095558.png'
 
-function NavBar() {
+const NavBar = () => {
   return (
-    <Navbar bg="light" expand="lg" className={styles.NavBar}>
-      <Navbar.Brand href="/">Cheshire Captures</Navbar.Brand>
-      <Navbar.Toggle aria-controls="navbar-collapse" />
-      <Navbar.Collapse id="navbar-collapse">
-        <Nav className={`${styles.Nav} ml-auto`}>
-          <Nav.Link href="/">Home</Nav.Link>
-          <Nav.Link href="/gallery">Gallery</Nav.Link>
-          <Nav.Link href="/signin">Sign in</Nav.Link>
-          <Nav.Link href="/signup">Sign up</Nav.Link>
-        </Nav>
-      </Navbar.Collapse>
+    <Navbar bg="-grey" expand="md" fixed="top" className={styles.NavBar}>
+      <Container>
+        <NavLink to="/">
+            <Navbar.Brand>
+                <img src={logo} alt="logo" height="50"/>
+            </Navbar.Brand>
+        </NavLink>
+        <Navbar.Toggle aria-controls="navbar-collapse" />
+        <Navbar.Collapse id="navbar-collapse">
+          <Nav className={`${styles.Nav} ml-auto`}>
+            <Nav.Link>
+              <i className='fas fa-house'></i>Home</Nav.Link>
+            <Nav.Link>
+              <i class="fa-solid fa-panorama"></i>Gallery</Nav.Link>
+            <Nav.Link>
+              <i class="fa-solid fa-user-plus"></i>Sign in</Nav.Link>
+            <Nav.Link>
+              <i class="fa-solid fa-arrow-right-to-bracket"></i>Sign up</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
     </Navbar>
   );
-}
+};
 
 export default NavBar;
