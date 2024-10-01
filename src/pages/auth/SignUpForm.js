@@ -35,10 +35,10 @@ const SignUpForm = () => {
   };
 
   return (
-    <Container fluid className={styles.Background}> {/* Apply the Background class */}
+    <Container fluid className={styles.Background}>
       <Row className="w-100 justify-content-center">
         <Col xs={12} md={6} lg={4} className="mx-auto">
-          <div className={styles.FormContainer}>
+          <div className={styles.SignUpFormContainer}>
             <h1 className={styles.Header}>Sign up</h1>
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="username">
