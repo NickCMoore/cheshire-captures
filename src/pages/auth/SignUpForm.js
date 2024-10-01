@@ -28,7 +28,7 @@ const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axiosInstance.post('/dj-rest-auth/registration/', {
+      await axiosInstance.post('/auth/registration/', {
         username,
         email,
         password1,
@@ -37,9 +37,10 @@ const SignUpForm = () => {
       await loginUser({ email, password: password1 });
       history.push('/');
     } catch (err) {
-      setErrors(err.response?.data);
+      setErrors(err.response?.data || { general: "Something went wrong. Please try again." });
     }
   };
+  
 
   return (
     <Container
