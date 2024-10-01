@@ -1,38 +1,52 @@
-import React, { useState, useContext } from 'react';
-import { Form, Button, Col, Row, Container } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Form, Button, Col, Row, Container, Alert } from 'react-bootstrap';
 import styles from '../../styles/SignInUpForm.module.css';
 import btnStyles from '../../styles/Button.module.css';
 import { Link, useHistory } from 'react-router-dom';
-import axiosInstance from '../../api/axiosDefaults'; // Import axiosInstance
-import { AuthContext } from '../../contexts/AuthContext'; // Import AuthContext
+import axiosInstance from '../../api/axiosDefaults';
+import { useAuth } from '../../contexts/AuthContext';
 
 const SignUpForm = () => {
-  const [username, setUsername] = useState('');
-  const [password1, setPassword1] = useState('');
-  const [password2, setPassword2] = useState('');
-  const [error, setError] = useState('');
-  const { loginUser } = useContext(AuthContext); 
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password1: '',
+    password2: '',
+  });
+  const { username, email, password1, password2 } = formData;
+  const [errors, setErrors] = useState({});
   const history = useHistory();
+  const { loginUser } = useAuth();
+
+  const handleChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const formData = {
+      await axiosInstance.post('/dj-rest-auth/registration/', {
         username,
+        email,
         password1,
         password2,
-      };
-      await axiosInstance.post('/dj-rest-auth/registration/', formData); 
-      await loginUser({ username, password: password1 }); 
+      });
+      await loginUser({ email, password: password1 });
       history.push('/');
-    } catch (error) {
-      setError('Sign-up failed. Please check your information.');
-      console.error(error);
+    } catch (err) {
+      setErrors(err.response?.data);
     }
   };
 
   return (
-    <Container fluid className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh', backgroundColor: '#f1f1f1' }}>
+    <Container
+      fluid
+      className="d-flex justify-content-center align-items-center"
+      style={{ minHeight: '100vh', backgroundColor: '#f1f1f1' }}
+    >
       <Row className="w-100 justify-content-center">
         <Col xs={12} md={6} lg={4} className="mx-auto">
           <div className={styles.FormContainer}>
@@ -46,9 +60,24 @@ const SignUpForm = () => {
                   placeholder="Enter username"
                   name="username"
                   value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={handleChange}
                 />
               </Form.Group>
+              {errors.username && <Alert variant="danger">{errors.username}</Alert>}
+
+              <Form.Group controlId="email">
+                <Form.Label className="d-none">Email</Form.Label>
+                <Form.Control
+                  className={styles.Input}
+                  type="email"
+                  placeholder="Enter email"
+                  name="email"
+                  value={email}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              {errors.email && <Alert variant="danger">{errors.email}</Alert>}
+
               <Form.Group controlId="password1">
                 <Form.Label className="d-none">Password</Form.Label>
                 <Form.Control
@@ -57,9 +86,11 @@ const SignUpForm = () => {
                   placeholder="Password"
                   name="password1"
                   value={password1}
-                  onChange={(e) => setPassword1(e.target.value)}
+                  onChange={handleChange}
                 />
               </Form.Group>
+              {errors.password1 && <Alert variant="danger">{errors.password1}</Alert>}
+
               <Form.Group controlId="password2">
                 <Form.Label className="d-none">Confirm password</Form.Label>
                 <Form.Control
@@ -68,9 +99,11 @@ const SignUpForm = () => {
                   placeholder="Confirm password"
                   name="password2"
                   value={password2}
-                  onChange={(e) => setPassword2(e.target.value)}
+                  onChange={handleChange}
                 />
               </Form.Group>
+              {errors.password2 && <Alert variant="danger">{errors.password2}</Alert>}
+
               <Button
                 className={`${btnStyles.Button} ${btnStyles.Bright} ${btnStyles.Wide}`}
                 type="submit"
@@ -78,7 +111,6 @@ const SignUpForm = () => {
                 Sign up
               </Button>
             </Form>
-            {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error message */}
             <Container className="mt-3">
               <Link className={styles.Link} to="/signin">
                 Already have an account? <span>Sign in</span>
