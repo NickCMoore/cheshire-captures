@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
   const loginUser = async (credentials) => {
     try {
       await axiosInstance.post('/dj-rest-auth/login/', credentials);
-      await fetchCurrentUser(); // Update currentUser state
+      await fetchCurrentUser();
     } catch (error) {
       throw error;
     }
