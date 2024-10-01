@@ -35,8 +35,7 @@ const SignInForm = () => {
   return (
     <Container
       fluid
-      className="d-flex justify-content-center align-items-center"
-      style={{ minHeight: '100vh', backgroundColor: '#f1f1f1' }}
+      className={styles.Background} // Apply the Background class here
     >
       <Row className="w-100 justify-content-center">
         <Col xs={12} md={6} lg={4} className="mx-auto">

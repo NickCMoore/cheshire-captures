@@ -3,7 +3,6 @@ import { Form, Button, Col, Row, Container, Alert } from 'react-bootstrap';
 import styles from '../../styles/SignInUpForm.module.css';
 import btnStyles from '../../styles/Button.module.css';
 import { Link, useHistory } from 'react-router-dom';
-import axiosInstance from '../../api/axiosDefaults';
 import { useAuth } from '../../contexts/AuthContext';
 
 const SignUpForm = () => {
@@ -28,26 +27,15 @@ const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axiosInstance.post('/auth/registration/', {
-        username,
-        email,
-        password1,
-        password2,
-      });
-      await loginUser({ email, password: password1 });
+      await loginUser({ email, password1 });
       history.push('/');
     } catch (err) {
-      setErrors(err.response?.data || { general: "Something went wrong. Please try again." });
+      setErrors(err.response?.data);
     }
   };
-  
 
   return (
-    <Container
-      fluid
-      className="d-flex justify-content-center align-items-center"
-      style={{ minHeight: '100vh', padding: '60px 0', backgroundColor: '#f1f1f1' }}
-    >
+    <Container fluid className={styles.Background}> {/* Apply the Background class */}
       <Row className="w-100 justify-content-center">
         <Col xs={12} md={6} lg={4} className="mx-auto">
           <div className={styles.FormContainer}>
