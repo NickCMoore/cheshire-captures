@@ -10,7 +10,7 @@
 
 .App {
     font-family: "Montserrat", sans-serif;
-    background-color: var(--rich-black);
+    background-color: rgba(255, 255, 255, 0.8);
     min-height: 100vh;
     color: var(--wisteria);
     padding-bottom: 20px;

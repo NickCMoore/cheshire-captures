@@ -7,16 +7,19 @@
 }
 
 .Background {
-    background-image: url('https://res.cloudinary.com/dwgtce0rh/image/upload/v1721310733/rrnrybzbr0iypcupobfl.jpg'); 
-    background-size: cover; 
+    background-image: url('https://res.cloudinary.com/dwgtce0rh/image/upload/v1721310733/rrnrybzbr0iypcupobfl.jpg');
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-height: 100vh; 
+    min-height: calc(100vh - 160px); 
+    margin-top: 40px; 
+    margin-bottom: 40px; 
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative; 
+    position: relative;
     z-index: 1;
+    overflow: hidden;
 }
 
 .Background::before {
@@ -41,7 +44,7 @@
     z-index: 2;
 }
 
-.FormContainer, .SignUpFormContainer {
+.SignUpFormContainer {
     background-color: #ffffff;
     padding: 40px 20px;
     border-radius: 8px;
@@ -55,9 +58,9 @@
 
 .Input {
     background: #ffffff;
-    border: 1px solid var(--yinmn-blue); 
+    border: 1px solid var(--yinmn-blue);
     border-radius: 4px;
-    color: var(--ultra-violet); 
+    color: var(--ultra-violet);
     text-align: center;
     padding: 12px;
     width: 100%;
@@ -70,7 +73,7 @@
     font-size: 1.5rem;
     text-align: center;
     text-transform: uppercase;
-    color: var(--mountbatten-pink); 
+    color: var(--mountbatten-pink);
     margin-bottom: 20px;
 }
 
@@ -78,17 +81,17 @@
     text-decoration: none;
     text-align: center;
     display: block;
-    color: var(--ultra-violet); 
+    color: var(--ultra-violet);
     font-size: 1rem;
 }
 
 .Link span {
-    color: var(--wisteria); 
+    color: var(--wisteria);
     font-weight: bold;
 }
 
 .Button {
-    background-color: var(--mountbatten-pink); 
+    background-color: var(--mountbatten-pink);
     color: #ffffff;
     border: none;
     padding: 10px 20px;
@@ -100,15 +103,27 @@
 }
 
 .Button:hover {
-    background-color: var(--wisteria); 
+    background-color: var(--wisteria);
     color: #ffffff;
 }
 
 .Row {
-    min-height: calc(100vh - 81px);
-    background-color: var(--rich-black); 
+    min-height: calc(100vh - 160px);
+    background-color: var(--rich-black);
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0;
+    padding: 0;
+}
+
+.Footer {
+    background-color: var(--yinmn-blue); 
+    padding: 20px;
+    color: white;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    z-index: 1000;
 }

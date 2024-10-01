@@ -1,24 +1,17 @@
 .NavBar {
     background-color: rgba(255, 255, 255, 0.8);
-    padding: 10px 30px;
+    padding: 12px 40px; 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.NavBar .logo {
-    margin-left: 20px;
 }
 
 .NavBar a {
     color: var(--yinmn-blue);
-    font-size: 1rem;
-    padding: 8px 15px;
+    font-size: 1.1rem; 
+    padding: 10px 20px;
     text-decoration: none;
 }
 
@@ -27,12 +20,7 @@
 }
 
 .NavLink {
-    padding: 5px 8px;
-}
-
-.NavBar .nav-links {
-    display: flex;
-    margin-right: 20px;
+    padding: 5px 10px;
 }
 
 .Active i {
@@ -41,8 +29,8 @@
 
 #basic-nav-dropdown {
     color: var(--ultra-violet);
-    font-size: 1rem;
-    padding: 5px 8px;
+    font-size: 1.2rem; 
+    padding: 7px 12px; 
     vertical-align: middle;
     border-radius: 4px;
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
@@ -52,4 +40,9 @@
     background-color: var(--wisteria);
     color: var(--mountbatten-pink);
 }
+
+.NavBar i {
+    font-size: 1.4rem;
+}
+
 
