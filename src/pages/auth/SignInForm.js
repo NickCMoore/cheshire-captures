@@ -1,30 +1,29 @@
 import React, { useState, useContext } from 'react';
-import { Form, Button, Col, Row, Container, Alert } from 'react-bootstrap';
+import { Form, Button, Col, Row, Container } from 'react-bootstrap';
 import styles from '../../styles/SignInUpForm.module.css';
 import btnStyles from '../../styles/Button.module.css';
 import { Link, useHistory } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 
 const SignInForm = () => {
-  const { loginUser } = useContext(AuthContext);
-  const [formData, setFormData] = useState({ email: '', password: '' });
-  const [errors, setErrors] = useState({});
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(''); 
+  const { loginUser } = useContext(AuthContext); 
   const history = useHistory();
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
-      await loginUser(formData);
-      history.push('/'); // Redirect to homepage after successful login
-    } catch (err) {
-      setErrors({ message: 'Invalid credentials. Please try again.' });
+      const credentials = {
+        email,
+        password,
+      };
+      await loginUser(credentials); 
+      history.push('/'); 
+    } catch (error) {
+      setError('Invalid email or password. Please try again.');
+      console.error(error);
     }
   };
 
@@ -34,7 +33,6 @@ const SignInForm = () => {
         <Col xs={12} md={6} lg={4} className="mx-auto">
           <div className={styles.FormContainer}>
             <h1 className={styles.Header}>Sign in</h1>
-            {errors.message && <Alert variant="danger">{errors.message}</Alert>}
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="email">
                 <Form.Label className="d-none">Email</Form.Label>
@@ -43,9 +41,8 @@ const SignInForm = () => {
                   type="email"
                   placeholder="Enter email"
                   name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)} 
                 />
               </Form.Group>
               <Form.Group controlId="password">
@@ -55,9 +52,8 @@ const SignInForm = () => {
                   type="password"
                   placeholder="Password"
                   name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)} 
                 />
               </Form.Group>
               <Button
@@ -67,6 +63,7 @@ const SignInForm = () => {
                 Sign in
               </Button>
             </Form>
+            {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error message */}
             <Container className="mt-3">
               <Link className={styles.Link} to="/signup">
                 Don't have an account? <span>Sign up</span>
