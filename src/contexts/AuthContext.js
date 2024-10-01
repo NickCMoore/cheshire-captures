@@ -8,19 +8,18 @@ export const AuthProvider = ({ children }) => {
 
   const fetchCurrentUser = async () => {
     try {
-      const response = await axiosInstance.get('/auth/user/');
-      setCurrentUser(response.data);
+      const token = localStorage.getItem('token'); 
+      if (token) {
+        axiosInstance.defaults.headers.common['Authorization'] = `Token ${token}`; 
+        const response = await axiosInstance.get('/auth/user/');
+        setCurrentUser(response.data);
+      } else {
+        setCurrentUser(null); 
+      }
     } catch (error) {
       setCurrentUser(null);
     }
   };
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    }
-  }, []);
 
   useEffect(() => {
     fetchCurrentUser();
@@ -29,10 +28,9 @@ export const AuthProvider = ({ children }) => {
   const loginUser = async (credentials) => {
     try {
       const response = await axiosInstance.post('/auth/login/', credentials);
-      const token = response.data.token;
-      localStorage.setItem('token', token);
-
-      axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      const token = response.data.key; 
+      localStorage.setItem('token', token); 
+      axiosInstance.defaults.headers.common['Authorization'] = `Token ${token}`; 
       await fetchCurrentUser();
     } catch (error) {
       throw error;
@@ -43,7 +41,7 @@ export const AuthProvider = ({ children }) => {
     try {
       await axiosInstance.post('/auth/logout/');
       localStorage.removeItem('token');
-      delete axiosInstance.defaults.headers.common['Authorization'];
+      delete axiosInstance.defaults.headers.common['Authorization']; 
       setCurrentUser(null);
     } catch (error) {
       console.error(error);
