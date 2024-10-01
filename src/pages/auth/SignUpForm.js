@@ -6,29 +6,35 @@ import { Link, useHistory } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 
 const SignUpForm = () => {
-  const [username, setUsername] = useState('');
-  const [password1, setPassword1] = useState('');
-  const [password2, setPassword2] = useState('');
-  const [error, setError] = useState('');
+  const [formData, setFormData] = useState({
+    username: '',
+    password1: '',
+    password2: ''
+  });
+  const { username, password1, password2 } = formData;
+
+  const [errors, setErrors] = useState({});
+  const { signupUser } = useContext(AuthContext);
   const history = useHistory();
-  const { loginUser } = useContext(AuthContext);
+
+  const handleChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value
+    });
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (password1 !== password2) {
-      setError('Passwords do not match');
+      setErrors({ password2: ['Passwords do not match.'] });
       return;
     }
     try {
-      const credentials = {
-        username,
-        password1,
-        password2,
-      };
-      await loginUser(credentials);
-      history.push('/');
-    } catch (err) {
-      setError('Failed to sign up. Please try again.');
+      await signupUser({ username, password1, password2 });
+      history.push('/'); // Redirect to the homepage after successful signup
+    } catch (error) {
+      setErrors(error.response?.data || {});
     }
   };
 
@@ -38,7 +44,9 @@ const SignUpForm = () => {
         <Col xs={12} md={6} lg={4} className="mx-auto">
           <div className={styles.FormContainer}>
             <h1 className={styles.Header}>Sign up</h1>
-            {error && <Alert variant="danger">{error}</Alert>}
+            {errors.username && <Alert variant="danger">{errors.username}</Alert>}
+            {errors.password1 && <Alert variant="danger">{errors.password1}</Alert>}
+            {errors.password2 && <Alert variant="danger">{errors.password2}</Alert>}
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="username">
                 <Form.Label className="d-none">Username</Form.Label>
@@ -48,7 +56,7 @@ const SignUpForm = () => {
                   placeholder="Enter username"
                   name="username"
                   value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={handleChange}
                 />
               </Form.Group>
               <Form.Group controlId="password1">
@@ -59,7 +67,7 @@ const SignUpForm = () => {
                   placeholder="Password"
                   name="password1"
                   value={password1}
-                  onChange={(e) => setPassword1(e.target.value)}
+                  onChange={handleChange}
                 />
               </Form.Group>
               <Form.Group controlId="password2">
@@ -70,7 +78,7 @@ const SignUpForm = () => {
                   placeholder="Confirm password"
                   name="password2"
                   value={password2}
-                  onChange={(e) => setPassword2(e.target.value)}
+                  onChange={handleChange}
                 />
               </Form.Group>
               <Button
