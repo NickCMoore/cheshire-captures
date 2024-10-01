@@ -1,37 +1,55 @@
 .NavBar {
-    background-color: #ffffff; 
-    border-bottom: 2px solid #dadadf; 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 10px 50px; 
-    position: fixed; 
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
     top: 0;
-    width: 100%; 
-    z-index: 1000; 
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.Nav {
-    margin-right: 20px;
-    margin-left: auto; 
+.NavBar .logo {
+    margin-left: 20px;
+}
+
+.NavBar a {
+    color: var(--yinmn-blue);
+    font-size: 1rem;
+    padding: 8px 15px;
+    text-decoration: none;
+}
+
+.NavBar a:hover {
+    color: var(--mountbatten-pink);
 }
 
 .NavLink {
-    padding: 5px 10px;
+    padding: 5px 8px;
+}
+
+.NavBar .nav-links {
+    display: flex;
+    margin-right: 20px;
 }
 
 .Active i {
-    color: #db628e;
+    color: var(--mountbatten-pink);
 }
 
 #basic-nav-dropdown {
-    color: #2e3b42;
-    font-size: 1.2rem;
-    padding: 8px 12px;
+    color: var(--ultra-violet);
+    font-size: 1rem;
+    padding: 5px 8px;
     vertical-align: middle;
     border-radius: 4px;
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 #basic-nav-dropdown:hover {
-    background-color: #f4f4f4;
-    color: #db628e;
+    background-color: var(--wisteria);
+    color: var(--mountbatten-pink);
 }
+

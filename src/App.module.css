@@ -1,9 +1,18 @@
 /* Global Styles */
+
+:root {
+    --rich-black: #0e1116ff;
+    --yinmn-blue: #374a67ff;
+    --ultra-violet: #616283ff;
+    --mountbatten-pink: #9e7b9bff;
+    --wisteria: #cb9cf2ff;
+}
+
 .App {
     font-family: "Montserrat", sans-serif;
-    background-color: #ffffff;
+    background-color: var(--rich-black);
     min-height: 100vh;
-    color: #2e3b42;
+    color: var(--wisteria);
     padding-bottom: 20px;
 }
 
@@ -25,7 +34,7 @@
 
 /* Anchor Link Styles */
 a {
-    color: #4a7c59;
+    color: var(--mountbatten-pink);
     transition: color ease-in-out 0.3s;
 }
 
@@ -34,7 +43,7 @@ a:hover {
 }
 
 a:hover i {
-    color: #f4a261;
+    color: var(--wisteria);
     transition: color ease-in-out 0.3s;
 }
 
@@ -48,12 +57,12 @@ i {
 i:hover {
     cursor: pointer;
     transition: color ease-in-out 0.3s;
-    color: #f4a261;
+    color: var(--mountbatten-pink);
 }
 
 /* Navbar Dropdown */
 #basic-nav-dropdown {
-    color: #4a7c59;
+    color: var(--mountbatten-pink);
     font-size: 1.6rem;
     padding: 7px;
     vertical-align: middle;
@@ -61,12 +70,12 @@ i:hover {
 
 /* Body Background Styling */
 body {
-    background-color: #f1f1f1;
+    background-color: var(--yinmn-blue);
 }
 
 /* Photo Frame Styles */
 .photo-frame {
-    border: 2px solid #e0e0e0;
+    border: 2px solid var(--ultra-violet);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
 }
@@ -77,8 +86,8 @@ body {
 
 /* Primary Button Styling */
 .button-primary {
-    background-color: #4a7c59;
-    color: #fff;
+    background-color: var(--mountbatten-pink);
+    color: var(--wisteria);
     border: none;
     padding: 10px 20px;
     font-size: 1rem;
@@ -87,24 +96,24 @@ body {
 }
 
 .button-primary:hover {
-    background-color: #3a5c49;
+    background-color: var(--ultra-violet);
 }
 
 /* Heading Styling */
 h1 {
     font-size: 2.5rem;
     font-weight: 700;
-    color: #2e3b42;
+    color: var(--wisteria);
     margin-bottom: 20px;
     text-align: center;
 }
 
 /* Content Box Styling */
 .Content {
-    background-color: #ffffff;
+    background-color: var(--yinmn-blue);
     padding: 20px;
     border-radius: 5px;
-    border: 1px solid #e0e0e0;
+    border: 1px solid var(--ultra-violet);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
@@ -127,7 +136,7 @@ h1 {
     max-height: 40vh;
     max-width: 100%;
     object-fit: contain;
-    border: 2px solid #e0e0e0;
+    border: 2px solid var(--ultra-violet);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin: 10px 0;
     transition: transform 0.3s ease-in-out;
@@ -143,15 +152,15 @@ h1 {
 }
 
 *::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: var(--rich-black);
 }
 
 *::-webkit-scrollbar-thumb {
-    background: #888;
+    background: var(--ultra-violet);
 }
 
 *::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: var(--mountbatten-pink);
 }
 
 /* Figure Styling */

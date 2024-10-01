@@ -20,12 +20,12 @@
 }
 
 .Bright {
-    background-color: #db628e;
+    background-color: var(--mountbatten-pink);
     color: #ffffff;
 }
 
 .Bright:hover {
-    background-color: #ff6f6f;
+    background-color: var(--wisteria);
     color: #ffffff;
 }
 
@@ -35,3 +35,4 @@
     margin: 15px auto;
     border-radius: 25px;
 }
+

@@ -1,0 +1,46 @@
+.FullScreenBackground {
+    background-image: url('your-background-image-url.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    position: relative;
+}
+
+.FullScreenOverlay {
+    background-color: rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.FullScreenContent {
+    position: relative;
+    z-index: 2;
+    color: white;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.FullScreenContent h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.FullScreenContent p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+}
+
+.Button {
+    font-size: 1.2rem;
+    padding: 10px 30px;
+    background-color: var(--ultra-violet);
+    color: white;
+    border-radius: 25px;
+    cursor: pointer;
+}

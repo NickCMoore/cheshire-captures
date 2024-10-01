@@ -35,7 +35,7 @@ const SignInForm = () => {
   return (
     <Container
       fluid
-      className={styles.Background} // Apply the Background class here
+      className={styles.Background}
     >
       <Row className="w-100 justify-content-center">
         <Col xs={12} md={6} lg={4} className="mx-auto">

@@ -1,3 +1,11 @@
+:root {
+    --rich-black: #0e1116ff;
+    --yinmn-blue: #374a67ff;
+    --ultra-violet: #616283ff;
+    --mountbatten-pink: #9e7b9bff;
+    --wisteria: #cb9cf2ff;
+}
+
 .Background {
     background-image: url('https://res.cloudinary.com/dwgtce0rh/image/upload/v1721310733/rrnrybzbr0iypcupobfl.jpg'); 
     background-size: cover; 
@@ -9,7 +17,7 @@
     justify-content: center;
     position: relative; 
     z-index: 1;
-  }
+}
 
 .Background::before {
     content: '';
@@ -18,9 +26,9 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); 
-    z-index: -1; 
-  }
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
 
 .FormContainer {
     background-color: #ffffff;
@@ -28,37 +36,28 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 400px;
+    max-width: 600px;
     margin: auto;
     z-index: 2;
-  }
+}
 
-  .SignUpFormContainer {
+.FormContainer, .SignUpFormContainer {
     background-color: #ffffff;
     padding: 40px 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 600px; 
+    max-width: 500px;
     margin: auto;
+    margin-top: 50px;
     z-index: 2;
-  }
-  
-  
-.Row {
-    min-height: calc(100vh - 81px);
-    background-color: #f1f1f1;
-    display: flex;
-    align-items: center; 
-    justify-content: center; 
-    margin: 0;
 }
 
 .Input {
     background: #ffffff;
-    border: 1px solid #dadadf;
+    border: 1px solid var(--yinmn-blue); 
     border-radius: 4px;
-    color: #2e3b42;
+    color: var(--ultra-violet); 
     text-align: center;
     padding: 12px;
     width: 100%;
@@ -71,7 +70,7 @@
     font-size: 1.5rem;
     text-align: center;
     text-transform: uppercase;
-    color: #db628e;
+    color: var(--mountbatten-pink); 
     margin-bottom: 20px;
 }
 
@@ -79,38 +78,37 @@
     text-decoration: none;
     text-align: center;
     display: block;
-    color: #2e3b42;
+    color: var(--ultra-violet); 
     font-size: 1rem;
 }
 
 .Link span {
-    color: #db628e;
+    color: var(--wisteria); 
     font-weight: bold;
 }
 
-.FormContainer {
-    background-color: #ffffff;
-    padding: 40px 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 500px;
-    margin: auto;
-    margin-top: 50px;
+.Button {
+    background-color: var(--mountbatten-pink); 
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    margin: 10px auto;
+    display: block;
+    cursor: pointer;
+    text-align: center;
 }
 
-.Container {
+.Button:hover {
+    background-color: var(--wisteria); 
+    color: #ffffff;
+}
+
+.Row {
+    min-height: calc(100vh - 81px);
+    background-color: var(--rich-black); 
     display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 60px 0;
-}
-
-.SignInCol,
-.SignUpCol {
-    display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0;
 }
-
