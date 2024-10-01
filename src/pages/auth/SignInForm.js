@@ -1,34 +1,43 @@
-import React, { useState, useContext } from 'react';
-import { Form, Button, Col, Row, Container } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Form, Button, Col, Row, Container, Alert } from 'react-bootstrap';
 import styles from '../../styles/SignInUpForm.module.css';
 import btnStyles from '../../styles/Button.module.css';
 import { Link, useHistory } from 'react-router-dom';
-import { AuthContext } from '../../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 
 const SignInForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(''); 
-  const { loginUser } = useContext(AuthContext); 
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+  const { email, password } = formData;
+  const [errors, setErrors] = useState({});
   const history = useHistory();
+  const { loginUser } = useAuth();
+
+  const handleChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const credentials = {
-        email,
-        password,
-      };
-      await loginUser(credentials); 
-      history.push('/'); 
-    } catch (error) {
-      setError('Invalid email or password. Please try again.');
-      console.error(error);
+      await loginUser({ email, password });
+      history.push('/');
+    } catch (err) {
+      setErrors({ detail: 'Invalid email or password' });
     }
   };
 
   return (
-    <Container fluid className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh', backgroundColor: '#f1f1f1' }}>
+    <Container
+      fluid
+      className="d-flex justify-content-center align-items-center"
+      style={{ minHeight: '100vh', backgroundColor: '#f1f1f1' }}
+    >
       <Row className="w-100 justify-content-center">
         <Col xs={12} md={6} lg={4} className="mx-auto">
           <div className={styles.FormContainer}>
@@ -42,9 +51,11 @@ const SignInForm = () => {
                   placeholder="Enter email"
                   name="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)} 
+                  onChange={handleChange}
                 />
               </Form.Group>
+              {errors.email && <Alert variant="danger">{errors.email}</Alert>}
+
               <Form.Group controlId="password">
                 <Form.Label className="d-none">Password</Form.Label>
                 <Form.Control
@@ -53,9 +64,11 @@ const SignInForm = () => {
                   placeholder="Password"
                   name="password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)} 
+                  onChange={handleChange}
                 />
               </Form.Group>
+              {errors.detail && <Alert variant="danger">{errors.detail}</Alert>}
+
               <Button
                 className={`${btnStyles.Button} ${btnStyles.Bright} ${btnStyles.Wide}`}
                 type="submit"
@@ -63,7 +76,6 @@ const SignInForm = () => {
                 Sign in
               </Button>
             </Form>
-            {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error message */}
             <Container className="mt-3">
               <Link className={styles.Link} to="/signup">
                 Don't have an account? <span>Sign up</span>
