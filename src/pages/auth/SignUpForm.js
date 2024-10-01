@@ -1,40 +1,33 @@
 import React, { useState, useContext } from 'react';
-import { Form, Button, Col, Row, Container, Alert } from 'react-bootstrap';
+import { Form, Button, Col, Row, Container } from 'react-bootstrap';
 import styles from '../../styles/SignInUpForm.module.css';
 import btnStyles from '../../styles/Button.module.css';
 import { Link, useHistory } from 'react-router-dom';
-import { AuthContext } from '../../contexts/AuthContext';
+import axiosInstance from '../../api/axiosDefaults'; // Import axiosInstance
+import { AuthContext } from '../../contexts/AuthContext'; // Import AuthContext
 
 const SignUpForm = () => {
-  const [formData, setFormData] = useState({
-    username: '',
-    password1: '',
-    password2: ''
-  });
-  const { username, password1, password2 } = formData;
-
-  const [errors, setErrors] = useState({});
-  const { signupUser } = useContext(AuthContext);
+  const [username, setUsername] = useState('');
+  const [password1, setPassword1] = useState('');
+  const [password2, setPassword2] = useState('');
+  const [error, setError] = useState('');
+  const { loginUser } = useContext(AuthContext); 
   const history = useHistory();
-
-  const handleChange = (event) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value
-    });
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (password1 !== password2) {
-      setErrors({ password2: ['Passwords do not match.'] });
-      return;
-    }
     try {
-      await signupUser({ username, password1, password2 });
-      history.push('/'); // Redirect to the homepage after successful signup
+      const formData = {
+        username,
+        password1,
+        password2,
+      };
+      await axiosInstance.post('/dj-rest-auth/registration/', formData); 
+      await loginUser({ username, password: password1 }); 
+      history.push('/');
     } catch (error) {
-      setErrors(error.response?.data || {});
+      setError('Sign-up failed. Please check your information.');
+      console.error(error);
     }
   };
 
@@ -44,9 +37,6 @@ const SignUpForm = () => {
         <Col xs={12} md={6} lg={4} className="mx-auto">
           <div className={styles.FormContainer}>
             <h1 className={styles.Header}>Sign up</h1>
-            {errors.username && <Alert variant="danger">{errors.username}</Alert>}
-            {errors.password1 && <Alert variant="danger">{errors.password1}</Alert>}
-            {errors.password2 && <Alert variant="danger">{errors.password2}</Alert>}
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="username">
                 <Form.Label className="d-none">Username</Form.Label>
@@ -56,7 +46,7 @@ const SignUpForm = () => {
                   placeholder="Enter username"
                   name="username"
                   value={username}
-                  onChange={handleChange}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </Form.Group>
               <Form.Group controlId="password1">
@@ -67,7 +57,7 @@ const SignUpForm = () => {
                   placeholder="Password"
                   name="password1"
                   value={password1}
-                  onChange={handleChange}
+                  onChange={(e) => setPassword1(e.target.value)}
                 />
               </Form.Group>
               <Form.Group controlId="password2">
@@ -78,7 +68,7 @@ const SignUpForm = () => {
                   placeholder="Confirm password"
                   name="password2"
                   value={password2}
-                  onChange={handleChange}
+                  onChange={(e) => setPassword2(e.target.value)}
                 />
               </Form.Group>
               <Button
@@ -88,6 +78,7 @@ const SignUpForm = () => {
                 Sign up
               </Button>
             </Form>
+            {error && <p style={{ color: 'red' }}>{error}</p>} {/* Display error message */}
             <Container className="mt-3">
               <Link className={styles.Link} to="/signin">
                 Already have an account? <span>Sign in</span>

@@ -1,34 +1,30 @@
 import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
-import { AuthContext } from '../../contexts/AuthContext';
-import { Form, Button, Col, Row, Container } from 'react-bootstrap';
+import { Form, Button, Col, Row, Container, Alert } from 'react-bootstrap';
 import styles from '../../styles/SignInUpForm.module.css';
 import btnStyles from '../../styles/Button.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const SignInForm = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
-  const [errors, setErrors] = useState({});
   const { loginUser } = useContext(AuthContext);
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [errors, setErrors] = useState({});
   const history = useHistory();
 
-  const handleChange = (event) => {
+  const handleChange = (e) => {
     setFormData({
       ...formData,
-      [event.target.name]: event.target.value,
+      [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       await loginUser(formData);
-      history.push('/');
-    } catch (error) {
-      setErrors({ form: 'Invalid email or password' });
+      history.push('/'); // Redirect to homepage after successful login
+    } catch (err) {
+      setErrors({ message: 'Invalid credentials. Please try again.' });
     }
   };
 
@@ -38,6 +34,7 @@ const SignInForm = () => {
         <Col xs={12} md={6} lg={4} className="mx-auto">
           <div className={styles.FormContainer}>
             <h1 className={styles.Header}>Sign in</h1>
+            {errors.message && <Alert variant="danger">{errors.message}</Alert>}
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="email">
                 <Form.Label className="d-none">Email</Form.Label>
@@ -48,7 +45,7 @@ const SignInForm = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  isInvalid={!!errors.form}
+                  required
                 />
               </Form.Group>
               <Form.Group controlId="password">
@@ -60,11 +57,8 @@ const SignInForm = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  isInvalid={!!errors.form}
+                  required
                 />
-                <Form.Control.Feedback type="invalid">
-                  {errors.form}
-                </Form.Control.Feedback>
               </Form.Group>
               <Button
                 className={`${btnStyles.Button} ${btnStyles.Bright} ${btnStyles.Wide}`}
