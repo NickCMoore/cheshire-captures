@@ -13,6 +13,8 @@ const Gallery = () => {
         'https://res.cloudinary.com/dwgtce0rh/image/upload/v1727870434/24633_a5n9zu.jpg',
         'https://res.cloudinary.com/dwgtce0rh/image/upload/v1727862662/vestrahorn-mountains-stokksnes-iceland_aoqbtp.jpg',
         'https://res.cloudinary.com/dwgtce0rh/image/upload/v1721310733/rrnrybzbr0iypcupobfl.jpg',
+        'https://res.cloudinary.com/dwgtce0rh/image/upload/v1721310879/zjadqskisbjlyfb5jb8i.jpg',
+        'https://res.cloudinary.com/dwgtce0rh/image/upload/v1720338009/cld-sample-2.jpg',
       ];
       setImages((prevImages) => [...prevImages, ...sampleImages]);
     };
