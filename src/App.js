@@ -6,6 +6,7 @@ import './api/axiosDefaults';
 import SignUpForm from './pages/auth/SignUpForm';
 import SignInForm from './pages/auth/SignInForm';
 import { AuthProvider } from './contexts/AuthContext';
+import Gallery from './pages/Gallery'; 
 import styles from './App.module.css';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
@@ -22,6 +23,9 @@ function App() {
 
             {/* About page route */}
             <Route exact path="/about" render={() => <AboutPage />} />
+
+            {/* Gallery page route */}
+            <Route exact path="/gallery" render={() => <Gallery />} /> 
 
             {/* Sign In route */}
             <Route exact path="/signin" render={() => <SignInForm />} />
