@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
+import axiosInstance from '../api/axiosDefaults';
 import styles from '../styles/Gallery.module.css';
 
 const Gallery = () => {
   const [images, setImages] = useState([]);
-  const [page, setPage] = useState(1); 
-  const { ref, inView } = useInView(); 
+  const [page, setPage] = useState(1);
+  const { ref, inView } = useInView();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -16,17 +18,29 @@ const Gallery = () => {
         'https://res.cloudinary.com/dwgtce0rh/image/upload/v1721310879/zjadqskisbjlyfb5jb8i.jpg',
         'https://res.cloudinary.com/dwgtce0rh/image/upload/v1720338009/cld-sample-2.jpg',
       ];
+
       setImages((prevImages) => [...prevImages, ...sampleImages]);
+
+      if (!loading) {
+        setLoading(true);
+        try {
+          const response = await axiosInstance.get(`/api/photos/?page=${page}`);
+          setImages((prevImages) => [...prevImages, ...response.data.results]);
+        } catch (error) {
+          console.error('Error fetching images:', error);
+        }
+        setLoading(false);
+      }
     };
 
-    if (inView) {
+    if (inView && !loading) {
       fetchImages();
     }
-  }, [inView, page]);
+  }, [inView, page, loading]); 
 
   useEffect(() => {
     if (inView) {
-      setPage((prevPage) => prevPage + 1); 
+      setPage((prevPage) => prevPage + 1);
     }
   }, [inView]);
 
@@ -37,7 +51,9 @@ const Gallery = () => {
           <img src={image} alt={`Gallery ${index}`} className={styles.image} />
         </div>
       ))}
-      <div ref={ref} className={styles.loader} />
+      <div ref={ref} className={styles.loader}>
+        {loading && 'Loading more...'}
+      </div>
     </div>
   );
 };
