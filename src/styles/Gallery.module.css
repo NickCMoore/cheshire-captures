@@ -21,8 +21,8 @@
 .imageContainer {
     position: relative;
     width: 100%;
-    max-width: 600px;
-    margin-bottom: 20px;
+    max-width: 900px; 
+    margin-bottom: 30px; 
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease-in-out;
@@ -40,4 +40,5 @@
 
 body, html {
     overflow-x: hidden;
+    overflow-y: auto;
 }

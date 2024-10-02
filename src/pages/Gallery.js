@@ -34,7 +34,7 @@ const Gallery = () => {
     <div className={styles.gallery}>
       {images.map((image, index) => (
         <div key={index} className={styles.imageContainer}>
-          <img src={image} alt={`Gallery image ${index}`} className={styles.image} />
+          <img src={image} alt={`Gallery ${index}`} className={styles.image} />
         </div>
       ))}
       <div ref={ref} className={styles.loader} />
