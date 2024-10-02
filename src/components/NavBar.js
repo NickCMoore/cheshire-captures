@@ -22,6 +22,9 @@ const NavBar = () => {
             <NavLink exact to="/gallery" className={styles.NavLink} activeClassName={styles.Active}>
               <i className="fa-solid fa-panorama"></i> Gallery
             </NavLink>
+            <NavLink exact to="/about" className={styles.NavLink} activeClassName={styles.Active}>
+              <i className="fa-solid fa-panorama"></i> About
+            </NavLink>
             <NavLink exact to="/signin" className={styles.NavLink} activeClassName={styles.Active}>
               <i className="fa-solid fa-user-plus"></i> Sign In
             </NavLink>

@@ -1,0 +1,40 @@
+.AboutPage {
+    background-color: #f3eaf4;
+    color: var(--rich-black); 
+    padding: 40px;
+    min-height: 100vh;
+  }
+
+  .AboutContainer {
+    min-height: 100vh; 
+    background-color: var(--rich-black); 
+    color: var(--wisteria); 
+    padding: 20px;
+  }
+  
+  .Container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #374a67ff; 
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .Header {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    font-size: 1.8rem;
+    color: #374a67ff;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  
