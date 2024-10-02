@@ -1,46 +1,65 @@
+:root {
+    --rich-black: #0e1116ff;
+    --yinmn-blue: #374a67ff;
+    --ultra-violet: #616283ff;
+    --mountbatten-pink: #9e7b9bff;
+    --wisteria: #cb9cf2ff;
+}
+
 .FullScreenBackground {
-    background-image: url('your-background-image-url.jpg');
+    background-image: url('https://res.cloudinary.com/dwgtce0rh/image/upload/v1727862662/vestrahorn-mountains-stokksnes-iceland_aoqbtp.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 100vh;
+    min-height: 100vh;
+    width: 100vw;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 }
 
 .FullScreenOverlay {
-    background-color: rgba(0, 0, 0, 0.4);
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 1;
 }
 
 .FullScreenContent {
-    position: relative;
     z-index: 2;
-    color: white;
+    color: var(--wisteria);
     text-align: center;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
-.FullScreenContent h1 {
-    font-size: 4rem;
+h1 {
+    font-size: 3rem;
+    color: var(--wisteria);
     margin-bottom: 20px;
 }
 
-.FullScreenContent p {
+p {
     font-size: 1.5rem;
+    color: var(--mountbatten-pink);
     margin-bottom: 30px;
 }
 
 .Button {
+    padding: 10px 20px;
     font-size: 1.2rem;
-    padding: 10px 30px;
     background-color: var(--ultra-violet);
     color: white;
-    border-radius: 25px;
+    border: none;
+    border-radius: 50px;
     cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
 }
+
+.Button:hover {
+    background-color: var(--mountbatten-pink);
+}
+

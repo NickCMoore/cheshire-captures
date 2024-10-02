@@ -1,6 +1,6 @@
 import styles from './HomePage.module.css';
 
-export default function HomePage() {
+const HomePage = () => {
   return (
     <div className={styles.FullScreenBackground}>
       <div className={styles.FullScreenOverlay}></div>
@@ -11,4 +11,6 @@ export default function HomePage() {
       </div>
     </div>
   );
-}
+};
+
+export default HomePage;
