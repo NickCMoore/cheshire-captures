@@ -28,8 +28,8 @@
   
   h2 {
     font-size: 1.8rem;
-    color: #374a67ff;
     margin-bottom: 10px;
+    color: var(--wisteria); 
   }
   
   p {

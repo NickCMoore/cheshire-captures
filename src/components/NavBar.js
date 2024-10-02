@@ -2,11 +2,11 @@ import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import styles from '../styles/NavBar.module.css';
-import logo from '../assets/cc-logo.png'
+import logo from '../assets/cc-logo.png';
 
 const NavBar = () => {
   return (
-    <Navbar bg="-grey" expand="md" fixed="top" className={styles.NavBar}>
+    <Navbar expand="md" fixed="top" className={styles.NavBar}>
       <Container>
         <NavLink to="/">
           <Navbar.Brand>
@@ -17,13 +17,13 @@ const NavBar = () => {
         <Navbar.Collapse id="navbar-collapse">
           <Nav className={`${styles.Nav} ml-auto`}>
             <NavLink exact to="/" className={styles.NavLink} activeClassName={styles.Active}>
-              <i className='fas fa-house'></i> Home
+              <i className="fas fa-house"></i> Home
             </NavLink>
             <NavLink exact to="/gallery" className={styles.NavLink} activeClassName={styles.Active}>
-              <i className="fa-solid fa-panorama"></i> Gallery
+              <i className="fa-solid fa-image"></i> Gallery
             </NavLink>
             <NavLink exact to="/about" className={styles.NavLink} activeClassName={styles.Active}>
-              <i className="fa-solid fa-panorama"></i> About
+              <i className="fa-solid fa-info-circle"></i> About
             </NavLink>
             <NavLink exact to="/signin" className={styles.NavLink} activeClassName={styles.Active}>
               <i className="fa-solid fa-user-plus"></i> Sign In
