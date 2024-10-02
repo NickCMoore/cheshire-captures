@@ -1,29 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import styles from '../styles/NavBar.module.css';
 import logo from '../assets/cc-logo.png';
 
 const NavBar = () => {
+  const [expanded, setExpanded] = useState(false);
+
   return (
-    <Navbar expand="md" fixed="top" className={styles.NavBar}>
+    <Navbar bg="-grey" expand="md" fixed="top" className={styles.NavBar} expanded={expanded}>
       <Container>
-        <NavLink to="/">
+        <NavLink to="/" onClick={() => setExpanded(false)}>
           <Navbar.Brand>
-            <img src={logo} alt="logo" height="50" />
+            <img src={logo} alt="logo" height="60" />
           </Navbar.Brand>
         </NavLink>
-        <Navbar.Toggle aria-controls="navbar-collapse" />
-        <Navbar.Collapse id="navbar-collapse">
-          <Nav className={`${styles.Nav} ml-auto`}>
+        <Navbar.Toggle aria-controls="navbar-collapse" onClick={() => setExpanded(expanded ? false : "expanded")} />
+        <Navbar.Collapse id="navbar-collapse" className={styles.NavbarCollapse}>
+          <Nav className={`${styles.Nav} ml-auto`} onSelect={() => setExpanded(false)}>
             <NavLink exact to="/" className={styles.NavLink} activeClassName={styles.Active}>
-              <i className="fas fa-house"></i> Home
+              <i className='fas fa-house'></i> Home
             </NavLink>
             <NavLink exact to="/gallery" className={styles.NavLink} activeClassName={styles.Active}>
-              <i className="fa-solid fa-image"></i> Gallery
+              <i className="fa-solid fa-panorama"></i> Gallery
             </NavLink>
             <NavLink exact to="/about" className={styles.NavLink} activeClassName={styles.Active}>
-              <i className="fa-solid fa-info-circle"></i> About
+              <i className="fa-solid fa-panorama"></i> About
             </NavLink>
             <NavLink exact to="/signin" className={styles.NavLink} activeClassName={styles.Active}>
               <i className="fa-solid fa-user-plus"></i> Sign In
@@ -39,3 +41,4 @@ const NavBar = () => {
 };
 
 export default NavBar;
+
