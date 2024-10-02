@@ -41,13 +41,13 @@
 
 h1 {
     font-size: 3rem;
-    color: var(--wisteria);
+    color: #E5CEDC;
     margin-bottom: 20px;
 }
 
 p {
     font-size: 1.5rem;
-    color: var(--mountbatten-pink);
+    color: #E5CEDC;
     margin-bottom: 30px;
 }
 
