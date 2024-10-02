@@ -4,6 +4,7 @@ import styles from '../../styles/SignInUpForm.module.css';
 import btnStyles from '../../styles/Button.module.css';
 import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import axiosInstance from '../../api/axiosDefaults';
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
@@ -18,19 +19,26 @@ const SignUpForm = () => {
   const { loginUser } = useAuth();
 
   const handleChange = (event) => {
+    const { name, value } = event.target;
     setFormData({
       ...formData,
-      [event.target.name]: event.target.value,
+      [name]: value,
     });
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (password1 !== password2) {
+      setErrors({ password2: "Passwords do not match" });
+      return;
+    }
+
     try {
-      await loginUser({ email, password1 });
+      await axiosInstance.post('/auth/registration/', { username, email, password1, password2 });
+      await loginUser({ email, password: password1 }); 
       history.push('/');
     } catch (err) {
-      setErrors(err.response?.data);
+      setErrors(err.response?.data || { detail: 'Something went wrong' });
     }
   };
 
@@ -39,7 +47,7 @@ const SignUpForm = () => {
       <Row className="w-100 justify-content-center">
         <Col xs={12} md={6} lg={4} className="mx-auto">
           <div className={styles.SignUpFormContainer}>
-            <h1 className={styles.Header}>Sign up</h1>
+            <h1 className={styles.Header}>Sign Up</h1>
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="username">
                 <Form.Label className="d-none">Username</Form.Label>
@@ -50,6 +58,7 @@ const SignUpForm = () => {
                   name="username"
                   value={username}
                   onChange={handleChange}
+                  required
                 />
               </Form.Group>
               {errors.username && <Alert variant="danger">{errors.username}</Alert>}
@@ -63,6 +72,7 @@ const SignUpForm = () => {
                   name="email"
                   value={email}
                   onChange={handleChange}
+                  required
                 />
               </Form.Group>
               {errors.email && <Alert variant="danger">{errors.email}</Alert>}
@@ -76,19 +86,21 @@ const SignUpForm = () => {
                   name="password1"
                   value={password1}
                   onChange={handleChange}
+                  required
                 />
               </Form.Group>
               {errors.password1 && <Alert variant="danger">{errors.password1}</Alert>}
 
               <Form.Group controlId="password2">
-                <Form.Label className="d-none">Confirm password</Form.Label>
+                <Form.Label className="d-none">Confirm Password</Form.Label>
                 <Form.Control
                   className={styles.Input}
                   type="password"
-                  placeholder="Confirm password"
+                  placeholder="Confirm Password"
                   name="password2"
                   value={password2}
                   onChange={handleChange}
+                  required
                 />
               </Form.Group>
               {errors.password2 && <Alert variant="danger">{errors.password2}</Alert>}
@@ -97,12 +109,12 @@ const SignUpForm = () => {
                 className={`${btnStyles.Button} ${btnStyles.Bright} ${btnStyles.Wide}`}
                 type="submit"
               >
-                Sign up
+                Sign Up
               </Button>
             </Form>
             <Container className="mt-3">
               <Link className={styles.Link} to="/signin">
-                Already have an account? <br></br><span>Sign in</span>
+                Already have an account? <br /><span>Sign in</span>
               </Link>
             </Container>
           </div>

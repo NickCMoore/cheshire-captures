@@ -16,9 +16,10 @@ const SignInForm = () => {
   const { loginUser } = useAuth();
 
   const handleChange = (event) => {
+    const { name, value } = event.target;
     setFormData({
       ...formData,
-      [event.target.name]: event.target.value,
+      [name]: value,
     });
   };
 
@@ -26,21 +27,18 @@ const SignInForm = () => {
     event.preventDefault();
     try {
       await loginUser({ email, password });
-      history.push('/');
+      history.push('/'); 
     } catch (err) {
       setErrors({ detail: 'Invalid email or password' });
     }
   };
 
   return (
-    <Container
-      fluid
-      className={styles.Background}
-    >
+    <Container fluid className={styles.Background}>
       <Row className="w-100 justify-content-center">
         <Col xs={12} md={6} lg={4} className="mx-auto">
           <div className={styles.FormContainer}>
-            <h1 className={styles.Header}>Sign in</h1>
+            <h1 className={styles.Header}>Sign In</h1>
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="email">
                 <Form.Label className="d-none">Email</Form.Label>
@@ -51,6 +49,7 @@ const SignInForm = () => {
                   name="email"
                   value={email}
                   onChange={handleChange}
+                  required
                 />
               </Form.Group>
               {errors.email && <Alert variant="danger">{errors.email}</Alert>}
@@ -60,10 +59,11 @@ const SignInForm = () => {
                 <Form.Control
                   className={styles.Input}
                   type="password"
-                  placeholder="Password"
+                  placeholder="Enter password"
                   name="password"
                   value={password}
                   onChange={handleChange}
+                  required
                 />
               </Form.Group>
               {errors.detail && <Alert variant="danger">{errors.detail}</Alert>}
@@ -72,12 +72,12 @@ const SignInForm = () => {
                 className={`${btnStyles.Button} ${btnStyles.Bright} ${btnStyles.Wide}`}
                 type="submit"
               >
-                Sign in
+                Sign In
               </Button>
             </Form>
             <Container className="mt-3">
               <Link className={styles.Link} to="/signup">
-                Don't have an account? <br></br><span>Sign up</span>
+                Don't have an account? <br /><span>Sign up</span>
               </Link>
             </Container>
           </div>
