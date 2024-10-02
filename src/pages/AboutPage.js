@@ -17,20 +17,18 @@ const AboutPage = () => {
 
         <h2>What We Do</h2>
         <p>
-          We organise meet-ups, photography workshops, and expeditions to some of Cheshire’s most picturesque locations. From the rolling hills and quaint villages to the dynamic skies and vast open fields, there’s no shortage of inspiring spots to capture. Our online platform also allows photographers to share their latest shots, get feedback, and even participate in friendly competitions.
+          We organise meet-ups, photography workshops, and expeditions to some of Cheshire’s most picturesque locations. From the rolling hills and quaint villages to the dynamic skies and vast open fields, there’s no shortage of inspiring spots to capture.
         </p>
 
         <h2>Our Values</h2>
         <p>
-          We are committed to fostering a supportive, inclusive, and respectful community. Whether you're a seasoned professional or just starting with your first camera, you'll find a welcoming space to share your journey. We value creativity, learning, and the spirit of adventure that drives landscape photography.
+          We are committed to fostering a supportive, inclusive, and respectful community. Whether you're a seasoned professional or just starting with your first camera, you'll find a welcoming space to share your journey. 
         </p>
 
         <h2>Join Us</h2>
         <p>
-          Whether you're an experienced photographer or simply someone who loves the art of capturing the beauty around us, we invite you to join Cheshire Captures. Explore our galleries, connect with fellow photographers, and experience the natural beauty of Cheshire through the lens of our passionate community.
+          Whether you're an experienced photographer or someone who loves the art of capturing the beauty around us, we invite you to join Cheshire Captures. Explore our galleries, connect with fellow photographers, and experience the natural beauty of Cheshire through the lens of our passionate community.
         </p>
-
-        <p>Let’s capture the moment together.</p>
       </div>
     </div>
   );
