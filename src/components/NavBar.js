@@ -1,7 +1,7 @@
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import styles from '../styles/NavBar.module.css';
-import logo from '../assets/Screenshot 2024-09-23 095558.png'
+import logo from '../assets/cc-logo.png'
 
 const NavBar = () => {
   return (
@@ -9,7 +9,7 @@ const NavBar = () => {
       <Container>
         <NavLink to="/">
           <Navbar.Brand>
-            <img src={logo} alt="logo" height="50" />
+            <img src={logo} alt="logo" height="60" />
           </Navbar.Brand>
         </NavLink>
         <Navbar.Toggle aria-controls="navbar-collapse" />
