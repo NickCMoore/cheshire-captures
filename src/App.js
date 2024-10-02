@@ -7,6 +7,7 @@ import SignUpForm from './pages/auth/SignUpForm';
 import SignInForm from './pages/auth/SignInForm';
 import { AuthProvider } from './contexts/AuthContext';
 import styles from './App.module.css';
+import HomePage from './pages/HomePage';
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
         <Container className={styles.Main}>
           <Switch>
             {/* Home page route */}
-            <Route exact path="/" render={() => <h1>Welcome to Cheshire Captures</h1>} />
+            <Route exact path="/" render={() => <HomePage />} />
 
             {/* Sign In route */}
             <Route exact path="/signin" render={() => <SignInForm />} />
