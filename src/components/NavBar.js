@@ -10,7 +10,7 @@ const NavBar = () => {
       <Container>
         <NavLink to="/">
           <Navbar.Brand>
-            <img src={logo} alt="logo" height="60" />
+            <img src={logo} alt="logo" height="50" />
           </Navbar.Brand>
         </NavLink>
         <Navbar.Toggle aria-controls="navbar-collapse" />

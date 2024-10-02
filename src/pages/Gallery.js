@@ -35,9 +35,7 @@ const Gallery = () => {
           <img src={image} alt={`Gallery image ${index}`} className={styles.image} />
         </div>
       ))}
-      <div ref={ref} className={styles.loading}>
-        Loading more...
-      </div>
+      <div ref={ref} className={styles.loader} />
     </div>
   );
 };
