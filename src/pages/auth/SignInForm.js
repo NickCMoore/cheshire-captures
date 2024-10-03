@@ -7,13 +7,13 @@ import btnStyles from '../../styles/Button.module.css';
 
 const SignInForm = () => {
   const [formData, setFormData] = useState({
-    username: '', 
+    username: '',
     password: '',
   });
 
-  const { username, password } = formData; 
+  const { username, password } = formData;
   const [errors, setErrors] = useState({});
-  const history = useHistory(); 
+  const history = useHistory();
   const { loginUser } = useAuth();
 
   const handleChange = (event) => {
@@ -27,7 +27,7 @@ const SignInForm = () => {
     event.preventDefault();
     try {
       await loginUser({ username, password }); 
-      history.push('/'); 
+      history.push('/');
     } catch (err) {
       setErrors({ detail: 'Invalid username or password' });
     }
@@ -45,8 +45,8 @@ const SignInForm = () => {
                 <Form.Control
                   className={styles.Input}
                   type="text"
-                  placeholder="Enter username" 
-                  name="username" 
+                  placeholder="Enter username"
+                  name="username"
                   value={username}
                   onChange={handleChange}
                 />

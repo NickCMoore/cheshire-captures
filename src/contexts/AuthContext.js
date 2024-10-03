@@ -21,8 +21,11 @@ export const AuthProvider = ({ children }) => {
 
   const loginUser = async (credentials) => {
     try {
-      const response = await axiosInstance.post('/auth/login/', credentials);
-      const token = response.data.key;
+      const response = await axiosInstance.post('/auth/login/', {
+        username: credentials.username, 
+        password: credentials.password
+      });
+      const token = response.data.key; 
       localStorage.setItem('token', token);
       axiosInstance.defaults.headers.common['Authorization'] = `Token ${token}`;
       await fetchCurrentUser();
@@ -30,6 +33,7 @@ export const AuthProvider = ({ children }) => {
       throw error;
     }
   };
+  
 
   const registerUser = async (credentials) => {
     try {
