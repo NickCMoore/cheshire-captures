@@ -1,20 +1,16 @@
 import React, { useState } from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext'; 
+import { useAuth } from '../contexts/AuthContext';
 import styles from '../styles/NavBar.module.css';
 import logo from '../assets/cc-logo.png';
 
 const NavBar = () => {
   const [expanded, setExpanded] = useState(false);
-  const { currentUser, logoutUser } = useAuth(); 
+  const { currentUser, logoutUser } = useAuth();  
 
   const handleLogout = async () => {
-    try {
-      await logoutUser();
-    } catch (err) {
-      console.error(err);
-    }
+    await logoutUser();
   };
 
   return (
@@ -35,12 +31,11 @@ const NavBar = () => {
               <i className="fa-solid fa-panorama"></i> Gallery
             </NavLink>
             <NavLink exact to="/about" className={styles.NavLink} activeClassName={styles.Active}>
-              <i className="fa-solid fa-info-circle"></i> About
+              <i className="fa-solid fa-info"></i> About
             </NavLink>
-
             {currentUser ? (
               <>
-                <NavLink exact to={`/profile/${currentUser.username}`} className={styles.NavLink} activeClassName={styles.Active}>
+                <NavLink exact to="/profile" className={styles.NavLink} activeClassName={styles.Active}>
                   <i className="fa-solid fa-user"></i> Profile
                 </NavLink>
                 <NavLink exact to="/" onClick={handleLogout} className={styles.NavLink}>

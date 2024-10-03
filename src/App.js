@@ -9,6 +9,7 @@ import Gallery from './pages/Gallery';
 import styles from './App.module.css';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route exact path="/gallery" render={() => <Gallery />} /> 
             <Route exact path="/signin" render={() => <SignInForm />} />
             <Route exact path="/signup" render={() => <SignUpForm />} />
+            <Route exact path="/profile" render={() => <Profile />} />
             <Route render={() => <p>Page not found!</p>} />
           </Switch>
         </Container>
