@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../contexts/AuthContext'; 
 import styles from '../styles/NavBar.module.css';
 import logo from '../assets/cc-logo.png';
 
@@ -9,8 +9,12 @@ const NavBar = () => {
   const [expanded, setExpanded] = useState(false);
   const { currentUser, logoutUser } = useAuth();  
 
-  const handleLogout = async () => {
-    await logoutUser();
+  const handleSignOut = async () => {
+    try {
+      await logoutUser();
+    } catch (err) {
+      console.error("Error signing out:", err);
+    }
   };
 
   return (
@@ -25,27 +29,28 @@ const NavBar = () => {
         <Navbar.Collapse id="navbar-collapse" className={styles.NavbarCollapse}>
           <Nav className={`${styles.Nav} ml-auto`} onSelect={() => setExpanded(false)}>
             <NavLink exact to="/" className={styles.NavLink} activeClassName={styles.Active}>
-              <i className='fas fa-house'></i> Home
+              <i className="fas fa-house"></i> Home
             </NavLink>
             <NavLink exact to="/gallery" className={styles.NavLink} activeClassName={styles.Active}>
               <i className="fa-solid fa-panorama"></i> Gallery
             </NavLink>
             <NavLink exact to="/about" className={styles.NavLink} activeClassName={styles.Active}>
-              <i className="fa-solid fa-info"></i> About
+              <i className="fa-solid fa-info-circle"></i> About
             </NavLink>
+
             {currentUser ? (
               <>
                 <NavLink exact to="/profile" className={styles.NavLink} activeClassName={styles.Active}>
                   <i className="fa-solid fa-user"></i> Profile
                 </NavLink>
-                <NavLink exact to="/" onClick={handleLogout} className={styles.NavLink}>
+                <NavLink exact to="/" className={styles.NavLink} onClick={handleSignOut}>
                   <i className="fa-solid fa-sign-out-alt"></i> Sign Out
                 </NavLink>
               </>
             ) : (
               <>
                 <NavLink exact to="/signin" className={styles.NavLink} activeClassName={styles.Active}>
-                  <i className="fa-solid fa-sign-in-alt"></i> Sign In
+                  <i className="fa-solid fa-arrow-right-to-bracket"></i> Sign In
                 </NavLink>
                 <NavLink exact to="/signup" className={styles.NavLink} activeClassName={styles.Active}>
                   <i className="fa-solid fa-user-plus"></i> Sign Up

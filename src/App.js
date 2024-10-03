@@ -1,35 +1,33 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import NavBar from './components/NavBar';
-import Container from 'react-bootstrap/Container';
-import { AuthProvider } from './contexts/AuthContext'; 
+import Profile from './pages/Profile'; 
+import HomePage from './pages/HomePage';
 import SignInForm from './pages/auth/SignInForm';
 import SignUpForm from './pages/auth/SignUpForm';
-import Gallery from './pages/Gallery'; 
-import styles from './App.module.css';
-import HomePage from './pages/HomePage';
+import Gallery from './pages/Gallery';
 import AboutPage from './pages/AboutPage';
-import Profile from './pages/Profile';
+import { AuthProvider } from './contexts/AuthContext';
+import './api/axiosDefaults';
+import styles from './App.module.css';
 
 function App() {
   return (
-    <AuthProvider> 
-      <div className={styles.App}>
+    <div className={styles.App}>
+      <AuthProvider>
         <NavBar />
-        <Container className={styles.Main}>
-          <Switch>
-            <Route exact path="/" render={() => <HomePage />} />
-            <Route exact path="/about" render={() => <AboutPage />} />
-            <Route exact path="/gallery" render={() => <Gallery />} /> 
-            <Route exact path="/signin" render={() => <SignInForm />} />
-            <Route exact path="/signup" render={() => <SignUpForm />} />
-            <Route exact path="/profile" render={() => <Profile />} />
-            <Route render={() => <p>Page not found!</p>} />
-          </Switch>
-        </Container>
-      </div>
-    </AuthProvider>
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/signin" component={SignInForm} />
+          <Route exact path="/signup" component={SignUpForm} />
+          <Route exact path="/gallery" component={Gallery} />
+          <Route exact path="/about" component={AboutPage} />
+          <Route exact path="/profile" component={Profile} />
+        </Switch>
+      </AuthProvider>
+    </div>
   );
 }
 
 export default App;
+
