@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import styles from '../styles/NavBar.module.css';
-import logo from '../assets/cc-logo.png'; // Adjust this path if needed
+import logo from '../assets/cc-logo.png';
 import { FaHome, FaImages, FaUserPlus, FaSignInAlt, FaInfoCircle } from 'react-icons/fa'; // FontAwesome icons
 
 const NavBar = () => {
@@ -13,7 +13,7 @@ const NavBar = () => {
       <Container>
         <NavLink to="/" onClick={() => setExpanded(false)}>
           <Navbar.Brand>
-            <img src={logo} alt="logo" height="60" /> {/* Logo */}
+            <img src={logo} alt="logo" height="60" />
           </Navbar.Brand>
         </NavLink>
         <Navbar.Toggle aria-controls="navbar-collapse" onClick={() => setExpanded(expanded ? false : "expanded")} />
