@@ -7,11 +7,11 @@ import btnStyles from '../../styles/Button.module.css';
 
 const SignInForm = () => {
   const [formData, setFormData] = useState({
-    email: '',
+    username: '', 
     password: '',
   });
 
-  const { email, password } = formData;
+  const { username, password } = formData; 
   const [errors, setErrors] = useState({});
   const history = useHistory(); 
   const { loginUser } = useAuth();
@@ -26,10 +26,10 @@ const SignInForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await loginUser({ email, password });
+      await loginUser({ username, password }); 
       history.push('/'); 
     } catch (err) {
-      setErrors({ detail: 'Invalid email or password' });
+      setErrors({ detail: 'Invalid username or password' });
     }
   };
 
@@ -40,18 +40,18 @@ const SignInForm = () => {
           <div className={styles.FormContainer}>
             <h1 className={styles.Header}>Sign in</h1>
             <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="email">
-                <Form.Label className="d-none">Email</Form.Label>
+              <Form.Group controlId="username">
+                <Form.Label className="d-none">Username</Form.Label>
                 <Form.Control
                   className={styles.Input}
-                  type="email"
-                  placeholder="Enter email"
-                  name="email"
-                  value={email}
+                  type="text"
+                  placeholder="Enter username" 
+                  name="username" 
+                  value={username}
                   onChange={handleChange}
                 />
               </Form.Group>
-              {errors.email && <Alert variant="danger">{errors.email}</Alert>}
+              {errors.username && <Alert variant="danger">{errors.username}</Alert>}
 
               <Form.Group controlId="password">
                 <Form.Label className="d-none">Password</Form.Label>

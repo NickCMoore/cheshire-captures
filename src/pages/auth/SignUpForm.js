@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import { Form, Button, Col, Row, Container, Alert } from 'react-bootstrap';
-import { Link, useHistory } from 'react-router-dom'; 
-import axiosInstance from '../../api/axiosDefaults';
+import { Link, useHistory } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 import styles from '../../styles/SignInUpForm.module.css';
 import btnStyles from '../../styles/Button.module.css';
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
-    username: '',
     email: '',
     password1: '',
     password2: '',
   });
 
-  const { username, email, password1, password2 } = formData;
+  const { email, password1, password2 } = formData;
   const [errors, setErrors] = useState({});
-  const history = useHistory(); 
+  const history = useHistory();
+  const { registerUser } = useAuth(); 
 
   const handleChange = (event) => {
     setFormData({
@@ -26,8 +26,12 @@ const SignUpForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (password1 !== password2) {
+      setErrors({ password: "Passwords don't match" });
+      return;
+    }
     try {
-      await axiosInstance.post('/auth/registration/', formData);
+      await registerUser({ email, password1, password2 });
       history.push('/signin'); 
     } catch (err) {
       setErrors(err.response?.data || { detail: 'Registration failed' });
@@ -38,22 +42,9 @@ const SignUpForm = () => {
     <Container fluid className={styles.Background}>
       <Row className="w-100 justify-content-center">
         <Col xs={12} md={6} lg={4} className="mx-auto">
-          <div className={styles.SignUpFormContainer}>
-            <h1 className={styles.Header}>Sign up</h1>
+          <div className={styles.FormContainer}>
+            <h1 className={styles.Header}>Sign Up</h1>
             <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="username">
-                <Form.Label className="d-none">Username</Form.Label>
-                <Form.Control
-                  className={styles.Input}
-                  type="text"
-                  placeholder="Enter username"
-                  name="username"
-                  value={username}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              {errors.username && <Alert variant="danger">{errors.username}</Alert>}
-
               <Form.Group controlId="email">
                 <Form.Label className="d-none">Email</Form.Label>
                 <Form.Control
@@ -78,20 +69,19 @@ const SignUpForm = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
-              {errors.password1 && <Alert variant="danger">{errors.password1}</Alert>}
 
               <Form.Group controlId="password2">
-                <Form.Label className="d-none">Confirm password</Form.Label>
+                <Form.Label className="d-none">Confirm Password</Form.Label>
                 <Form.Control
                   className={styles.Input}
                   type="password"
-                  placeholder="Confirm password"
+                  placeholder="Confirm Password"
                   name="password2"
                   value={password2}
                   onChange={handleChange}
                 />
               </Form.Group>
-              {errors.password2 && <Alert variant="danger">{errors.password2}</Alert>}
+              {errors.password && <Alert variant="danger">{errors.password}</Alert>}
 
               <Button className={`${btnStyles.Button} ${btnStyles.Bright} ${btnStyles.Wide}`} type="submit">
                 Sign up
@@ -99,7 +89,7 @@ const SignUpForm = () => {
             </Form>
             <Container className="mt-3">
               <Link className={styles.Link} to="/signin">
-                Already have an account? <br></br><span>Sign in</span>
+                Already have an account? <span>Sign in</span>
               </Link>
             </Container>
           </div>

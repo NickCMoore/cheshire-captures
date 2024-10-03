@@ -5,20 +5,13 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(true); 
 
   const fetchCurrentUser = async () => {
     try {
-      const token = localStorage.getItem('token');
-      if (token) {
-        axiosInstance.defaults.headers.Authorization = `Token ${token}`;
-        const response = await axiosInstance.get('/auth/user/');
-        setCurrentUser(response.data);
-      }
+      const response = await axiosInstance.get('/auth/user/');
+      setCurrentUser(response.data);
     } catch (error) {
-      setCurrentUser(null); 
-    } finally {
-      setLoading(false); 
+      setCurrentUser(null);
     }
   };
 
@@ -60,10 +53,6 @@ export const AuthProvider = ({ children }) => {
       console.error(error);
     }
   };
-
-  if (loading) {
-    return <div>Loading...</div>; 
-  }
 
   return (
     <AuthContext.Provider value={{ currentUser, loginUser, registerUser, logoutUser }}>
