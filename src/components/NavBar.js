@@ -1,59 +1,52 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext'; 
+import { useAuth } from '../contexts/AuthContext';
 import styles from '../styles/NavBar.module.css';
 import logo from '../assets/cc-logo.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome, faImage, faUser, faSignOutAlt, faSignInAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 const NavBar = () => {
-  const [expanded, setExpanded] = useState(false);
-  const { currentUser, logoutUser } = useAuth();  
-
-  const handleSignOut = async () => {
-    try {
-      await logoutUser();
-    } catch (err) {
-      console.error("Error signing out:", err);
-    }
-  };
+  const { currentUser, logoutUser } = useAuth();
 
   return (
-    <Navbar bg="-grey" expand="md" fixed="top" className={styles.NavBar} expanded={expanded}>
+    <Navbar bg="light" expand="md" fixed="top" className={styles.NavBar}>
       <Container>
-        <NavLink to="/" onClick={() => setExpanded(false)}>
+        <NavLink to="/" className={styles.NavLink}>
           <Navbar.Brand>
             <img src={logo} alt="logo" height="60" />
           </Navbar.Brand>
         </NavLink>
-        <Navbar.Toggle aria-controls="navbar-collapse" onClick={() => setExpanded(expanded ? false : "expanded")} />
-        <Navbar.Collapse id="navbar-collapse" className={styles.NavbarCollapse}>
-          <Nav className={`${styles.Nav} ml-auto`} onSelect={() => setExpanded(false)}>
+        <Navbar.Toggle aria-controls="navbar-collapse" />
+        <Navbar.Collapse id="navbar-collapse">
+          <Nav className="ml-auto">
             <NavLink exact to="/" className={styles.NavLink} activeClassName={styles.Active}>
-              <i className="fas fa-house"></i> Home
+              <FontAwesomeIcon icon={faHome} /> Home
             </NavLink>
             <NavLink exact to="/gallery" className={styles.NavLink} activeClassName={styles.Active}>
-              <i className="fa-solid fa-panorama"></i> Gallery
+              <FontAwesomeIcon icon={faImage} /> Gallery
             </NavLink>
             <NavLink exact to="/about" className={styles.NavLink} activeClassName={styles.Active}>
-              <i className="fa-solid fa-info-circle"></i> About
+              About
             </NavLink>
 
             {currentUser ? (
               <>
-                <NavLink exact to="/profile" className={styles.NavLink} activeClassName={styles.Active}>
-                  <i className="fa-solid fa-user"></i> Profile
+                <NavLink to="/profile" className={styles.NavLink} activeClassName={styles.Active}>
+                  <FontAwesomeIcon icon={faUser} /> Profile
                 </NavLink>
-                <NavLink exact to="/" className={styles.NavLink} onClick={handleSignOut}>
-                  <i className="fa-solid fa-sign-out-alt"></i> Sign Out
+                <NavLink to="/" className={styles.NavLink} onClick={logoutUser}>
+                  <FontAwesomeIcon icon={faSignOutAlt} /> Sign Out
                 </NavLink>
               </>
             ) : (
               <>
                 <NavLink exact to="/signin" className={styles.NavLink} activeClassName={styles.Active}>
-                  <i className="fa-solid fa-arrow-right-to-bracket"></i> Sign In
+                  <FontAwesomeIcon icon={faSignInAlt} /> Sign In
                 </NavLink>
                 <NavLink exact to="/signup" className={styles.NavLink} activeClassName={styles.Active}>
-                  <i className="fa-solid fa-user-plus"></i> Sign Up
+                  <FontAwesomeIcon icon={faUserPlus} /> Sign Up
                 </NavLink>
               </>
             )}
