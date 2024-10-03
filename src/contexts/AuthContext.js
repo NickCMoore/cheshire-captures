@@ -21,15 +21,16 @@ export const AuthProvider = ({ children }) => {
 
   const loginUser = async (credentials) => {
     try {
-      const response = await axiosInstance.post('/auth/login/', credentials);
-      const token = response.data.key;
-      localStorage.setItem('token', token);
-      axiosInstance.defaults.headers.Authorization = `Token ${token}`;
-      await fetchCurrentUser();
+      const response = await axiosInstance.post('/auth/login/', credentials); 
+      const token = response.data.key; 
+      localStorage.setItem('token', token); 
+      axiosInstance.defaults.headers.common['Authorization'] = `Token ${token}`; 
+      await fetchCurrentUser(); 
     } catch (error) {
-      throw error;
+      throw error; 
     }
   };
+  
 
   const registerUser = async (credentials) => {
     try {

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Form, Button, Col, Row, Container, Alert } from 'react-bootstrap';
 import styles from '../../styles/SignInUpForm.module.css';
 import btnStyles from '../../styles/Button.module.css';
-import { Link, useHistory } from 'react-router-dom'; // Use useHistory for react-router-dom v5
-import { useAuth } from '../../contexts/AuthContext';
+import { Link, useHistory } from 'react-router-dom';
+import axiosInstance from '../../api/axiosDefaults';
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
@@ -14,8 +14,7 @@ const SignUpForm = () => {
   });
   const { username, email, password1, password2 } = formData;
   const [errors, setErrors] = useState({});
-  const history = useHistory(); // Use useHistory for navigation in react-router-dom v5
-  const { registerUser } = useAuth();
+  const history = useHistory(); 
 
   const handleChange = (event) => {
     setFormData({
@@ -27,14 +26,21 @@ const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (password1 !== password2) {
-      setErrors({ password2: 'Passwords must match' });
+      setErrors({ password2: 'Passwords do not match' });
       return;
     }
+
     try {
-      await registerUser({ username, email, password1, password2 });
-      history.push('/'); // Redirect after successful registration
+      await axiosInstance.post('/auth/registration/', {
+        username,
+        email,
+        password1,
+        password2,
+      });
+
+      history.push('/signin');
     } catch (err) {
-      setErrors(err.response?.data || { detail: 'Error registering user' });
+      setErrors(err.response?.data || { detail: 'An error occurred' }); 
     }
   };
 
@@ -42,7 +48,7 @@ const SignUpForm = () => {
     <Container fluid className={styles.Background}>
       <Row className="w-100 justify-content-center">
         <Col xs={12} md={6} lg={4} className="mx-auto">
-          <div className={styles.FormContainer}>
+          <div className={styles.SignUpFormContainer}>
             <h1 className={styles.Header}>Sign up</h1>
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="username">
@@ -96,8 +102,6 @@ const SignUpForm = () => {
                 />
               </Form.Group>
               {errors.password2 && <Alert variant="danger">{errors.password2}</Alert>}
-
-              {errors.detail && <Alert variant="danger">{errors.detail}</Alert>}
 
               <Button
                 className={`${btnStyles.Button} ${btnStyles.Bright} ${btnStyles.Wide}`}
