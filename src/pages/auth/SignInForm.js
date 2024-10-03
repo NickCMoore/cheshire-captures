@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { Form, Button, Col, Row, Container, Alert } from 'react-bootstrap';
+import { Link, useHistory } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 import styles from '../../styles/SignInUpForm.module.css';
 import btnStyles from '../../styles/Button.module.css';
-import { Link, useHistory } from 'react-router-dom'; 
-import { useAuth } from '../../contexts/AuthContext';
 
 const SignInForm = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+
   const { email, password } = formData;
   const [errors, setErrors] = useState({});
   const history = useHistory(); 
@@ -25,10 +26,10 @@ const SignInForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await loginUser({ email, password }); 
-      history.push('/');
+      await loginUser({ email, password });
+      history.push('/'); 
     } catch (err) {
-      setErrors({ detail: 'Invalid email or password' }); 
+      setErrors({ detail: 'Invalid email or password' });
     }
   };
 
@@ -65,10 +66,7 @@ const SignInForm = () => {
               </Form.Group>
               {errors.detail && <Alert variant="danger">{errors.detail}</Alert>}
 
-              <Button
-                className={`${btnStyles.Button} ${btnStyles.Bright} ${btnStyles.Wide}`}
-                type="submit"
-              >
+              <Button className={`${btnStyles.Button} ${btnStyles.Bright} ${btnStyles.Wide}`} type="submit">
                 Sign in
               </Button>
             </Form>

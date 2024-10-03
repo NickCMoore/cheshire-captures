@@ -7,30 +7,32 @@ const Gallery = () => {
   const [images, setImages] = useState([]);
   const [page, setPage] = useState(1); 
   const [loading, setLoading] = useState(false); 
+  const [hasMore, setHasMore] = useState(true); 
   const { ref, inView } = useInView(); 
 
   useEffect(() => {
     const fetchImages = async () => {
+      if (!hasMore || loading) return; 
       setLoading(true);
       try {
         const response = await axiosInstance.get(`/api/photos/?page=${page}`); 
-        setImages((prevImages) => [...prevImages, ...response.data.results]); 
+        if (response.data.results.length > 0) {
+          setImages((prevImages) => [...prevImages, ...response.data.results]); 
+          setPage((prevPage) => prevPage + 1); 
+        }
+        if (!response.data.next) {
+          setHasMore(false);
+        }
       } catch (error) {
         console.error('Error fetching images:', error);
       }
       setLoading(false);
     };
 
-    if (inView && !loading) {
+    if (inView && hasMore) {
       fetchImages();
     }
-  }, [inView, page, loading]);
-
-  useEffect(() => {
-    if (inView && !loading) {
-      setPage((prevPage) => prevPage + 1); 
-    }
-  }, [inView, loading]);
+  }, [inView, page, hasMore, loading]); 
 
   return (
     <div className={styles.gallery}>
@@ -40,7 +42,8 @@ const Gallery = () => {
         </div>
       ))}
       {loading && <div className={styles.loader}>Loading...</div>}
-      <div ref={ref} className={styles.loader}></div>
+      <div ref={ref} className={styles.loader}></div> 
+      {!hasMore && <div className={styles.endMessage}>No more images to load.</div>}
     </div>
   );
 };

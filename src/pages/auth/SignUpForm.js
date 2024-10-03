@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Form, Button, Col, Row, Container, Alert } from 'react-bootstrap';
+import { Link, useHistory } from 'react-router-dom'; 
+import axiosInstance from '../../api/axiosDefaults';
 import styles from '../../styles/SignInUpForm.module.css';
 import btnStyles from '../../styles/Button.module.css';
-import { Link, useHistory } from 'react-router-dom';
-import axiosInstance from '../../api/axiosDefaults';
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +12,7 @@ const SignUpForm = () => {
     password1: '',
     password2: '',
   });
+
   const { username, email, password1, password2 } = formData;
   const [errors, setErrors] = useState({});
   const history = useHistory(); 
@@ -25,22 +26,11 @@ const SignUpForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (password1 !== password2) {
-      setErrors({ password2: 'Passwords do not match' });
-      return;
-    }
-
     try {
-      await axiosInstance.post('/auth/registration/', {
-        username,
-        email,
-        password1,
-        password2,
-      });
-
-      history.push('/signin');
+      await axiosInstance.post('/auth/registration/', formData);
+      history.push('/signin'); 
     } catch (err) {
-      setErrors(err.response?.data || { detail: 'An error occurred' }); 
+      setErrors(err.response?.data || { detail: 'Registration failed' });
     }
   };
 
@@ -103,10 +93,7 @@ const SignUpForm = () => {
               </Form.Group>
               {errors.password2 && <Alert variant="danger">{errors.password2}</Alert>}
 
-              <Button
-                className={`${btnStyles.Button} ${btnStyles.Bright} ${btnStyles.Wide}`}
-                type="submit"
-              >
+              <Button className={`${btnStyles.Button} ${btnStyles.Bright} ${btnStyles.Wide}`} type="submit">
                 Sign up
               </Button>
             </Form>
