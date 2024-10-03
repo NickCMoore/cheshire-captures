@@ -8,14 +8,8 @@ export const AuthProvider = ({ children }) => {
 
   const fetchCurrentUser = async () => {
     try {
-      const token = localStorage.getItem('token'); 
-      if (token) {
-        axiosInstance.defaults.headers.common['Authorization'] = `Token ${token}`; 
-        const response = await axiosInstance.get('/auth/user/');
-        setCurrentUser(response.data);
-      } else {
-        setCurrentUser(null); 
-      }
+      const response = await axiosInstance.get('/auth/user/');
+      setCurrentUser(response.data);
     } catch (error) {
       setCurrentUser(null);
     }
@@ -28,9 +22,21 @@ export const AuthProvider = ({ children }) => {
   const loginUser = async (credentials) => {
     try {
       const response = await axiosInstance.post('/auth/login/', credentials);
-      const token = response.data.key; 
-      localStorage.setItem('token', token); 
-      axiosInstance.defaults.headers.common['Authorization'] = `Token ${token}`; 
+      const token = response.data.key;
+      localStorage.setItem('token', token);
+      axiosInstance.defaults.headers.Authorization = `Token ${token}`;
+      await fetchCurrentUser();
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const registerUser = async (credentials) => {
+    try {
+      const response = await axiosInstance.post('/auth/registration/', credentials);
+      const token = response.data.key;
+      localStorage.setItem('token', token);
+      axiosInstance.defaults.headers.Authorization = `Token ${token}`;
       await fetchCurrentUser();
     } catch (error) {
       throw error;
@@ -41,7 +47,7 @@ export const AuthProvider = ({ children }) => {
     try {
       await axiosInstance.post('/auth/logout/');
       localStorage.removeItem('token');
-      delete axiosInstance.defaults.headers.common['Authorization']; 
+      delete axiosInstance.defaults.headers.Authorization;
       setCurrentUser(null);
     } catch (error) {
       console.error(error);
@@ -49,7 +55,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ currentUser, loginUser, logoutUser }}>
+    <AuthContext.Provider value={{ currentUser, loginUser, registerUser, logoutUser }}>
       {children}
     </AuthContext.Provider>
   );

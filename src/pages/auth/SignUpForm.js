@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { Form, Button, Col, Row, Container, Alert } from 'react-bootstrap';
 import styles from '../../styles/SignInUpForm.module.css';
 import btnStyles from '../../styles/Button.module.css';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import axiosInstance from '../../api/axiosDefaults';
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
@@ -15,30 +14,23 @@ const SignUpForm = () => {
   });
   const { username, email, password1, password2 } = formData;
   const [errors, setErrors] = useState({});
-  const history = useHistory();
-  const { loginUser } = useAuth();
+  const navigate = useNavigate();
+  const { registerUser } = useAuth();
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
     setFormData({
       ...formData,
-      [name]: value,
+      [event.target.name]: event.target.value,
     });
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (password1 !== password2) {
-      setErrors({ password2: "Passwords do not match" });
-      return;
-    }
-
     try {
-      await axiosInstance.post('/auth/registration/', { username, email, password1, password2 });
-      await loginUser({ email, password: password1 }); 
-      history.push('/');
+      await registerUser({ username, email, password1, password2 });
+      navigate('/');
     } catch (err) {
-      setErrors(err.response?.data || { detail: 'Something went wrong' });
+      setErrors(err.response?.data || { detail: 'Sign up failed' });
     }
   };
 
@@ -47,7 +39,7 @@ const SignUpForm = () => {
       <Row className="w-100 justify-content-center">
         <Col xs={12} md={6} lg={4} className="mx-auto">
           <div className={styles.SignUpFormContainer}>
-            <h1 className={styles.Header}>Sign Up</h1>
+            <h1 className={styles.Header}>Sign up</h1>
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="username">
                 <Form.Label className="d-none">Username</Form.Label>
@@ -58,7 +50,6 @@ const SignUpForm = () => {
                   name="username"
                   value={username}
                   onChange={handleChange}
-                  required
                 />
               </Form.Group>
               {errors.username && <Alert variant="danger">{errors.username}</Alert>}
@@ -72,7 +63,6 @@ const SignUpForm = () => {
                   name="email"
                   value={email}
                   onChange={handleChange}
-                  required
                 />
               </Form.Group>
               {errors.email && <Alert variant="danger">{errors.email}</Alert>}
@@ -86,21 +76,19 @@ const SignUpForm = () => {
                   name="password1"
                   value={password1}
                   onChange={handleChange}
-                  required
                 />
               </Form.Group>
               {errors.password1 && <Alert variant="danger">{errors.password1}</Alert>}
 
               <Form.Group controlId="password2">
-                <Form.Label className="d-none">Confirm Password</Form.Label>
+                <Form.Label className="d-none">Confirm password</Form.Label>
                 <Form.Control
                   className={styles.Input}
                   type="password"
-                  placeholder="Confirm Password"
+                  placeholder="Confirm password"
                   name="password2"
                   value={password2}
                   onChange={handleChange}
-                  required
                 />
               </Form.Group>
               {errors.password2 && <Alert variant="danger">{errors.password2}</Alert>}
@@ -109,12 +97,12 @@ const SignUpForm = () => {
                 className={`${btnStyles.Button} ${btnStyles.Bright} ${btnStyles.Wide}`}
                 type="submit"
               >
-                Sign Up
+                Sign up
               </Button>
             </Form>
             <Container className="mt-3">
               <Link className={styles.Link} to="/signin">
-                Already have an account? <br /><span>Sign in</span>
+                Already have an account? <br></br><span>Sign in</span>
               </Link>
             </Container>
           </div>
