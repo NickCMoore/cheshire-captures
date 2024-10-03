@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Form, Button, Col, Row, Container, Alert } from 'react-bootstrap';
 import styles from '../../styles/SignInUpForm.module.css';
 import btnStyles from '../../styles/Button.module.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom'; // Use useHistory for react-router-dom v5
 import { useAuth } from '../../contexts/AuthContext';
 
 const SignUpForm = () => {
@@ -14,7 +14,7 @@ const SignUpForm = () => {
   });
   const { username, email, password1, password2 } = formData;
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
+  const history = useHistory(); // Use useHistory for navigation in react-router-dom v5
   const { registerUser } = useAuth();
 
   const handleChange = (event) => {
@@ -26,11 +26,15 @@ const SignUpForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (password1 !== password2) {
+      setErrors({ password2: 'Passwords must match' });
+      return;
+    }
     try {
       await registerUser({ username, email, password1, password2 });
-      navigate('/');
+      history.push('/'); // Redirect after successful registration
     } catch (err) {
-      setErrors(err.response?.data || { detail: 'Sign up failed' });
+      setErrors(err.response?.data || { detail: 'Error registering user' });
     }
   };
 
@@ -38,7 +42,7 @@ const SignUpForm = () => {
     <Container fluid className={styles.Background}>
       <Row className="w-100 justify-content-center">
         <Col xs={12} md={6} lg={4} className="mx-auto">
-          <div className={styles.SignUpFormContainer}>
+          <div className={styles.FormContainer}>
             <h1 className={styles.Header}>Sign up</h1>
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="username">
@@ -92,6 +96,8 @@ const SignUpForm = () => {
                 />
               </Form.Group>
               {errors.password2 && <Alert variant="danger">{errors.password2}</Alert>}
+
+              {errors.detail && <Alert variant="danger">{errors.detail}</Alert>}
 
               <Button
                 className={`${btnStyles.Button} ${btnStyles.Bright} ${btnStyles.Wide}`}
