@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import styles from '../styles/NavBar.module.css';
-import logo from '../assets/cc-logo.png';
+import logo from '../assets/cc-logo.png'; // Adjust this path if needed
+import { FaHome, FaImages, FaUserPlus, FaSignInAlt, FaInfoCircle } from 'react-icons/fa'; // FontAwesome icons
 
 const NavBar = () => {
   const [expanded, setExpanded] = useState(false);
@@ -12,26 +13,26 @@ const NavBar = () => {
       <Container>
         <NavLink to="/" onClick={() => setExpanded(false)}>
           <Navbar.Brand>
-            <img src={logo} alt="logo" height="60" />
+            <img src={logo} alt="logo" height="60" /> {/* Logo */}
           </Navbar.Brand>
         </NavLink>
         <Navbar.Toggle aria-controls="navbar-collapse" onClick={() => setExpanded(expanded ? false : "expanded")} />
         <Navbar.Collapse id="navbar-collapse" className={styles.NavbarCollapse}>
           <Nav className={`${styles.Nav} ml-auto`} onSelect={() => setExpanded(false)}>
             <NavLink exact to="/" className={styles.NavLink} activeClassName={styles.Active}>
-              <i className='fas fa-house'></i> Home
+              <FaHome /> Home
             </NavLink>
             <NavLink exact to="/gallery" className={styles.NavLink} activeClassName={styles.Active}>
-              <i className="fa-solid fa-panorama"></i> Gallery
+              <FaImages /> Gallery
             </NavLink>
             <NavLink exact to="/about" className={styles.NavLink} activeClassName={styles.Active}>
-              <i className="fa-solid fa-panorama"></i> About
+              <FaInfoCircle /> About
             </NavLink>
             <NavLink exact to="/signin" className={styles.NavLink} activeClassName={styles.Active}>
-              <i className="fa-solid fa-user-plus"></i> Sign In
+              <FaSignInAlt /> Sign In
             </NavLink>
             <NavLink exact to="/signup" className={styles.NavLink} activeClassName={styles.Active}>
-              <i className="fa-solid fa-arrow-right-to-bracket"></i> Sign Up
+              <FaUserPlus /> Sign Up
             </NavLink>
           </Nav>
         </Navbar.Collapse>
@@ -41,4 +42,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-
