@@ -7,12 +7,13 @@ import btnStyles from '../../styles/Button.module.css';
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
+    username: '',  // Add username field
     email: '',
     password1: '',
     password2: '',
   });
 
-  const { email, password1, password2 } = formData;
+  const { username, email, password1, password2 } = formData; // Destructure username
   const [errors, setErrors] = useState({});
   const history = useHistory();
   const { registerUser } = useAuth(); 
@@ -31,7 +32,8 @@ const SignUpForm = () => {
       return;
     }
     try {
-      await registerUser({ email, password1, password2 });
+      // Include username in the registration payload
+      await registerUser({ username, email, password1, password2 });
       history.push('/signin'); 
     } catch (err) {
       setErrors(err.response?.data || { detail: 'Registration failed' });
@@ -45,6 +47,19 @@ const SignUpForm = () => {
           <div className={styles.FormContainer}>
             <h1 className={styles.Header}>Sign Up</h1>
             <Form onSubmit={handleSubmit}>
+              <Form.Group controlId="username">
+                <Form.Label className="d-none">Username</Form.Label>
+                <Form.Control
+                  className={styles.Input}
+                  type="text"
+                  placeholder="Enter username"
+                  name="username" // Set name to "username"
+                  value={username}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              {errors.username && <Alert variant="danger">{errors.username}</Alert>}
+
               <Form.Group controlId="email">
                 <Form.Label className="d-none">Email</Form.Label>
                 <Form.Control
