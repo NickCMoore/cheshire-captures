@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { Form, Button, Col, Row, Container, Alert } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
-import axios from 'axios'; 
+import axios from 'axios';
 import styles from '../../styles/SignInUpForm.module.css';
 import btnStyles from '../../styles/Button.module.css';
 
-
 axios.defaults.xsrfCookieName = 'csrftoken'; 
-axios.defaults.xsrfHeaderName = 'X-CSRFToken'; 
-
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
@@ -31,14 +29,27 @@ const SignUpForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log('Form submitted');
+
     try {
-      const csrfToken = document.cookie.split('; ').find(row => row.startsWith('csrftoken')).split('=')[1];
-  
+      const csrfToken = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('csrftoken'))
+        ?.split('=')[1];
+      console.log('CSRF Token:', csrfToken);
+
+      const formDataToSubmit = new FormData();
+      formDataToSubmit.append('username', username);
+      formDataToSubmit.append('email', email);
+      formDataToSubmit.append('password1', password1);
+      formDataToSubmit.append('password2', password2);
+
       await axios.post(
-        '/dj-rest-auth/registration/', 
-        { username, email, password1, password2 },
+        'https://cheshire-captures-backend-084aac6d9023.herokuapp.com/dj-rest-auth/registration/',
+        formDataToSubmit,
         { headers: { 'X-CSRFToken': csrfToken } } 
       );
+
       history.push('/');
     } catch (err) {
       if (err.response && err.response.status === 400) {
@@ -48,8 +59,6 @@ const SignUpForm = () => {
       }
     }
   };
-  
-  
 
   return (
     <Container fluid className={styles.Background}>
