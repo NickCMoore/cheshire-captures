@@ -4,7 +4,6 @@ import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios'; 
 import styles from '../../styles/SignInUpForm.module.css';
 import btnStyles from '../../styles/Button.module.css';
-import { getCookie } from '../../utils/Utils'; 
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
@@ -28,16 +27,9 @@ const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const csrfToken = getCookie('csrftoken'); 
       await axios.post(
         '/auth/registration/', 
-        { username, email, password1, password2 },
-        {
-          headers: {
-            'X-CSRFToken': csrfToken,
-            'Cache-Control': 'no-cache',
-          },
-        }
+        { username, email, password1, password2 }
       );
       history.push('/'); 
     } catch (err) {
@@ -48,7 +40,6 @@ const SignUpForm = () => {
       }
     }
   };
-  
 
   return (
     <Container fluid className={styles.Background}>

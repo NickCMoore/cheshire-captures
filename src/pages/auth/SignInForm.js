@@ -4,8 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useSetCurrentUser } from '../../contexts/AuthContext';
 import styles from '../../styles/SignInUpForm.module.css';
 import btnStyles from '../../styles/Button.module.css';
-import axios from 'axios'; 
-import { getCookie } from '../../utils/Utils'; 
+import axios from 'axios';
 
 const SignInForm = () => {
   const [formData, setFormData] = useState({
@@ -28,17 +27,7 @@ const SignInForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const csrfToken = getCookie('csrftoken'); 
-      const { data } = await axios.post(
-        '/auth/login/', 
-        { username, password },
-        {
-          headers: {
-            'X-CSRFToken': csrfToken,  
-            'Cache-Control': 'no-cache', 
-          },
-        }
-      );
+      const { data } = await axios.post('/auth/login/', { username, password });
       setCurrentUser(data.user);  
       history.push('/');  
     } catch (err) {
