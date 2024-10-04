@@ -46,7 +46,7 @@ const NavBar = () => {
 
             {currentUser ? (
               <>
-                <NavLink to="/profile" className={styles.NavLink} activeClassName={styles.Active}>
+                <NavLink to={`/profile/${currentUser?.id}`} className={styles.NavLink} activeClassName={styles.Active}>
                   <FontAwesomeIcon icon={faUser} /> Profile
                 </NavLink>
                 <NavLink to="/" className={styles.NavLink} onClick={handleLogout}>

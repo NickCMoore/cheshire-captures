@@ -23,7 +23,7 @@ function App() {
           <Route exact path="/signup" component={SignUpForm} />
           <Route exact path="/gallery" component={Gallery} />
           <Route exact path="/about" component={AboutPage} />
-          <Route exact path="/profile" component={Profile} />
+          <Route exact path="/profile/:id" component={Profile} />
         </Switch>
       </CurrentUserProvider>
     </div>
