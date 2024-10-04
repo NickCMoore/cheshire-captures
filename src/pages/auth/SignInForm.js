@@ -18,6 +18,7 @@ const SignInForm = () => {
   const history = useHistory();
   const setCurrentUser = useSetCurrentUser();
 
+  // Update form input values
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -25,23 +26,27 @@ const SignInForm = () => {
     });
   };
 
+  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      // Get CSRF token from the cookie
       const csrfToken = getCookie('csrftoken'); 
+      // Make the login request with CSRF token included
       const { data } = await axios.post(
-        '/api/auth/login/', 
+        'https://cheshire-captures-backend-084aac6d9023.herokuapp.com/api/auth/login/', 
         { username, password },
         {
           headers: {
-            'X-CSRFToken': csrfToken, 
-            'Cache-Control': 'no-cache',
+            'X-CSRFToken': csrfToken,  // Include CSRF token
+            'Cache-Control': 'no-cache', // Ensure no caching
           },
         }
       );
-      setCurrentUser(data.user); 
-      history.push('/'); 
+      setCurrentUser(data.user);  // Update current user context
+      history.push('/');  // Redirect to homepage on successful login
     } catch (err) {
+      // Handle errors
       if (err.response && err.response.status === 401) {
         setErrors({ detail: 'Invalid username or password' });
       } else {

@@ -23,7 +23,13 @@ const Gallery = () => {
         if (response.data && Array.isArray(response.data.results)) {
           console.log('Images from response:', response.data.results);
           if (response.data.results.length > 0) {
-            setImages((prevImages) => [...prevImages, ...response.data.results]); 
+
+            const cloudinaryBaseUrl = 'https://res.cloudinary.com/dwgtce0rh/';
+            const updatedImages = response.data.results.map(image => ({
+              ...image,
+              url: `${cloudinaryBaseUrl}${image.image}`,
+            }));
+            setImages((prevImages) => [...prevImages, ...updatedImages]); 
             setPage((prevPage) => prevPage + 1); 
           } else {
             setHasMore(false); 
@@ -52,7 +58,7 @@ const Gallery = () => {
       {images.length > 0 ? (
         images.map((image, index) => (
           <div key={index} className={styles.imageContainer}>
-            <img src={image.image} alt={`Gallery ${index}`} className={styles.image} /> 
+            <img src={image.url} alt={`Gallery ${index}`} className={styles.image} /> 
           </div>
         ))
       ) : (
