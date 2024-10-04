@@ -8,7 +8,6 @@ import SignUpForm from './pages/auth/SignUpForm';
 import Gallery from './pages/Gallery';
 import AboutPage from './pages/AboutPage';
 import { AuthProvider } from './contexts/AuthContext'; 
-import { ProfileDataProvider } from './contexts/ProfileDataContext';
 import './api/axiosDefaults';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './App.module.css';
@@ -17,7 +16,6 @@ function App() {
   return (
     <div className={styles.App}>
       <AuthProvider>
-        <ProfileDataProvider>
           <NavBar />
           <Switch>
             <Route exact path="/" component={HomePage} />
@@ -27,7 +25,6 @@ function App() {
             <Route exact path="/about" component={AboutPage} />
             <Route exact path="/profile/:id" component={Profile} />
           </Switch>
-        </ProfileDataProvider>
       </AuthProvider>
     </div>
   );

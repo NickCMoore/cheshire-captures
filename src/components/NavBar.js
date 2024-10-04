@@ -1,69 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import { useCurrentUser, useSetCurrentUser } from '../contexts/AuthContext';
+import { useAuth } from '../contexts/AuthContext'; 
 import styles from '../styles/NavBar.module.css';
 import logo from '../assets/cc-logo.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faImage, faUser, faSignOutAlt, faSignInAlt, faUserPlus, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
+
+// Importing icons from react-icons
+import { FaHome, FaImages, FaInfoCircle, FaUser, FaSignOutAlt, FaSignInAlt, FaUserPlus } from 'react-icons/fa';
 
 const NavBar = () => {
-  const currentUser = useCurrentUser();
-  const setCurrentUser = useSetCurrentUser();
+  const [expanded, setExpanded] = useState(false);
+  const { currentUser, logoutUser } = useAuth(); 
 
   const handleLogout = async () => {
     try {
-      await axios.post('/api/auth/logout/');
-      setCurrentUser(null);
-      localStorage.removeItem('token');
-      delete axios.defaults.headers.common['Authorization'];
-    } catch (error) {
-      console.error('Error logging out:', error);
+      await logoutUser();
+    } catch (err) {
+      console.error(err);
     }
   };
 
-  if (currentUser === undefined) {
-    return <div>Loading...</div>; 
-  }
-
   return (
-    <Navbar bg="light" expand="md" fixed="top" className={styles.NavBar}>
+    <Navbar bg="light" expand="md" fixed="top" className={styles.NavBar} expanded={expanded}>
       <Container>
-        <NavLink to="/" className={styles.NavLink}>
+        <NavLink to="/" onClick={() => setExpanded(false)}>
           <Navbar.Brand>
             <img src={logo} alt="logo" height="60" />
           </Navbar.Brand>
         </NavLink>
-        <Navbar.Toggle aria-controls="navbar-collapse" />
-        <Navbar.Collapse id="navbar-collapse">
-          <Nav className="ms-auto">
+        <Navbar.Toggle aria-controls="navbar-collapse" onClick={() => setExpanded(expanded ? false : "expanded")} />
+        <Navbar.Collapse id="navbar-collapse" className={styles.NavbarCollapse}>
+          <Nav className={`${styles.Nav} ml-auto`} onSelect={() => setExpanded(false)}>
             <NavLink exact to="/" className={styles.NavLink} activeClassName={styles.Active}>
-              <FontAwesomeIcon icon={faHome} /> Home
+              <FaHome /> Home
             </NavLink>
             <NavLink exact to="/gallery" className={styles.NavLink} activeClassName={styles.Active}>
-              <FontAwesomeIcon icon={faImage} /> Gallery
+              <FaImages /> Gallery
             </NavLink>
             <NavLink exact to="/about" className={styles.NavLink} activeClassName={styles.Active}>
-              <FontAwesomeIcon icon={faCircleInfo} /> About
+              <FaInfoCircle /> About
             </NavLink>
-
             {currentUser ? (
               <>
-                <NavLink to={`/profile/${currentUser.id}`} className={styles.NavLink} activeClassName={styles.Active}>
-                  <FontAwesomeIcon icon={faUser} /> Profile
+                <NavLink exact to={`/profile/${currentUser.username}`} className={styles.NavLink} activeClassName={styles.Active}>
+                  <FaUser /> Profile
                 </NavLink>
-                <NavLink to="/" className={styles.NavLink} onClick={handleLogout}>
-                  <FontAwesomeIcon icon={faSignOutAlt} /> Sign Out
+                <NavLink exact to="/" onClick={handleLogout} className={styles.NavLink}>
+                  <FaSignOutAlt /> Sign Out
                 </NavLink>
               </>
             ) : (
               <>
                 <NavLink exact to="/signin" className={styles.NavLink} activeClassName={styles.Active}>
-                  <FontAwesomeIcon icon={faSignInAlt} /> Sign In
+                  <FaSignInAlt /> Sign In
                 </NavLink>
                 <NavLink exact to="/signup" className={styles.NavLink} activeClassName={styles.Active}>
-                  <FontAwesomeIcon icon={faUserPlus} /> Sign Up
+                  <FaUserPlus /> Sign Up
                 </NavLink>
               </>
             )}

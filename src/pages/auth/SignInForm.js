@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Form, Button, Col, Row, Container, Alert } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
-import { useSetCurrentUser } from '../../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import styles from '../../styles/SignInUpForm.module.css';
 import btnStyles from '../../styles/Button.module.css';
-import axios from 'axios';
 
 const SignInForm = () => {
   const [formData, setFormData] = useState({
@@ -12,10 +11,11 @@ const SignInForm = () => {
     password: '',
   });
 
-  const { username, password } = formData;
   const [errors, setErrors] = useState({});
   const history = useHistory();
-  const setCurrentUser = useSetCurrentUser();
+  const { loginUser } = useAuth();
+
+  const { username, password } = formData; 
 
   const handleChange = (event) => {
     setFormData({
@@ -27,16 +27,10 @@ const SignInForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await axios.post('/auth/login/', { username, password });
-      setCurrentUser(data.user);  
-      history.push('/');  
+      await loginUser({ username, password }); 
+      history.push('/');
     } catch (err) {
-      // Handle errors
-      if (err.response && err.response.status === 401) {
-        setErrors({ detail: 'Invalid username or password' });
-      } else {
-        setErrors({ detail: 'Something went wrong. Please try again.' });
-      }
+      setErrors({ detail: 'Invalid username or password' });
     }
   };
 
@@ -47,19 +41,20 @@ const SignInForm = () => {
           <div className={styles.FormContainer}>
             <h1 className={styles.Header}>Sign in</h1>
             <Form onSubmit={handleSubmit}>
+              {/* Username Input */}
               <Form.Group controlId="username">
                 <Form.Label className="d-none">Username</Form.Label>
                 <Form.Control
                   className={styles.Input}
                   type="text"
-                  placeholder="Enter username"
+                  placeholder="Username"
                   name="username"
                   value={username}
                   onChange={handleChange}
                 />
               </Form.Group>
-              {errors.username && <Alert variant="danger">{errors.username}</Alert>}
 
+              {/* Password Input */}
               <Form.Group controlId="password">
                 <Form.Label className="d-none">Password</Form.Label>
                 <Form.Control
@@ -71,15 +66,19 @@ const SignInForm = () => {
                   onChange={handleChange}
                 />
               </Form.Group>
+
+              {/* Error Message */}
               {errors.detail && <Alert variant="danger">{errors.detail}</Alert>}
 
+              {/* Submit Button */}
               <Button className={`${btnStyles.Button} ${btnStyles.Bright} ${btnStyles.Wide}`} type="submit">
                 Sign in
               </Button>
             </Form>
+
             <Container className="mt-3">
               <Link className={styles.Link} to="/signup">
-                Don't have an account? <br /><span>Sign up</span>
+                Don't have an account? <br></br><span>Sign up</span>
               </Link>
             </Container>
           </div>
