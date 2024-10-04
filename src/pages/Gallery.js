@@ -52,7 +52,7 @@ const Gallery = () => {
       {images.length > 0 ? (
         images.map((image, index) => (
           <div key={index} className={styles.imageContainer}>
-            <img src={image.url} alt={`Gallery ${index}`} className={styles.image} /> 
+            <img src={image.image} alt={`Gallery ${index}`} className={styles.image} /> 
           </div>
         ))
       ) : (
