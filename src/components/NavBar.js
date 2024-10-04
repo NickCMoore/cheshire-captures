@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import { useCurrentUser, useSetCurrentUser } from '../contexts/AuthContext'; 
+import { useCurrentUser, useSetCurrentUser } from '../contexts/AuthContext';
 import styles from '../styles/NavBar.module.css';
 import logo from '../assets/cc-logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,25 +9,23 @@ import { faHome, faImage, faUser, faSignOutAlt, faSignInAlt, faUserPlus, faCircl
 import axios from 'axios';
 
 const NavBar = () => {
-  const currentUser = useCurrentUser(); 
-  const setCurrentUser = useSetCurrentUser(); 
-
-  if (currentUser === undefined) {
-    return <div>Loading...</div>; 
-  }
-
-  console.log('Current user:', currentUser); 
+  const currentUser = useCurrentUser();
+  const setCurrentUser = useSetCurrentUser();
 
   const handleLogout = async () => {
     try {
       await axios.post('/api/auth/logout/');
       setCurrentUser(null);
       localStorage.removeItem('token');
-      delete axios.defaults.headers.common['Authorization']; 
+      delete axios.defaults.headers.common['Authorization'];
     } catch (error) {
       console.error('Error logging out:', error);
     }
   };
+
+  if (currentUser === undefined) {
+    return <div>Loading...</div>; 
+  }
 
   return (
     <Navbar bg="light" expand="md" fixed="top" className={styles.NavBar}>

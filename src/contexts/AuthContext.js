@@ -9,13 +9,13 @@ export const useSetCurrentUser = () => useContext(SetCurrentUserContext);
 
 export const CurrentUserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const { data } = await axios.get('/auth/user/');
-        setCurrentUser(data);
+        setCurrentUser(data); 
       } catch (err) {
         console.error('Error fetching user:', err);
         setCurrentUser(null);
