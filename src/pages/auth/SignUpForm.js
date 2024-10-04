@@ -28,7 +28,7 @@ const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await axios.post('/api/auth/register/', { username, email, password }); 
+      const { data } = await axios.post('/auth/registration/', { username, email, password }); 
       setCurrentUser(data.user); 
       history.push('/'); 
     } catch (err) {
