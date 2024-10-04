@@ -18,21 +18,25 @@ const Gallery = () => {
       try {
         console.log('Fetching images for page:', page);
         const response = await axiosReq.get(`https://cheshire-captures-backend-084aac6d9023.herokuapp.com/api/photos/?page=${page}`, { withCredentials: true });
-        console.log('API Response:', response);
+        console.log('API Response:', response.data);
         
         if (response.data && Array.isArray(response.data.results)) {
+          console.log('Images from response:', response.data.results);
           if (response.data.results.length > 0) {
             setImages((prevImages) => [...prevImages, ...response.data.results]); 
             setPage((prevPage) => prevPage + 1); 
           } else {
-            setHasMore(false);
+            setHasMore(false); 
           }
         } else {
           console.error('Unexpected response structure:', response.data);
-          setHasMore(false);
+          setHasMore(false); 
         }
       } catch (error) {
         console.error('Error fetching images:', error);
+        if (error.response && error.response.status === 404) {
+          setHasMore(false); 
+        }
       } finally {
         setLoading(false);
       }
