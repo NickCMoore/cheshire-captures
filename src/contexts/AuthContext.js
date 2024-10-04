@@ -12,23 +12,44 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch the current logged-in user
+  const fetchUser = async () => {
+    try {
+      const { data } = await axios.get('/auth/user/', { headers: { 'Cache-Control': 'no-cache' } });
+      setCurrentUser(data);
+      setError(null);
+    } catch (err) {
+      console.error('Error fetching user:', err);
+      setError('Failed to fetch user data');
+      setCurrentUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLogin = async (loginData) => {
+    try {
+      await axios.post('/auth/login/', loginData);
+      await fetchUser(); 
+    } catch (err) {
+      console.error('Login failed:', err);
+      setError('Login failed');
+    }
+  };
+
+  
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const { data } = await axios.get('/auth/user/', { headers: { 'Cache-Control': 'no-cache' } });
-        setCurrentUser(data);
-        setError(null);
-      } catch (err) {
-        console.error('Error fetching user:', err);
-        setError('Failed to fetch user data');
-        setCurrentUser(null);
-      } finally {
+
+    const checkSession = async () => {
+      const token = localStorage.getItem('authToken'); 
+      if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        await fetchUser();
+      } else {
         setLoading(false);
       }
     };
-
-    fetchUser();
+    
+    checkSession();
   }, []);
 
   if (loading) {
@@ -41,7 +62,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <SetCurrentUserContext.Provider value={setCurrentUser}>
+      <SetCurrentUserContext.Provider value={{ setCurrentUser, handleLogin }}>
         {children}
       </SetCurrentUserContext.Provider>
     </CurrentUserContext.Provider>
