@@ -17,7 +17,7 @@ const Gallery = () => {
       setLoading(true);
       try {
         console.log('Fetching images for page:', page);
-        const response = await axiosReq.get(`/api/photos/?page=${page}`);
+        const response = await axiosReq.get(`https://cheshire-captures-backend-084aac6d9023.herokuapp.com/api/photos/?page=${page}`, { withCredentials: true });
         console.log('API Response:', response);
         
         if (response.data && Array.isArray(response.data.results)) {
