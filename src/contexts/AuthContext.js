@@ -28,20 +28,16 @@ export const CurrentUserProvider = ({ children }) => {
   }, []);
 
   useMemo(() => {
-    axiosReq.interceptors.request.use(
+    const requestInterceptor = axiosReq.interceptors.request.use(
       async (config) => {
         if (shouldRefreshToken()) {
           try {
             await axios.post('/auth/token/refresh/');
           } catch (err) {
-            setCurrentUser((prevUser) => {
-              if (prevUser) {
-                history.push('/signin');
-              }
-              return null;
-            });
+            console.error('Error refreshing token:', err);
+            setCurrentUser(null);
             removeTokenTimestamp();
-            return config;
+            history.push('/signin');
           }
         }
         return config;
@@ -49,26 +45,28 @@ export const CurrentUserProvider = ({ children }) => {
       (err) => Promise.reject(err)
     );
 
-    axiosRes.interceptors.response.use(
+    const responseInterceptor = axiosRes.interceptors.response.use(
       (response) => response,
       async (err) => {
         if (err.response?.status === 401) {
           try {
             await axios.post('/auth/token/refresh/');
           } catch (refreshErr) {
-            setCurrentUser((prevUser) => {
-              if (prevUser) {
-                history.push('/signin');
-              }
-              return null;
-            });
+            console.error('Error refreshing token:', refreshErr);
+            setCurrentUser(null);
             removeTokenTimestamp();
+            history.push('/signin');
           }
           return axios(err.config);
         }
         return Promise.reject(err);
       }
     );
+
+    return () => {
+      axiosReq.interceptors.request.eject(requestInterceptor);
+      axiosRes.interceptors.response.eject(responseInterceptor);
+    };
   }, [history]);
 
   return (
