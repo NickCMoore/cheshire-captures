@@ -1,76 +1,88 @@
-import React, { useEffect, useState } from "react";
-import { useCurrentUser } from "../contexts/AuthContext"; 
-import { axiosReq } from "../api/axiosDefaults";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const Profile = () => {
-  const currentUser = useCurrentUser();
-  const [profile, setProfile] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [editMode, setEditMode] = useState(false);
-  const [profileData, setProfileData] = useState({
-    display_name: "",
-    bio: "",
-    location: "",
-    website: "",
-    instagram: "",
-    twitter: "",
-  });
+  const { id } = useParams(); 
+  const [profile, setProfile] = useState(null); 
+  const [currentUser, setCurrentUser] = useState(null); 
+  const [isFollowing, setIsFollowing] = useState(false); 
+  const [isOwnProfile, setIsOwnProfile] = useState(false); 
 
   useEffect(() => {
-    const fetchProfile = async () => {
+    const fetchCurrentUser = async () => {
       try {
-        if (currentUser) {
-          const { data } = await axiosReq.get(`/photographers/${currentUser.id}/`);
-          setProfile(data);
-          setProfileData({
-            display_name: data.display_name,
-            bio: data.bio,
-            location: data.location,
-            website: data.website,
-            instagram: data.instagram,
-            twitter: data.twitter,
-          });
-          setLoading(false);
-        }
-      } catch (err) {
-        console.error("Error fetching profile data:", err);
-        setLoading(false);
+        const { data } = await axios.get('/auth/user/');
+        setCurrentUser(data);
+      } catch (error) {
+        console.error('Error fetching current user:', error);
       }
     };
 
-    if (currentUser) {
-      fetchProfile();
-    }
-  }, [currentUser]);
+    const fetchProfile = async () => {
+      try {
+        const { data } = await axios.get(`/api/photographers/${id}/`);
+        setProfile(data);
+        setIsFollowing(data.is_following); 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+        if (currentUser && data.user === currentUser.id) {
+          setIsOwnProfile(true); 
+        }
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+      }
+    };
+
+    fetchCurrentUser();
+    fetchProfile();
+  }, [id, currentUser]);
+
+  const handleFollowToggle = async () => {
     try {
-      const formData = new FormData();
-      Object.keys(profileData).forEach((key) => {
-        formData.append(key, profileData[key]);
-      });
-      await axiosReq.put(`/photographers/${currentUser.id}/`, formData);
-      setEditMode(false);
-    } catch (err) {
-      console.error("Error updating profile:", err);
+      if (isFollowing) {
+        await axios.post(`/api/follows/${id}/unfollow/`);
+        setIsFollowing(false);
+      } else {
+        await axios.post(`/api/follows/`, { following: id });
+        setIsFollowing(true);
+      }
+    } catch (error) {
+      console.error('Error following/unfollowing photographer:', error);
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (!profile || !currentUser) return <p>Loading...</p>;
 
   return (
-    <div className="profile-page">
-      <div className="profile-details">
-        <h1>{profile?.display_name || currentUser?.username}</h1>
-        {editMode ? (
-          <form onSubmit={handleSubmit}>
-            <button type="submit">Save Changes</button>
-          </form>
+    <div>
+      <h1>{profile.display_name}</h1>
+      <p>{profile.bio}</p>
+
+      <div>
+        <h2>Photos</h2>
+        {profile.photos && profile.photos.length > 0 ? (
+          profile.photos.map((photo) => (
+            <img key={photo.id} src={photo.image_url} alt={photo.title} />
+          ))
         ) : (
-          <button onClick={() => setEditMode(true)}>Edit Profile</button>
+          <p>No photos yet.</p>
         )}
       </div>
+
+      <div>
+        <h2>Social Links</h2>
+        {profile.website && <a href={profile.website}>Website</a>}
+        {profile.instagram && <a href={profile.instagram}>Instagram</a>}
+        {profile.twitter && <a href={profile.twitter}>Twitter</a>}
+      </div>
+
+      {isOwnProfile ? (
+        <button>Edit Profile</button>
+      ) : (
+        <button onClick={handleFollowToggle}>
+          {isFollowing ? 'Unfollow' : 'Follow'}
+        </button>
+      )}
     </div>
   );
 };
