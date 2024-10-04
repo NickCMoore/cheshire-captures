@@ -15,30 +15,29 @@ const Gallery = () => {
     const fetchImages = async () => {
       if (!hasMore || loading) return; 
       setLoading(true);
-
       try {
-        console.log('Fetching images for page:', page); 
+        console.log('Fetching images for page:', page);
         const response = await axiosReq.get(`/api/photos/?page=${page}`);
-        console.log('API Response:', response); 
-
+        console.log('API Response:', response);
+        
         if (response.data && Array.isArray(response.data.results)) {
           if (response.data.results.length > 0) {
             setImages((prevImages) => [...prevImages, ...response.data.results]); 
             setPage((prevPage) => prevPage + 1); 
           } else {
-            setHasMore(false); 
+            setHasMore(false);
           }
         } else {
           console.error('Unexpected response structure:', response.data);
-          setHasMore(false); 
+          setHasMore(false);
         }
       } catch (error) {
         console.error('Error fetching images:', error);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
-    
+
     if (inView && hasMore) {
       fetchImages();
     }
@@ -46,14 +45,14 @@ const Gallery = () => {
 
   return (
     <Container className={styles.gallery}> 
-      {images.length > 0 ? ( 
+      {images.length > 0 ? (
         images.map((image, index) => (
           <div key={index} className={styles.imageContainer}>
             <img src={image.url} alt={`Gallery ${index}`} className={styles.image} /> 
           </div>
         ))
       ) : (
-        <div className={styles.endMessage}>No images available.</div> 
+        <div className={styles.endMessage}>No images available.</div>
       )}
       {loading && <div className={styles.loader}>Loading...</div>}
       <div ref={ref} className={styles.loader}></div> 
