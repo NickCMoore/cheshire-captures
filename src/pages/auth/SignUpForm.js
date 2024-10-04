@@ -5,6 +5,11 @@ import axios from 'axios';
 import styles from '../../styles/SignInUpForm.module.css';
 import btnStyles from '../../styles/Button.module.css';
 
+
+axios.defaults.xsrfCookieName = 'csrftoken'; 
+axios.defaults.xsrfHeaderName = 'X-CSRFToken'; 
+
+
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
     username: '',
@@ -27,9 +32,16 @@ const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      const csrfToken = document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1];
+  
       await axios.post(
-        'https://cheshire-captures-backend-084aac6d9023.herokuapp.com/auth/registration/', 
-        { username, email, password1, password2 }
+        '/dj-rest-auth/registration/', 
+        { username, email, password1, password2 },
+        {
+          headers: {
+            'X-CSRFToken': csrfToken
+          }
+        }
       );
       history.push('/');
     } catch (err) {
@@ -40,6 +52,7 @@ const SignUpForm = () => {
       }
     }
   };
+  
   
 
   return (
