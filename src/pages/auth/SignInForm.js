@@ -5,6 +5,7 @@ import { useSetCurrentUser } from '../../contexts/AuthContext';
 import styles from '../../styles/SignInUpForm.module.css';
 import btnStyles from '../../styles/Button.module.css';
 import axios from 'axios'; 
+import { getCookie } from '../../utils/Utils'; 
 
 const SignInForm = () => {
   const [formData, setFormData] = useState({
@@ -27,7 +28,17 @@ const SignInForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await axios.post('/api/auth/login/', { username, password });
+      const csrfToken = getCookie('csrftoken'); 
+      const { data } = await axios.post(
+        '/api/auth/login/', 
+        { username, password },
+        {
+          headers: {
+            'X-CSRFToken': csrfToken, 
+            'Cache-Control': 'no-cache',
+          },
+        }
+      );
       setCurrentUser(data.user); 
       history.push('/'); 
     } catch (err) {
@@ -38,7 +49,6 @@ const SignInForm = () => {
       }
     }
   };
-  
 
   return (
     <Container fluid className={styles.Background}>
@@ -79,7 +89,7 @@ const SignInForm = () => {
             </Form>
             <Container className="mt-3">
               <Link className={styles.Link} to="/signup">
-                Don't have an account? <br></br><span>Sign up</span>
+                Don't have an account? <br /><span>Sign up</span>
               </Link>
             </Container>
           </div>
