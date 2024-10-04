@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { Form, Button, Col, Row, Container, Alert } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
-import { useSetCurrentUser } from '../../contexts/AuthContext';
+import axios from 'axios'; 
 import styles from '../../styles/SignInUpForm.module.css';
 import btnStyles from '../../styles/Button.module.css';
-import axios from 'axios'; 
+import { getCookie } from '../../utils/Utils'; 
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
-    password: '',
+    password1: '',
+    password2: '',
   });
 
-  const { username, email, password } = formData;
+  const { username, email, password1, password2 } = formData;
   const [errors, setErrors] = useState({});
   const history = useHistory();
-  const setCurrentUser = useSetCurrentUser(); 
 
   const handleChange = (event) => {
     setFormData({
@@ -28,13 +28,27 @@ const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await axios.post('/auth/registration/', { username, email, password }); 
-      setCurrentUser(data.user); 
+      const csrfToken = getCookie('csrftoken'); 
+      await axios.post(
+        '/auth/registration/', 
+        { username, email, password1, password2 },
+        {
+          headers: {
+            'X-CSRFToken': csrfToken,
+            'Cache-Control': 'no-cache',
+          },
+        }
+      );
       history.push('/'); 
     } catch (err) {
-      setErrors({ detail: 'Error creating account' });
+      if (err.response && err.response.status === 400) {
+        setErrors(err.response.data);
+      } else {
+        setErrors({ detail: 'Something went wrong. Please try again.' });
+      }
     }
   };
+  
 
   return (
     <Container fluid className={styles.Background}>
@@ -69,26 +83,41 @@ const SignUpForm = () => {
               </Form.Group>
               {errors.email && <Alert variant="danger">{errors.email}</Alert>}
 
-              <Form.Group controlId="password">
+              <Form.Group controlId="password1">
                 <Form.Label className="d-none">Password</Form.Label>
                 <Form.Control
                   className={styles.Input}
                   type="password"
                   placeholder="Password"
-                  name="password"
-                  value={password}
+                  name="password1"
+                  value={password1}
                   onChange={handleChange}
                 />
               </Form.Group>
-              {errors.detail && <Alert variant="danger">{errors.detail}</Alert>}
+              {errors.password1 && <Alert variant="danger">{errors.password1}</Alert>}
+
+              <Form.Group controlId="password2">
+                <Form.Label className="d-none">Confirm Password</Form.Label>
+                <Form.Control
+                  className={styles.Input}
+                  type="password"
+                  placeholder="Confirm Password"
+                  name="password2"
+                  value={password2}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              {errors.password2 && <Alert variant="danger">{errors.password2}</Alert>}
+
+              {errors.non_field_errors && <Alert variant="danger">{errors.non_field_errors}</Alert>}
 
               <Button className={`${btnStyles.Button} ${btnStyles.Bright} ${btnStyles.Wide}`} type="submit">
-                Sign Up
+                Sign up
               </Button>
             </Form>
             <Container className="mt-3">
               <Link className={styles.Link} to="/signin">
-                Already have an account? <br></br><span>Sign in</span>
+                Already have an account? <br /><span>Sign in</span>
               </Link>
             </Container>
           </div>
