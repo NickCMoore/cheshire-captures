@@ -28,10 +28,10 @@ const SignUpForm = () => {
     event.preventDefault();
     try {
       await axios.post(
-        '/auth/registration/', 
+        'https://cheshire-captures-backend-084aac6d9023.herokuapp.com/auth/registration/', 
         { username, email, password1, password2 }
       );
-      history.push('/'); 
+      history.push('/');
     } catch (err) {
       if (err.response && err.response.status === 400) {
         setErrors(err.response.data);
@@ -40,6 +40,7 @@ const SignUpForm = () => {
       }
     }
   };
+  
 
   return (
     <Container fluid className={styles.Background}>
