@@ -1,8 +1,5 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import { axiosReq, axiosRes } from '../api/axiosDefaults';
-import { useHistory } from 'react-router-dom';
-import { removeTokenTimestamp, shouldRefreshToken } from '../utils/Utils';
 
 export const CurrentUserContext = createContext();
 export const SetCurrentUserContext = createContext();
@@ -12,71 +9,26 @@ export const useSetCurrentUser = () => useContext(SetCurrentUserContext);
 
 export const CurrentUserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-  const history = useHistory();
-
-  const handleMount = async () => {
-    try {
-      const { data } = await axiosRes.get('/auth/user/');
-      setCurrentUser(data); 
-    } catch (err) {
-      console.error('Error fetching user:', err);
-    }
-  };
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    handleMount();
-  }, []);
-
-  useMemo(() => {
-    const requestInterceptor = axiosReq.interceptors.request.use(
-      async (config) => {
-        if (shouldRefreshToken()) {
-          try {
-            const response = await axios.post('/auth/token/refresh/');
-            const newToken = response.data.token; 
-            axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
-          } catch (err) {
-            console.error('Error refreshing token:', err);
-            setCurrentUser(null);
-            removeTokenTimestamp();
-            history.push('/signin');
-          }
-        }
-        return config;
-      },
-      (err) => Promise.reject(err)
-    );
-
-    const responseInterceptor = axiosRes.interceptors.response.use(
-      (response) => response,
-      async (err) => {
-        if (err.response?.status === 401) {
-          try {
-            const response = await axios.post('/auth/token/refresh/');
-            const newToken = response.data.token; 
-            axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
-            return axios(err.config); 
-          } catch (refreshErr) {
-            console.error('Error refreshing token:', refreshErr);
-            setCurrentUser(null);
-            removeTokenTimestamp();
-            history.push('/signin');
-          }
-        }
-        return Promise.reject(err);
+    const fetchUser = async () => {
+      try {
+        const { data } = await axios.get('/auth/user/');
+        setCurrentUser(data);
+      } catch (err) {
+        console.error('Error fetching user:', err);
+      } finally {
+        setLoading(false); 
       }
-    );
-
-    return () => {
-      axiosReq.interceptors.request.eject(requestInterceptor);
-      axiosRes.interceptors.response.eject(responseInterceptor);
     };
-  }, [history, setCurrentUser]);
+    fetchUser();
+  }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <SetCurrentUserContext.Provider value={setCurrentUser}>
-        {children}
+        {!loading ? children : <div>Loading...</div>}
       </SetCurrentUserContext.Provider>
     </CurrentUserContext.Provider>
   );
