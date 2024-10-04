@@ -1,9 +1,13 @@
 import React from 'react';
-import { useAuth } from '../contexts/AuthContext';
+import { useCurrentUser } from '../contexts/AuthContext'; 
 import styles from '../styles/Profile.module.css';
 
 const Profile = () => {
-  const { currentUser } = useAuth(); 
+  const currentUser = useCurrentUser(); 
+
+  if (!currentUser) {
+    return <p>Loading...</p>; 
+  }
 
   return (
     <div className={styles.Profile}>

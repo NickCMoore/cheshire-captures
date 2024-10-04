@@ -1,68 +1,81 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
-import axiosInstance from '../api/axiosDefaults';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import axios from 'axios';
+import { axiosReq, axiosRes } from '../api/axiosDefaults';
+import { useHistory } from 'react-router-dom';
+import { removeTokenTimestamp, shouldRefreshToken } from '../utils/Utils';
 
-export const AuthContext = createContext();
+export const CurrentUserContext = createContext();
+export const SetCurrentUserContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+export const useCurrentUser = () => useContext(CurrentUserContext);
+export const useSetCurrentUser = () => useContext(SetCurrentUserContext);
+
+export const CurrentUserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
+  const history = useHistory();
 
-  const fetchCurrentUser = async () => {
+  const handleMount = async () => {
     try {
-      const response = await axiosInstance.get('/auth/user/');
-      setCurrentUser(response.data);
-    } catch (error) {
-      setCurrentUser(null);
+      const { data } = await axiosRes.get('/auth/user/');
+      setCurrentUser(data);
+    } catch (err) {
+      console.error('Error fetching user:', err);
     }
   };
 
   useEffect(() => {
-    fetchCurrentUser();
+    handleMount();
   }, []);
 
-  const loginUser = async (credentials) => {
-    try {
-      const response = await axiosInstance.post('/auth/login/', {
-        username: credentials.username, 
-        password: credentials.password
-      });
-      const token = response.data.key; 
-      localStorage.setItem('token', token);
-      axiosInstance.defaults.headers.common['Authorization'] = `Token ${token}`;
-      await fetchCurrentUser();
-    } catch (error) {
-      throw error;
-    }
-  };
-  
+  useMemo(() => {
+    axiosReq.interceptors.request.use(
+      async (config) => {
+        if (shouldRefreshToken()) {
+          try {
+            await axios.post('/auth/token/refresh/');
+          } catch (err) {
+            setCurrentUser((prevUser) => {
+              if (prevUser) {
+                history.push('/signin');
+              }
+              return null;
+            });
+            removeTokenTimestamp();
+            return config;
+          }
+        }
+        return config;
+      },
+      (err) => Promise.reject(err)
+    );
 
-  const registerUser = async (credentials) => {
-    try {
-      const response = await axiosInstance.post('/auth/registration/', credentials);
-      const token = response.data.key;
-      localStorage.setItem('token', token);
-      axiosInstance.defaults.headers.Authorization = `Token ${token}`;
-      await fetchCurrentUser();
-    } catch (error) {
-      throw error;
-    }
-  };
-
-  const logoutUser = async () => {
-    try {
-      await axiosInstance.post('/auth/logout/');
-      localStorage.removeItem('token');
-      delete axiosInstance.defaults.headers.Authorization;
-      setCurrentUser(null);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    axiosRes.interceptors.response.use(
+      (response) => response,
+      async (err) => {
+        if (err.response?.status === 401) {
+          try {
+            await axios.post('/auth/token/refresh/');
+          } catch (refreshErr) {
+            setCurrentUser((prevUser) => {
+              if (prevUser) {
+                history.push('/signin');
+              }
+              return null;
+            });
+            removeTokenTimestamp();
+          }
+          return axios(err.config);
+        }
+        return Promise.reject(err);
+      }
+    );
+  }, [history]);
 
   return (
-    <AuthContext.Provider value={{ currentUser, loginUser, registerUser, logoutUser }}>
-      {children}
-    </AuthContext.Provider>
+    <CurrentUserContext.Provider value={currentUser}>
+      <SetCurrentUserContext.Provider value={setCurrentUser}>
+        {children}
+      </SetCurrentUserContext.Provider>
+    </CurrentUserContext.Provider>
   );
 };
-
-export const useAuth = () => useContext(AuthContext);

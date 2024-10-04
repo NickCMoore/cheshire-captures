@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Form, Button, Col, Row, Container, Alert } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+import { useSetCurrentUser } from '../../contexts/AuthContext';
 import styles from '../../styles/SignInUpForm.module.css';
 import btnStyles from '../../styles/Button.module.css';
+import axios from 'axios'; 
 
 const SignInForm = () => {
   const [formData, setFormData] = useState({
@@ -14,7 +15,7 @@ const SignInForm = () => {
   const { username, password } = formData;
   const [errors, setErrors] = useState({});
   const history = useHistory();
-  const { loginUser } = useAuth();
+  const setCurrentUser = useSetCurrentUser();
 
   const handleChange = (event) => {
     setFormData({
@@ -26,8 +27,9 @@ const SignInForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await loginUser({ username, password }); 
-      history.push('/');
+      const { data } = await axios.post('/api/auth/login/', { username, password }); 
+      setCurrentUser(data.user); 
+      history.push('/'); 
     } catch (err) {
       setErrors({ detail: 'Invalid username or password' });
     }

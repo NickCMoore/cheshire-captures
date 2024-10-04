@@ -7,7 +7,7 @@ import SignInForm from './pages/auth/SignInForm';
 import SignUpForm from './pages/auth/SignUpForm';
 import Gallery from './pages/Gallery';
 import AboutPage from './pages/AboutPage';
-import { AuthProvider } from './contexts/AuthContext';
+import { CurrentUserProvider } from './contexts/AuthContext';
 import './api/axiosDefaults';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './App.module.css';
@@ -15,7 +15,7 @@ import styles from './App.module.css';
 function App() {
   return (
     <div className={styles.App}>
-      <AuthProvider>
+      <CurrentUserProvider>
         <NavBar />
         <Switch>
           <Route exact path="/" component={HomePage} />
@@ -25,7 +25,7 @@ function App() {
           <Route exact path="/about" component={AboutPage} />
           <Route exact path="/profile" component={Profile} />
         </Switch>
-      </AuthProvider>
+      </CurrentUserProvider>
     </div>
   );
 }

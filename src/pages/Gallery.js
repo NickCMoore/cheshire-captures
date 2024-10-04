@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import axiosInstance from '../api/axiosDefaults'; 
-import styles from '../styles/Gallery.module.css';
+import { axiosReq } from '../api/axiosDefaults'; 
+import styles from '../styles/Gallery.module.css'; 
+import { Container } from 'react-bootstrap'; 
 
 const Gallery = () => {
   const [images, setImages] = useState([]);
@@ -15,7 +16,7 @@ const Gallery = () => {
       if (!hasMore || loading) return; 
       setLoading(true);
       try {
-        const response = await axiosInstance.get(`/api/photos/?page=${page}`); 
+        const response = await axiosReq.get(`/api/photos/?page=${page}`); 
         if (response.data.results.length > 0) {
           setImages((prevImages) => [...prevImages, ...response.data.results]); 
           setPage((prevPage) => prevPage + 1); 
@@ -35,7 +36,7 @@ const Gallery = () => {
   }, [inView, page, hasMore, loading]); 
 
   return (
-    <div className={styles.gallery}>
+    <Container className={styles.gallery}> 
       {images.map((image, index) => (
         <div key={index} className={styles.imageContainer}>
           <img src={image.url} alt={`Gallery ${index}`} className={styles.image} /> 
@@ -44,7 +45,7 @@ const Gallery = () => {
       {loading && <div className={styles.loader}>Loading...</div>}
       <div ref={ref} className={styles.loader}></div> 
       {!hasMore && <div className={styles.endMessage}>No more images to load.</div>}
-    </div>
+    </Container>
   );
 };
 

@@ -1,14 +1,20 @@
 import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
+import { useCurrentUser, useSetCurrentUser } from '../contexts/AuthContext';
 import styles from '../styles/NavBar.module.css';
 import logo from '../assets/cc-logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faImage, faUser, faSignOutAlt, faSignInAlt, faUserPlus, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 
 const NavBar = () => {
-  const { currentUser, logoutUser } = useAuth();
+  const currentUser = useCurrentUser(); 
+  const setCurrentUser = useSetCurrentUser(); 
+
+  const handleLogout = async () => {
+    setCurrentUser(null);
+    localStorage.removeItem('token');
+  };
 
   return (
     <Navbar bg="light" expand="md" fixed="top" className={styles.NavBar}>
@@ -36,7 +42,7 @@ const NavBar = () => {
                 <NavLink to="/profile" className={styles.NavLink} activeClassName={styles.Active}>
                   <FontAwesomeIcon icon={faUser} /> Profile
                 </NavLink>
-                <NavLink to="/" className={styles.NavLink} onClick={logoutUser}>
+                <NavLink to="/" className={styles.NavLink} onClick={handleLogout}>
                   <FontAwesomeIcon icon={faSignOutAlt} /> Sign Out
                 </NavLink>
               </>
