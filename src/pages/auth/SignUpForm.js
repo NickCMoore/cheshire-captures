@@ -32,16 +32,12 @@ const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const csrfToken = document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1];
+      const csrfToken = document.cookie.split('; ').find(row => row.startsWith('csrftoken')).split('=')[1];
   
       await axios.post(
         '/dj-rest-auth/registration/', 
         { username, email, password1, password2 },
-        {
-          headers: {
-            'X-CSRFToken': csrfToken
-          }
-        }
+        { headers: { 'X-CSRFToken': csrfToken } } 
       );
       history.push('/');
     } catch (err) {
