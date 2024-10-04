@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button, Col, Row, Container, Alert } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
-import axios from 'axios';
+import axios from 'axios'; 
 import styles from '../../styles/SignInUpForm.module.css';
 import btnStyles from '../../styles/Button.module.css';
 
@@ -20,6 +20,20 @@ const SignUpForm = () => {
   const [errors, setErrors] = useState({});
   const history = useHistory();
 
+  const getCSRFToken = async () => {
+    try {
+      await axios.get('https://cheshire-captures-backend-084aac6d9023.herokuapp.com/dj-rest-auth/csrf/'); // Fetch CSRF token from your backend
+      const csrfToken = document.cookie.split('; ').find((row) => row.startsWith('csrftoken'))?.split('=')[1];
+      return csrfToken;
+    } catch (err) {
+      console.error('Error fetching CSRF token', err);
+    }
+  };
+
+  useEffect(() => {
+    getCSRFToken();
+  }, []);
+
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -32,17 +46,15 @@ const SignUpForm = () => {
     console.log('Form submitted');
 
     try {
-      const csrfToken = document.cookie
-        .split('; ')
-        .find((row) => row.startsWith('csrftoken'))
-        ?.split('=')[1];
-      console.log('CSRF Token:', csrfToken);
+      const csrfToken = await getCSRFToken();
+      console.log('CSRF Token:', csrfToken); 
 
-      const formDataToSubmit = new FormData();
-      formDataToSubmit.append('username', username);
-      formDataToSubmit.append('email', email);
-      formDataToSubmit.append('password1', password1);
-      formDataToSubmit.append('password2', password2);
+      const formDataToSubmit = {
+        username,
+        email,
+        password1,
+        password2,
+      };
 
       await axios.post(
         'https://cheshire-captures-backend-084aac6d9023.herokuapp.com/dj-rest-auth/registration/',
