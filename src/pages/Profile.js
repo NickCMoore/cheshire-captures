@@ -3,17 +3,20 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const Profile = () => {
-  const { id } = useParams(); 
-  const [profile, setProfile] = useState(null); 
-  const [currentUser, setCurrentUser] = useState(null); 
-  const [isFollowing, setIsFollowing] = useState(false); 
-  const [isOwnProfile, setIsOwnProfile] = useState(false); 
+  const { id } = useParams();
+  const [profile, setProfile] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [isOwnProfile, setIsOwnProfile] = useState(false);
+  const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
+    let isMounted = true; // flag to check if component is mounted
+
     const fetchCurrentUser = async () => {
       try {
         const { data } = await axios.get('/auth/user/');
-        setCurrentUser(data);
+        if (isMounted) setCurrentUser(data);
       } catch (error) {
         console.error('Error fetching current user:', error);
       }
@@ -22,19 +25,27 @@ const Profile = () => {
     const fetchProfile = async () => {
       try {
         const { data } = await axios.get(`/api/photographers/${id}/`);
-        setProfile(data);
-        setIsFollowing(data.is_following); 
+        if (isMounted) {
+          setProfile(data);
+          setIsFollowing(data.is_following);
 
-        if (currentUser && data.user === currentUser.id) {
-          setIsOwnProfile(true); 
+          if (currentUser && data.user === currentUser.id) {
+            setIsOwnProfile(true);
+          }
         }
       } catch (error) {
         console.error('Error fetching profile data:', error);
+      } finally {
+        if (isMounted) setLoading(false); // stop loading after fetch
       }
     };
 
     fetchCurrentUser();
     fetchProfile();
+
+    return () => {
+      isMounted = false; // clean up function
+    };
   }, [id, currentUser]);
 
   const handleFollowToggle = async () => {
@@ -51,7 +62,9 @@ const Profile = () => {
     }
   };
 
-  if (!profile || !currentUser) return <p>Loading...</p>;
+  if (loading) return <p>Loading...</p>; 
+
+  if (!profile) return <p>Profile not found.</p>;
 
   return (
     <div>
