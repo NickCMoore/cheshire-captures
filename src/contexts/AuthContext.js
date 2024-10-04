@@ -18,6 +18,7 @@ export const CurrentUserProvider = ({ children }) => {
         setCurrentUser(data);
       } catch (err) {
         console.error('Error fetching user:', err);
+        setCurrentUser(null);
       } finally {
         setLoading(false); 
       }
@@ -25,10 +26,14 @@ export const CurrentUserProvider = ({ children }) => {
     fetchUser();
   }, []);
 
+  if (loading) {
+    return <div>Loading...</div>; 
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <SetCurrentUserContext.Provider value={setCurrentUser}>
-        {!loading ? children : <div>Loading...</div>}
+        {children}
       </SetCurrentUserContext.Provider>
     </CurrentUserContext.Provider>
   );

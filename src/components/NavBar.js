@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import { useCurrentUser, useSetCurrentUser } from '../contexts/AuthContext';
+import { useCurrentUser, useSetCurrentUser } from '../contexts/AuthContext'; 
 import styles from '../styles/NavBar.module.css';
 import logo from '../assets/cc-logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,6 +11,12 @@ import axios from 'axios';
 const NavBar = () => {
   const currentUser = useCurrentUser(); 
   const setCurrentUser = useSetCurrentUser(); 
+
+  if (currentUser === undefined) {
+    return <div>Loading...</div>; 
+  }
+
+  console.log('Current user:', currentUser); 
 
   const handleLogout = async () => {
     try {
