@@ -9,6 +9,7 @@ import Gallery from './pages/Gallery';
 import AboutPage from './pages/AboutPage';
 import { AuthProvider } from './contexts/AuthContext';
 import './api/axiosDefaults';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './App.module.css';
 
 function App() {

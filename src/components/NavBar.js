@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import styles from '../styles/NavBar.module.css';
 import logo from '../assets/cc-logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faImage, faUser, faSignOutAlt, faSignInAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faImage, faUser, faSignOutAlt, faSignInAlt, faUserPlus, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 
 const NavBar = () => {
   const { currentUser, logoutUser } = useAuth();
@@ -28,7 +28,7 @@ const NavBar = () => {
               <FontAwesomeIcon icon={faImage} /> Gallery
             </NavLink>
             <NavLink exact to="/about" className={styles.NavLink} activeClassName={styles.Active}>
-              About
+              <FontAwesomeIcon icon={faCircleInfo} /> About
             </NavLink>
 
             {currentUser ? (

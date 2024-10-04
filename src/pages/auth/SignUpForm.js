@@ -7,13 +7,13 @@ import btnStyles from '../../styles/Button.module.css';
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
-    username: '',  // Add username field
+    username: '',  
     email: '',
     password1: '',
     password2: '',
   });
 
-  const { username, email, password1, password2 } = formData; // Destructure username
+  const { username, email, password1, password2 } = formData;
   const [errors, setErrors] = useState({});
   const history = useHistory();
   const { registerUser } = useAuth(); 
@@ -32,7 +32,6 @@ const SignUpForm = () => {
       return;
     }
     try {
-      // Include username in the registration payload
       await registerUser({ username, email, password1, password2 });
       history.push('/signin'); 
     } catch (err) {
@@ -53,7 +52,7 @@ const SignUpForm = () => {
                   className={styles.Input}
                   type="text"
                   placeholder="Enter username"
-                  name="username" // Set name to "username"
+                  name="username" 
                   value={username}
                   onChange={handleChange}
                 />
