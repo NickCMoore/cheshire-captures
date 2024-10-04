@@ -15,10 +15,12 @@ const Gallery = () => {
     const fetchImages = async () => {
       if (!hasMore || loading) return; 
       setLoading(true);
+
       try {
+        console.log('Fetching images for page:', page); 
         const response = await axiosReq.get(`/api/photos/?page=${page}`);
-        console.log('API Response:', response);
-        
+        console.log('API Response:', response); 
+
         if (response.data && Array.isArray(response.data.results)) {
           if (response.data.results.length > 0) {
             setImages((prevImages) => [...prevImages, ...response.data.results]); 
