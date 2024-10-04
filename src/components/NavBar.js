@@ -6,14 +6,21 @@ import styles from '../styles/NavBar.module.css';
 import logo from '../assets/cc-logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faImage, faUser, faSignOutAlt, faSignInAlt, faUserPlus, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 const NavBar = () => {
   const currentUser = useCurrentUser(); 
   const setCurrentUser = useSetCurrentUser(); 
 
   const handleLogout = async () => {
-    setCurrentUser(null);
-    localStorage.removeItem('token');
+    try {
+      await axios.post('/api/auth/logout/');
+      setCurrentUser(null);
+      localStorage.removeItem('token');
+      delete axios.defaults.headers.common['Authorization']; 
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
   };
 
   return (
@@ -26,7 +33,7 @@ const NavBar = () => {
         </NavLink>
         <Navbar.Toggle aria-controls="navbar-collapse" />
         <Navbar.Collapse id="navbar-collapse">
-          <Nav className="ml-auto">
+          <Nav className="ms-auto">
             <NavLink exact to="/" className={styles.NavLink} activeClassName={styles.Active}>
               <FontAwesomeIcon icon={faHome} /> Home
             </NavLink>

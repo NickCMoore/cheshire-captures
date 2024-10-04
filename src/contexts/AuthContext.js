@@ -17,7 +17,7 @@ export const CurrentUserProvider = ({ children }) => {
   const handleMount = async () => {
     try {
       const { data } = await axiosRes.get('/auth/user/');
-      setCurrentUser(data);
+      setCurrentUser(data); 
     } catch (err) {
       console.error('Error fetching user:', err);
     }
@@ -32,7 +32,9 @@ export const CurrentUserProvider = ({ children }) => {
       async (config) => {
         if (shouldRefreshToken()) {
           try {
-            await axios.post('/auth/token/refresh/');
+            const response = await axios.post('/auth/token/refresh/');
+            const newToken = response.data.token; 
+            axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
           } catch (err) {
             console.error('Error refreshing token:', err);
             setCurrentUser(null);
@@ -50,14 +52,16 @@ export const CurrentUserProvider = ({ children }) => {
       async (err) => {
         if (err.response?.status === 401) {
           try {
-            await axios.post('/auth/token/refresh/');
+            const response = await axios.post('/auth/token/refresh/');
+            const newToken = response.data.token; 
+            axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
+            return axios(err.config); 
           } catch (refreshErr) {
             console.error('Error refreshing token:', refreshErr);
             setCurrentUser(null);
             removeTokenTimestamp();
             history.push('/signin');
           }
-          return axios(err.config);
         }
         return Promise.reject(err);
       }
@@ -67,7 +71,7 @@ export const CurrentUserProvider = ({ children }) => {
       axiosReq.interceptors.request.eject(requestInterceptor);
       axiosRes.interceptors.response.eject(responseInterceptor);
     };
-  }, [history]);
+  }, [history, setCurrentUser]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

@@ -27,13 +27,18 @@ const SignInForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await axios.post('/api/auth/login/', { username, password }); 
+      const { data } = await axios.post('/api/auth/login/', { username, password });
       setCurrentUser(data.user); 
       history.push('/'); 
     } catch (err) {
-      setErrors({ detail: 'Invalid username or password' });
+      if (err.response && err.response.status === 401) {
+        setErrors({ detail: 'Invalid username or password' });
+      } else {
+        setErrors({ detail: 'Something went wrong. Please try again.' });
+      }
     }
   };
+  
 
   return (
     <Container fluid className={styles.Background}>
