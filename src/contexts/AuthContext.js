@@ -7,16 +7,16 @@ export const SetCurrentUserContext = createContext();
 export const useCurrentUser = () => useContext(CurrentUserContext);
 export const useSetCurrentUser = () => useContext(SetCurrentUserContext);
 
-export const CurrentUserProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Fetch the current logged-in user
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const { data } = await axios.get('/auth/user/', { headers: { 'Cache-Control': 'no-cache' } });
-        console.log('User data fetched:', data);
         setCurrentUser(data);
         setError(null);
       } catch (err) {
