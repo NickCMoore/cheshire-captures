@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { axiosReq } from '../../api/axiosDefaults';
-import styles from '../../styles/SignInUpForm.module.css'; // Ensure correct CSS file is used
+import axios from 'axios';  
+import styles from '../../styles/SignInUpForm.module.css'; 
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
@@ -9,38 +10,56 @@ const SignUpForm = () => {
     password1: '',
     password2: '',
   });
+  const { username, email, password1, password2 } = formData;
+  const [error, setError] = useState(null);
+  const history = useHistory();
 
   const handleChange = (event) => {
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
     });
+    setError(null);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axiosReq.post(
-        'https://cheshire-captures-backend-084aac6d9023.herokuapp.com/dj-rest-auth/registration/',
-        formData
-      );
-      console.log('Response:', response.data);
+      await axios.post('dj-rest-auth/registration/', formData);
+      history.push('/signin');
     } catch (error) {
-      console.error('Error during registration:', error);
+      if (error.response && error.response.data) {
+        setError(error.response.data);
+      } else {
+        setError('Something went wrong. Please try again.');
+      }
     }
   };
-
+  
   return (
     <div className={styles.Background}>
       <div className={styles.FormContainer}>
         <h1 className={styles.Header}>Sign Up</h1>
+
+        {error && (
+          <div className={styles.Error}>
+            {typeof error === 'object' ? (
+              Object.keys(error).map((key) => (
+                <p key={key}>{key}: {error[key]}</p>
+              ))
+            ) : (
+              <p>{error}</p>
+            )}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit}>
           <input
             type="text"
             name="username"
             placeholder="Username"
             className={styles.Input}
-            value={formData.username}
+            value={username}
             onChange={handleChange}
           />
           <input
@@ -48,7 +67,7 @@ const SignUpForm = () => {
             name="email"
             placeholder="Email"
             className={styles.Input}
-            value={formData.email}
+            value={email}
             onChange={handleChange}
           />
           <input
@@ -56,7 +75,7 @@ const SignUpForm = () => {
             name="password1"
             placeholder="Password"
             className={styles.Input}
-            value={formData.password1}
+            value={password1}
             onChange={handleChange}
           />
           <input
@@ -64,7 +83,7 @@ const SignUpForm = () => {
             name="password2"
             placeholder="Confirm Password"
             className={styles.Input}
-            value={formData.password2}
+            value={password2}
             onChange={handleChange}
           />
           <button type="submit" className={styles.Button}>Sign Up</button>
