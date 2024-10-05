@@ -1,13 +1,27 @@
-.Profile {
-    text-align: center;
-    padding: 2rem;
-  }
-  
-  .Profile h1 {
-    font-size: 2rem;
-  }
-  
-  .Profile p {
-    font-size: 1.2rem;
-  }
-  
+.profileContainer {
+  padding-top: 100px; 
+  margin-bottom: 50px;
+}
+
+.profileImage {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.socialLinks {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.socialLinks li {
+  margin-bottom: 10px;
+}
+
+.photo {
+  border-radius: 10px;
+  max-height: 250px;
+  object-fit: cover;
+}

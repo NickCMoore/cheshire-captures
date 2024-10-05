@@ -1,19 +1,10 @@
-:root {
-    --rich-black: #0e1116ff;
-    --yinmn-blue: #374a67ff;
-    --ultra-violet: #616283ff;
-    --mountbatten-pink: #9e7b9bff;
-    --wisteria: #cb9cf2ff;
-}
-
 .FullScreenBackground {
     background-image: url('https://res.cloudinary.com/dwgtce0rh/image/upload/v1727862662/vestrahorn-mountains-stokksnes-iceland_aoqbtp.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-height: calc(100vh - 160px); 
-    margin-top: 40px; 
-    margin-bottom: 40px; 
+    min-height: calc(100vh - 70px); /* Adjust based on actual navbar height */
+    padding-top: 70px; /* Make sure content starts below the navbar */
     display: flex;
     align-items: center;
     justify-content: center;

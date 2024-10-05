@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { axiosReq } from '../api/axiosDefaults'; 
 import styles from '../styles/Gallery.module.css'; 
-import { Container } from 'react-bootstrap'; 
+import { Container, Row, Col } from 'react-bootstrap'; 
 
 const Gallery = () => {
   const [images, setImages] = useState([]);
@@ -48,19 +48,25 @@ const Gallery = () => {
   }, [inView, page, hasMore, loading]);
 
   return (
-    <Container className={styles.gallery}>
-      {images.length > 0 ? (
-        images.map((image, index) => (
-          <div key={index} className={styles.imageContainer}>
-            <img src={image.url} alt={`Gallery ${index}`} className={styles.image} />
+    <Container fluid className={styles.galleryContainer}>
+      <Row className="justify-content-center">
+        <Col md={8} lg={6}>
+          <div className={styles.galleryContent}>
+            {images.length > 0 ? (
+              images.map((image, index) => (
+                <div key={index} className={styles.imageContainer}>
+                  <img src={image.url} alt={`Gallery ${index}`} className={styles.image} />
+                </div>
+              ))
+            ) : (
+              <div className={styles.endMessage}>No images available.</div>
+            )}
+            {loading && <div className={styles.loader}>Loading...</div>}
+            <div ref={ref} className={styles.loader}></div>
+            {!hasMore && <div className={styles.endMessage}>No more images to load.</div>}
           </div>
-        ))
-      ) : (
-        <div className={styles.endMessage}>No images available.</div>
-      )}
-      {loading && <div className={styles.loader}>Loading...</div>}
-      <div ref={ref} className={styles.loader}></div>
-      {!hasMore && <div className={styles.endMessage}>No more images to load.</div>}
+        </Col>
+      </Row>
     </Container>
   );
 };
