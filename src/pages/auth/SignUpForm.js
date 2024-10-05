@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';  
 import styles from '../../styles/SignInUpForm.module.css'; 
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory } from 'react-router-dom';
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
@@ -25,7 +25,7 @@ const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post('/dj-rest-auth/registration/', formData);
+      await axios.post("/dj-rest-auth/registration/", formData);
       history.push('/signin');
     } catch (error) {
       if (error.response && error.response.data) {
