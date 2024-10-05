@@ -9,6 +9,7 @@ import logo from '../assets/cc-logo.png';
 
 const NavBar = () => {
   const currentUser = useContext(CurrentUserContext);
+  console.log("Current User in Navbar:", currentUser);
   const setCurrentUser = useContext(SetCurrentUserContext);
   const history = useHistory();
 

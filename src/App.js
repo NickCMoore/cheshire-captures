@@ -38,12 +38,12 @@ function App() {
           <NavBar />
           <Container className={styles.Main}>
             <Switch>
-              <Route exact path="/" component={HomePage} />
-              <Route exact path="/signin" component={SignInForm} />
-              <Route exact path="/signup" component={SignUpForm} />
-              <Route exact path="/gallery" component={Gallery} />
-              <Route exact path="/about" component={AboutPage} />
-              <Route exact path="/profile/:id" component={Profile} />
+              <Route exact path="/" render={() => <HomePage />} />
+              <Route exact path="/signin" render={() => <SignInForm />} />
+              <Route exact path="/signup" render={() => <SignUpForm />} />
+              <Route exact path="/gallery" render={() => <Gallery />} />
+              <Route exact path="/about" render={() => <AboutPage />} />
+              <Route exact path="/profile/:id" render={() => <Profile />} />
             </Switch>
           </Container>
         </div>
