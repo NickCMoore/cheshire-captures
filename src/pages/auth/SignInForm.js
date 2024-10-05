@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { axiosReq } from '../../api/axiosDefaults';
-import { useHistory } from 'react-router-dom';
+import axios from 'axios';  
 import styles from '../../styles/SignInUpForm.module.css'; 
+import { useHistory } from 'react-router-dom';
 
 const SignInForm = () => {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
-
+  const { username, password } = formData;
+  const [error, setError] = useState(null);
   const history = useHistory();
 
   const handleChange = (event) => {
@@ -16,33 +17,47 @@ const SignInForm = () => {
       ...formData,
       [event.target.name]: event.target.value,
     });
+    setError(null);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axiosReq.post(
-        'https://cheshire-captures-backend-084aac6d9023.herokuapp.com/dj-rest-auth/login/',
-        formData
-      );
-      console.log('Response:', response.data);
-      history.push('/');
+      await axios.post("/dj-rest-auth/login/", formData);
+      history.push('/'); 
     } catch (error) {
-      console.error('Error during sign in:', error);
+      if (error.response && error.response.data) {
+        setError(error.response.data);
+      } else {
+        setError('Something went wrong. Please try again.');
+      }
     }
   };
-
+  
   return (
     <div className={styles.Background}>
       <div className={styles.FormContainer}>
         <h1 className={styles.Header}>Sign In</h1>
+
+        {error && (
+          <div className={styles.Error}>
+            {typeof error === 'object' ? (
+              Object.keys(error).map((key) => (
+                <p key={key}>{key}: {error[key]}</p>
+              ))
+            ) : (
+              <p>{error}</p>
+            )}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit}>
           <input
             type="text"
             name="username"
             placeholder="Username"
             className={styles.Input}
-            value={formData.username}
+            value={username}
             onChange={handleChange}
           />
           <input
@@ -50,10 +65,10 @@ const SignInForm = () => {
             name="password"
             placeholder="Password"
             className={styles.Input}
-            value={formData.password}
+            value={password}
             onChange={handleChange}
           />
-          <button type="submit" className={styles.Button}>Sign In</button> {/* Same button class as Sign Up */}
+          <button type="submit" className={styles.Button}>Sign In</button>
         </form>
       </div>
     </div>
@@ -61,3 +76,4 @@ const SignInForm = () => {
 };
 
 export default SignInForm;
+
