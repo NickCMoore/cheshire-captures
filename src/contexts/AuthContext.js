@@ -1,82 +1,66 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
 export const AuthContext = createContext();
+export const SetAuthContext = createContext();
+
+export const useAuth = () => useContext(AuthContext);
+export const useSetAuth = () => useContext(SetAuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
+
+  const getCSRFToken = () => {
+    let csrfToken = null;
+    if (document.cookie) {
+      document.cookie.split('; ').forEach(cookie => {
+        if (cookie.startsWith('csrftoken=')) {
+          csrfToken = cookie.split('=')[1];
+        }
+      });
+    }
+    return csrfToken;
+  };
 
   const fetchCurrentUser = async () => {
     try {
-      const response = await axios.get('/auth/user/');
-      setCurrentUser(response.data);
-    } catch (error) {
+      const { data } = await axios.get('/auth/user/');
+      setCurrentUser(data);
+    } catch {
       setCurrentUser(null);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
+  };
+
+  const loginUser = async (credentials) => {
+    const csrfToken = getCSRFToken();
+    await axios.post('/auth/login/', credentials, {
+      headers: { 'X-CSRFToken': csrfToken },
+    });
+    await fetchCurrentUser();
+  };
+
+  const logoutUser = async () => {
+    const csrfToken = getCSRFToken();
+    if (!csrfToken) return;
+    await axios.post('/auth/logout/', {}, {
+      headers: { 'X-CSRFToken': csrfToken },
+    });
+    setCurrentUser(null);
+    localStorage.removeItem('token');
   };
 
   useEffect(() => {
     fetchCurrentUser();
   }, []);
 
-  const loginUser = async (credentials) => {
-    try {
-      const response = await axios.post('/auth/login/', credentials);
-      const token = response.data.key;
-      localStorage.setItem('token', token);
-      axios.defaults.headers.common['Authorization'] = `Token ${token}`;
-      await fetchCurrentUser();
-    } catch (error) {
-      throw error;
-    }
-  };
-
-  const registerUser = async (credentials) => {
-    try {
-      const response = await axios.post('/auth/registration/', credentials);
-      const token = response.data.key;
-      localStorage.setItem('token', token);
-      axios.defaults.headers.Authorization = `Token ${token}`;
-      await fetchCurrentUser();
-    } catch (error) {
-      throw error;
-    }
-  };
-
-  const logoutUser = async () => {
-    const csrfToken = getCSRFToken();
-    if (!csrfToken) {
-      console.error('CSRF token missing');
-      return;
-    }
-
-    try {
-      await axios.post('/auth/logout/', {}, {
-        headers: {
-          'X-CSRFToken': csrfToken,
-        },
-      });
-      localStorage.removeItem('token');
-      delete axios.defaults.headers.common['Authorization'];
-      setCurrentUser(null);
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
-  };
-
-  const getCSRFToken = () => {
-    const cookieValue = document.cookie.split('; ').find(row => row.startsWith('csrftoken='));
-    return cookieValue ? cookieValue.split('=')[1] : null;
-  };
-
   return (
-    <AuthContext.Provider value={{ currentUser, loginUser, registerUser, logoutUser, loading }}>
-      {children}
+    <AuthContext.Provider value={currentUser}>
+      <SetAuthContext.Provider value={{ loginUser, logoutUser }}>
+        {!loading && children}
+      </SetAuthContext.Provider>
     </AuthContext.Provider>
   );
 };
-
-export const useAuth = () => useContext(AuthContext);
