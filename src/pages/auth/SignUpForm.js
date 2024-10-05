@@ -6,11 +6,10 @@ import { useHistory } from 'react-router-dom';
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
     username: '',
-    email: '',
     password1: '',
     password2: '',
   });
-  const { username, email, password1, password2 } = formData;
+  const { username, password1, password2 } = formData;
   const [error, setError] = useState(null);
   const history = useHistory();
 
@@ -60,14 +59,6 @@ const SignUpForm = () => {
             placeholder="Username"
             className={styles.Input}
             value={username}
-            onChange={handleChange}
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            className={styles.Input}
-            value={email}
             onChange={handleChange}
           />
           <input
