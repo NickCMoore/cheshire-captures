@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import NavBar from './components/NavBar';
 import Container from 'react-bootstrap/Container';
@@ -22,10 +22,18 @@ function App() {
   useEffect(() => {
     const handleMount = async () => {
       try {
+<<<<<<< HEAD
         const { data } = await axios.get('dj-rest-auth/user/');
+=======
+        const { data } = await axios.get('/dj-rest-auth/user/', { withCredentials: true });
+>>>>>>> fbdfa4bfbb61cd361109f4d5abad21b6c585ce23
         setCurrentUser(data);
       } catch (err) {
-        console.log(err);
+        if (err.response?.status === 401) {
+          setCurrentUser(null);
+        } else {
+          console.error("Error fetching user:", err);
+        }
       }
     };
     handleMount();
@@ -39,11 +47,23 @@ function App() {
           <Container className={styles.Main}>
             <Switch>
               <Route exact path="/" render={() => <HomePage />} />
-              <Route exact path="/signin" render={() => <SignInForm />} />
-              <Route exact path="/signup" render={() => <SignUpForm />} />
+              <Route 
+                exact 
+                path="/signin" 
+                render={() => currentUser ? <Redirect to="/" /> : <SignInForm />} 
+              />
+              <Route 
+                exact 
+                path="/signup" 
+                render={() => currentUser ? <Redirect to="/" /> : <SignUpForm />} 
+              />
               <Route exact path="/gallery" render={() => <Gallery />} />
               <Route exact path="/about" render={() => <AboutPage />} />
-              <Route exact path="/profile/:id" render={() => <Profile />} />
+              <Route 
+                exact 
+                path="/profile/:id" 
+                render={() => currentUser ? <Profile /> : <Redirect to="/signin" />} 
+              />
             </Switch>
           </Container>
         </div>
@@ -53,3 +73,4 @@ function App() {
 }
 
 export default App;
+
