@@ -1,26 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useCurrentUser } from '../contexts/CurrentUserContext';
 import axios from 'axios';
 import { Container, Row, Col, Button, Image, Card } from 'react-bootstrap';
 import styles from '../styles/Profile.module.css';
 
 const Profile = () => {
   const { id } = useParams();
+  const currentUser = useCurrentUser();
   const [profile, setProfile] = useState(null);
-  const [currentUser, setCurrentUser] = useState(null);
   const [isFollowing, setIsFollowing] = useState(false);
   const [isOwnProfile, setIsOwnProfile] = useState(false);
 
   useEffect(() => {
-    const fetchCurrentUser = async () => {
-      try {
-        const { data } = await axios.get('/auth/user/');
-        setCurrentUser(data);
-      } catch (error) {
-        console.error('Error fetching current user:', error);
-      }
-    };
-
     const fetchProfile = async () => {
       try {
         const { data } = await axios.get(`/api/photographers/${id}/`);
@@ -34,8 +26,9 @@ const Profile = () => {
       }
     };
 
-    fetchCurrentUser();
-    fetchProfile();
+    if (currentUser) {
+      fetchProfile();
+    }
   }, [id, currentUser]);
 
   const handleFollowToggle = async () => {

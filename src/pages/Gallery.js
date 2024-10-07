@@ -9,6 +9,7 @@ const Gallery = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const [error, setError] = useState(null);
   const { ref, inView } = useInView();
 
   useEffect(() => {
@@ -16,7 +17,7 @@ const Gallery = () => {
       if (!hasMore || loading) return;
       setLoading(true);
       try {
-        const response = await axiosReq.get(`https://cheshire-captures-backend-084aac6d9023.herokuapp.com/api/photos/?page=${page}`, { withCredentials: true });
+        const response = await axiosReq.get(`/api/photos/?page=${page}`);
         
         if (response.data && Array.isArray(response.data.results)) {
           if (response.data.results.length > 0) {
@@ -36,6 +37,8 @@ const Gallery = () => {
       } catch (error) {
         if (error.response && error.response.status === 404) {
           setHasMore(false);
+        } else {
+          setError('Error loading images. Please try again later.');
         }
       } finally {
         setLoading(false);
@@ -58,12 +61,15 @@ const Gallery = () => {
                   <img src={image.url} alt={`Gallery ${index}`} className={styles.image} />
                 </div>
               ))
-            ) : (
+            ) : !loading && !error ? (
               <div className={styles.endMessage}>No images available.</div>
-            )}
+            ) : null}
+
             {loading && <div className={styles.loader}>Loading...</div>}
+            {error && <div className={styles.errorMessage}>{error}</div>}
+
             <div ref={ref} className={styles.loader}></div>
-            {!hasMore && <div className={styles.endMessage}>No more images to load.</div>}
+            {!hasMore && !loading && <div className={styles.endMessage}>No more images to load.</div>}
           </div>
         </Col>
       </Row>

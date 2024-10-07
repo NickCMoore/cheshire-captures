@@ -4,7 +4,6 @@ import styles from '../../styles/SignInUpForm.module.css';
 import { useHistory } from 'react-router-dom';
 import { useSetCurrentUser } from '../../contexts/CurrentUserContext';
 
-
 const SignInForm = () => {
   const [formData, setFormData] = useState({
     username: '',
@@ -12,6 +11,7 @@ const SignInForm = () => {
   });
   const { username, password } = formData;
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const setCurrentUser = useSetCurrentUser();
   const history = useHistory();
 
@@ -20,16 +20,20 @@ const SignInForm = () => {
       ...formData,
       [event.target.name]: event.target.value,
     });
-    setError(null);
+    setError(null); 
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);  
     try {
-      const { data } = await axios.post("/dj-rest-auth/login/", formData);
-      setCurrentUser(data.user);
+      const { data } = await axios.post("/dj-rest-auth/login/", formData, {
+        withCredentials: true,  
+      });
+      setCurrentUser(data.user);  
       history.push('/'); 
     } catch (error) {
+      setLoading(false); 
       if (error.response && error.response.data) {
         setError(error.response.data);
       } else {
@@ -37,7 +41,7 @@ const SignInForm = () => {
       }
     }
   };
-  
+
   return (
     <div className={styles.Background}>
       <div className={styles.FormContainer}>
@@ -54,6 +58,8 @@ const SignInForm = () => {
             )}
           </div>
         )}
+
+        {loading ? <p>Loading...</p> : null}
 
         <form onSubmit={handleSubmit}>
           <input
@@ -72,7 +78,9 @@ const SignInForm = () => {
             value={password}
             onChange={handleChange}
           />
-          <button type="submit" className={styles.Button}>Sign In</button>
+          <button type="submit" className={styles.Button} disabled={loading}>
+            {loading ? "Signing In..." : "Sign In"}
+          </button>
         </form>
       </div>
     </div>
