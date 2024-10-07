@@ -22,18 +22,19 @@ function App() {
   useEffect(() => {
     const handleMount = async () => {
       try {
-        const { data } = await axios.get('/dj-rest-auth/user/');
+        const { data } = await axios.get('/dj-rest-auth/user/', { withCredentials: true });
         setCurrentUser(data);
       } catch (err) {
         if (err.response?.status === 401) {
-  
-          setCurrentUser(null); 
-          console.log(err); 
+          setCurrentUser(null);
+        } else {
+          console.error("Error fetching user:", err);
         }
       }
     };
     handleMount();
   }, []);
+  
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
