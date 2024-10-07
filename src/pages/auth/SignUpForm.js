@@ -13,12 +13,11 @@ const SignUpForm = () => {
   const setCurrentUser = useSetCurrentUser(); 
   const [signUpData, setSignUpData] = useState({
     username: '',
-    email: '',
     password1: '',
     password2: '',
   });
 
-  const { username, email, password1, password2 } = signUpData;
+  const {username, password1, password2 } = signUpData;
   const [errors, setErrors] = useState({});
   const history = useHistory();
 
@@ -61,21 +60,6 @@ const SignUpForm = () => {
               />
             </Form.Group>
             {errors.username?.map((message, idx) => 
-              <Alert variant="warning" key={idx}>{message}</Alert>
-            )}
-
-            <Form.Group controlId="email">
-              <Form.Label className="d-none">Email</Form.Label>
-              <Form.Control 
-                className={styles.Input}
-                type="email" 
-                placeholder="Enter email" 
-                name="email"
-                value={email}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            {errors.email?.map((message, idx) => 
               <Alert variant="warning" key={idx}>{message}</Alert>
             )}
 

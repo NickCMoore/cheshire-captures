@@ -27,7 +27,6 @@ function SignInForm() {
   const [errors, setErrors] = useState({});
   const history = useHistory();
 
-  // Handles input field changes
   const handleChange = (e) => {
     setSignInData({
       ...signInData,
@@ -38,27 +37,22 @@ function SignInForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await axios.post('/dj-rest-auth/login/', signInData);
-      
+      const { data } = await axios.post('dj-rest-auth/login/', signInData);
       setCurrentUser(data.user);
-      setTokenTimestamp(data);  // This should store the refresh token
-      localStorage.setItem('refresh_token', data.refresh_token);  // Store refresh token manually if needed
-  
-      history.goBack();
+      setTokenTimestamp(data);
+      
+      history.push(`/profile/${data.user.username}`);
     } catch (err) {
-      console.error("Login error:", err.response?.data || err.message || err);
       setErrors(err.response?.data || {});
     }
   };
-  
 
   return (
     <Row className={styles.Row}>
       <Col className="my-auto p-0 p-md-2" md={6}>
         <Container className={`${appStyles.Content} p-4`}>
-          <Image src={logo} className="mb-5" alt="Logo" />
+          <Image src={logo} className="mb-5" />
           <h1 className={styles.Header}>Sign In</h1>
-          
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="username">
               <Form.Label className="d-none">Username</Form.Label>
@@ -98,19 +92,21 @@ function SignInForm() {
             ))}
           </Form>
         </Container>
-        
         <Container className={`mt-3 ${appStyles.Content}`}>
           <Link className={styles.Link} to="/signup">
             Don't have an account? <span>Sign up now!</span>
           </Link>
         </Container>
       </Col>
-
-      <Col md={6} className={`my-auto d-none d-md-block p-2 ${styles.SignInCol}`}>
+      <Col
+        md={6}
+        className={`my-auto d-none d-md-block p-2 ${styles.SignInCol}`}
+      >
         <Image
           className={`${appStyles.FillerImage}`}
-          src={"https://res.cloudinary.com/dwgtce0rh/image/upload/v1727870434/24633_a5n9zu.jpg"}
-          alt="Sign in visual"
+          src={
+            "https://res.cloudinary.com/dwgtce0rh/image/upload/v1727870434/24633_a5n9zu.jpg"
+          }
         />
       </Col>
     </Row>

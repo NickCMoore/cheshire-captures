@@ -6,7 +6,7 @@ import { Container, Row, Col, Button, Image, Card } from 'react-bootstrap';
 import styles from '../styles/Profile.module.css';
 
 const Profile = () => {
-  const { id } = useParams();
+  const { username } = useParams(); 
   const currentUser = useCurrentUser();
   const [profile, setProfile] = useState(null);
   const [isFollowing, setIsFollowing] = useState(false);
@@ -15,10 +15,10 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const { data } = await axios.get(`/api/photographers/${id}/`);
+        const { data } = await axios.get(`/api/photographers/${username}/`);  
         setProfile(data);
         setIsFollowing(data.is_following);
-        if (currentUser && data.user === currentUser.id) {
+        if (currentUser && data.user.id === currentUser.id) {  
           setIsOwnProfile(true);
         }
       } catch (error) {
@@ -29,15 +29,15 @@ const Profile = () => {
     if (currentUser) {
       fetchProfile();
     }
-  }, [id, currentUser]);
+  }, [username, currentUser]);
 
   const handleFollowToggle = async () => {
     try {
       if (isFollowing) {
-        await axios.post(`/api/follows/${id}/unfollow/`);
+        await axios.post(`/api/follows/${profile.user.id}/unfollow/`); 
         setIsFollowing(false);
       } else {
-        await axios.post(`/api/follows/`, { following: id });
+        await axios.post(`/api/follows/`, { following: profile.user.id });
         setIsFollowing(true);
       }
     } catch (error) {
@@ -45,7 +45,7 @@ const Profile = () => {
     }
   };
 
-  if (!profile || !currentUser) return <p>Loading...</p>;
+  if (!profile) return <p>Loading...</p>;
 
   return (
     <Container className={styles.profileContainer}>
