@@ -1,19 +1,12 @@
-import {useState} from "react";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom/cjs/react-router-dom";
-import styles from "../../styles/SignInUpForm.module.css";
-import btnStyles from "../../styles/Button.module.css";
-import appStyles from "../../App.module.css";
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Image from "react-bootstrap/Image";
-import Alert from "react-bootstrap/Alert";
-import axios from "axios";
-import logo from "../../assets/cc-logo.png";
-import { useRedirect } from "../../hooks/UseRedirect";
+import React, { useState, useEffect } from 'react';
+import { Form, Button, Col, Row, Container, Alert } from 'react-bootstrap';
+import { Link, useHistory } from 'react-router-dom';
+import axios from 'axios'; 
+import styles from '../../styles/SignInUpForm.module.css';
+import btnStyles from '../../styles/Button.module.css';
+
+axios.defaults.xsrfCookieName = 'csrftoken'; 
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
 const SignUpForm = () => {
 
@@ -30,20 +23,55 @@ const SignUpForm = () => {
   
   const history = useHistory();
 
-  const handleChange = (e) => {
-    setSignUpData({
-      ...signUpData,
-      [e.target.name]: e.target.value,
+  const getCSRFToken = async () => {
+    try {
+      await axios.get('https://cheshire-captures-backend-084aac6d9023.herokuapp.com/dj-rest-auth/csrf/'); // Fetch CSRF token from your backend
+      const csrfToken = document.cookie.split('; ').find((row) => row.startsWith('csrftoken'))?.split('=')[1];
+      return csrfToken;
+    } catch (err) {
+      console.error('Error fetching CSRF token', err);
+    }
+  };
+
+  useEffect(() => {
+    getCSRFToken();
+  }, []);
+
+  const handleChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
     });
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log('Form submitted');
+
     try {
-        await axios.post('dj-rest-auth/registration/', signUpData)
-        history.push('/signin')
-    } catch(err){
-        setErrors(err.response?.data)
+      const csrfToken = await getCSRFToken();
+      console.log('CSRF Token:', csrfToken); 
+
+      const formDataToSubmit = {
+        username,
+        email,
+        password1,
+        password2,
+      };
+
+      await axios.post(
+        'https://cheshire-captures-backend-084aac6d9023.herokuapp.com/dj-rest-auth/registration/',
+        formDataToSubmit,
+        { headers: { 'X-CSRFToken': csrfToken } } 
+      );
+
+      history.push('/');
+    } catch (err) {
+      if (err.response && err.response.status === 400) {
+        setErrors(err.response.data);
+      } else {
+        setErrors({ detail: 'Something went wrong. Please try again.' });
+      }
     }
   };
 
