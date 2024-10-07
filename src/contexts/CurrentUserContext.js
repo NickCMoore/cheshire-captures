@@ -35,9 +35,13 @@ export const CurrentUserProvider = ({ children }) => {
     }, []);
 
     useMemo(() => {
-        // Request Interceptor for automatic token refreshing
         axiosReq.interceptors.request.use(
             async (config) => {
+                const accessToken = localStorage.getItem('access_token');
+                if (accessToken) {
+                    config.headers.Authorization = `Bearer ${accessToken}`;
+                }
+
                 const refreshToken = localStorage.getItem('refresh_token');
                 if (shouldRefreshToken() && refreshToken) {
                     try {
@@ -47,10 +51,9 @@ export const CurrentUserProvider = ({ children }) => {
                         localStorage.setItem('access_token', data.access);
                         config.headers.Authorization = `Bearer ${data.access}`;
                     } catch (err) {
-                        setCurrentUser(null); // Clear current user
+                        setCurrentUser(null);
                         removeTokenTimestamp();
                         history.push("/signin");
-                        return config;  // Proceed with the request without refreshing
                     }
                 }
                 return config;
@@ -58,37 +61,29 @@ export const CurrentUserProvider = ({ children }) => {
             (err) => Promise.reject(err)
         );
 
-        // Response Interceptor to handle 401 errors and refresh tokens
         axiosRes.interceptors.response.use(
-            (response) => response,  // Pass through successful responses
+            (response) => response,
             async (err) => {
                 const originalRequest = err.config;
                 if (err.response?.status === 401 && !originalRequest._retry) {
                     originalRequest._retry = true;
-
                     try {
                         const refreshToken = localStorage.getItem('refresh_token');
                         if (refreshToken) {
                             const { data } = await axios.post("/dj-rest-auth/token/refresh/", {
                                 refresh: refreshToken,
                             });
-
-                            // Store the new access token
                             localStorage.setItem('access_token', data.access);
-
-                            // Update the original request with the new access token
                             originalRequest.headers.Authorization = `Bearer ${data.access}`;
-
-                            // Retry the original request with the new token
-                            return axios(originalRequest);
+                            return axios(originalRequest);  
                         }
                     } catch (tokenRefreshError) {
-                        setCurrentUser(null); // Clear current user on token refresh failure
+                        setCurrentUser(null);
                         removeTokenTimestamp();
                         history.push("/signin");
                     }
                 }
-                return Promise.reject(err);  // For other errors, reject the request
+                return Promise.reject(err);
             }
         );
     }, [history]);
@@ -101,3 +96,4 @@ export const CurrentUserProvider = ({ children }) => {
         </CurrentUserContext.Provider>
     );
 };
+
