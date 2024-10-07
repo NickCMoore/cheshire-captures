@@ -3,12 +3,10 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-height: calc(100vh - 160px); 
-    margin-top: 40px; 
-    margin-bottom: 40px; 
+    min-height: 100vh; 
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; 
     position: relative;
     z-index: 1;
     overflow: hidden;
@@ -31,7 +29,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 500px; 
+    max-width: 400px; 
     margin: 0 auto; 
     display: flex;
     flex-direction: column;
@@ -39,6 +37,7 @@
     text-align: center;
     z-index: 2;
 }
+
 
 .Input {
     background: #ffffff;
@@ -50,8 +49,13 @@
     width: 100%;
     max-width: 300px; 
     margin: 10px auto;
+    transition: border-color 0.3s ease;
 }
 
+.Input:focus {
+    border-color: var(--wisteria);
+    outline: none;
+}
 
 .Button {
     background-color: var(--mountbatten-pink);
@@ -71,10 +75,9 @@
     color: #ffffff;
 }
 
-
 .Header {
     font-weight: 700;
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     text-align: center;
     text-transform: uppercase;
     color: var(--mountbatten-pink);
@@ -92,24 +95,6 @@
 .Link span {
     color: var(--wisteria);
     font-weight: bold;
-}
-
-
-.Button {
-    background-color: var(--mountbatten-pink);
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 50px;
-    margin: 10px auto;
-    display: block;
-    cursor: pointer;
-    text-align: center;
-}
-
-.Button:hover {
-    background-color: var(--wisteria);
-    color: #ffffff;
 }
 
 .Row {
@@ -131,4 +116,23 @@
     width: 100%;
     bottom: 0;
     z-index: 1000;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .FormContainer {
+        padding: 20px 15px;
+    }
+
+    .Input {
+        max-width: 100%;
+    }
+
+    .Header {
+        font-size: 1.25rem;
+    }
+
+    .Footer {
+        font-size: 0.8rem;
+    }
 }
