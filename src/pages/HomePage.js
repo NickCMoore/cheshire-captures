@@ -10,7 +10,7 @@ const HomePage = () => {
         <h1>Welcome to Cheshire Captures</h1>
         <p>Capture and share your favourite moments with the community.</p>
         <Link to="/signup">
-          <button className={styles.Button}>Get Started</button>
+          <button className={styles.Button} aria-label="Sign up and get started">Get Started</button>
         </Link>
       </div>
     </div>

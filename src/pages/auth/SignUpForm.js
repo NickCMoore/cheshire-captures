@@ -12,6 +12,7 @@ const SignUpForm = () => {
   });
   const { username, password1, password2 } = formData;
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
   const setCurrentUser = useContext(SetCurrentUserContext);
 
@@ -25,11 +26,15 @@ const SignUpForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     try {
-      const { data } = await axios.post("/dj-rest-auth/registration/", formData);
-      setCurrentUser(data.user); 
-      history.push('/'); 
+      const { data } = await axios.post("/dj-rest-auth/registration/", formData, {
+        withCredentials: true,
+      });
+      setCurrentUser(data.user);
+      history.push('/');
     } catch (error) {
+      setLoading(false);
       if (error.response && error.response.data) {
         setError(error.response.data);
       } else {
@@ -54,6 +59,8 @@ const SignUpForm = () => {
             )}
           </div>
         )}
+
+        {loading ? <p>Loading...</p> : null}
 
         <form onSubmit={handleSubmit}>
           <input
@@ -80,7 +87,9 @@ const SignUpForm = () => {
             value={password2}
             onChange={handleChange}
           />
-          <button type="submit" className={styles.Button}>Sign Up</button>
+          <button type="submit" className={styles.Button} disabled={loading}>
+            {loading ? "Signing Up..." : "Sign Up"}
+          </button>
         </form>
       </div>
     </div>
