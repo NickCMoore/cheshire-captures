@@ -6,13 +6,10 @@ import styles from '../../styles/SignInUpForm.module.css';
 import btnStyles from '../../styles/Button.module.css';
 import appStyles from '../../App.module.css';
 import logo from '../../assets/cc-logo.png';  
-import { useRedirect } from '../../hooks/UseRedirect';  
 import { useSetCurrentUser } from '../../contexts/CurrentUserContext';  
 import { setTokenTimestamp } from '../../utils/Utils';  
 
 const SignUpForm = () => {
-  useRedirect('loggedIn');
-
   const setCurrentUser = useSetCurrentUser(); 
   const [signUpData, setSignUpData] = useState({
     username: '',
