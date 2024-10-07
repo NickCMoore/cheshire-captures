@@ -1,90 +1,118 @@
-import React, { useState } from 'react';
-import axios from 'axios';  
-import styles from '../../styles/SignInUpForm.module.css'; 
-import { useHistory } from 'react-router-dom';
-import { useSetCurrentUser } from '../../contexts/CurrentUserContext';
+import { Link, useHistory } from "react-router-dom";
+import { useState } from "react";
+import Form from "react-bootstrap/Form";
+import Alert from "react-bootstrap/Alert";
+import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Image from "react-bootstrap/Image";
+import Container from "react-bootstrap/Container";
+import styles from "../../styles/SignInUpForm.module.css";
+import btnStyles from "../../styles/Button.module.css";
+import appStyles from "../../App.module.css";
+import logo from "../../assets/cc-logo.png";
+import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
+import { useRedirect } from "../../hooks/UseRedirect";
+import { setTokenTimestamp } from "../../utils/Utils";
+import axios from "axios";
 
-const SignInForm = () => {
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-  });
-  const { username, password } = formData;
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const setCurrentUser = useSetCurrentUser();
-  const history = useHistory();
+function SignInForm() {
 
-  const handleChange = (event) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
-    setError(null); 
-  };
+    const setCurrentUser = useSetCurrentUser();
+    useRedirect('loggedIn')
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setLoading(true);  
-    try {
-      const { data } = await axios.post("/dj-rest-auth/login/", formData, {
-        withCredentials: true,  
+    const [signInData, setSignInData] = useState({
+        username: '',
+        password: '',
       });
-      setCurrentUser(data.user);  
-      history.push('/'); 
-    } catch (error) {
-      setLoading(false); 
-      if (error.response && error.response.data) {
-        setError(error.response.data);
-      } else {
-        setError('Something went wrong. Please try again.');
-      }
-    }
-  };
+
+    const {username, password} = signInData;
+    const [errors, setErrors] = useState({});
+    const history = useHistory();
+
+    const handleChange = (e) => {
+        setSignInData({
+          ...signInData,
+          [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            const {data} = await axios.post('dj-rest-auth/login/', signInData)
+            setCurrentUser(data.user);
+            setTokenTimestamp(data);
+            history.goBack();
+        } catch(err){
+            setErrors(err.response?.data)
+        }
+    };
 
   return (
-    <div className={styles.Background}>
-      <div className={styles.FormContainer}>
-        <h1 className={styles.Header}>Sign In</h1>
-
-        {error && (
-          <div className={styles.Error}>
-            {typeof error === 'object' ? (
-              Object.keys(error).map((key) => (
-                <p key={key}>{key}: {error[key]}</p>
-              ))
-            ) : (
-              <p>{error}</p>
+    <Row className={styles.Row}>
+      <Col className="my-auto p-0 p-md-2" md={6}>
+        <Container className={`${appStyles.Content} p-4 `}>
+          <Image src={logo} className="mb-5" />
+          <h1 className={styles.Header}>sign in</h1>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="username">
+              <Form.Label className="d-none">Username</Form.Label>
+              <Form.Control 
+                className={styles.Input}
+                type="text" 
+                name="username"
+                placeholder="Enter username"
+                value={username}
+                onChange={handleChange}
+                  />
+            </Form.Group>
+            {errors.username?.map((message, idx) => 
+              <Alert variant="warning" key={idx}>{message}</Alert>
             )}
-          </div>
-        )}
 
-        {loading ? <p>Loading...</p> : null}
+            <Form.Group controlId="password">
+              <Form.Label className="d-none">Password</Form.Label>
+              <Form.Control 
+                className={styles.Input}
+                type="password" 
+                name="password"
+                placeholder="Password"
+                value={password}
+                onChange={handleChange} 
+              />
+            </Form.Group>
+            {errors.password?.map((message, idx) => 
+              <Alert variant="warning" key={idx}>{message}</Alert>
+            )}
 
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            className={styles.Input}
-            value={username}
-            onChange={handleChange}
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            className={styles.Input}
-            value={password}
-            onChange={handleChange}
-          />
-          <button type="submit" className={styles.Button} disabled={loading}>
-            {loading ? "Signing In..." : "Sign In"}
-          </button>
-        </form>
-      </div>
-    </div>
+            <Button className={`${btnStyles.Button} ${btnStyles.Bright} ${btnStyles.Wide}`} type="submit">
+              Sign in
+            </Button>
+            {errors.non_field_errors?.map((message, idx) => 
+              <Alert variant="warning" className="mt-3" key={idx}>{message}</Alert>
+            )}
+          </Form>
+        </Container>
+        <Container className={`mt-3 ${appStyles.Content}`}>
+          <Link className={styles.Link} to="/signup">
+            Don't have an account? <span>Sign up now!</span>
+          </Link>
+        </Container>
+      </Col>
+      <Col
+        md={6}
+        className={`my-auto d-none d-md-block p-2 ${styles.SignInCol}`}
+      >
+        <Image
+          className={`${appStyles.FillerImage}`}
+          src={
+            "https://res.cloudinary.com/dwgtce0rh/image/upload/v1727870434/24633_a5n9zu.jpg"
+          }
+        />
+      </Col>
+    </Row>
   );
-};
+}
 
 export default SignInForm;
