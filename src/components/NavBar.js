@@ -16,14 +16,11 @@ import { useState } from 'react';
 // Axios imports
 import axios from 'axios';
 
-
-
 const NavBar = () => {
 
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
 
-  // Variables to toggle open and closed mobile navbar burger menu
   const [toggleNavBar, setToggleNavBar] = useState(false);
 
   const handleSignOut = async () => {
@@ -47,6 +44,7 @@ const NavBar = () => {
       <i className="fas fa-plus"></i>Add Event
     </NavLink>
   );
+
   const loggedInIcons = (
     <>
       <NavLink
@@ -63,12 +61,8 @@ const NavBar = () => {
 
       <NavDropdown
         id={styles.dropdownMenu}
-        title=
-          <span className={`${styles.dropdownText} d-sm-inline-column`}>
-            <i className="fas fa-heart"></i>
-            
-            My Events
-          </span>
+        title={<span className={`${styles.dropdownText} d-sm-inline-column`}>
+          <i className="fas fa-heart"></i>My Events</span>}
       >
         <NavDropdown.Item
           id={styles.dropdownItem}
@@ -118,6 +112,7 @@ const NavBar = () => {
           setToggleNavBar(!toggleNavBar);
         }}
       >
+        <i className="fas fa-user-circle"></i>Profile
       </NavDropdown.Item>
       <NavDropdown.Item 
         id={styles.dropdownItem}
@@ -131,8 +126,18 @@ const NavBar = () => {
   )
 
   const loggedOutIcons = (
-    <>    
-    
+    <>
+      <NavLink
+        exact
+        className={styles.NavLink}
+        activeClassName={styles.Active}
+        to="/about"
+        onClick={() => {
+          setToggleNavBar(!toggleNavBar);
+        }}
+      >
+        <i className="fas fa-info-circle"></i>About
+      </NavLink>
     </>
   );
 
@@ -202,7 +207,6 @@ const NavBar = () => {
                     <i className="fas fa-user-alt ml-5"></i>
                 </span>
               }
-
               id="basic-nav-dropdown" 
             >
               {currentUser ? loggedInDropdownIcons : loggedOutDropdownIcons}
@@ -214,4 +218,4 @@ const NavBar = () => {
   );
 }
 
-export default NavBar
+export default NavBar;

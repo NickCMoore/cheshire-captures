@@ -11,7 +11,6 @@ import AboutPage from "./pages/AboutPage";
 import Profile from "./pages/Profile";
 import { useCurrentUser } from "./contexts/CurrentUserContext";
 
-
 function App() {
   const currentUser = useCurrentUser();
 
@@ -20,21 +19,9 @@ function App() {
       <NavBar />
       <Container className={styles.Main}>
         <Switch>
-          <Route
-            exact
-            path="/"
-            render={() => <HomePage />}
-          />
-          <Route
-            exact
-            path="/gallery"
-            render={() => <Gallery />}
-          />
-          <Route
-            exact
-            path="/about"
-            render={() => <AboutPage />}
-          />
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/gallery" component={Gallery} />
+          <Route exact path="/about" component={AboutPage} />
           <Route
             exact
             path="/signin"
@@ -56,6 +43,7 @@ function App() {
               currentUser ? <Profile /> : <Redirect to="/signin" />
             }
           />
+          <Route render={() => <Redirect to="/" />} />
         </Switch>
       </Container>
     </div>
