@@ -24,7 +24,7 @@ function SignInForm() {
     const [signInData, setSignInData] = useState({
         username: '',
         password: '',
-      });
+    });
 
     const {username, password} = signInData;
     const [errors, setErrors] = useState({});
@@ -32,8 +32,8 @@ function SignInForm() {
 
     const handleChange = (e) => {
         setSignInData({
-          ...signInData,
-          [e.target.name]: e.target.value,
+            ...signInData,
+            [e.target.name]: e.target.value,
         });
     };
 
@@ -65,7 +65,7 @@ function SignInForm() {
                 placeholder="Enter username"
                 value={username}
                 onChange={handleChange}
-                  />
+              />
             </Form.Group>
             {errors.username?.map((message, idx) => 
               <Alert variant="warning" key={idx}>{message}</Alert>

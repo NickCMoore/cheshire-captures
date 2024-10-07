@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Form, Button, Col, Row, Container, Alert, Image } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios'; 
@@ -7,12 +7,13 @@ import btnStyles from '../../styles/Button.module.css';
 import appStyles from '../../App.module.css';
 import logo from '../../assets/cc-logo.png';  
 import { useRedirect } from '../../hooks/UseRedirect';  
-axios.defaults.xsrfCookieName = 'csrftoken'; 
-axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+import { useSetCurrentUser } from '../../contexts/CurrentUserContext';  
+import { setTokenTimestamp } from '../../utils/Utils';  
 
 const SignUpForm = () => {
   useRedirect('loggedIn');
 
+  const setCurrentUser = useSetCurrentUser(); 
   const [signUpData, setSignUpData] = useState({
     username: '',
     email: '',
@@ -24,20 +25,6 @@ const SignUpForm = () => {
   const [errors, setErrors] = useState({});
   const history = useHistory();
 
-  const getCSRFToken = async () => {
-    try {
-      await axios.get('https://cheshire-captures-backend-084aac6d9023.herokuapp.com/dj-rest-auth/csrf/');
-      const csrfToken = document.cookie.split('; ').find((row) => row.startsWith('csrftoken'))?.split('=')[1];
-      return csrfToken;
-    } catch (err) {
-      console.error('Error fetching CSRF token', err);
-    }
-  };
-
-  useEffect(() => {
-    getCSRFToken();
-  }, []);
-
   const handleChange = (event) => {
     setSignUpData({
       ...signUpData,
@@ -47,32 +34,13 @@ const SignUpForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Form submitted');
-
     try {
-      const csrfToken = await getCSRFToken();
-      console.log('CSRF Token:', csrfToken); 
-
-      const formDataToSubmit = {
-        username,
-        email,
-        password1,
-        password2,
-      };
-
-      await axios.post(
-        'https://cheshire-captures-backend-084aac6d9023.herokuapp.com/dj-rest-auth/registration/',
-        formDataToSubmit,
-        { headers: { 'X-CSRFToken': csrfToken } } 
-      );
-
-      history.push('/');
+      const {data} = await axios.post('/dj-rest-auth/registration/', signUpData);
+      setCurrentUser(data.user);
+      setTokenTimestamp(data);
+      history.goBack();
     } catch (err) {
-      if (err.response && err.response.status === 400) {
-        setErrors(err.response.data);
-      } else {
-        setErrors({ detail: 'Something went wrong. Please try again.' });
-      }
+      setErrors(err.response?.data);
     }
   };
 
