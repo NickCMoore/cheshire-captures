@@ -20,7 +20,13 @@ function App() {
       <Container className={styles.Main}>
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route exact path="/gallery" component={Gallery} />
+          <Route
+            exact
+            path="/gallery"
+            render={() =>
+              currentUser ? <Gallery /> : <Redirect to="/signin" />
+            }
+          />
           <Route exact path="/about" component={AboutPage} />
           <Route
             exact
