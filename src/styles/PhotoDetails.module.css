@@ -63,4 +63,27 @@
     font-size: 16px;
     border: 1px solid rgba(255, 255, 255, 0.2);
   }
+
+  .commentButton {
+    margin-top: 15px;
+    background-color: var(--mountbatten-pink);
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .commentButton:hover {
+    background-color: var(--ultra-violet); 
+    color: #fff; 
+  }
+  
+  .commentButton:focus {
+    outline: none;
+    box-shadow: 0 0 5px var(--ultra-violet); 
+  }
+  
   

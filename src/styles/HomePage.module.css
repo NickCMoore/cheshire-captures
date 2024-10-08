@@ -3,8 +3,8 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-height: calc(100vh - 70px); /* Adjust based on actual navbar height */
-    padding-top: 70px; /* Make sure content starts below the navbar */
+    min-height: calc(100vh - 70px); 
+    padding-top: 110px; 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,7 +20,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    background-color: rgba(0, 0, 0, 0.4); 
     z-index: -1;
 }
 

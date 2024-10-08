@@ -52,7 +52,7 @@ const PhotoDetails = () => {
         const { data } = await axiosReq.get(`/api/photos/${id}/comments/`);
         setComments(data.results);
       } catch (err) {
-        setComments(mockComments[id] || []); 
+        setComments(mockComments[id] || []);
       }
     };
 
@@ -116,8 +116,8 @@ const PhotoDetails = () => {
                 placeholder="Write your comment here..."
               />
             </Form.Group>
-            <Button variant="success" type="submit">
-              Post Comment
+            <Button className={`${styles.commentButton} btn`} type="submit">
+            Post Comment
             </Button>
           </Form>
         </Col>
