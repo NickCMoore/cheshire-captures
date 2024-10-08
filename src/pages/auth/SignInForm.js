@@ -34,22 +34,16 @@ function SignInForm() {
       const { data } = await axios.post('/dj-rest-auth/login/', signInData);
       
       setCurrentUser(data.user);
-      // Optionally store the token for authenticated requests
       localStorage.setItem('token', data.key);
-      
-      // Redirect the user to the homepage or profile after successful sign-in
       history.push(`/profile/${data.profile_id}`);
     } catch (err) {
-      console.error("Sign-in error:", err.response?.data || err.message || err);
       setErrors(err.response?.data || {});
     }
   };
-  
-
 
   return (
     <Container fluid className={styles.Background}>
-      <Row className="justify-content-center">
+      <Row className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
         <Col xs={12} md={6} lg={4}>
           <div className={styles.FormContainer}>
             <h1 className={styles.Header}>Sign In</h1>
@@ -66,7 +60,7 @@ function SignInForm() {
                 />
               </Form.Group>
               {errors.username?.map((message, idx) => (
-                <Alert variant="warning" key={idx}>
+                <Alert variant="warning" className={styles.Alert} key={idx}>
                   {message}
                 </Alert>
               ))}
@@ -83,29 +77,29 @@ function SignInForm() {
                 />
               </Form.Group>
               {errors.password?.map((message, idx) => (
-                <Alert variant="warning" key={idx}>
+                <Alert variant="warning" className={styles.Alert} key={idx}>
                   {message}
                 </Alert>
               ))}
 
-              <Button
-                className={`${btnStyles.Button} ${btnStyles.Bright}`}
-                type="submit"
-              >
-                Sign In
-              </Button>
+              <Row className="d-flex justify-content-center">
+                <Button className={`${btnStyles.Button} ${styles.Button}`} type="submit">
+                  Sign In
+                </Button>
+              </Row>
+
               {errors.non_field_errors?.map((message, idx) => (
-                <Alert variant="warning" className="mt-3" key={idx}>
+                <Alert variant="warning" className={`${styles.Alert} mt-3`} key={idx}>
                   {message}
                 </Alert>
               ))}
             </Form>
 
-            <Container className={`mt-3`}>
+            <Row className="d-flex justify-content-center mt-3">
               <Link className={styles.Link} to="/signup">
-                Don't have an account? <span>Sign up now!</span>
+                Don't have an account? <br></br><span>Sign up now!</span>
               </Link>
-            </Container>
+            </Row>
           </div>
         </Col>
       </Row>

@@ -1,138 +1,78 @@
 .Background {
     background-image: url('https://res.cloudinary.com/dwgtce0rh/image/upload/v1721310733/rrnrybzbr0iypcupobfl.jpg');
     background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    min-height: 100vh; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
-}
-
-.Background::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: -1;
+    background-color: var(--yinmn-blue);
+    height: 100vh;
 }
 
 .FormContainer {
-    background-color: #F3EAF4;
-    padding: 40px 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--yinmn-blue);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    color: var(--wisteria);
     width: 100%;
-    max-width: 400px; 
-    margin: 0 auto; 
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    text-align: center;
-    z-index: 2;
+    max-width: 500px;
+    min-width: 300px;
 }
 
+.Header {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 20px;
+    text-align: center;
+}
 
 .Input {
-    background: #ffffff;
-    border: 1px solid var(--yinmn-blue);
-    border-radius: 4px;
-    color: var(--ultra-violet);
-    text-align: center;
-    padding: 12px;
-    width: 100%;
-    max-width: 300px; 
-    margin: 10px auto;
-    transition: border-color 0.3s ease;
+    background-color: white; 
+    border: none;
+    border-radius: 5px;
+    color: var(--wisteria);
+    padding: 10px;
+    margin-bottom: 15px;
 }
 
 .Input:focus {
-    border-color: var(--wisteria);
+    background-color: white; 
     outline: none;
+    box-shadow: 0 0 5px var(--wisteria);
+}
+
+.Input::placeholder {
+    color: var(--wisteria); 
 }
 
 .Button {
-    background-color: var(--mountbatten-pink);
-    color: #ffffff;
+    background-color: var(--mountbatten-pink); 
+    color: white; 
     border: none;
-    padding: 10px 20px;
-    border-radius: 50px;
-    margin: 10px auto;
-    display: block;
-    cursor: pointer;
-    text-align: center;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1.2rem;
+    width: 100%;
     transition: background-color 0.3s ease-in-out;
 }
 
 .Button:hover {
-    background-color: var(--wisteria);
-    color: #ffffff;
-}
-
-.Header {
-    font-weight: 700;
-    font-size: 1.75rem;
-    text-align: center;
-    text-transform: uppercase;
-    color: var(--mountbatten-pink);
-    margin-bottom: 20px;
+    background-color: var(--ultra-violet); 
+    color: white;
 }
 
 .Link {
-    text-decoration: none;
+    color: var(--wisteria);
     text-align: center;
     display: block;
-    color: var(--ultra-violet);
-    font-size: 1rem;
+    margin-top: 15px;
 }
 
 .Link span {
-    color: var(--wisteria);
     font-weight: bold;
+    color: var(--mountbatten-pink);
 }
 
-.Row {
-    min-height: calc(100vh - 160px);
-    background-color: var(--rich-black);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    padding: 0;
-}
-
-.Footer {
-    background-color: var(--yinmn-blue); 
-    padding: 20px;
-    color: white;
-    text-align: center;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    z-index: 1000;
-    font-size: 0.9rem;
-}
-
-@media (max-width: 768px) {
-    .FormContainer {
-        padding: 20px 15px;
-    }
-
-    .Input {
-        max-width: 100%;
-    }
-
-    .Header {
-        font-size: 1.25rem;
-    }
-
-    .Footer {
-        font-size: 0.8rem;
-    }
+.Alert {
+    background-color: var(--ultra-violet);
+    border: none;
+    color: #fff;
 }

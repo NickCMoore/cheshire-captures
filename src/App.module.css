@@ -68,11 +68,6 @@ i:hover {
     vertical-align: middle;
 }
 
-/* Body Background Styling */
-body {
-    background-color: var(--yinmn-blue);
-}
-
 /* Photo Frame Styles */
 .photo-frame {
     border: 2px solid var(--ultra-violet);
