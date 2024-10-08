@@ -12,6 +12,7 @@ const Gallery = () => {
   const [error, setError] = useState(null);
   const { ref, inView } = useInView();
 
+  // Fetch images
   useEffect(() => {
     const fetchImages = async () => {
       if (!hasMore || loading) return;
@@ -20,26 +21,23 @@ const Gallery = () => {
         const response = await axiosReq.get(`/api/photos/?page=${page}`);
         
         if (response.data && Array.isArray(response.data.results)) {
-          if (response.data.results.length > 0) {
-            const cloudinaryBaseUrl = 'https://res.cloudinary.com/dwgtce0rh/image/upload/';
-            const updatedImages = response.data.results.map(image => ({
-              ...image,
-              url: `${cloudinaryBaseUrl}${image.image}`,
-            }));
-            setImages((prevImages) => [...prevImages, ...updatedImages]);
-            setPage((prevPage) => prevPage + 1);
-          } else {
+          const cloudinaryBaseUrl = 'https://res.cloudinary.com/dwgtce0rh/image/upload/';
+          const updatedImages = response.data.results.map(image => ({
+            ...image,
+            url: `${cloudinaryBaseUrl}${image.image}`,
+          }));
+
+          setImages((prevImages) => [...prevImages, ...updatedImages]);
+          setPage((prevPage) => prevPage + 1);
+
+          if (response.data.results.length === 0) {
             setHasMore(false);
           }
         } else {
           setHasMore(false);
         }
       } catch (error) {
-        if (error.response && error.response.status === 404) {
-          setHasMore(false);
-        } else {
-          setError('Error loading images. Please try again later.');
-        }
+        setError('Error loading images. Please try again later.');
       } finally {
         setLoading(false);
       }
@@ -53,20 +51,30 @@ const Gallery = () => {
   return (
     <Container fluid className={styles.galleryContainer}>
       <Row className="justify-content-center">
-        <Col md={8} lg={6}>
+        <Col md={10} lg={8}>
           <div className={styles.galleryContent}>
+            {error && <div className={styles.errorMessage}>{error}</div>}
+
             {images.length > 0 ? (
-              images.map((image, index) => (
-                <div key={index} className={styles.imageContainer}>
-                  <img src={image.url} alt={`Gallery ${index}`} className={styles.image} />
-                </div>
-              ))
+              <Row>
+                {images.map((image, index) => (
+                  <Col xs={12} sm={6} md={4} lg={3} key={index} className={styles.imageCol}>
+                    <div className={styles.imageContainer}>
+                      <img 
+                        src={image.url} 
+                        alt={image.title || `Gallery ${index}`} 
+                        className={styles.image} 
+                        loading="lazy" 
+                      />
+                    </div>
+                  </Col>
+                ))}
+              </Row>
             ) : !loading && !error ? (
               <div className={styles.endMessage}>No images available.</div>
             ) : null}
 
             {loading && <div className={styles.loader}>Loading...</div>}
-            {error && <div className={styles.errorMessage}>{error}</div>}
 
             <div ref={ref} className={styles.loader}></div>
             {!hasMore && !loading && <div className={styles.endMessage}>No more images to load.</div>}

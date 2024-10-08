@@ -14,46 +14,36 @@ export const CurrentUserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
     const history = useHistory();
 
-    const fetchCurrentUser = async () => {
-        const accessToken = localStorage.getItem('access_token');
-        if (accessToken) {
-            try {
-                const { data } = await axiosRes.get('dj-rest-auth/user/', {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                });
-                setCurrentUser(data);
-            } catch (err) {
-                console.log('Error fetching user data:', err);
-            }
-        }
-    };
+// Fetch current user info
+// const fetchCurrentUser = async () => {
+//     try {
+//         const { data } = await axiosRes.get('dj-rest-auth/user/');
+//         setCurrentUser(data);
+//     } catch (err) {
+//         console.error('Error fetching user data:', err);
+//         setCurrentUser(null);  // Log out on error
+//     }
+// };
 
-    useEffect(() => {
-        fetchCurrentUser();
-    }, []);
-    
+// useEffect(() => {
+//     fetchCurrentUser();
+// }, []);
+
+
     useMemo(() => {
+       
         axiosReq.interceptors.request.use(
             async (config) => {
-                const accessToken = localStorage.getItem('access_token');
-                if (accessToken) {
-                    config.headers.Authorization = `Bearer ${accessToken}`;
-                }
-
                 const refreshToken = localStorage.getItem('refresh_token');
                 if (shouldRefreshToken() && refreshToken) {
                     try {
-                        const { data } = await axios.post('/dj-rest-auth/token/refresh/', {
-                            refresh: refreshToken,
-                        });
+                        const { data } = await axios.post('/dj-rest-auth/token/refresh/', { refresh: refreshToken });
                         localStorage.setItem('access_token', data.access);
-                        config.headers.Authorization = `Bearer ${data.access}`;
+                        config.headers.Authorization = `Bearer ${data.access}`; 
                     } catch (err) {
                         setCurrentUser(null);
-                        removeTokenTimestamp();
-                        history.push('/signin');
+                        removeTokenTimestamp(); 
+                        history.push('/signin');  
                     }
                 }
                 return config;
@@ -70,17 +60,15 @@ export const CurrentUserProvider = ({ children }) => {
                     try {
                         const refreshToken = localStorage.getItem('refresh_token');
                         if (refreshToken) {
-                            const { data } = await axios.post('/dj-rest-auth/token/refresh/', {
-                                refresh: refreshToken,
-                            });
-                            localStorage.setItem('access_token', data.access);
-                            originalRequest.headers.Authorization = `Bearer ${data.access}`;
+                            const { data } = await axios.post('/dj-rest-auth/token/refresh/', { refresh: refreshToken });
+                            localStorage.setItem('access_token', data.access);  
+                            originalRequest.headers.Authorization = `Bearer ${data.access}`;  
                             return axios(originalRequest);
                         }
                     } catch (tokenRefreshError) {
                         setCurrentUser(null);
-                        removeTokenTimestamp();
-                        history.push('/signin');
+                        removeTokenTimestamp(); 
+                        history.push('/signin');  
                     }
                 }
                 return Promise.reject(err);
