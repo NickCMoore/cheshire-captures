@@ -1,46 +1,64 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { axiosReq } from "../api/axiosDefaults";
 import styles from "../styles/PhotoDetails.module.css";
 
-const mockPhotoDetails = {
-  1: {
-    id: 1,
-    title: "Seaside Castle",
-    description: "A beautiful castle by the sea during sunset.",
-    image: "https://res.cloudinary.com/dwgtce0rh/image/upload/v1721310733/rrnrybzbr0iypcupobfl.jpg",
-    photographer: "John Doe",
-    likes_count: 123,
-    comments: [
-      { user: "Alice", content: "Amazing shot!" },
-      { user: "Bob", content: "Love the colors in this photo." },
-    ],
-  },
-  2: {
-    id: 2,
-    title: "Forest Path",
-    description: "A peaceful path through the forest in autumn.",
-    image: "https://res.cloudinary.com/dwgtce0rh/image/upload/v1721310879/zjadqskisbjlyfb5jb8i.jpg",
-    photographer: "Jane Smith",
-    likes_count: 89,
-    comments: [
-      { user: "Chris", content: "I wish I could be there!" },
-      { user: "Dana", content: "Beautiful scenery!" },
-    ],
-  },
+// Dummy data for fallback
+const mockImages = [
+  { id: 1, title: "Seaside Castle", image: "https://res.cloudinary.com/dwgtce0rh/image/upload/v1721310733/rrnrybzbr0iypcupobfl.jpg", photographer: "John Doe", likes_count: 123, description: "Beautiful seaside castle." },
+  { id: 2, title: "Forest Path", image: "https://res.cloudinary.com/dwgtce0rh/image/upload/v1721310879/zjadqskisbjlyfb5jb8i.jpg", photographer: "Jane Smith", likes_count: 89, description: "A tranquil path through the forest." },
+  { id: 3, title: "Cows in Field", image: "https://res.cloudinary.com/dwgtce0rh/image/upload/v1721311470/pduqayvfu4pc2vvz3ytq.jpg", photographer: "Mike Johnson", likes_count: 45, description: "Cows grazing in a field." },
+  { id: 4, title: "Winter Coast", image: "https://res.cloudinary.com/dwgtce0rh/image/upload/v1727870434/24633_a5n9zu.jpg", photographer: "Alice Brown", likes_count: 76, description: "Snowy coast in the winter." },
+];
+
+// Dummy comments for fallback
+const mockComments = {
+  1: [
+    { user: "JaneDoe", content: "Love this photo!" },
+    { user: "JohnSmith", content: "Stunning capture!" },
+  ],
+  2: [
+    { user: "EmilyJones", content: "The light here is beautiful." },
+  ],
+  3: [],
+  4: [
+    { user: "ChrisBrown", content: "Amazing winter vibes!" },
+  ],
 };
 
 const PhotoDetails = () => {
   const { id } = useParams();
   const [photo, setPhoto] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchPhoto = async () => {
-      const photoData = mockPhotoDetails[id];
-      setPhoto(photoData);
+    const fetchPhotoDetails = async () => {
+      try {
+        const { data } = await axiosReq.get(`/api/photos/${id}/`);
+        setPhoto(data);
+      } catch (err) {
+        const fallbackPhoto = mockImages.find((image) => image.id === parseInt(id));
+        if (fallbackPhoto) {
+          setPhoto(fallbackPhoto);
+        } else {
+          setError("Photo not found.");
+        }
+      }
     };
 
-    fetchPhoto();
+    const fetchComments = async () => {
+      try {
+        const { data } = await axiosReq.get(`/api/photos/${id}/comments/`);
+        setComments(data.results);
+      } catch (err) {
+        setComments(mockComments[id] || []); // Fallback to dummy comments
+      }
+    };
+
+    fetchPhotoDetails();
+    fetchComments();
   }, [id]);
 
   if (!photo) {
@@ -64,13 +82,16 @@ const PhotoDetails = () => {
           </div>
           <hr />
           <h4>Comments</h4>
-          {photo.comments.length > 0 ? (
-            photo.comments.map((comment, index) => (
-              <p key={index} className={styles.comment}><strong>{comment.user}:</strong> {comment.content}</p>
+          {comments.length > 0 ? (
+            comments.map((comment, index) => (
+              <p key={index} className={styles.comment}>
+                <strong>{comment.user}:</strong> {comment.content}
+              </p>
             ))
           ) : (
             <p>No comments yet.</p>
           )}
+          {error && <p className={styles.error}>{error}</p>}
         </Col>
       </Row>
     </Container>

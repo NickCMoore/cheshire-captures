@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Carousel, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom'; 
+import { axiosReq } from '../api/axiosDefaults';
 import styles from '../styles/Gallery.module.css';
 
 const mockImages = [
@@ -12,10 +13,28 @@ const mockImages = [
 
 const Gallery = () => {
   const [images, setImages] = useState([]);
+  const [likes, setLikes] = useState({});
 
   useEffect(() => {
     setImages(mockImages);
+      const fetchLikes = async () => {
+        const likesData = {};
+        for (let image of mockImages) {
+          try {
+            const { data } = await axiosReq.get(`/api/photos/${image.id}/`); // Fetch the details for each photo
+            likesData[image.id] = data.likes_count; // Store the likes count
+          } catch (error) {
+            console.error("Error fetching likes for image", image.id);
+            likesData[image.id] = 0; // Default to 0 likes if there's an error
+          }
+        }
+        setLikes(likesData);
+      };
+    
+      fetchLikes();
+
   }, []);
+
 
   return (
     <Container fluid className={styles.galleryContainer}>
@@ -32,6 +51,7 @@ const Gallery = () => {
             <Carousel.Caption className={styles.carouselCaption}>
               <h5>{image.title}</h5>
               <p>By: {image.photographer}</p>
+              <p>❤️ {image.likes_count} Likes</p> {/* Likes Count */}
             </Carousel.Caption>
           </Carousel.Item>
         ))}
