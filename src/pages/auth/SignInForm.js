@@ -35,7 +35,7 @@ function SignInForm() {
       
       setCurrentUser(data.user);
       localStorage.setItem('token', data.key);
-      history.push(`/profile/${data.photographer_id}`);
+      history.push(`/profile/${data.user.photographer_id}`);
     } catch (err) {
       setErrors(err.response?.data || {});
     }
