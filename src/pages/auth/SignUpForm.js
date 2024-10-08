@@ -41,7 +41,7 @@ function SignUpForm() {
       const { data } = await axios.post("dj-rest-auth/registration/", signUpData);
       setCurrentUser(data.user);
       setTokenTimestamp(data);
-      history.push("/"); // Redirect to homepage or profile after successful signup
+      history.push("/signin/");
     } catch (err) {
       setErrors(err.response?.data || {});
     }

@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useContext, useMemo, useState, useEffect } from 'react';
 import axios from 'axios';
 import { axiosReq, axiosRes } from '../api/axiosDefaults';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
@@ -14,7 +14,7 @@ export const CurrentUserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
     const history = useHistory();
 
-    const handleMount = async () => {
+    const fetchCurrentUser = async () => {
         const accessToken = localStorage.getItem('access_token');
         if (accessToken) {
             try {
@@ -25,15 +25,15 @@ export const CurrentUserProvider = ({ children }) => {
                 });
                 setCurrentUser(data);
             } catch (err) {
-                console.log("Error fetching user data:", err);
+                console.log('Error fetching user data:', err);
             }
         }
     };
 
     useEffect(() => {
-        handleMount();
+        fetchCurrentUser();
     }, []);
-
+    
     useMemo(() => {
         axiosReq.interceptors.request.use(
             async (config) => {
@@ -45,7 +45,7 @@ export const CurrentUserProvider = ({ children }) => {
                 const refreshToken = localStorage.getItem('refresh_token');
                 if (shouldRefreshToken() && refreshToken) {
                     try {
-                        const { data } = await axios.post("/dj-rest-auth/token/refresh/", {
+                        const { data } = await axios.post('/dj-rest-auth/token/refresh/', {
                             refresh: refreshToken,
                         });
                         localStorage.setItem('access_token', data.access);
@@ -53,7 +53,7 @@ export const CurrentUserProvider = ({ children }) => {
                     } catch (err) {
                         setCurrentUser(null);
                         removeTokenTimestamp();
-                        history.push("/signin");
+                        history.push('/signin');
                     }
                 }
                 return config;
@@ -70,17 +70,17 @@ export const CurrentUserProvider = ({ children }) => {
                     try {
                         const refreshToken = localStorage.getItem('refresh_token');
                         if (refreshToken) {
-                            const { data } = await axios.post("/dj-rest-auth/token/refresh/", {
+                            const { data } = await axios.post('/dj-rest-auth/token/refresh/', {
                                 refresh: refreshToken,
                             });
                             localStorage.setItem('access_token', data.access);
                             originalRequest.headers.Authorization = `Bearer ${data.access}`;
-                            return axios(originalRequest);  
+                            return axios(originalRequest);
                         }
                     } catch (tokenRefreshError) {
                         setCurrentUser(null);
                         removeTokenTimestamp();
-                        history.push("/signin");
+                        history.push('/signin');
                     }
                 }
                 return Promise.reject(err);
@@ -96,4 +96,3 @@ export const CurrentUserProvider = ({ children }) => {
         </CurrentUserContext.Provider>
     );
 };
-

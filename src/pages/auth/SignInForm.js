@@ -1,29 +1,25 @@
-import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import Form from 'react-bootstrap/Form';
-import Alert from 'react-bootstrap/Alert';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Image from 'react-bootstrap/Image';
-import Container from 'react-bootstrap/Container';
-import styles from '../../styles/SignInUpForm.module.css';
-import logo from '../../assets/cc-logo.png';
-import { useSetCurrentUser } from '../../contexts/CurrentUserContext';
-import { setTokenTimestamp } from '../../utils/Utils';
-import axios from 'axios';
+import { Link, useHistory } from "react-router-dom";
+import { useState } from "react";
+import Form from "react-bootstrap/Form";
+import Alert from "react-bootstrap/Alert";
+import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
+import styles from "../../styles/SignInUpForm.module.css";
+import btnStyles from "../../styles/Button.module.css";
+import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
+import axios from "axios";
 
 function SignInForm() {
   const setCurrentUser = useSetCurrentUser();
-  const history = useHistory();
-
   const [signInData, setSignInData] = useState({
-    username: '',
-    password: '',
+    username: "",
+    password: "",
   });
-
   const { username, password } = signInData;
   const [errors, setErrors] = useState({});
+  const history = useHistory();
 
   const handleChange = (e) => {
     setSignInData({
@@ -36,20 +32,26 @@ function SignInForm() {
     event.preventDefault();
     try {
       const { data } = await axios.post('/dj-rest-auth/login/', signInData);
+      
       setCurrentUser(data.user);
-      setTokenTimestamp(data);
-      history.goBack();
+      // Optionally store the token for authenticated requests
+      localStorage.setItem('token', data.key);
+      
+      // Redirect the user to the homepage or profile after successful sign-in
+      history.push(`/profile/${data.profile_id}`);
     } catch (err) {
+      console.error("Sign-in error:", err.response?.data || err.message || err);
       setErrors(err.response?.data || {});
     }
   };
+  
+
 
   return (
-    <Container className={styles.Background}>
-      <Row className={styles.Row}>
-        <Col className="my-auto p-0 p-md-2" md={6}>
-          <Container className={`${styles.FormContainer}`}>
-            <Image src={logo} className="mb-5" />
+    <Container fluid className={styles.Background}>
+      <Row className="justify-content-center">
+        <Col xs={12} md={6} lg={4}>
+          <div className={styles.FormContainer}>
             <h1 className={styles.Header}>Sign In</h1>
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="username">
@@ -86,7 +88,10 @@ function SignInForm() {
                 </Alert>
               ))}
 
-              <Button className={`${styles.Button}`} type="submit">
+              <Button
+                className={`${btnStyles.Button} ${btnStyles.Bright}`}
+                type="submit"
+              >
                 Sign In
               </Button>
               {errors.non_field_errors?.map((message, idx) => (
@@ -95,19 +100,13 @@ function SignInForm() {
                 </Alert>
               ))}
             </Form>
-            <Container className={`mt-3 ${styles.LinkContainer}`}>
+
+            <Container className={`mt-3`}>
               <Link className={styles.Link} to="/signup">
                 Don't have an account? <span>Sign up now!</span>
               </Link>
             </Container>
-          </Container>
-        </Col>
-        <Col md={6} className="d-none d-md-block">
-          <Image
-            className={styles.SideImage}
-            src="https://res.cloudinary.com/dwgtce0rh/image/upload/v1727870434/24633_a5n9zu.jpg"
-            fluid
-          />
+          </div>
         </Col>
       </Row>
     </Container>
