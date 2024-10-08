@@ -6,38 +6,38 @@ import { Container, Row, Col, Button, Image, Card } from 'react-bootstrap';
 import styles from '../styles/Profile.module.css';
 
 const Profile = () => {
-  const { username } = useParams(); 
+  const { id } = useParams(); // ID from URL params
   const currentUser = useCurrentUser();
-  const [profile, setProfile] = useState(null);
+  const [photographer, setPhotographer] = useState(null);
   const [isFollowing, setIsFollowing] = useState(false);
   const [isOwnProfile, setIsOwnProfile] = useState(false);
 
   useEffect(() => {
-    const fetchProfile = async () => {
+    const fetchPhotographer = async () => {
       try {
-        const { data } = await axios.get(`/api/photographers/${username}/`);  
-        setProfile(data);
+        const { data } = await axios.get(`/api/photographers/photographers/${id}/`);  
+        setPhotographer(data);
         setIsFollowing(data.is_following);
-        if (currentUser && data.user.id === currentUser.id) {  
+        if (currentUser && data.user === currentUser.id) {  
           setIsOwnProfile(true);
         }
       } catch (error) {
-        console.error('Error fetching profile data:', error);
+        console.error('Error fetching photographer data:', error);
       }
     };
 
     if (currentUser) {
-      fetchProfile();
+      fetchPhotographer();
     }
-  }, [username, currentUser]);
+  }, [id, currentUser]);
 
   const handleFollowToggle = async () => {
     try {
       if (isFollowing) {
-        await axios.post(`/api/follows/${profile.user.id}/unfollow/`); 
+        await axios.post(`/api/follows/${photographer.id}/unfollow/`); 
         setIsFollowing(false);
       } else {
-        await axios.post(`/api/follows/`, { following: profile.user.id });
+        await axios.post(`/api/follows/`, { following: photographer.id });
         setIsFollowing(true);
       }
     } catch (error) {
@@ -45,16 +45,16 @@ const Profile = () => {
     }
   };
 
-  if (!profile) return <p>Loading...</p>;
+  if (!photographer) return <p>Loading...</p>;
 
   return (
     <Container className={styles.profileContainer}>
       <Row className="justify-content-center my-5">
         <Col md={4} className="text-center">
           <Card className="p-4 shadow-sm">
-            <Image src={profile.profile_image} roundedCircle className={styles.profileImage} />
-            <h2 className="mt-3">{profile.display_name}</h2>
-            <p className={`${styles.bio} mt-2`}>{profile.bio}</p>
+            <Image src={photographer.profile_image} roundedCircle className={styles.profileImage} />
+            <h2 className="mt-3">{photographer.display_name}</h2>
+            <p className={`${styles.bio} mt-2`}>{photographer.bio}</p>
             {isOwnProfile ? (
               <Button variant="primary" className="mt-2">Edit Profile</Button>
             ) : (
@@ -68,8 +68,8 @@ const Profile = () => {
           <Card className="p-4 shadow-sm mb-4">
             <h3>Photos</h3>
             <Row>
-              {profile.photos && profile.photos.length > 0 ? (
-                profile.photos.map((photo) => (
+              {photographer.photos && photographer.photos.length > 0 ? (
+                photographer.photos.map((photo) => (
                   <Col key={photo.id} xs={12} md={6} lg={4} className="mb-3">
                     <Image src={photo.image_url} fluid className={styles.photo} />
                   </Col>
@@ -82,9 +82,9 @@ const Profile = () => {
           <Card className="p-4 shadow-sm">
             <h3>Social Links</h3>
             <ul className={styles.socialLinks}>
-              {profile.website && <li><a href={profile.website} target="_blank" rel="noopener noreferrer">Website</a></li>}
-              {profile.instagram && <li><a href={profile.instagram} target="_blank" rel="noopener noreferrer">Instagram</a></li>}
-              {profile.twitter && <li><a href={profile.twitter} target="_blank" rel="noopener noreferrer">Twitter</a></li>}
+              {photographer.website && <li><a href={photographer.website} target="_blank" rel="noopener noreferrer">Website</a></li>}
+              {photographer.instagram && <li><a href={photographer.instagram} target="_blank" rel="noopener noreferrer">Instagram</a></li>}
+              {photographer.twitter && <li><a href={photographer.twitter} target="_blank" rel="noopener noreferrer">Twitter</a></li>}
             </ul>
           </Card>
         </Col>
