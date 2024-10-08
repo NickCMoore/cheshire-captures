@@ -63,7 +63,7 @@ const NavBar = () => {
         exact
         className={styles.NavLink}
         activeClassName={styles.Active}
-        to={`/profiles/${currentUser?.profile_id}`}
+        to={`/profiles/${currentUser?.photographer_id}`}
         onClick={() => {
           setToggleNavBar(!toggleNavBar);
         }}
@@ -78,7 +78,7 @@ const NavBar = () => {
       <NavDropdown.Item 
         id={styles.dropdownItem}
         as={Link} 
-        to={`/profiles/${currentUser?.profile_id}`}
+        to={`/profiles/${currentUser?.photographer_id}`}
         onClick={() => {
           setToggleNavBar(!toggleNavBar);
         }}

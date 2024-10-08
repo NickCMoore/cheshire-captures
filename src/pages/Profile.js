@@ -6,7 +6,7 @@ import { Container, Row, Col, Button, Image, Card } from 'react-bootstrap';
 import styles from '../styles/Profile.module.css';
 
 const Profile = () => {
-  const { id } = useParams(); // ID from URL params
+  const { id } = useParams(); 
   const currentUser = useCurrentUser();
   const [photographer, setPhotographer] = useState(null);
   const [isFollowing, setIsFollowing] = useState(false);
