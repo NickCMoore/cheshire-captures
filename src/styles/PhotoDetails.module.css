@@ -22,3 +22,9 @@
     margin-top: 20px;
   }
   
+  .commentSection p {
+    background-color: var(--yinmn-blue);
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
