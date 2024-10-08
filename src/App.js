@@ -11,6 +11,7 @@ import PhotoDetails from "./pages/PhotoDetails";
 import AboutPage from "./pages/AboutPage";
 import Profile from "./pages/Profile";
 import { useCurrentUser } from "./contexts/CurrentUserContext";
+import PopularPhotographers from './pages/PopularPhotographers';
 
 function App() {
   const currentUser = useCurrentUser();
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/" component={HomePage} />
           <Route exact path="/gallery" component={Gallery} />
           <Route exact path="/photos/:id" component={PhotoDetails} />
+          <Route exact path="/popular-photographers" component={PopularPhotographers} />
           <Route exact path="/about" component={AboutPage} />
 
 

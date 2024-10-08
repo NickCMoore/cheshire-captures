@@ -35,70 +35,40 @@ const NavBar = () => {
     }
   };
 
-  const addEventIcon = (
-    <NavLink
-      exact
-      className={styles.NavLink}
-      activeClassName={styles.Active}
-      to="/events/create"
-    >
-      <i className="fas fa-plus"></i>Add Event
-    </NavLink>
-  );
-
   const loggedInIcons = (
     <>
       <NavLink
         exact
         className={styles.NavLink}
         activeClassName={styles.Active}
-        to="/feed"
+        to="/gallery"
         onClick={() => {
           setToggleNavBar(!toggleNavBar);
         }}
       >
-        <i className="fas fa-stream"></i>Feed
+        <i className="fas fa-images"></i>Gallery
       </NavLink>
-
-      <NavDropdown
-        id={styles.dropdownMenu}
-        title={<span className={`${styles.dropdownText} d-sm-inline-column`}>
-          <i className="fas fa-heart"></i>My Events</span>}
-      >
-        <NavDropdown.Item
-          id={styles.dropdownItem}
-          as={Link}
-          className={styles.NavLink}
-          to="/myevents/going"
-          onClick={() => {
-            setToggleNavBar(!toggleNavBar);
-          }}
-        >
-          <i className="far fa-calendar-check"></i>Going
-        </NavDropdown.Item>
-        <NavDropdown.Item
-          id={styles.dropdownItem}
-          className={styles.NavLink}
-          as={Link}
-          to="/myevents/interested"
-          onClick={() => {
-            setToggleNavBar(!toggleNavBar);
-          }}
-        >
-          <i className="fa-regular fa-eye"></i>Interested
-        </NavDropdown.Item>
-      </NavDropdown>
-
       <NavLink
         exact
         className={styles.NavLink}
         activeClassName={styles.Active}
-        to="/reviews"
+        to="/popular-photographers"
         onClick={() => {
           setToggleNavBar(!toggleNavBar);
         }}
       >
-        <i className="fas fa-star"></i>Reviews
+        <i className="fas fa-users"></i>Popular Photographers
+      </NavLink>
+      <NavLink
+        exact
+        className={styles.NavLink}
+        activeClassName={styles.Active}
+        to={`/profiles/${currentUser?.profile_id}`}
+        onClick={() => {
+          setToggleNavBar(!toggleNavBar);
+        }}
+      >
+        <i className="fas fa-user"></i>Profile
       </NavLink>
     </>
   );
@@ -128,6 +98,17 @@ const NavBar = () => {
 
   const loggedOutIcons = (
     <>
+      <NavLink
+        exact
+        className={styles.NavLink}
+        activeClassName={styles.Active}
+        to="/popular-photographers"
+        onClick={() => {
+          setToggleNavBar(!toggleNavBar);
+        }}
+      >
+        <i className="fas fa-users"></i>Popular Photographers
+      </NavLink>
       <NavLink
         exact
         className={styles.NavLink}
@@ -181,7 +162,6 @@ const NavBar = () => {
               <img src={logo} alt="logo" height="55"/>
           </Navbar.Brand>
         </NavLink>
-        {currentUser && addEventIcon}
         <Navbar.Toggle 
           onClick={() => {
             setToggleNavBar(!toggleNavBar);

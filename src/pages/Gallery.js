@@ -13,7 +13,7 @@ const mockImages = [
 
 const Gallery = () => {
   const [images, setImages] = useState([]);
-  const [likes, setLikes] = useState({});
+   const [likes, setLikes] = useState({});
 
   useEffect(() => {
     setImages(mockImages);
@@ -21,11 +21,11 @@ const Gallery = () => {
         const likesData = {};
         for (let image of mockImages) {
           try {
-            const { data } = await axiosReq.get(`/api/photos/${image.id}/`); // Fetch the details for each photo
-            likesData[image.id] = data.likes_count; // Store the likes count
+            const { data } = await axiosReq.get(`/api/photos/${image.id}/`); 
+            likesData[image.id] = data.likes_count;
           } catch (error) {
             console.error("Error fetching likes for image", image.id);
-            likesData[image.id] = 0; // Default to 0 likes if there's an error
+            likesData[image.id] = 0; 
           }
         }
         setLikes(likesData);
