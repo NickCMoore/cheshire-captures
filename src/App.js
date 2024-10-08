@@ -7,6 +7,7 @@ import HomePage from "./pages/HomePage";
 import SignInForm from "./pages/auth/SignInForm";
 import SignUpForm from "./pages/auth/SignUpForm";
 import Gallery from "./pages/Gallery";
+import PhotoDetails from "./pages/PhotoDetails"; 
 import AboutPage from "./pages/AboutPage";
 import Profile from "./pages/Profile";
 import { useCurrentUser } from "./contexts/CurrentUserContext";
@@ -21,6 +22,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/gallery" component={Gallery} />
+          <Route exact path="/photos/:id" component={PhotoDetails} />
           <Route exact path="/about" component={AboutPage} />
 
 
