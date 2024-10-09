@@ -21,7 +21,17 @@ const PhotoDetails = () => {
       }
     };
 
+    const fetchComments = async () => {
+      try {
+        const { data } = await axiosReq.get(`/api/photos/${id}/comments/`);
+        setComments(data.results);
+      } catch (err) {
+        console.error("Error fetching comments:", err);
+      }
+    };
+
     fetchPhotoDetails();
+    fetchComments();
   }, [id]);
 
   const handleAddComment = async (e) => {
@@ -56,6 +66,7 @@ const PhotoDetails = () => {
             <h2>{photo.title}</h2>
             <p>{photo.description}</p>
             <p><strong>Photographer:</strong> {photo.photographer_display_name}</p>
+            <p><strong>Tags:</strong> {photo.tags.map(tag => tag.name).join(', ')}</p>
             <Button variant="primary" className={styles.likeButton}>
               Like {photo.likes_count}
             </Button>
@@ -65,7 +76,7 @@ const PhotoDetails = () => {
           {comments.length > 0 ? (
             comments.map((comment) => (
               <p key={comment.id} className={styles.comment}>
-                <strong>{comment.user}:</strong> {comment.content}
+                <strong>{comment.photographer}:</strong> {comment.content}
               </p>
             ))
           ) : (
