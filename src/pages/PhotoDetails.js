@@ -23,12 +23,14 @@ const PhotoDetails = () => {
 
     const fetchComments = async () => {
       try {
-        const { data } = await axiosReq.get(`/api/photos/${id}/comments/`);
+        const { data } = await axiosReq.get(`/api/photos/comments/?photo=${id}`);
         setComments(data.results);
       } catch (err) {
         console.error("Error fetching comments:", err);
       }
     };
+    
+    
 
     fetchPhotoDetails();
     fetchComments();
@@ -37,7 +39,7 @@ const PhotoDetails = () => {
   const handleAddComment = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axiosRes.post(`/api/photos/${id}/comments/`, {
+      const { data } = await axiosRes.post(`/api/photos/photos/${id}/comments/`, {
         content: newComment,
       });
       setComments((prevComments) => [...prevComments, data]);
@@ -46,7 +48,7 @@ const PhotoDetails = () => {
       setError("Error adding comment.");
     }
   };
-
+  
   if (error) {
     return <p>{error}</p>;
   }
