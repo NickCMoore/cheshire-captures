@@ -1,125 +1,143 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import { axiosReq, axiosRes } from '../api/axiosDefaults';
-import { Form, Button, Container } from 'react-bootstrap';
-import styles from '../styles/ProfileEdit.module.css';
+import React, { useEffect, useState } from "react";
+import { useParams, useHistory } from "react-router-dom";
+import axios from 'axios';
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import styles from "../styles/ProfileEdit.module.css";
 
 const ProfileEdit = () => {
-  const { id } = useParams(); // Get the photographer's ID from the URL
+  const { id } = useParams();
   const history = useHistory();
-  const [photographerData, setPhotographerData] = useState({
-    display_name: '',
-    bio: '',
-    location: '',
-    website: '',
-    instagram: '',
-    twitter: '',
+  const [profileData, setProfileData] = useState({
+    display_name: "",
+    bio: "",
+    location: "",
+    website: "",
+    instagram: "",
+    twitter: "",
   });
   const [error, setError] = useState(null);
 
+  const { display_name, bio, location, website, instagram, twitter } = profileData;
+
   useEffect(() => {
-    const fetchPhotographer = async () => {
+    const fetchProfileData = async () => {
       try {
-        const { data } = await axiosReq.get(`/api/photographers/photographers/${id}/`);
-        setPhotographerData(data);
-      } catch (error) {
-        console.error('Error fetching photographer data:', error);
-        setError('Could not fetch photographer data.');
+        const { data } = await axios.get(`/api/photographers/photographers/${id}/`);
+        setProfileData({
+          display_name: data.display_name || "",
+          bio: data.bio || "",
+          location: data.location || "",
+          website: data.website || "",
+          instagram: data.instagram || "",
+          twitter: data.twitter || "",
+        });
+      } catch (err) {
+        console.error("Error fetching profile data:", err);
+        setError("Unable to load profile data.");
       }
     };
 
-    fetchPhotographer();
+    fetchProfileData();
   }, [id]);
 
-  const handleChange = (event) => {
-    setPhotographerData({
-      ...photographerData,
-      [event.target.name]: event.target.value,
+  const handleChange = (e) => {
+    console.log(`Updating field: ${e.target.name} with value: ${e.target.value}`);
+    setProfileData({
+      ...profileData,
+      [e.target.name]: e.target.value,
     });
   };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      await axiosRes.put(`/api/photographers/photographers/${id}/`, photographerData);
+      const { data } = await axios.put(
+        `/api/photographers/photographers/${id}/`, 
+        profileData
+      );
+      console.log("Profile updated successfully:", data);
       history.push(`/profile/${id}`); 
-    } catch (error) {
-      console.error('Error updating profile:', error);
-      setError('Could not update profile.');
+    } catch (err) {
+      console.error("Error updating profile:", err);
+      setError("Failed to update profile. Please try again.");
     }
   };
 
   return (
-    <Container className={styles.profileEditContainer}>
-      <h2>Edit Profile</h2>
-      {error && <p className="text-danger">{error}</p>}
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="display_name">
-          <Form.Label>Display Name</Form.Label>
-          <Form.Control
-            type="text"
-            name="display_name"
-            value={photographerData.display_name}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
-
-        <Form.Group controlId="bio">
-          <Form.Label>Bio</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={3}
-            name="bio"
-            value={photographerData.bio}
-            onChange={handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="location">
-          <Form.Label>Location</Form.Label>
-          <Form.Control
-            type="text"
-            name="location"
-            value={photographerData.location}
-            onChange={handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="website">
-          <Form.Label>Website</Form.Label>
-          <Form.Control
-            type="url"
-            name="website"
-            value={photographerData.website}
-            onChange={handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="instagram">
-          <Form.Label>Instagram</Form.Label>
-          <Form.Control
-            type="url"
-            name="instagram"
-            value={photographerData.instagram}
-            onChange={handleChange}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="twitter">
-          <Form.Label>Twitter</Form.Label>
-          <Form.Control
-            type="url"
-            name="twitter"
-            value={photographerData.twitter}
-            onChange={handleChange}
-          />
-        </Form.Group>
-
-        <Button variant="primary" type="submit">
-          Save Changes
-        </Button>
-      </Form>
+    <Container className={styles.ProfileEdit}>
+      <Row className="justify-content-center">
+        <Col md={8}>
+          <h2>Edit Profile</h2>
+          {error && <p className={styles.Error}>{error}</p>}
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="display_name">
+              <Form.Label>Display Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="display_name"
+                value={display_name}
+                onChange={handleChange}
+                placeholder="Enter display name"
+                required
+              />
+            </Form.Group>
+            <Form.Group controlId="bio">
+              <Form.Label>Bio</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                name="bio"
+                value={bio}
+                onChange={handleChange}
+                placeholder="Write a short bio"
+              />
+            </Form.Group>
+            <Form.Group controlId="location">
+              <Form.Label>Location</Form.Label>
+              <Form.Control
+                type="text"
+                name="location"
+                value={location}
+                onChange={handleChange}
+                placeholder="Enter your location"
+              />
+            </Form.Group>
+            <Form.Group controlId="website">
+              <Form.Label>Website</Form.Label>
+              <Form.Control
+                type="url"
+                name="website"
+                value={website}
+                onChange={handleChange}
+                placeholder="Enter website URL"
+              />
+            </Form.Group>
+            <Form.Group controlId="instagram">
+              <Form.Label>Instagram</Form.Label>
+              <Form.Control
+                type="url"
+                name="instagram"
+                value={instagram}
+                onChange={handleChange}
+                placeholder="Enter Instagram URL"
+              />
+            </Form.Group>
+            <Form.Group controlId="twitter">
+              <Form.Label>Twitter</Form.Label>
+              <Form.Control
+                type="url"
+                name="twitter"
+                value={twitter}
+                onChange={handleChange}
+                placeholder="Enter Twitter URL"
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Save Changes
+            </Button>
+          </Form>
+        </Col>
+      </Row>
     </Container>
   );
 };
