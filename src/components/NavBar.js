@@ -1,47 +1,28 @@
-// Bootstrap imports
-import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-// Component imports
-import logo from '../assets/cc-logo.png';
-// CSS imports
-import styles from '../styles/NavBar.module.css';
+import React, { useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useCurrentUser, useSetCurrentUser } from '../contexts/CurrentUserContext';
 import { removeTokenTimestamp } from '../utils/Utils';
-// React imports
-import { NavLink, useLocation, useHistory } from 'react-router-dom';
-import { Link } from "react-router-dom";
-import { useState } from 'react';
-// Axios imports
 import axios from 'axios';
+import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Link, useHistory } from 'react-router-dom';
+import logo from '../assets/cc-logo.png';
+import styles from '../styles/NavBar.module.css';
 
 const NavBar = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
-  const location = useLocation();
   const history = useHistory();
-
   const [toggleNavBar, setToggleNavBar] = useState(false);
 
   const handleSignOut = async () => {
     try {
       await axios.post('dj-rest-auth/logout/');
       setCurrentUser(null);
-      setToggleNavBar(!toggleNavBar);
+      setToggleNavBar(false);
       removeTokenTimestamp();
-      history.push('/'); 
+      history.push('/');
     } catch (err) {
       console.log(err);
-    }
-  };
-
-  const isOnOwnProfile = currentUser && location.pathname === `/profiles/${currentUser.photographer_id}`;
-
-  const handleProfileClick = () => {
-    if (currentUser) {
-      history.push(`/profiles/${currentUser.photographer_id}`);
-      setToggleNavBar(false); 
     }
   };
 
@@ -52,7 +33,7 @@ const NavBar = () => {
         className={styles.NavLink}
         activeClassName={styles.Active}
         to="/gallery"
-        onClick={() => setToggleNavBar(!toggleNavBar)}
+        onClick={() => setToggleNavBar(false)}
       >
         <i className="fas fa-images"></i>Gallery
       </NavLink>
@@ -61,21 +42,19 @@ const NavBar = () => {
         className={styles.NavLink}
         activeClassName={styles.Active}
         to="/popular-photographers"
-        onClick={() => setToggleNavBar(!toggleNavBar)}
+        onClick={() => setToggleNavBar(false)}
       >
         <i className="fas fa-users"></i>Popular Photographers
       </NavLink>
-      {!isOnOwnProfile && (
-        <NavLink
-          exact
-          className={styles.NavLink}
-          activeClassName={styles.Active}
-          to={`/profiles/${currentUser?.photographer_id}`}
-          onClick={handleProfileClick}
-        >
-          <i className="fas fa-user"></i>Profile
-        </NavLink>
-      )}
+      <NavLink
+        exact
+        className={styles.NavLink}
+        activeClassName={styles.Active}
+        to={`/profile/${currentUser?.photographer_id}`}
+        onClick={() => setToggleNavBar(false)}
+      >
+        <i className="fas fa-user"></i>Profile
+      </NavLink>
       <NavLink
         exact
         className={styles.NavLink}
@@ -94,7 +73,7 @@ const NavBar = () => {
         className={styles.NavLink}
         activeClassName={styles.Active}
         to="/about"
-        onClick={() => setToggleNavBar(!toggleNavBar)}
+        onClick={() => setToggleNavBar(false)}
       >
         <i className="fas fa-info-circle"></i>About
       </NavLink>
@@ -106,7 +85,7 @@ const NavBar = () => {
           id={styles.dropdownItem}
           as={Link} 
           to="/signin"
-          onClick={() => setToggleNavBar(!toggleNavBar)}
+          onClick={() => setToggleNavBar(false)}
         >
           <i className="fas fa-sign-in-alt"></i>Sign in
         </NavDropdown.Item>
@@ -114,7 +93,7 @@ const NavBar = () => {
           id={styles.dropdownItem}
           as={Link} 
           to="/signup"
-          onClick={() => setToggleNavBar(!toggleNavBar)}
+          onClick={() => setToggleNavBar(false)}
         >
           <i className="fas fa-user-plus"></i>Sign up
         </NavDropdown.Item>
@@ -147,7 +126,7 @@ const NavBar = () => {
               className={styles.NavLink}
               activeClassName={styles.Active}
               to="/"
-              onClick={() => setToggleNavBar(!toggleNavBar)}
+              onClick={() => setToggleNavBar(false)}
             >
               <i className="fas fa-home"></i>Home
             </NavLink>
