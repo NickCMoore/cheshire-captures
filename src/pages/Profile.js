@@ -18,18 +18,21 @@ const Profile = () => {
         const { data } = await axios.get(`/api/photographers/photographers/${id}/`);  
         setPhotographer(data);
         setIsFollowing(data.is_following);
-        if (currentUser && data.user === currentUser.id) {  
+        if (currentUser && String(data.user) === String(currentUser.username)) {
           setIsOwnProfile(true);
         }
       } catch (error) {
         console.error('Error fetching photographer data:', error);
       }
     };
-
+  
     if (currentUser) {
       fetchPhotographer();
     }
   }, [id, currentUser]);
+  
+  
+  
 
   const handleFollowToggle = async () => {
     try {
