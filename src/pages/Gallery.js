@@ -13,28 +13,32 @@ const mockImages = [
 
 const Gallery = () => {
   const [images, setImages] = useState([]);
-   const [likes, setLikes] = useState({});
 
   useEffect(() => {
-    setImages(mockImages);
-      const fetchLikes = async () => {
-        const likesData = {};
-        for (let image of mockImages) {
-          try {
-            const { data } = await axiosReq.get(`/api/photos/${image.id}/`); 
-            likesData[image.id] = data.likes_count;
-          } catch (error) {
-            console.error("Error fetching likes for image", image.id);
-            likesData[image.id] = 0; 
-          }
+    const fetchPhotos = async () => {
+      try {
+        const { data } = await axiosReq.get('/api/photos/photos/');
+        if (data.results && data.results.length > 0) {
+          const photos = data.results.map((photo) => ({
+            id: photo.id,
+            title: photo.title,
+            imageUrl: photo.image.startsWith('http')
+              ? photo.image 
+              : `https://res.cloudinary.com/dwgtce0rh/${photo.image}`, 
+            photographer: photo.photographer_display_name || 'Unknown',
+          }));
+          setImages(photos);
+        } else {
+          setImages(mockImages);
         }
-        setLikes(likesData);
-      };
-    
-      fetchLikes();
+      } catch (error) {
+        console.error('Error fetching photos:', error);
+        setImages(mockImages);
+      }
+    };
 
+    fetchPhotos();
   }, []);
-
 
   return (
     <Container fluid className={styles.galleryContainer}>
@@ -51,7 +55,6 @@ const Gallery = () => {
             <Carousel.Caption className={styles.carouselCaption}>
               <h5>{image.title}</h5>
               <p>By: {image.photographer}</p>
-              <p>❤️ {image.likes_count} Likes</p> {/* Likes Count */}
             </Carousel.Caption>
           </Carousel.Item>
         ))}
@@ -61,4 +64,3 @@ const Gallery = () => {
 };
 
 export default Gallery;
-
