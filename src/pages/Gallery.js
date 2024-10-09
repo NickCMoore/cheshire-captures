@@ -22,9 +22,9 @@ const Gallery = () => {
           const photos = data.results.map((photo) => ({
             id: photo.id,
             title: photo.title,
-            imageUrl: photo.image.startsWith('http')
+            imageUrl: photo.image && photo.image.startsWith('http') 
               ? photo.image 
-              : `https://res.cloudinary.com/dwgtce0rh/${photo.image}`, 
+              : `https://res.cloudinary.com/dwgtce0rh/${photo.image || ''}`, 
             photographer: photo.photographer_display_name || 'Unknown',
           }));
           setImages(photos);
@@ -48,7 +48,7 @@ const Gallery = () => {
             <Link to={`/photos/${image.id}`}>
               <img
                 className={`d-block w-100 ${styles.image}`}
-                src={image.imageUrl}
+                src={image.imageUrl || 'https://res.cloudinary.com/dwgtce0rh/image/upload/v1721310733/rrnrybzbr0iypcupobfl.jpg'}
                 alt={image.title}
               />
             </Link>
