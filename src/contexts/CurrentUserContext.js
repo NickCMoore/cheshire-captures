@@ -15,9 +15,10 @@ export const CurrentUserProvider = ({ children }) => {
   const history = useHistory();
 
   // Fetch current user info
+  /*
   const fetchCurrentUser = async () => {
     try {
-      const { data } = await axiosRes.get('dj-rest-auth/user/');
+      const { data } = await axiosRes.get('/dj-rest-auth/user/');
       setCurrentUser(data);
     } catch (err) {
       console.error('Error fetching user data:', err);
@@ -28,6 +29,7 @@ export const CurrentUserProvider = ({ children }) => {
   useEffect(() => {
     fetchCurrentUser();
   }, []);
+  */
 
   useEffect(() => {
     axiosReq.interceptors.request.use(
