@@ -31,16 +31,13 @@ const Profile = () => {
     }
   }, [id, currentUser]);
   
-  
-  
-
   const handleFollowToggle = async () => {
     try {
       if (isFollowing) {
-        await axios.post(`/api/follows/${photographer.id}/unfollow/`); 
+        await axios.delete(`/api/photographers/follows/${photographer.id}/`); 
         setIsFollowing(false);
       } else {
-        await axios.post(`/api/follows/`, { following: photographer.id });
+        await axios.post(`/api/photographers/follows/`, { following: photographer.id });
         setIsFollowing(true);
       }
     } catch (error) {
