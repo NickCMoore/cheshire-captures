@@ -10,6 +10,7 @@ import Gallery from "./pages/Gallery";
 import PhotoDetails from "./pages/PhotoDetails"; 
 import AboutPage from "./pages/AboutPage";
 import Profile from "./pages/Profile";
+import ProfileEdit from './pages/ProfileEdit';
 import { useCurrentUser } from "./contexts/CurrentUserContext";
 import PopularPhotographers from './pages/PopularPhotographers';
 
@@ -26,6 +27,7 @@ function App() {
           <Route exact path="/photos/:id" component={PhotoDetails} />
           <Route exact path="/popular-photographers" component={PopularPhotographers} />
           <Route exact path="/about" component={AboutPage} />
+          <Route path="/profile/:id/edit" component={ProfileEdit} />
 
 
           <Route

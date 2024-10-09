@@ -39,7 +39,8 @@ const PhotoDetails = () => {
   const handleAddComment = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axiosRes.post(`/api/photos/photos/${id}/comments/`, {
+      const { data } = await axiosRes.post(`/api/photos/comments/`, {
+        photo: id,
         content: newComment,
       });
       setComments((prevComments) => [...prevComments, data]);
@@ -48,6 +49,7 @@ const PhotoDetails = () => {
       setError("Error adding comment.");
     }
   };
+  
   
   if (error) {
     return <p>{error}</p>;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useCurrentUser } from '../contexts/CurrentUserContext';
 import axios from 'axios';
 import { Container, Row, Col, Button, Image, Card } from 'react-bootstrap';
@@ -56,7 +56,11 @@ const Profile = () => {
             <h2 className="mt-3">{photographer.display_name}</h2>
             <p className={`${styles.bio} mt-2`}>{photographer.bio}</p>
             {isOwnProfile ? (
-              <Button variant="primary" className="mt-2">Edit Profile</Button>
+              <Link to={`/profile/${id}/edit`}>
+                <Button variant="primary" className="mt-2">
+                  Edit Profile
+                </Button>
+              </Link>
             ) : (
               <Button variant={isFollowing ? 'danger' : 'success'} onClick={handleFollowToggle}>
                 {isFollowing ? 'Unfollow' : 'Follow'}
