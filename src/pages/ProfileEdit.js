@@ -37,9 +37,9 @@ const ProfileEdit = () => {
   }, [id, currentUser]);
 
   const handleProfileImageChange = (event) => {
-    if (event.target.files && event.target.files.length > 0) {
+    if (event.target.files.length) {
       setNewProfileImage(event.target.files[0]);
-      console.log('Selected file:', event.target.files[0]);
+      console.log('Selected file:', event.target.files[0]); 
     }
   };
 
@@ -48,23 +48,23 @@ const ProfileEdit = () => {
       console.error('No image selected for upload.');
       return;
     }
-  
+
     const formData = new FormData();
     formData.append('profile_image', newProfileImage);
-  
+
     try {
       const { data } = await axios.put(`/api/photographers/photographers/${id}/`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      setPhotographer(data); 
-      setNewProfileImage(null); 
+      setPhotographer(data);
+      setNewProfileImage(null);
+      console.log('Profile image updated successfully.');
     } catch (error) {
       console.error('Error uploading profile image:', error);
     }
   };
-  
 
   const handleProfileUpdate = async (event) => {
     event.preventDefault();
@@ -78,6 +78,7 @@ const ProfileEdit = () => {
         twitter,
       });
       setPhotographer(data);
+      console.log('Profile updated successfully.');
     } catch (error) {
       console.error('Error updating profile details:', error);
     }
@@ -103,8 +104,8 @@ const ProfileEdit = () => {
                   <Form.Label className={styles.formLabel}>Change Profile Picture</Form.Label>
                   <Form.Control type="file" onChange={handleProfileImageChange} />
                   <Button
-                    className="uploadButton"
                     variant="primary"
+                    className="mt-2"
                     onClick={handleProfileImageUpload}
                     disabled={!newProfileImage}
                   >

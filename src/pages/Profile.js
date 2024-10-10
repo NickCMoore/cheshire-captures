@@ -39,7 +39,7 @@ const ProfileEdit = () => {
   const handleProfileImageChange = (event) => {
     if (event.target.files.length) {
       setNewProfileImage(event.target.files[0]);
-      console.log('Selected file:', event.target.files[0]); // Debugging
+      console.log('Selected file:', event.target.files[0]);
     }
   };
 
