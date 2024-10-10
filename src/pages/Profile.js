@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useCurrentUser } from '../contexts/CurrentUserContext';
 import axios from 'axios';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import styles from '../styles/Profile.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
@@ -12,10 +12,12 @@ import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 const Profile = () => {
   const { id } = useParams();
   const currentUser = useCurrentUser();
+  const history = useHistory();
   const [photographer, setPhotographer] = useState(null);
   const [photos, setPhotos] = useState([]);
   const [isFollowing, setIsFollowing] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [followersCount, setFollowersCount] = useState(0);
 
   useEffect(() => {
     const fetchPhotographer = async () => {
@@ -23,6 +25,7 @@ const Profile = () => {
         const { data } = await axios.get(`/api/photographers/photographers/${id}/`);
         setPhotographer(data);
         setIsFollowing(data.is_followed);
+        setFollowersCount(data.total_followers); 
       } catch (error) {
         console.error('Error fetching photographer data:', error);
       } finally {
@@ -49,6 +52,7 @@ const Profile = () => {
     try {
       await axios.post(`/api/photographers/photographers/${id}/follow/`);
       setIsFollowing(true);
+      setFollowersCount((prevCount) => prevCount + 1);
     } catch (error) {
       console.error('Error following photographer:', error);
     }
@@ -58,9 +62,14 @@ const Profile = () => {
     try {
       await axios.post(`/api/photographers/photographers/${id}/unfollow/`);
       setIsFollowing(false);
+      setFollowersCount((prevCount) => prevCount - 1);
     } catch (error) {
       console.error('Error unfollowing photographer:', error);
     }
+  };
+
+  const handleViewFollowers = () => {
+    history.push(`/profile/${id}/followers`);
   };
 
   if (loading) return <p>Loading...</p>;
@@ -101,6 +110,14 @@ const Profile = () => {
                 </li>
               )}
             </ul>
+            <div className="mt-3">
+              <p>
+                <strong>Followers:</strong> {followersCount}
+              </p>
+              <Button variant="info" onClick={handleViewFollowers}>
+                View Followers
+              </Button>
+            </div>
             {isOwnProfile ? (
               <Link to={`/profile/${id}/edit`}>
                 <Button variant="secondary" className="mt-2">

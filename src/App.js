@@ -17,6 +17,7 @@ import PopularPhotographers from './pages/PopularPhotographers';
 import PhotoUpload from './pages/PhotoUpload';
 import PhotoEdit from './pages/PhotoEdit';
 import ChangePassword from './pages/auth/ChangePassword';
+import FollowingList from './pages/FollowerList';
 
 
 function App() {
@@ -55,7 +56,6 @@ function App() {
               currentUser ? <Redirect to="/" /> : <SignUpForm />
             }
           />
-          import ChangePassword from './pages/auth/ChangePassword';
           <Route
             exact
             path="/change-password"
@@ -75,6 +75,12 @@ function App() {
             path="/photos/:id/edit"
             render={() =>
               currentUser ? <PhotoEdit /> : <Redirect to="/signin" />
+            }
+          />
+          <Route
+            path="/profile/:id/followers"
+            render={() =>
+              currentUser ? <FollowingList /> : <Redirect to="/signin" />
             }
           />
           <Route

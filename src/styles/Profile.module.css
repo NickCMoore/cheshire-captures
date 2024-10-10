@@ -1,20 +1,35 @@
-.profileEditContainer {
-  max-width: 800px;
-  margin: auto;
+.profileContainer {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
 }
 
 .profileCard {
   border-radius: 10px;
-  border: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  background-color: #fff;
 }
 
-.formLabel {
-  font-weight: 600;
+.followingLink {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.followingLink:hover {
+  text-decoration: underline;
 }
 
 .profileImage {
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.text-center {
+  font-size: 1.5rem;
+  font-weight: bold;
 }
