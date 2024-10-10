@@ -44,12 +44,12 @@ const PopularPhotographers = () => {
                   </Button>
                 </Link>
                 {currentUser?.username === photographer.user?.username && (
-                <Link to={`/profile/${photographer.id}/edit`}>
-                  <Button variant="secondary" className="w-100 mt-2">
-                    Edit Profile
-                  </Button>
-                </Link>
-              )}
+                  <Link to={`/profile/${photographer.id}/edit`}>
+                    <Button variant="secondary" className="w-100 mt-2">
+                      Edit Profile
+                    </Button>
+                  </Link>
+                )}
               </Card.Body>
             </Card>
           </Col>
