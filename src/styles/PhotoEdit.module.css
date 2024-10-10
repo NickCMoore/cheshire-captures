@@ -1,0 +1,29 @@
+.editContainer {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+  }
+  
+  .editContainer h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .editContainer .form-control {
+    margin-bottom: 10px;
+  }
+  
+  .imageWrapper {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  .imagePreview {
+    max-width: 100%;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 5px;
+  }
+  

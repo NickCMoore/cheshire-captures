@@ -6,22 +6,22 @@ import styles from '../styles/PhotoEdit.module.css';
 
 const PhotoEdit = () => {
   const { id } = useParams();
-  const [photo, setPhoto] = useState({});
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const history = useHistory();
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPhoto = async () => {
       try {
         const { data } = await axiosReq.get(`/api/photos/photos/${id}/`);
-        setPhoto(data);
         setTitle(data.title);
         setDescription(data.description);
         setImageUrl(data.image_url);
       } catch (error) {
         console.error('Error fetching photo:', error);
+        setError('Unable to fetch photo details. Please try again later.');
       }
     };
 
@@ -38,12 +38,14 @@ const PhotoEdit = () => {
       history.push(`/photos/${id}`);
     } catch (error) {
       console.error('Error updating photo:', error);
+      setError('Failed to update photo. Please try again.');
     }
   };
 
   return (
     <Container className={styles.editContainer}>
       <h2>Edit Photo</h2>
+      {error && <p className={styles.error}>{error}</p>}
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="title">
           <Form.Label>Title</Form.Label>
