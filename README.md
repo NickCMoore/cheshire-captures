@@ -206,41 +206,37 @@ Set Up a Virtual Environment
 
 Create and activate a virtual environment:
 
-bash
-Copy code
+    ```bash
 python3 -m venv venv
 source venv/bin/activate  # For Windows use: venv\Scripts\activate
 Install Dependencies
 
 Install the required packages:
 
-bash
-Copy code
-pip install -r requirements.txt
+    ```bash
+pip install -r requirements.txt```
+
 Set Up the Environment Variables
 
 Create a .env file in the root of the project and add the following:
 
 php
-Copy code
+
 SECRET_KEY=<your-django-secret-key>
 DATABASE_URL=postgres://<username>:<password>@<hostname>:<port>/<database_name>
 DEBUG=True
 ALLOWED_HOSTS=127.0.0.1,localhost
 Apply Migrations
 
-bash
-Copy code
+```bash
 python manage.py migrate
 Create a Superuser
 
-bash
-Copy code
+```bash
 python manage.py createsuperuser
 Run the Development Server
 
-bash
-Copy code
+```bash
 python manage.py runserver
 The backend will be available at http://127.0.0.1:8000.
 
@@ -258,7 +254,7 @@ Cheshire Captures API Documentation
 
 Base URL
 arduino
-Copy code
+
 https://8000-nickcmoore-cheshirecapt-1t388js0qvn.ws-eu116.gitpod.io/api/
 Endpoints Overview
 Here is a summary of the available endpoints:
@@ -330,26 +326,23 @@ Git
 Installation
 Clone the Frontend Repository
 
-bash
-Copy code
+```bash
 git clone https://github.com/NickCMoore/cheshire-captures-frontend.git
 cd cheshire-captures-frontend
 Install Dependencies
 
-bash
-Copy code
+```bash
 npm install
 Environment Variables
 
 Create a .env file in the root of the project and add:
 
 arduino
-Copy code
+
 REACT_APP_API_URL=http://127.0.0.1:8000/api/
 Run the Development Server
 
-bash
-Copy code
+```bash
 npm start
 The frontend will be available at http://localhost:3000.
 
@@ -376,46 +369,38 @@ Media Storage: Cloudinary for image uploads
 Testing
 To run the Django backend tests:
 
-bash
-Copy code
+```bash
 python manage.py test
 To test the frontend, use the following:
 
-bash
-Copy code
+```bash
 npm test
 Deployment
 Frontend Deployment to Heroku
 Create a new Heroku app:
 
-bash
-Copy code
+```bash
 heroku create cheshire-captures-frontend
 Push to Heroku:
 
-bash
-Copy code
+```bash
 git push heroku main
 Set environment variables in Heroku:
 
-bash
-Copy code
+```bash
 heroku config:set REACT_APP_API_URL=<backend-production-url>
 Backend Deployment to Heroku
 Create a new Heroku app:
 
-bash
-Copy code
+```bash
 heroku create cheshire-captures-backend
 Push to Heroku:
 
-bash
-Copy code
+```bash
 git push heroku main
 Set environment variables in Heroku:
 
-bash
-Copy code
+```
 heroku config:set SECRET_KEY=<your-django-secret-key>
 heroku config:set DEBUG=False
 License

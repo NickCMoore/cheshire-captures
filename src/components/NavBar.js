@@ -38,6 +38,14 @@ const NavBar = () => {
         <i className="fas fa-images"></i>Gallery
       </NavLink>
       <NavLink
+      exact
+      className={styles.NavLink}
+      activeClassName={styles.Active}
+      to="/upload-photo"
+      >
+      <i className="fas fa-upload"></i>Upload Photo
+      </NavLink>
+      <NavLink
         exact
         className={styles.NavLink}
         activeClassName={styles.Active}

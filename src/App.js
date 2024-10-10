@@ -14,6 +14,7 @@ import ProfileEdit from './pages/ProfileEdit';
 import MyPhotos from './pages/MyPhotos'; // Import the MyPhotos page
 import { useCurrentUser } from "./contexts/CurrentUserContext";
 import PopularPhotographers from './pages/PopularPhotographers';
+import PhotoUpload from './pages/PhotoUpload';
 
 function App() {
   const currentUser = useCurrentUser();
@@ -49,6 +50,13 @@ function App() {
             path="/signup"
             render={() =>
               currentUser ? <Redirect to="/" /> : <SignUpForm />
+            }
+          />
+          <Route
+            exact
+            path="/upload-photo"
+            render={() =>
+              currentUser ? <PhotoUpload /> : <Redirect to="/signin" />
             }
           />
           <Route

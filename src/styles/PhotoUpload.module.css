@@ -1,0 +1,17 @@
+.uploadContainer {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+  }
+  
+  .uploadContainer h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .uploadContainer .form-control {
+    margin-bottom: 10px;
+  }
+  
