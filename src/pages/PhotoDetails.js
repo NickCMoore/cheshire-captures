@@ -15,6 +15,8 @@ const PhotoDetails = () => {
   const [error, setError] = useState(null);
   const [likeCount, setLikeCount] = useState(0);
   const [hasLiked, setHasLiked] = useState(false);
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editingCommentContent, setEditingCommentContent] = useState("");
 
   useEffect(() => {
     const fetchPhotoDetails = async () => {
@@ -58,6 +60,41 @@ const PhotoDetails = () => {
       setError(null);
     } catch (err) {
       setError("Error adding comment.");
+    }
+  };
+
+  const handleEditComment = (comment) => {
+    setEditingCommentId(comment.id);
+    setEditingCommentContent(comment.content);
+  };
+
+  const handleSaveEditedComment = async (e, commentId) => {
+    e.preventDefault();
+    try {
+      await axiosRes.patch(`/api/photos/comments/${commentId}/`, {
+        content: editingCommentContent,
+      });
+      setComments((prevComments) =>
+        prevComments.map((comment) =>
+          comment.id === commentId ? { ...comment, content: editingCommentContent } : comment
+        )
+      );
+      setEditingCommentId(null);
+      setEditingCommentContent("");
+    } catch (err) {
+      setError("Error editing comment.");
+    }
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this comment?");
+    if (!confirmDelete) return;
+
+    try {
+      await axiosRes.delete(`/api/photos/comments/${commentId}/`);
+      setComments((prevComments) => prevComments.filter((comment) => comment.id !== commentId));
+    } catch (err) {
+      setError("Error deleting comment.");
     }
   };
 
@@ -145,9 +182,52 @@ const PhotoDetails = () => {
           <h4>Comments</h4>
           {comments.length > 0 ? (
             comments.map((comment) => (
-              <p key={comment.id} className={styles.comment}>
-                <strong>{comment.photographer}:</strong> {comment.content}
-              </p>
+              <div key={comment.id} className={styles.comment}>
+                {editingCommentId === comment.id ? (
+                  <Form onSubmit={(e) => handleSaveEditedComment(e, comment.id)}>
+                    <Form.Control
+                      as="textarea"
+                      rows={2}
+                      value={editingCommentContent}
+                      onChange={(e) => setEditingCommentContent(e.target.value)}
+                    />
+                    <Button type="submit" variant="primary" className="mt-2">
+                      Save
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      className="mt-2 ml-2"
+                      onClick={() => setEditingCommentId(null)}
+                    >
+                      Cancel
+                    </Button>
+                  </Form>
+                ) : (
+                  <>
+                    <p>
+                      <strong>{comment.photographer}:</strong> {comment.content}
+                    </p>
+                    {currentUser?.username === comment.photographer && (
+                      <>
+                        <Button
+                          variant="link"
+                          onClick={() => handleEditComment(comment)}
+                          className="p-0 mr-2"
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          variant="link"
+                          onClick={() => handleDeleteComment(comment.id)}
+                          className="p-0 text-danger"
+                        >
+                          Delete
+                        </Button>
+                      </>
+                    )}
+                  </>
+                )}
+              </div>
             ))
           ) : (
             <p>No comments yet.</p>
