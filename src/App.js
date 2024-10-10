@@ -11,11 +11,13 @@ import PhotoDetails from "./pages/PhotoDetails";
 import AboutPage from "./pages/AboutPage";
 import Profile from "./pages/Profile";
 import ProfileEdit from './pages/ProfileEdit';
-import MyPhotos from './pages/MyPhotos'; // Import the MyPhotos page
+import MyPhotos from './pages/MyPhotos'; 
 import { useCurrentUser } from "./contexts/CurrentUserContext";
 import PopularPhotographers from './pages/PopularPhotographers';
 import PhotoUpload from './pages/PhotoUpload';
 import PhotoEdit from './pages/PhotoEdit';
+import ChangePassword from './pages/auth/ChangePassword';
+
 
 function App() {
   const currentUser = useCurrentUser();
@@ -51,6 +53,14 @@ function App() {
             path="/signup"
             render={() =>
               currentUser ? <Redirect to="/" /> : <SignUpForm />
+            }
+          />
+          import ChangePassword from './pages/auth/ChangePassword';
+          <Route
+            exact
+            path="/change-password"
+            render={() =>
+              currentUser ? <ChangePassword /> : <Redirect to="/signin" />
             }
           />
           <Route

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useCurrentUser } from '../contexts/CurrentUserContext';
 import axios from 'axios';
-import { Container, Form, Button, Image, Row, Col, Card } from 'react-bootstrap';
+import { Container, Form, Button, Image, Row, Col, Card, Alert } from 'react-bootstrap';
 import styles from '../styles/Profile.module.css';
 
 const ProfileEdit = () => {
@@ -15,6 +15,11 @@ const ProfileEdit = () => {
   const [website, setWebsite] = useState('');
   const [instagram, setInstagram] = useState('');
   const [twitter, setTwitter] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
 
   useEffect(() => {
     const fetchPhotographer = async () => {
@@ -27,6 +32,7 @@ const ProfileEdit = () => {
         setInstagram(data.instagram);
         setTwitter(data.twitter);
       } catch (error) {
+        setErrorMessage('Error fetching photographer data.');
         console.error('Error fetching photographer data:', error);
       }
     };
@@ -39,13 +45,12 @@ const ProfileEdit = () => {
   const handleProfileImageChange = (event) => {
     if (event.target.files.length) {
       setNewProfileImage(event.target.files[0]);
-      console.log('Selected file:', event.target.files[0]); 
     }
   };
 
   const handleProfileImageUpload = async () => {
     if (!newProfileImage) {
-      console.error('No image selected for upload.');
+      setErrorMessage('No image selected for upload.');
       return;
     }
 
@@ -60,8 +65,10 @@ const ProfileEdit = () => {
       });
       setPhotographer(data);
       setNewProfileImage(null);
-      console.log('Profile image updated successfully.');
+      setSuccessMessage('Profile image updated successfully.');
+      setErrorMessage('');
     } catch (error) {
+      setErrorMessage('Error uploading profile image.');
       console.error('Error uploading profile image:', error);
     }
   };
@@ -78,9 +85,36 @@ const ProfileEdit = () => {
         twitter,
       });
       setPhotographer(data);
-      console.log('Profile updated successfully.');
+      setSuccessMessage('Profile updated successfully.');
+      setErrorMessage('');
     } catch (error) {
+      setErrorMessage('Error updating profile details.');
       console.error('Error updating profile details:', error);
+    }
+  };
+
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+
+    if (newPassword !== confirmNewPassword) {
+      setErrorMessage('New passwords do not match.');
+      return;
+    }
+
+    try {
+      await axios.post('/dj-rest-auth/password/change/', {
+        old_password: currentPassword,
+        new_password1: newPassword,
+        new_password2: confirmNewPassword,
+      });
+      setSuccessMessage('Password changed successfully.');
+      setErrorMessage('');
+      setCurrentPassword('');
+      setNewPassword('');
+      setConfirmNewPassword('');
+    } catch (error) {
+      setErrorMessage('Error changing password.');
+      console.error('Error changing password:', error);
     }
   };
 
@@ -89,9 +123,11 @@ const ProfileEdit = () => {
   return (
     <Container className={`${styles.profileEditContainer} mt-5`}>
       <Row className="justify-content-center">
-        <Col md={8}>
+        <Col md={6}>
           <Card className={`p-4 shadow ${styles.profileCard}`}>
             <h2 className="text-center mb-4">Edit Profile</h2>
+            {successMessage && <Alert variant="success">{successMessage}</Alert>}
+            {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
             <Form onSubmit={handleProfileUpdate}>
               <div className="text-center">
                 <Image
@@ -121,6 +157,7 @@ const ProfileEdit = () => {
                   placeholder="Enter display name"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
+                  required
                 />
               </Form.Group>
 
@@ -167,6 +204,49 @@ const ProfileEdit = () => {
 
               <Button variant="success" type="submit" className="w-100 mt-4">
                 Save Changes
+              </Button>
+            </Form>
+          </Card>
+        </Col>
+        <Col md={6}>
+          <Card className={`p-4 shadow ${styles.profileCard}`}>
+            <h3 className="text-center mb-4">Change Password</h3>
+            <Form onSubmit={handleChangePassword}>
+              <Form.Group controlId="currentPassword" className="mb-3">
+                <Form.Label className={styles.formLabel}>Current Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Enter current password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group controlId="newPassword" className="mb-3">
+                <Form.Label className={styles.formLabel}>New Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Enter new password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group controlId="confirmNewPassword" className="mb-3">
+                <Form.Label className={styles.formLabel}>Confirm New Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Confirm new password"
+                  value={confirmNewPassword}
+                  onChange={(e) => setConfirmNewPassword(e.target.value)}
+                  required
+                />
+              </Form.Group>
+
+              <Button variant="primary" type="submit" className="w-100">
+                Change Password
               </Button>
             </Form>
           </Card>
