@@ -58,6 +58,15 @@ const NavBar = () => {
       <NavLink
         exact
         className={styles.NavLink}
+        activeClassName={styles.Active}
+        to="/my-photos"
+        onClick={() => setToggleNavBar(false)}
+      >
+        <i className="fas fa-camera-retro"></i>My Photos
+      </NavLink>
+      <NavLink
+        exact
+        className={styles.NavLink}
         to="/"
         onClick={handleSignOut}
       >
@@ -65,6 +74,8 @@ const NavBar = () => {
       </NavLink>
     </>
   );
+  
+  
 
   const loggedOutIcons = (
     <>

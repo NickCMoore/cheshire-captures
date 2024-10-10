@@ -28,7 +28,6 @@ const Gallery = () => {
           }));
           setImages(photos);
 
-          // Extract unique categories for the dropdown
           const uniqueCategories = [...new Set(data.results.map(photo => photo.category))];
           setCategories(uniqueCategories);
         } else {
