@@ -62,7 +62,7 @@ const NavBar = () => {
         to="/my-photos"
         onClick={() => setToggleNavBar(false)}
       >
-        <i className="fas fa-camera-retro"></i>My Photos
+        <i className="fas fa-camera"></i>My Photos
       </NavLink>
       <NavLink
         exact
@@ -74,8 +74,6 @@ const NavBar = () => {
       </NavLink>
     </>
   );
-  
-  
 
   const loggedOutIcons = (
     <>

@@ -11,6 +11,7 @@ import PhotoDetails from "./pages/PhotoDetails";
 import AboutPage from "./pages/AboutPage";
 import Profile from "./pages/Profile";
 import ProfileEdit from './pages/ProfileEdit';
+import MyPhotos from './pages/MyPhotos'; // Import the MyPhotos page
 import { useCurrentUser } from "./contexts/CurrentUserContext";
 import PopularPhotographers from './pages/PopularPhotographers';
 
@@ -28,7 +29,13 @@ function App() {
           <Route exact path="/popular-photographers" component={PopularPhotographers} />
           <Route exact path="/about" component={AboutPage} />
           <Route path="/profile/:id/edit" component={ProfileEdit} />
-
+          <Route
+            exact
+            path="/my-photos"
+            render={() =>
+              currentUser ? <MyPhotos /> : <Redirect to="/signin" />
+            }
+          />
 
           <Route
             exact
