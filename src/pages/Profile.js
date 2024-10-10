@@ -14,14 +14,19 @@ const Profile = () => {
   const currentUser = useCurrentUser();
   const [photographer, setPhotographer] = useState(null);
   const [photos, setPhotos] = useState([]);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPhotographer = async () => {
       try {
         const { data } = await axios.get(`/api/photographers/photographers/${id}/`);
         setPhotographer(data);
+        setIsFollowing(data.is_followed);
       } catch (error) {
         console.error('Error fetching photographer data:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -40,7 +45,26 @@ const Profile = () => {
     }
   }, [id, currentUser]);
 
-  if (!photographer) return <p>Loading...</p>;
+  const handleFollow = async () => {
+    try {
+      await axios.post(`/api/photographers/photographers/${id}/follow/`);
+      setIsFollowing(true);
+    } catch (error) {
+      console.error('Error following photographer:', error);
+    }
+  };
+
+  const handleUnfollow = async () => {
+    try {
+      await axios.post(`/api/photographers/photographers/${id}/unfollow/`);
+      setIsFollowing(false);
+    } catch (error) {
+      console.error('Error unfollowing photographer:', error);
+    }
+  };
+
+  if (loading) return <p>Loading...</p>;
+  if (!photographer) return <p>Photographer not found.</p>;
 
   const isOwnProfile = currentUser && String(photographer.user) === String(currentUser.username);
 
@@ -77,41 +101,51 @@ const Profile = () => {
                 </li>
               )}
             </ul>
-            {isOwnProfile && (
+            {isOwnProfile ? (
               <Link to={`/profile/${id}/edit`}>
                 <Button variant="secondary" className="mt-2">
                   Edit Profile
                 </Button>
               </Link>
+            ) : (
+              <Button
+                variant={isFollowing ? 'danger' : 'primary'}
+                className="mt-2"
+                onClick={isFollowing ? handleUnfollow : handleFollow}
+              >
+                {isFollowing ? 'Unfollow' : 'Follow'}
+              </Button>
             )}
           </Card>
         </Col>
       </Row>
-      <Row className="mt-4">
-        <h3 className="text-center">My Photos</h3>
-        {photos.length > 0 ? (
-          photos.map((photo) => (
-            <Col key={photo.id} md={4} className="mb-4">
-              <Card className="shadow-sm">
-                <Link to={`/photos/${photo.id}`}>
-                  <Card.Img variant="top" src={photo.image_url} alt={photo.title} />
-                </Link>
-                <Card.Body>
-                  <Card.Title>{photo.title}</Card.Title>
-                  <Card.Text>{photo.created_at}</Card.Text>
-                  <Link to={`/photos/${photo.id}/edit`}>
-                    <Button variant="secondary" className="w-100">
-                      Edit
-                    </Button>
+      {isOwnProfile && (
+        <Row className="mt-4">
+          <h3 className="text-center">My Photos</h3>
+          {photos.length > 0 ? (
+            photos.map((photo) => (
+              <Col key={photo.id} md={4} className="mb-4">
+                <Card className="shadow-sm">
+                  <Link to={`/photos/${photo.id}`}>
+                    <Card.Img variant="top" src={photo.image_url} alt={photo.title} />
                   </Link>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))
-        ) : (
-          <p className="text-center">You have not uploaded any photos yet.</p>
-        )}
-      </Row>
+                  <Card.Body>
+                    <Card.Title>{photo.title}</Card.Title>
+                    <Card.Text>{photo.created_at}</Card.Text>
+                    <Link to={`/photos/${photo.id}/edit`}>
+                      <Button variant="secondary" className="w-100">
+                        Edit
+                      </Button>
+                    </Link>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))
+          ) : (
+            <p className="text-center">You have not uploaded any photos yet.</p>
+          )}
+        </Row>
+      )}
     </Container>
   );
 };
