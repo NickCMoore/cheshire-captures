@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Carousel, Container } from 'react-bootstrap';
+import { Carousel, Container, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom'; 
 import { axiosReq } from '../api/axiosDefaults';
 import styles from '../styles/Gallery.module.css';
 
 const Gallery = () => {
   const [images, setImages] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPhotos = async () => {
@@ -19,14 +21,37 @@ const Gallery = () => {
             photographer: photo.photographer_display_name || 'Unknown',
           }));
           setImages(photos);
+        } else {
+          setError('No photos available at the moment.');
         }
       } catch (error) {
         console.error('Error fetching photos:', error);
+        setError('Failed to load photos. Please try again later.');
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchPhotos();
   }, []);
+
+  if (isLoading) {
+    return (
+      <Container className="text-center my-5">
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container className="text-center my-5">
+        <p>{error}</p>
+      </Container>
+    );
+  }
 
   return (
     <Container fluid className={styles.galleryContainer}>
