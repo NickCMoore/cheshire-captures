@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useHistory } from "react-router-dom";
 import { useCurrentUser } from '../contexts/CurrentUserContext';
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
@@ -7,6 +7,7 @@ import styles from "../styles/PhotoDetails.module.css";
 
 const PhotoDetails = () => {
   const { id } = useParams();
+  const history = useHistory();
   const currentUser = useCurrentUser();
   const [photo, setPhoto] = useState(null);
   const [comments, setComments] = useState([]);
@@ -21,7 +22,7 @@ const PhotoDetails = () => {
         const { data } = await axiosReq.get(`/api/photos/photos/${id}/`);
         setPhoto(data);
         setLikeCount(data.likes_count);
-        setHasLiked(data.user_has_liked); // Assuming this info is available in the API response.
+        setHasLiked(data.user_has_liked);
       } catch (err) {
         setError("Photo not found.");
       }
@@ -54,7 +55,7 @@ const PhotoDetails = () => {
       });
       setComments((prevComments) => [...prevComments, data]);
       setNewComment("");
-      setError(null); // Clear any previous errors
+      setError(null);
     } catch (err) {
       setError("Error adding comment.");
     }
@@ -77,6 +78,19 @@ const PhotoDetails = () => {
       setHasLiked(!hasLiked);
     } catch (err) {
       console.error("Error handling like/unlike:", err);
+    }
+  };
+
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this photo?");
+    if (!confirmDelete) return;
+
+    try {
+      await axiosRes.delete(`/api/photos/photos/${id}/`);
+      history.push("/gallery");
+    } catch (err) {
+      setError("Error deleting photo.");
+      console.error("Error deleting photo:", err);
     }
   };
 
@@ -107,6 +121,25 @@ const PhotoDetails = () => {
             >
               {hasLiked ? "Unlike" : "Like"} {likeCount}
             </Button>
+            {currentUser?.username === photo.photographer_display_name && (
+              <>
+                <Button
+                  variant="warning"
+                  className={`${styles.editButton} mt-3`}
+                  as={Link}
+                  to={`/photos/${id}/edit`}
+                >
+                  Edit Photo
+                </Button>
+                <Button
+                  variant="danger"
+                  className={`${styles.deleteButton} mt-3`}
+                  onClick={handleDelete}
+                >
+                  Delete Photo
+                </Button>
+              </>
+            )}
           </div>
           <hr />
           <h4>Comments</h4>

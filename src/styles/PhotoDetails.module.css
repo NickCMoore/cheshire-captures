@@ -85,5 +85,18 @@
     outline: none;
     box-shadow: 0 0 5px var(--ultra-violet); 
   }
+
+  .deleteButton {
+    margin-top: 20px;
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+  }
+  
+  .deleteButton:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+  }
+  
   
   
