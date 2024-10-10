@@ -1,35 +1,66 @@
 .profileContainer {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 2rem;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
 }
 
 .profileCard {
-  border-radius: 10px;
-  padding: 2rem;
-  background-color: #fff;
-}
-
-.followingLink {
-  display: inline-block;
-  margin-top: 1rem;
-  font-size: 1rem;
-  color: #007bff;
-  text-decoration: none;
-}
-
-.followingLink:hover {
-  text-decoration: underline;
+  border-radius: 15px;
+  background-color: #ffffff;
+  border: none;
 }
 
 .profileImage {
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   object-fit: cover;
-  margin-bottom: 1rem;
+  margin-bottom: 15px;
 }
 
-.text-center {
-  font-size: 1.5rem;
+.profileName {
+  font-size: 24px;
   font-weight: bold;
+}
+
+.bio {
+  font-size: 16px;
+  color: #6c757d;
+}
+
+.socialLinks {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.socialLinks li {
+  display: inline-block;
+}
+
+.icon {
+  margin-right: 5px;
+}
+
+.photoGallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.photoCard {
+  transition: transform 0.2s ease-in-out;
+  border-radius: 10px;
+}
+
+.photoCard:hover {
+  transform: translateY(-5px);
+}
+
+.photoImage {
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
 }
