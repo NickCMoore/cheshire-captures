@@ -1,8 +1,8 @@
-import { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
-import { axiosReq, axiosRes } from '../api/axiosDefaults';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { removeTokenTimestamp, shouldRefreshToken } from '../utils/Utils';
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import axios from "axios";
+import { axiosReq, axiosRes } from "../api/axiosDefaults";
+import { useHistory } from "react-router";
+import { removeTokenTimestamp, shouldRefreshToken } from "../utils/Utils";
 
 export const CurrentUserContext = createContext();
 export const SetCurrentUserContext = createContext();
@@ -14,62 +14,59 @@ export const CurrentUserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const history = useHistory();
 
-  // Fetch current user info
-  /*
-  const fetchCurrentUser = async () => {
+  const handleMount = async () => {
     try {
-      const { data } = await axiosRes.get('/dj-rest-auth/user/');
+      const { data } = await axiosRes.get("dj-rest-auth/user/");
       setCurrentUser(data);
     } catch (err) {
-      console.error('Error fetching user data:', err);
-      setCurrentUser(null); 
+      // console.log(err);
     }
   };
 
   useEffect(() => {
-    fetchCurrentUser();
+    handleMount();
   }, []);
-  */
 
-  useEffect(() => {
+  useMemo(() => {
     axiosReq.interceptors.request.use(
       async (config) => {
-        const refreshToken = localStorage.getItem('refresh_token');
-        if (shouldRefreshToken() && refreshToken) {
+        if (shouldRefreshToken()) {
           try {
-            const { data } = await axios.post('/dj-rest-auth/token/refresh/', { refresh: refreshToken });
-            localStorage.setItem('access_token', data.access);
-            config.headers.Authorization = `Bearer ${data.access}`;
+            await axios.post("/dj-rest-auth/token/refresh/");
           } catch (err) {
-            setCurrentUser(null);
+            setCurrentUser((prevCurrentUser) => {
+              if (prevCurrentUser) {
+                history.push("/signin");
+              }
+              return null;
+            });
             removeTokenTimestamp();
-            history.push('/signin');
+            return config;
           }
         }
         return config;
       },
-      (err) => Promise.reject(err)
+      (err) => {
+        return Promise.reject(err);
+      }
     );
 
     axiosRes.interceptors.response.use(
       (response) => response,
       async (err) => {
-        const originalRequest = err.config;
-        if (err.response?.status === 401 && !originalRequest._retry) {
-          originalRequest._retry = true;
+        if (err.response?.status === 401) {
           try {
-            const refreshToken = localStorage.getItem('refresh_token');
-            if (refreshToken) {
-              const { data } = await axios.post('/dj-rest-auth/token/refresh/', { refresh: refreshToken });
-              localStorage.setItem('access_token', data.access);
-              originalRequest.headers.Authorization = `Bearer ${data.access}`;
-              return axios(originalRequest);
-            }
-          } catch (tokenRefreshError) {
-            setCurrentUser(null);
+            await axios.post("/dj-rest-auth/token/refresh/");
+          } catch (err) {
+            setCurrentUser((prevCurrentUser) => {
+              if (prevCurrentUser) {
+                history.push("/signin");
+              }
+              return null;
+            });
             removeTokenTimestamp();
-            history.push('/signin');
           }
+          return axios(err.config);
         }
         return Promise.reject(err);
       }

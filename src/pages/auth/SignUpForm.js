@@ -25,6 +25,7 @@ function SignUpForm() {
   const { username, password1, password2 } = signUpData;
   const [errors, setErrors] = useState({});
 
+  // Handle input changes
   const handleChange = (e) => {
     setSignUpData({
       ...signUpData,
@@ -32,10 +33,11 @@ function SignUpForm() {
     });
   };
 
+  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await axios.post("dj-rest-auth/registration/", signUpData);
+      const { data } = await axios.post("/dj-rest-auth/registration/", signUpData);
       setCurrentUser(data.user);
       setTokenTimestamp(data);
       history.push("/signin/");
@@ -46,7 +48,7 @@ function SignUpForm() {
 
   return (
     <Container fluid className={styles.Background}>
-      <Row className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+      <Row className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
         <Col xs={12} md={6} lg={4}>
           <div className={styles.FormContainer}>
             <h1 className={styles.Header}>Sign Up</h1>
@@ -90,7 +92,7 @@ function SignUpForm() {
               <Form.Group controlId="password2">
                 <Form.Label className="d-none">Confirm Password</Form.Label>
                 <Form.Control
-                  className={styles.Input}  
+                  className={styles.Input}
                   type="password"
                   name="password2"
                   placeholder="Confirm password"
@@ -106,10 +108,7 @@ function SignUpForm() {
               ))}
 
               <Row className="d-flex justify-content-center">
-                <Button
-                  className={`${btnStyles.Button} ${styles.Button} mt-3`}
-                  type="submit"
-                >
+                <Button className={`${btnStyles.Button} ${styles.Button} mt-3`} type="submit">
                   Sign Up
                 </Button>
               </Row>
@@ -123,7 +122,8 @@ function SignUpForm() {
 
             <Row className="d-flex justify-content-center mt-3">
               <Link className={styles.Link} to="/signin">
-                Already have an account? <br></br><strong>Sign in here!</strong>
+                Already have an account? <br />
+                <strong>Sign in here!</strong>
               </Link>
             </Row>
           </div>
