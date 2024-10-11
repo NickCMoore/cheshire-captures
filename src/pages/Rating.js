@@ -10,7 +10,7 @@ const RatingComponent = ({ photoId }) => {
     useEffect(() => {
         const fetchRatings = async () => {
             try {
-                const { data } = await axiosReq.get(`/api/photos/${photoId}/ratings/`);
+                const { data } = await axiosReq.get(`/api/photos/photos/${photoId}/ratings/`);
                 const userRatingData = data.find(r => r.user === currentUser?.username);
                 if (userRatingData) {
                     setUserRating(userRatingData.rating);
