@@ -1,29 +1,26 @@
 .profileContainer {
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 10px;
+  margin-top: 80px; 
+  margin-bottom: 40px; 
 }
 
 .profileCard {
-  border-radius: 15px;
-  background-color: #ffffff;
-  border: none;
+  border-radius: 20px;
 }
 
 .profileImage {
   width: 150px;
   height: 150px;
   object-fit: cover;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .profileName {
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 2rem;
+  font-weight: 700;
 }
 
 .bio {
-  font-size: 16px;
+  font-size: 1rem;
   color: #6c757d;
 }
 
@@ -31,13 +28,7 @@
   list-style: none;
   padding: 0;
   display: flex;
-  gap: 10px;
-  justify-content: center;
-  margin-top: 15px;
-}
-
-.socialLinks li {
-  display: inline-block;
+  gap: 15px;
 }
 
 .icon {
@@ -47,20 +38,19 @@
 .photoGallery {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
+  justify-content: center;
 }
 
 .photoCard {
-  transition: transform 0.2s ease-in-out;
-  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
 }
 
 .photoCard:hover {
-  transform: translateY(-5px);
+  transform: scale(1.02);
 }
 
 .photoImage {
-  height: 200px;
+  border-radius: 5px;
+  max-height: 200px;
   object-fit: cover;
-  border-radius: 10px;
 }

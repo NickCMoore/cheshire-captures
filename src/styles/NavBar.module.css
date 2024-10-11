@@ -1,5 +1,5 @@
 .NavBar {
-    background-color: lavenderblush;
+    background-color: var(--magnolia);
     height: 70px; 
     width: 100%;
     position: fixed;
@@ -11,8 +11,8 @@
 
 .NavBar a {
     color: var(--yinmn-blue);
-    font-size: 1.1rem; 
-    padding: 8px 15px;
+    font-size: 1rem; 
+    padding: 8px 10px;
     text-decoration: none;
 }
 

@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link, useHistory } from 'react-router-dom';
 import { useCurrentUser } from '../contexts/CurrentUserContext';
 import axios from 'axios';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import { Link, useHistory } from 'react-router-dom';
-import styles from '../styles/Profile.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
+import styles from '../styles/Profile.module.css';
 
 const Profile = () => {
   const { id } = useParams();
   const currentUser = useCurrentUser();
   const history = useHistory();
   const [photographer, setPhotographer] = useState(null);
-  const [photos, setPhotos] = useState([]);
+  const [photos, setPhotos] = useState([]); // State for the user's photos
   const [isFollowing, setIsFollowing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [followersCount, setFollowersCount] = useState(0);
@@ -78,24 +77,24 @@ const Profile = () => {
   const isOwnProfile = currentUser && String(photographer.user) === String(currentUser.username);
 
   return (
-    <Container className={`${styles.profileContainer} mt-5`} fluid="lg">
-      <Row className="justify-content-center">
-        <Col md={8}>
+    <Container className="d-flex justify-content-center align-items-center min-vh-100">
+      <Row className="justify-content-center w-100">
+        <Col xs={12} md={10} lg={8}>
           <Card className={`p-4 shadow-sm ${styles.profileCard}`}>
             <Row className="align-items-center">
-              <Col md={4} className="text-center">
+              <Col xs={12} md={4} className="text-center mb-3 mb-md-0">
                 <img
                   src={photographer.profile_image || 'https://res.cloudinary.com/dwgtce0rh/image/upload/v1728599006/v491glywexjtr2trgoj1.jpg'}
                   alt={photographer.display_name}
                   className={`${styles.profileImage} rounded-circle`}
                 />
               </Col>
-              <Col md={8}>
-                <h3 className={`${styles.profileName} text-primary`}>{photographer.display_name}</h3>
+              <Col xs={12} md={8}>
+                <h3 className="text-primary">{photographer.display_name}</h3>
                 <p className={styles.bio}>{photographer.bio}</p>
-                <ul className={styles.socialLinks}>
+                <ul className={`${styles.socialLinks} list-unstyled d-flex flex-wrap`}>
                   {photographer.website && (
-                    <li>
+                    <li className="mr-3">
                       <FontAwesomeIcon icon={faGlobe} className={styles.icon} />
                       <a href={photographer.website} target="_blank" rel="noopener noreferrer">
                         Website
@@ -103,7 +102,7 @@ const Profile = () => {
                     </li>
                   )}
                   {photographer.instagram && (
-                    <li>
+                    <li className="mr-3">
                       <FontAwesomeIcon icon={faInstagram} className={styles.icon} />
                       <a href={photographer.instagram} target="_blank" rel="noopener noreferrer">
                         Instagram
@@ -119,23 +118,22 @@ const Profile = () => {
                     </li>
                   )}
                 </ul>
-                <div className="mt-3">
-                  <p>
+                <div className="d-flex align-items-center mt-3">
+                  <p className="mb-0 mr-3">
                     <strong>Followers:</strong> {followersCount}
                   </p>
                   <Button variant="info" onClick={handleViewFollowers} className="mr-2">
                     View Followers
                   </Button>
                   {isOwnProfile ? (
-                    <Link to={`/profile/${id}/edit`}>
-                      <Button variant="secondary" className="mt-2">
+                    <Link to={`/profile/${id}/edit`} className="d-flex">
+                      <Button variant="secondary">
                         Edit Profile
                       </Button>
                     </Link>
                   ) : (
                     <Button
                       variant={isFollowing ? 'danger' : 'primary'}
-                      className="mt-2"
                       onClick={isFollowing ? handleUnfollow : handleFollow}
                     >
                       {isFollowing ? 'Unfollow' : 'Follow'}
@@ -147,33 +145,29 @@ const Profile = () => {
           </Card>
         </Col>
       </Row>
-      {isOwnProfile && (
+      {isOwnProfile && photos.length > 0 && (
         <Row className="mt-4">
           <h3 className="text-center mb-4">My Photos</h3>
-          {photos.length > 0 ? (
-            <Row className={`${styles.photoGallery}`}>
-              {photos.map((photo) => (
-                <Col key={photo.id} md={4} className="mb-4">
-                  <Card className={`shadow-sm ${styles.photoCard}`}>
-                    <Link to={`/photos/${photo.id}`}>
-                      <Card.Img variant="top" src={photo.image_url} alt={photo.title} className={styles.photoImage} />
+          <Row className="justify-content-center">
+            {photos.map((photo) => (
+              <Col key={photo.id} xs={12} sm={6} md={4} className="mb-4">
+                <Card className="shadow-sm">
+                  <Link to={`/photos/${photo.id}`}>
+                    <Card.Img variant="top" src={photo.image_url} alt={photo.title} />
+                  </Link>
+                  <Card.Body>
+                    <Card.Title>{photo.title}</Card.Title>
+                    <Card.Text>{new Date(photo.created_at).toLocaleDateString()}</Card.Text>
+                    <Link to={`/photos/${photo.id}/edit`}>
+                      <Button variant="secondary" className="w-100">
+                        Edit
+                      </Button>
                     </Link>
-                    <Card.Body>
-                      <Card.Title>{photo.title}</Card.Title>
-                      <Card.Text>{new Date(photo.created_at).toLocaleDateString()}</Card.Text>
-                      <Link to={`/photos/${photo.id}/edit`}>
-                        <Button variant="secondary" className="w-100">
-                          Edit
-                        </Button>
-                      </Link>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              ))}
-            </Row>
-          ) : (
-            <p className="text-center mt-5">You have not uploaded any photos yet.</p>
-          )}
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
         </Row>
       )}
     </Container>
