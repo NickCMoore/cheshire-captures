@@ -1,8 +1,17 @@
-# Cheshire Captures
+# **_Cheshire Captures_**
+
+**Cheshire Captures** is a full-stack photography community platform designed to connect photographers and photo enthusiasts. Built using Django REST Framework and React, it allows users to create accounts, upload photos, rate, comment, and interact with the photography community. Users can filter photos by category, search for photographers or photos, and view top-rated content.
+
+Both the backend and frontend are deployed separately on Heroku, with the backend providing a robust API for data management and the frontend delivering an intuitive and responsive user experience.
+
+To view the platform, please [click here](https://cheshire-captures-4a500dc7ab0a.herokuapp.com/).
 
 ## Table of Contents
 
 - [Overview](#overview)
+   - [Problem Statement](#problem-statement)
+   - [Target Audience](#target-audience)
+   - [Solution](#solution)
 - [Features](#features)
 - [User Stories](#user-stories)
 - [Technologies Used](#technologies-used)
@@ -26,7 +35,28 @@
 
 Both the backend and frontend are deployed separately on Heroku, with the backend providing a robust API for data management and the frontend delivering an intuitive and responsive user experience.
 
----
+### Problem Statement
+
+Photographers often struggle to find a platform that caters to their specific needs for showcasing their work and connecting with fellow professionals. General social media platforms can lack the tailored features that photographers require, such as the ability to easily share high-quality images, receive meaningful feedback, and collaborate with peers. Also, existing platforms may not provide effective ways to promote their portfolios to potential clients or collaborators. These challenges can lead to missed networking opportunities, underwhelming portfolio visibility, and a sense of isolation in the photography community.
+
+### Target Audience
+
+Cheshire Captures is specifically designed for:
+
+- Photographers: Professionals and enthusiasts who want a platform where they can share their work, receive feedback, and connect with like-minded individuals in the Cheshire area.
+- Photography Enthusiasts: Individuals who are passionate about photography and wish to engage in discussions, discover new photographers, and explore a variety of photographic styles.
+- Potential Clients: Individuals or businesses looking for photographers for events, shoots, or collaborations and need an easy way to browse through photographers' portfolios and contact them.
+
+### Solution
+
+Cheshire Captures aims to address these challenges by providing a tailored platform where photographers and enthusiasts can:
+
+-  Showcase Work: Easily upload and share high-quality photos, allowing photographers to present their portfolios in an appealing, professional manner.
+- Receive Feedback: Enable community engagement through likes, ratings, and comments on photos, fostering a space for constructive criticism and appreciation.
+- Network and Collaborate: Connect with fellow photographers through follow features, direct messaging, and discussions, making it easier to collaborate on projects and grow professional networks.
+- Promote and Discover: Facilitate a search and filter feature to help users find photographers based on style, location, and popularity, making it easier for potential clients to discover local talent.
+- Organise Portfolios: Create user-friendly profile pages where photographers can curate their best work and provide additional information about their services, making them more accessible to clients and collaborators.
+- By solving these problems, Cheshire Captures aims to enhance the experience for photographers in the Cheshire area, providing them with a dedicated space to connect, collaborate, and showcase their talent. This platform not only enables better portfolio visibility and professional networking but also strengthens the local photography community by bringing photographers together in a more meaningful way.
 
 ## Features
 
