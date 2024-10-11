@@ -1,20 +1,25 @@
+/* Reset and Global Styles */
 body, html {
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
+  font-family: "Montserrat", sans-serif;
+  background-color: var(--yinmn-blue);
+  color: var(--wisteria);
 }
 
-.ContainerWithBg {
-  background-image: url('https://res.cloudinary.com/dwgtce0rh/image/upload/v1721310733/rrnrybzbr0iypcupobfl.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  filter: brightness(0.7);
+:root {
+  --rich-black: #0e1116ff;
+  --yinmn-blue: #374a67ff;
+  --ultra-violet: #616283ff;
+  --mountbatten-pink: #9e7b9bff;
+  --wisteria: #cb9cf2ff;
+  --battleship-gray: #8f9491ff;
+  --rose-quartz: #bca3acff;
+  --thistle: #e5cedcff;
+  --magnolia: #f3eaf4ff;
+  --lavender-blush: #eadde1ff;
 }
 
 body, html, .ContainerWithBg {
@@ -22,4 +27,166 @@ body, html, .ContainerWithBg {
   padding: 0;
 }
 
+/* Main Container Styling */
+.Main {
+  padding-top: 70px;
+  padding-bottom: 60px;
+  height: calc(100vh - 101px);
+}
 
+/* Universal Box Sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Anchor Link Styles */
+a {
+  color: var(--mountbatten-pink);
+  transition: color ease-in-out 0.3s;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+a:hover i {
+  color: var(--wisteria);
+  transition: color ease-in-out 0.3s;
+}
+
+/* Icon Styles */
+i {
+  font-size: 1.8rem;
+  padding: 7px;
+  vertical-align: middle;
+}
+
+i:hover {
+  cursor: pointer;
+  transition: color ease-in-out 0.3s;
+  color: var(--mountbatten-pink);
+}
+
+/* Navbar Dropdown */
+#basic-nav-dropdown {
+  color: var(--mountbatten-pink);
+  font-size: 1.6rem;
+  padding: 7px;
+  vertical-align: middle;
+}
+
+/* Photo Frame Styles */
+.photo-frame {
+  border: 2px solid var(--ultra-violet);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.photo-frame:hover {
+  transform: scale(1.02);
+}
+
+/* Primary Button Styling */
+.button-primary {
+  background-color: var(--mountbatten-pink);
+  color: var(--wisteria);
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.button-primary:hover {
+  background-color: var(--ultra-violet);
+}
+
+/* Heading Styling */
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #E5CEDC;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Content Box Styling */
+.Content {
+  background-color: var(--yinmn-blue);
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid var(--ultra-violet);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.Content:hover {
+  transform: scale(1.01);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Image Styling */
+.FillerImage {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.Image {
+  max-height: 40vh;
+  max-width: 100%;
+  object-fit: contain;
+  border: 2px solid var(--ultra-violet);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px 0;
+  transition: transform 0.3s ease-in-out;
+}
+
+.Image:hover {
+  transform: scale(1.02);
+}
+
+/* Scrollbar Styles */
+*::-webkit-scrollbar {
+  width: 5px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--rich-black);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--ultra-violet);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--mountbatten-pink);
+}
+
+/* Figure Styling */
+figure {
+  text-align: center;
+  display: inline-block;
+}
+
+/* File Input Styling */
+input[type="file"] {
+  display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .button-primary {
+    padding: 8px 16px;
+  }
+}

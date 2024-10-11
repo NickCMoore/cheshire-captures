@@ -4,6 +4,7 @@ import { useCurrentUser } from '../contexts/CurrentUserContext';
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
 import styles from "../styles/PhotoDetails.module.css";
+import RatingComponent from "./Rating";
 
 const PhotoDetails = () => {
   const { id } = useParams();
@@ -38,7 +39,7 @@ const PhotoDetails = () => {
         console.error("Error fetching comments:", err);
       }
     };
-    
+
     fetchPhotoDetails();
     fetchComments();
   }, [id]);
@@ -151,6 +152,7 @@ const PhotoDetails = () => {
             <p>{photo.description}</p>
             <p><strong>Photographer:</strong> {photo.photographer_display_name}</p>
             <p><strong>Tags:</strong> {photo.tags.map(tag => tag.name).join(', ')}</p>
+            <RatingComponent photoId={id} />
             <Button
               variant={hasLiked ? "danger" : "primary"}
               className={styles.likeButton}
