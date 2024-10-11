@@ -124,7 +124,7 @@ const ProfileEdit = () => {
     <Container className={`${styles.profileEditContainer} mt-5`}>
       <Row className="justify-content-center">
         <Col md={6}>
-          <Card className={`p-4 shadow ${styles.profileCard}`}>
+          <Card className={`p-4 shadow ${styles.profileCard} mt-3`}>
             <h2 className="text-center mb-4">Edit Profile</h2>
             {successMessage && <Alert variant="success">{successMessage}</Alert>}
             {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
@@ -209,7 +209,7 @@ const ProfileEdit = () => {
           </Card>
         </Col>
         <Col md={6}>
-          <Card className={`p-4 shadow ${styles.profileCard}`}>
+          <Card className={`p-4 shadow ${styles.profileCard} mt-3`}>
             <h3 className="text-center mb-4">Change Password</h3>
             <Form onSubmit={handleChangePassword}>
               <Form.Group controlId="currentPassword" className="mb-3">

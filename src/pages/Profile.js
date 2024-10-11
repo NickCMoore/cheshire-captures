@@ -13,7 +13,7 @@ const Profile = () => {
   const currentUser = useCurrentUser();
   const history = useHistory();
   const [photographer, setPhotographer] = useState(null);
-  const [photos, setPhotos] = useState([]); // State for the user's photos
+  const [photos, setPhotos] = useState([]);
   const [isFollowing, setIsFollowing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [followersCount, setFollowersCount] = useState(0);
@@ -80,8 +80,8 @@ const Profile = () => {
     <Container className="d-flex justify-content-center align-items-center min-vh-100">
       <Row className="justify-content-center w-100">
         <Col xs={12} md={10} lg={8}>
-          <Card className={`p-4 shadow-sm ${styles.profileCard}`}>
-            <Row className="align-items-center">
+          <Card className={`p-5 shadow-sm ${styles.profileCard}`} style={{ minHeight: '500px' }}>
+            <Row className="align-items-center h-100">
               <Col xs={12} md={4} className="text-center mb-3 mb-md-0">
                 <img
                   src={photographer.profile_image || 'https://res.cloudinary.com/dwgtce0rh/image/upload/v1728599006/v491glywexjtr2trgoj1.jpg'}

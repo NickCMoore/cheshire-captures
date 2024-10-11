@@ -107,9 +107,8 @@ function SignUpForm() {
 
               <Row className="d-flex justify-content-center">
                 <Button
-                  className={`${btnStyles.Button} ${btnStyles.Wide} mt-3`}
+                  className={`${btnStyles.Button} ${styles.Button} mt-3`}
                   type="submit"
-                  variant="primary"
                 >
                   Sign Up
                 </Button>

@@ -32,7 +32,6 @@ function SignInForm() {
     event.preventDefault();
     try {
       const { data } = await axios.post('/dj-rest-auth/login/', signInData);
-      
       setCurrentUser(data.user);
       localStorage.setItem('token', data.key);
       history.push(`/profile/${data.user.photographer_id}`);
@@ -83,7 +82,10 @@ function SignInForm() {
               ))}
 
               <Row className="d-flex justify-content-center">
-                <Button className={`${btnStyles.Button} ${styles.Button}`} type="submit">
+                <Button
+                  className={`${btnStyles.Button} ${styles.Button} mt-3`}
+                  type="submit"
+                >
                   Sign In
                 </Button>
               </Row>
@@ -97,7 +99,8 @@ function SignInForm() {
 
             <Row className="d-flex justify-content-center mt-3">
               <Link className={styles.Link} to="/signup">
-                Don't have an account? <br></br><span>Sign up now!</span>
+                Don't have an account? <br />
+                <span>Sign up now!</span>
               </Link>
             </Row>
           </div>

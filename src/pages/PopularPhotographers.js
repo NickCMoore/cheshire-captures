@@ -27,11 +27,11 @@ const PopularPhotographers = () => {
     <Container>
       <h2 className="my-4">Popular Photographers</h2>
       <SearchBar onSearch={setSearchQuery} />
-      <Row>
+      <Row className="mt-4">
         {photographers.map((photographer) => (
           <Col key={photographer.id} md={4} className="mb-4">
             <Card className="shadow-sm">
-              <Card.Body className="text-center">
+              <Card.Body className="text-left">
                 <Card.Title className="mt-2">{photographer.display_name}</Card.Title>
                 <Card.Text>{photographer.bio}</Card.Text>
                 <Link to={`/profile/${photographer.id}`}>
@@ -56,4 +56,3 @@ const PopularPhotographers = () => {
 };
 
 export default PopularPhotographers;
-

@@ -39,11 +39,12 @@
   h2 {
     font-size: 1.8rem;
     margin-bottom: 10px;
-    color: #fff;
+    color: var(--lavender-blush);
   }
   
   p {
     font-size: 1.2rem;
+    color: var(--magnolia);
     line-height: 1.6;
     margin-bottom: 20px;
   }
