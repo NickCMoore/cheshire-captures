@@ -1,10 +1,16 @@
-.profileContainer {
-  margin-top: 80px; 
-  margin-bottom: 40px; 
+.profileEditContainer {
+  padding-top: 80px; 
 }
 
 .profileCard {
-  border-radius: 20px;
+  background-color: #f8f9fa; 
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.formLabel {
+  font-weight: bold;
+  color: #495057;
 }
 
 .profileImage {
@@ -14,43 +20,21 @@
   margin-bottom: 20px;
 }
 
-.profileName {
-  font-size: 2rem;
-  font-weight: 700;
+.btn {
+  margin-top: 20px;
+  width: 100%;
 }
 
-.bio {
-  font-size: 1rem;
-  color: #6c757d;
+.alert {
+  margin-top: 20px;
 }
 
-.socialLinks {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 15px;
+.container {
+  padding-top: 40px;
 }
 
-.icon {
-  margin-right: 5px;
-}
-
-.photoGallery {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.photoCard {
-  transition: transform 0.3s ease-in-out;
-}
-
-.photoCard:hover {
-  transform: scale(1.02);
-}
-
-.photoImage {
-  border-radius: 5px;
-  max-height: 200px;
-  object-fit: cover;
+@media (max-width: 767px) {
+  .profileEditContainer {
+    padding-top: 60px;
+  }
 }

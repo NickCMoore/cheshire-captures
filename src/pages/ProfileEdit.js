@@ -4,6 +4,7 @@ import { useCurrentUser } from '../contexts/CurrentUserContext';
 import axios from 'axios';
 import { Container, Form, Button, Image, Row, Col, Card, Alert } from 'react-bootstrap';
 import styles from '../styles/Profile.module.css';
+import btnStyles from '../styles/Button.module.css';
 
 const ProfileEdit = () => {
   const { id } = useParams();
@@ -121,11 +122,11 @@ const ProfileEdit = () => {
   if (!photographer) return <p>Loading...</p>;
 
   return (
-    <Container className="vh-100">
+    <Container className={`${styles.profileEditContainer} vh-100`}>
       <Row className="justify-content-center align-items-center h-100">
-        <Col md={8}>
-          <Row className="gx-5"> {/* Add horizontal spacing between columns */}
-            <Col lg={6} className="mx-auto">
+        <Col md={10}>
+          <Row className="gx-5">
+            <Col lg={6}>
               <Card className={`p-4 shadow ${styles.profileCard}`}>
                 <h2 className="text-center mb-4">Edit Profile</h2>
                 {successMessage && <Alert variant="success">{successMessage}</Alert>}
@@ -139,7 +140,6 @@ const ProfileEdit = () => {
                       alt="Profile"
                     />
                     <Form.Group className="mb-3">
-                      <Form.Label className={styles.formLabel}>Change Profile Picture</Form.Label>
                       <Form.Control type="file" onChange={handleProfileImageChange} />
                       <Button
                         variant="primary"
@@ -204,14 +204,17 @@ const ProfileEdit = () => {
                     />
                   </Form.Group>
 
-                  <Button variant="success" type="submit" className="w-100 mt-4">
+                  <Button 
+                    className={`${btnStyles.Button} w-100 mt-4`} 
+                    type="submit"
+                  >
                     Save Changes
                   </Button>
                 </Form>
               </Card>
             </Col>
 
-            <Col lg={6} className="mx-auto">
+            <Col lg={6}>
               <Card className={`p-4 shadow ${styles.profileCard}`}>
                 <h3 className="text-center mb-4">Change Password</h3>
                 {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
@@ -249,7 +252,10 @@ const ProfileEdit = () => {
                     />
                   </Form.Group>
 
-                  <Button variant="primary" type="submit" className="w-100">
+                  <Button 
+                    className={`${btnStyles.Button} w-100`}  
+                    type="submit"
+                  >
                     Change Password
                   </Button>
                 </Form>
