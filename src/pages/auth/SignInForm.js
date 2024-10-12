@@ -32,10 +32,17 @@ function SignInForm() {
     event.preventDefault();
     try {
       const { data } = await axios.post('/dj-rest-auth/login/', signInData);
-      const token = data.key;
-      localStorage.setItem('token', token);
+
+      const accessToken = data.access_token;
+      const refreshToken = data.refresh_token;
+
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+
       setCurrentUser(data.user);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+
       history.push(`/profile/${data.user.photographer_id}`);
     } catch (err) {
       setErrors(err.response?.data || {});
