@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
 import { useHistory } from "react-router";
@@ -19,7 +19,6 @@ export const CurrentUserProvider = ({ children }) => {
       const { data } = await axiosRes.get("dj-rest-auth/user/");
       setCurrentUser(data);
     } catch (err) {
-      // console.log(err);
     }
   };
 
@@ -27,8 +26,9 @@ export const CurrentUserProvider = ({ children }) => {
     handleMount();
   }, []);
 
-  useMemo(() => {
-    axiosReq.interceptors.request.use(
+
+  useEffect(() => {
+    const requestInterceptor = axiosReq.interceptors.request.use(
       async (config) => {
         if (shouldRefreshToken()) {
           try {
@@ -41,7 +41,6 @@ export const CurrentUserProvider = ({ children }) => {
               return null;
             });
             removeTokenTimestamp();
-            return config;
           }
         }
         return config;
@@ -51,12 +50,13 @@ export const CurrentUserProvider = ({ children }) => {
       }
     );
 
-    axiosRes.interceptors.response.use(
+    const responseInterceptor = axiosRes.interceptors.response.use(
       (response) => response,
       async (err) => {
         if (err.response?.status === 401) {
           try {
             await axios.post("/dj-rest-auth/token/refresh/");
+            return axiosRes(err.config); 
           } catch (err) {
             setCurrentUser((prevCurrentUser) => {
               if (prevCurrentUser) {
@@ -66,12 +66,16 @@ export const CurrentUserProvider = ({ children }) => {
             });
             removeTokenTimestamp();
           }
-          return axios(err.config);
         }
         return Promise.reject(err);
       }
     );
-  }, [history]);
+
+    return () => {
+      axiosReq.interceptors.request.eject(requestInterceptor);
+      axiosRes.interceptors.response.eject(responseInterceptor);
+    };
+  }, [history, setCurrentUser]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
