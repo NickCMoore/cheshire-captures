@@ -11,11 +11,16 @@ const RatingComponent = ({ photoId }) => {
         const fetchRatings = async () => {
             try {
                 const { data } = await axiosReq.get(`/api/photos/photos/${photoId}/ratings/`);
-                const userRatingData = data.find(r => r.user === currentUser?.username);
-                if (userRatingData) {
-                    setUserRating(userRatingData.rating);
+                
+  
+                if (Array.isArray(data)) {
+                    const userRatingData = data.find(r => r.user === currentUser?.id); 
+                    if (userRatingData) {
+                        setUserRating(userRatingData.rating);
+                    }
                 }
-                setAverageRating(data.average_rating);
+
+                setAverageRating(data.average_rating || 0); 
             } catch (error) {
                 console.error("Error fetching ratings:", error);
             }
@@ -35,8 +40,8 @@ const RatingComponent = ({ photoId }) => {
         try {
             const { data } = await axiosRes.post(`/api/photos/${photoId}/rate/`, { rating: newRating });
             setUserRating(newRating);
-            if (data.new_average_rating) {
-                setAverageRating(data.new_average_rating);
+            if (data.new_average_rating !== undefined) {
+                setAverageRating(data.new_average_rating);  
             }
             console.log(data.detail);
         } catch (error) {
