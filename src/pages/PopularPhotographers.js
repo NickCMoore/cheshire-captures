@@ -13,7 +13,7 @@ const PopularPhotographers = () => {
   useEffect(() => {
     const fetchPhotographers = async () => {
       try {
-        const { data } = await axios.get(`/api/photographers/photographers/?search=${searchQuery}`);
+        const { data } = await axios.get(`/api/photos/photos/top-rated/`);
         setPhotographers(data.results);
       } catch (error) {
         console.error('Error fetching photographers:', error);
