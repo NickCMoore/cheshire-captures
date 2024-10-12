@@ -58,7 +58,7 @@ const ProfileEdit = () => {
     formData.append('profile_image', newProfileImage);
 
     try {
-      const { data } = await axios.put(`/api/photographers/photographers/${id}/`, formData, {
+      const { data } = await axios.patch(`/api/photographers/photographers/${id}/`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -121,135 +121,141 @@ const ProfileEdit = () => {
   if (!photographer) return <p>Loading...</p>;
 
   return (
-    <Container className={`${styles.profileEditContainer} mt-5`}>
-      <Row className="justify-content-center">
-        <Col md={6}>
-          <Card className={`p-4 shadow ${styles.profileCard} mt-3`}>
-            <h2 className="text-center mb-4">Edit Profile</h2>
-            {successMessage && <Alert variant="success">{successMessage}</Alert>}
-            {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-            <Form onSubmit={handleProfileUpdate}>
-              <div className="text-center">
-                <Image
-                  src={photographer.profile_image}
-                  roundedCircle
-                  className={`${styles.profileImage} mb-3`}
-                  alt="Profile"
-                />
-                <Form.Group className="mb-3">
-                  <Form.Label className={styles.formLabel}>Change Profile Picture</Form.Label>
-                  <Form.Control type="file" onChange={handleProfileImageChange} />
-                  <Button
-                    variant="primary"
-                    className="mt-2"
-                    onClick={handleProfileImageUpload}
-                    disabled={!newProfileImage}
-                  >
-                    Upload New Picture
+    <Container className="vh-100">
+      <Row className="justify-content-center align-items-center h-100">
+        <Col md={8}>
+          <Row className="gx-5"> {/* Add horizontal spacing between columns */}
+            <Col lg={6} className="mx-auto">
+              <Card className={`p-4 shadow ${styles.profileCard}`}>
+                <h2 className="text-center mb-4">Edit Profile</h2>
+                {successMessage && <Alert variant="success">{successMessage}</Alert>}
+                {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+                <Form onSubmit={handleProfileUpdate}>
+                  <div className="text-center">
+                    <Image
+                      src={photographer.profile_image}
+                      roundedCircle
+                      className={`${styles.profileImage} mb-3`}
+                      alt="Profile"
+                    />
+                    <Form.Group className="mb-3">
+                      <Form.Label className={styles.formLabel}>Change Profile Picture</Form.Label>
+                      <Form.Control type="file" onChange={handleProfileImageChange} />
+                      <Button
+                        variant="primary"
+                        className="mt-2"
+                        onClick={handleProfileImageUpload}
+                        disabled={!newProfileImage}
+                      >
+                        Upload New Picture
+                      </Button>
+                    </Form.Group>
+                  </div>
+
+                  <Form.Group controlId="displayName" className="mb-3">
+                    <Form.Label className={styles.formLabel}>Display Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter display name"
+                      value={displayName}
+                      onChange={(e) => setDisplayName(e.target.value)}
+                      required
+                    />
+                  </Form.Group>
+
+                  <Form.Group controlId="bio" className="mb-3">
+                    <Form.Label className={styles.formLabel}>Bio</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      rows={3}
+                      placeholder="Tell us about yourself"
+                      value={bio}
+                      onChange={(e) => setBio(e.target.value)}
+                    />
+                  </Form.Group>
+
+                  <Form.Group controlId="website" className="mb-3">
+                    <Form.Label className={styles.formLabel}>Website</Form.Label>
+                    <Form.Control
+                      type="url"
+                      placeholder="https://example.com"
+                      value={website}
+                      onChange={(e) => setWebsite(e.target.value)}
+                    />
+                  </Form.Group>
+
+                  <Form.Group controlId="instagram" className="mb-3">
+                    <Form.Label className={styles.formLabel}>Instagram</Form.Label>
+                    <Form.Control
+                      type="url"
+                      placeholder="https://instagram.com/yourusername"
+                      value={instagram}
+                      onChange={(e) => setInstagram(e.target.value)}
+                    />
+                  </Form.Group>
+
+                  <Form.Group controlId="twitter" className="mb-3">
+                    <Form.Label className={styles.formLabel}>Twitter</Form.Label>
+                    <Form.Control
+                      type="url"
+                      placeholder="https://twitter.com/yourusername"
+                      value={twitter}
+                      onChange={(e) => setTwitter(e.target.value)}
+                    />
+                  </Form.Group>
+
+                  <Button variant="success" type="submit" className="w-100 mt-4">
+                    Save Changes
                   </Button>
-                </Form.Group>
-              </div>
+                </Form>
+              </Card>
+            </Col>
 
-              <Form.Group controlId="displayName" className="mb-3">
-                <Form.Label className={styles.formLabel}>Display Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter display name"
-                  value={displayName}
-                  onChange={(e) => setDisplayName(e.target.value)}
-                  required
-                />
-              </Form.Group>
+            <Col lg={6} className="mx-auto">
+              <Card className={`p-4 shadow ${styles.profileCard}`}>
+                <h3 className="text-center mb-4">Change Password</h3>
+                {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+                <Form onSubmit={handleChangePassword}>
+                  <Form.Group controlId="currentPassword" className="mb-3">
+                    <Form.Label className={styles.formLabel}>Current Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Enter current password"
+                      value={currentPassword}
+                      onChange={(e) => setCurrentPassword(e.target.value)}
+                      required
+                    />
+                  </Form.Group>
 
-              <Form.Group controlId="bio" className="mb-3">
-                <Form.Label className={styles.formLabel}>Bio</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  placeholder="Tell us about yourself"
-                  value={bio}
-                  onChange={(e) => setBio(e.target.value)}
-                />
-              </Form.Group>
+                  <Form.Group controlId="newPassword" className="mb-3">
+                    <Form.Label className={styles.formLabel}>New Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Enter new password"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      required
+                    />
+                  </Form.Group>
 
-              <Form.Group controlId="website" className="mb-3">
-                <Form.Label className={styles.formLabel}>Website</Form.Label>
-                <Form.Control
-                  type="url"
-                  placeholder="https://example.com"
-                  value={website}
-                  onChange={(e) => setWebsite(e.target.value)}
-                />
-              </Form.Group>
+                  <Form.Group controlId="confirmNewPassword" className="mb-3">
+                    <Form.Label className={styles.formLabel}>Confirm New Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Confirm new password"
+                      value={confirmNewPassword}
+                      onChange={(e) => setConfirmNewPassword(e.target.value)}
+                      required
+                    />
+                  </Form.Group>
 
-              <Form.Group controlId="instagram" className="mb-3">
-                <Form.Label className={styles.formLabel}>Instagram</Form.Label>
-                <Form.Control
-                  type="url"
-                  placeholder="https://instagram.com/yourusername"
-                  value={instagram}
-                  onChange={(e) => setInstagram(e.target.value)}
-                />
-              </Form.Group>
-
-              <Form.Group controlId="twitter" className="mb-3">
-                <Form.Label className={styles.formLabel}>Twitter</Form.Label>
-                <Form.Control
-                  type="url"
-                  placeholder="https://twitter.com/yourusername"
-                  value={twitter}
-                  onChange={(e) => setTwitter(e.target.value)}
-                />
-              </Form.Group>
-
-              <Button variant="success" type="submit" className="w-100 mt-4">
-                Save Changes
-              </Button>
-            </Form>
-          </Card>
-        </Col>
-        <Col md={6}>
-          <Card className={`p-4 shadow ${styles.profileCard} mt-3`}>
-            <h3 className="text-center mb-4">Change Password</h3>
-            <Form onSubmit={handleChangePassword}>
-              <Form.Group controlId="currentPassword" className="mb-3">
-                <Form.Label className={styles.formLabel}>Current Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Enter current password"
-                  value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                  required
-                />
-              </Form.Group>
-
-              <Form.Group controlId="newPassword" className="mb-3">
-                <Form.Label className={styles.formLabel}>New Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Enter new password"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  required
-                />
-              </Form.Group>
-
-              <Form.Group controlId="confirmNewPassword" className="mb-3">
-                <Form.Label className={styles.formLabel}>Confirm New Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Confirm new password"
-                  value={confirmNewPassword}
-                  onChange={(e) => setConfirmNewPassword(e.target.value)}
-                  required
-                />
-              </Form.Group>
-
-              <Button variant="primary" type="submit" className="w-100">
-                Change Password
-              </Button>
-            </Form>
-          </Card>
+                  <Button variant="primary" type="submit" className="w-100">
+                    Change Password
+                  </Button>
+                </Form>
+              </Card>
+            </Col>
+          </Row>
         </Col>
       </Row>
     </Container>
