@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, useHistory } from "react-router-dom";
 import { useCurrentUser } from '../contexts/CurrentUserContext';
-import { Container, Row, Col, Button, Form, Alert } from "react-bootstrap";
+import { Container, Row, Col, Button, Form, Image } from "react-bootstrap";
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
 import styles from "../styles/PhotoDetails.module.css";
 import RatingComponent from "./Rating";
@@ -16,8 +16,6 @@ const PhotoDetails = () => {
   const [error, setError] = useState(null);
   const [likeCount, setLikeCount] = useState(0);
   const [hasLiked, setHasLiked] = useState(false);
-  const [editingCommentId, setEditingCommentId] = useState(null);
-  const [editingCommentContent, setEditingCommentContent] = useState("");
 
   useEffect(() => {
     const fetchPhotoDetails = async () => {
@@ -28,7 +26,6 @@ const PhotoDetails = () => {
         setHasLiked(data.user_has_liked);
       } catch (err) {
         setError("Photo not found.");
-        history.push("/gallery"); 
       }
     };
 
@@ -43,7 +40,7 @@ const PhotoDetails = () => {
 
     fetchPhotoDetails();
     fetchComments();
-  }, [id, history]);
+  }, [id]);
 
   const handleAddComment = async (e) => {
     e.preventDefault();
@@ -62,41 +59,6 @@ const PhotoDetails = () => {
       setError(null);
     } catch (err) {
       setError("Error adding comment.");
-    }
-  };
-
-  const handleEditComment = (comment) => {
-    setEditingCommentId(comment.id);
-    setEditingCommentContent(comment.content);
-  };
-
-  const handleSaveEditedComment = async (e, commentId) => {
-    e.preventDefault();
-    try {
-      await axiosRes.patch(`/api/photos/comments/${commentId}/`, {
-        content: editingCommentContent,
-      });
-      setComments((prevComments) =>
-        prevComments.map((comment) =>
-          comment.id === commentId ? { ...comment, content: editingCommentContent } : comment
-        )
-      );
-      setEditingCommentId(null);
-      setEditingCommentContent("");
-    } catch (err) {
-      setError("Error editing comment.");
-    }
-  };
-
-  const handleDeleteComment = async (commentId) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this comment?");
-    if (!confirmDelete) return;
-
-    try {
-      await axiosRes.delete(`/api/photos/comments/${commentId}/`);
-      setComments((prevComments) => prevComments.filter((comment) => comment.id !== commentId));
-    } catch (err) {
-      setError("Error deleting comment.");
     }
   };
 
@@ -133,16 +95,20 @@ const PhotoDetails = () => {
     }
   };
 
+  if (error) {
+    return <p>{error}</p>;
+  }
+
   if (!photo) {
     return <p>Loading...</p>;
   }
 
   return (
-    <Container className={styles.photoDetailsContainer}>
-      {error && <Alert variant="danger">{error}</Alert>}
-      <Row>
+    <Container className={`${styles.photoDetailsContainer} d-flex align-items-center justify-content-center vh-100`}>
+      <Row className="w-100">
         <Col md={8}>
-          <img src={photo.image} alt={photo.title} className={styles.photoImage} />
+          {/* Display the photo */}
+          <Image src={photo.image_url} alt={photo.title} className={styles.photoImage} fluid />
         </Col>
         <Col md={4}>
           <div className={styles.photoDetailsText}>
@@ -151,107 +117,75 @@ const PhotoDetails = () => {
             <p><strong>Photographer:</strong> {photo.photographer_display_name}</p>
             <p><strong>Tags:</strong> {photo.tags.map(tag => tag.name).join(', ')}</p>
             <RatingComponent photoId={id} />
-            <Button
-              variant={hasLiked ? "danger" : "primary"}
-              className={styles.likeButton}
-              onClick={handleLike}
-            >
-              {hasLiked ? "Unlike" : "Like"} {likeCount}
-            </Button>
-            {currentUser?.username === photo.photographer_display_name && (
-              <>
-                <Button
-                  variant="warning"
-                  className={`${styles.editButton} mt-3`}
-                  as={Link}
-                  to={`/photos/${id}/edit`}
-                >
-                  Edit Photo
+
+            {/* Buttons for like, edit, and delete */}
+            <div className={styles.photoDetailsButtons}>
+              <Button
+                variant={hasLiked ? "danger" : "primary"}
+                className={styles.likeButton}
+                onClick={handleLike}
+              >
+                {hasLiked ? "Unlike" : "Like"} {likeCount}
+              </Button>
+
+              {currentUser?.username === photo.photographer_display_name && (
+                <>
+                  <Button
+                    variant="warning"
+                    className={styles.editButton}
+                    as={Link}
+                    to={`/photos/${id}/edit`}
+                  >
+                    Edit Photo
+                  </Button>
+                  <Button
+                    variant="danger"
+                    className={styles.deleteButton}
+                    onClick={handleDelete}
+                  >
+                    Delete Photo
+                  </Button>
+                </>
+              )}
+            </div>
+
+            <hr />
+            <h4>Comments</h4>
+
+            {comments.length > 0 ? (
+              comments.map((comment) => (
+                <div key={comment.id} className={styles.comment}>
+                  <p>
+                    <strong>{comment.photographer}:</strong> {comment.content}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p>No comments yet.</p>
+            )}
+
+            {/* Add a comment section */}
+            {currentUser ? (
+              <Form onSubmit={handleAddComment}>
+                <Form.Group controlId="commentContent">
+                  <Form.Label className={styles.commentHeader}>Add a Comment</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                    placeholder="Write your comment here..."
+                    className={styles.commentInput}
+                  />
+                </Form.Group>
+                <Button className={styles.commentButton} type="submit">
+                  Post Comment
                 </Button>
-                <Button
-                  variant="danger"
-                  className={`${styles.deleteButton} mt-3`}
-                  onClick={handleDelete}
-                >
-                  Delete Photo
-                </Button>
-              </>
+              </Form>
+            ) : (
+              <p className={styles.error}>Please <Link to="/signin">sign in</Link> to add a comment.</p>
             )}
           </div>
-          <hr />
-          <h4>Comments</h4>
-          {comments.length > 0 ? (
-            comments.map((comment) => (
-              <div key={comment.id} className={styles.comment}>
-                {editingCommentId === comment.id ? (
-                  <Form onSubmit={(e) => handleSaveEditedComment(e, comment.id)}>
-                    <Form.Control
-                      as="textarea"
-                      rows={2}
-                      value={editingCommentContent}
-                      onChange={(e) => setEditingCommentContent(e.target.value)}
-                    />
-                    <Button type="submit" variant="primary" className="mt-2">
-                      Save
-                    </Button>
-                    <Button
-                      variant="secondary"
-                      className="mt-2 ml-2"
-                      onClick={() => setEditingCommentId(null)}
-                    >
-                      Cancel
-                    </Button>
-                  </Form>
-                ) : (
-                  <>
-                    <p>
-                      <strong>{comment.photographer_display_name}:</strong> {comment.content}
-                    </p>
-                    {currentUser?.username === comment.photographer_display_name && (
-                      <>
-                        <Button
-                          variant="link"
-                          onClick={() => handleEditComment(comment)}
-                          className="p-0 mr-2"
-                        >
-                          Edit
-                        </Button>
-                        <Button
-                          variant="link"
-                          onClick={() => handleDeleteComment(comment.id)}
-                          className="p-0 text-danger"
-                        >
-                          Delete
-                        </Button>
-                      </>
-                    )}
-                  </>
-                )}
-              </div>
-            ))
-          ) : (
-            <p>No comments yet.</p>
-          )}
-
-          {currentUser ? (
-            <Form onSubmit={handleAddComment}>
-              <Form.Group controlId="commentContent">
-                <Form.Label>Add a Comment</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  value={newComment}
-                  onChange={(e) => setNewComment(e.target.value)}
-                  placeholder="Write your comment here..."
-                />
-              </Form.Group>
-              <Button className={`${styles.commentButton} btn`} type="submit">
-                Post Comment
-              </Button>
-            </Form>
-          ) : (
-            <p className={styles.error}>Please <Link to="/signin">sign in</Link> to add a comment.</p>
-          )}
         </Col>
       </Row>
     </Container>

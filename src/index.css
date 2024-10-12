@@ -5,7 +5,7 @@ body, html {
   height: 100%;
   width: 100%;
   font-family: "Montserrat", sans-serif;
-  background-color: var(--magnolia);
+  background-color: var(--yinmn-blue);
   color: var(--wisteria);
 }
 
@@ -15,7 +15,6 @@ body, html {
   --ultra-violet: #616283ff;
   --mountbatten-pink: #9e7b9bff;
   --wisteria: #cb9cf2ff;
-  --battleship-gray: #8f9491ff;
   --rose-quartz: #bca3acff;
   --thistle: #e5cedcff;
   --magnolia: #f3eaf4ff;
