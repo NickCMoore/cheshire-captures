@@ -1,177 +1,112 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, Link, useHistory } from 'react-router-dom';
-import { useCurrentUser } from '../contexts/CurrentUserContext';
+import React, { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { faGlobe } from '@fortawesome/free-solid-svg-icons';
+import { Container, Row, Col, Card, Image, Button } from 'react-bootstrap';
+import { useCurrentUser } from '../contexts/CurrentUserContext';
 import styles from '../styles/Profile.module.css';
 
-const Profile = () => {
+const ProfilePage = () => {
   const { id } = useParams();
   const currentUser = useCurrentUser();
-  const history = useHistory();
   const [photographer, setPhotographer] = useState(null);
-  const [photos, setPhotos] = useState([]);
+  const [isBioLong, setIsBioLong] = useState(false);
+  const [showFullBio, setShowFullBio] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [followersCount, setFollowersCount] = useState(0);
 
   useEffect(() => {
     const fetchPhotographer = async () => {
       try {
         const { data } = await axios.get(`/api/photographers/photographers/${id}/`);
         setPhotographer(data);
-        setIsFollowing(data.is_followed);
-        setFollowersCount(data.total_followers);
+        setIsBioLong(data.bio.length > 150); // Check if bio is long
+        setIsFollowing(data.is_following);  // Assuming API returns if current user is following the photographer
       } catch (error) {
-        console.error('Error fetching photographer data:', error);
-      } finally {
-        setLoading(false);
+        console.error('Error fetching photographer:', error);
       }
     };
-
-    const fetchMyPhotos = async () => {
-      try {
-        const { data } = await axios.get('/api/photos/photos/my_photos/');
-        setPhotos(data.results);
-      } catch (error) {
-        console.error('Error fetching my photos:', error);
-      }
-    };
-
     fetchPhotographer();
-    if (currentUser && currentUser.photographer_id === id) {
-      fetchMyPhotos();
-    }
-  }, [id, currentUser]);
+  }, [id]);
 
-  const handleFollow = async () => {
+  const handleFollowToggle = async () => {
     try {
-      await axios.post(`/api/photographers/photographers/${id}/follow/`);
-      setIsFollowing(true);
-      setFollowersCount((prevCount) => prevCount + 1);
+      if (isFollowing) {
+        await axios.post(`/api/photographers/photographers/${id}/unfollow/`);
+        setIsFollowing(false);
+      } else {
+        await axios.post(`/api/photographers/photographers/${id}/follow/`);
+        setIsFollowing(true);
+      }
     } catch (error) {
-      console.error('Error following photographer:', error);
+      console.error('Error following/unfollowing:', error);
     }
   };
 
-  const handleUnfollow = async () => {
-    try {
-      await axios.post(`/api/photographers/photographers/${id}/unfollow/`);
-      setIsFollowing(false);
-      setFollowersCount((prevCount) => prevCount - 1);
-    } catch (error) {
-      console.error('Error unfollowing photographer:', error);
-    }
+  const toggleBio = () => {
+    setShowFullBio(!showFullBio); // Toggle between showing full bio or part of it
   };
 
-  const handleViewFollowers = () => {
-    history.push(`/profile/${id}/followers`);
-  };
-
-  if (loading) return <p>Loading...</p>;
-  if (!photographer) return <p>Photographer not found.</p>;
-
-  const isOwnProfile = currentUser && String(photographer.user) === String(currentUser.username);
+  if (!photographer) return <p>Loading...</p>;
 
   return (
-    <Container className="d-flex justify-content-center align-items-center min-vh-100">
-      <Row className="justify-content-center w-100">
-        <Col xs={12} md={10} lg={8}>
-          <Card className={`p-5 shadow-sm ${styles.profileCard}`} style={{ minHeight: '500px' }}>
-            <Row className="align-items-center h-100">
-              <Col xs={12} md={4} className="text-center mb-3 mb-md-0">
-                <img
-                  src={photographer.profile_image || 'https://res.cloudinary.com/dwgtce0rh/image/upload/v1728599006/v491glywexjtr2trgoj1.jpg'}
-                  alt={photographer.display_name}
-                  className={`${styles.profileImage} rounded-circle`}
-                />
-              </Col>
-              <Col xs={12} md={8}>
-                <h3 className="text-primary">{photographer.display_name}</h3>
-                <p className={styles.bio}>{photographer.bio}</p>
-                <ul className={`${styles.socialLinks} list-unstyled d-flex flex-wrap`}>
-                  {photographer.website && (
-                    <li className="mr-3">
-                      <FontAwesomeIcon icon={faGlobe} className={styles.icon} />
-                      <a href={photographer.website} target="_blank" rel="noopener noreferrer">
-                        Website
-                      </a>
-                    </li>
-                  )}
-                  {photographer.instagram && (
-                    <li className="mr-3">
-                      <FontAwesomeIcon icon={faInstagram} className={styles.icon} />
-                      <a href={photographer.instagram} target="_blank" rel="noopener noreferrer">
-                        Instagram
-                      </a>
-                    </li>
-                  )}
-                  {photographer.twitter && (
-                    <li>
-                      <FontAwesomeIcon icon={faTwitter} className={styles.icon} />
-                      <a href={photographer.twitter} target="_blank" rel="noopener noreferrer">
-                        X (formerly Twitter)
-                      </a>
-                    </li>
-                  )}
-                </ul>
-                <div className="d-flex align-items-center mt-3">
-                  <p className="mb-0 mr-3">
-                    <strong>Followers:</strong> {followersCount}
-                  </p>
-                  <Button variant="info" onClick={handleViewFollowers} className="mr-2">
-                    View Followers
-                  </Button>
-                  {isOwnProfile ? (
-                    <Link to={`/profile/${id}/edit`} className="d-flex">
-                      <Button variant="secondary">
-                        Edit Profile
-                      </Button>
-                    </Link>
-                  ) : (
-                    <Button
-                      variant={isFollowing ? 'danger' : 'primary'}
-                      onClick={isFollowing ? handleUnfollow : handleFollow}
-                    >
-                      {isFollowing ? 'Unfollow' : 'Follow'}
-                    </Button>
-                  )}
-                </div>
-              </Col>
+    <Container className={styles.profileContainer}>
+      <Row className="justify-content-center my-5">
+        <Col md={4} className="text-center">
+          <Card className="p-4 shadow-sm">
+            <Image
+              src={photographer.profile_image}
+              roundedCircle
+              className={styles.profileImage}
+            />
+            <h2 className="mt-3">{photographer.display_name}</h2>
+            <p className={`${styles.bio} mt-2`}>
+              {showFullBio || !isBioLong ? photographer.bio : `${photographer.bio.slice(0, 150)}...`}
+            </p>
+            {isBioLong && (
+              <Button variant="link" onClick={toggleBio}>
+                {showFullBio ? 'Show less' : 'Show more'}
+              </Button>
+            )}
+
+              <Button
+                as={Link}
+                to={`/profile/${id}/edit`}
+                variant="primary"
+                className="mt-2"
+              >
+                Edit Profile
+              </Button>
+            <Button variant={isFollowing ? 'danger' : 'success'} onClick={handleFollowToggle} className="mt-2">
+              {isFollowing ? 'Unfollow' : 'Follow'}
+            </Button>
+          </Card>
+        </Col>
+        <Col md={8}>
+          <Card className="p-4 shadow-sm mb-4">
+            <h3>Photos</h3>
+            <Row>
+              {photographer.photos && photographer.photos.length > 0 ? (
+                photographer.photos.map((photo) => (
+                  <Col key={photo.id} xs={12} md={6} lg={4} className="mb-3">
+                    <Image src={photo.image_url} fluid className={styles.photo} />
+                  </Col>
+                ))
+              ) : (
+                <p>No photos yet.</p>
+              )}
             </Row>
+          </Card>
+          <Card className="p-4 shadow-sm">
+            <h3>Social Links</h3>
+            <ul className={styles.socialLinks}>
+              {photographer.website && <li><a href={photographer.website} target="_blank" rel="noopener noreferrer">Website</a></li>}
+              {photographer.instagram && <li><a href={photographer.instagram} target="_blank" rel="noopener noreferrer">Instagram</a></li>}
+              {photographer.twitter && <li><a href={photographer.twitter} target="_blank" rel="noopener noreferrer">Twitter</a></li>}
+            </ul>
           </Card>
         </Col>
       </Row>
-      {isOwnProfile && photos.length > 0 && (
-        <Row className="mt-4">
-          <h3 className="text-center mb-4">My Photos</h3>
-          <Row className="justify-content-center">
-            {photos.map((photo) => (
-              <Col key={photo.id} xs={12} sm={6} md={4} className="mb-4">
-                <Card className="shadow-sm">
-                  <Link to={`/photos/${photo.id}`}>
-                    <Card.Img variant="top" src={photo.image_url} alt={photo.title} />
-                  </Link>
-                  <Card.Body>
-                    <Card.Title>{photo.title}</Card.Title>
-                    <Card.Text>{new Date(photo.created_at).toLocaleDateString()}</Card.Text>
-                    <Link to={`/photos/${photo.id}/edit`}>
-                      <Button variant="secondary" className="w-100">
-                        Edit
-                      </Button>
-                    </Link>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </Row>
-      )}
     </Container>
   );
 };
 
-export default Profile;
+export default ProfilePage;
