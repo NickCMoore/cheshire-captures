@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, useHistory } from "react-router-dom";
 import { useCurrentUser } from '../contexts/CurrentUserContext';
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import { Container, Row, Col, Button, Form, Alert } from "react-bootstrap";
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
 import styles from "../styles/PhotoDetails.module.css";
 import RatingComponent from "./Rating";
@@ -28,6 +28,7 @@ const PhotoDetails = () => {
         setHasLiked(data.user_has_liked);
       } catch (err) {
         setError("Photo not found.");
+        history.push("/gallery"); 
       }
     };
 
@@ -42,7 +43,7 @@ const PhotoDetails = () => {
 
     fetchPhotoDetails();
     fetchComments();
-  }, [id]);
+  }, [id, history]);
 
   const handleAddComment = async (e) => {
     e.preventDefault();
@@ -132,19 +133,16 @@ const PhotoDetails = () => {
     }
   };
 
-  if (error) {
-    return <p>{error}</p>;
-  }
-
   if (!photo) {
     return <p>Loading...</p>;
   }
 
   return (
     <Container className={styles.photoDetailsContainer}>
+      {error && <Alert variant="danger">{error}</Alert>}
       <Row>
         <Col md={8}>
-          <img src={photo.image_url} alt={photo.title} className={styles.photoImage} />
+          <img src={photo.image} alt={photo.title} className={styles.photoImage} />
         </Col>
         <Col md={4}>
           <div className={styles.photoDetailsText}>
@@ -207,9 +205,9 @@ const PhotoDetails = () => {
                 ) : (
                   <>
                     <p>
-                      <strong>{comment.photographer}:</strong> {comment.content}
+                      <strong>{comment.photographer_display_name}:</strong> {comment.content}
                     </p>
-                    {currentUser?.username === comment.photographer && (
+                    {currentUser?.username === comment.photographer_display_name && (
                       <>
                         <Button
                           variant="link"
@@ -234,7 +232,6 @@ const PhotoDetails = () => {
           ) : (
             <p>No comments yet.</p>
           )}
-          {error && <p className={styles.error}>{error}</p>}
 
           {currentUser ? (
             <Form onSubmit={handleAddComment}>
