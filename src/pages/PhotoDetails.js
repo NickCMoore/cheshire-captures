@@ -44,23 +44,26 @@ const PhotoDetails = () => {
 
   const handleAddComment = async (e) => {
     e.preventDefault();
+    
     if (!currentUser) {
       setError("You need to be logged in to comment.");
       return;
     }
-
+  
     try {
-      const { data } = await axiosRes.post(`/api/photos/comments/`, {
-        photo: id,
+      const { data } = await axiosRes.post('/api/photos/comments/', {
+        photo: id,  
         content: newComment,
       });
       setComments((prevComments) => [...prevComments, data]);
-      setNewComment("");
+      setNewComment('');
       setError(null);
     } catch (err) {
       setError("Error adding comment.");
+      console.error('Error adding comment:', err);
     }
   };
+  
 
   const handleLike = async () => {
     if (!currentUser) {
@@ -93,6 +96,11 @@ const PhotoDetails = () => {
       setError("Error deleting photo.");
       console.error("Error deleting photo:", err);
     }
+  };
+
+  // Handle the "Back to Gallery" button click
+  const handleBackToGallery = () => {
+    history.push("/gallery");
   };
 
   if (error) {
@@ -147,6 +155,15 @@ const PhotoDetails = () => {
                   </Button>
                 </>
               )}
+
+              {/* Back to Gallery Button */}
+              <Button
+                variant="secondary"
+                className={styles.backButton}
+                onClick={handleBackToGallery}
+              >
+                Back to Gallery
+              </Button>
             </div>
 
             <hr />
@@ -164,7 +181,6 @@ const PhotoDetails = () => {
               <p>No comments yet.</p>
             )}
 
-            {/* Add a comment section */}
             {currentUser ? (
               <Form onSubmit={handleAddComment}>
                 <Form.Group controlId="commentContent">

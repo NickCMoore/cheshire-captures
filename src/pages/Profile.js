@@ -44,7 +44,7 @@ const ProfilePage = () => {
               roundedCircle
               className={styles.profileImage}
             />
-            <h2 className="mt-3">{photographer.display_name}</h2>
+            <h2 className={styles.blueHeading}>{photographer.display_name}</h2>
             <p className={`${styles.bio} mt-2`}>
               {showFullBio || !isBioLong ? photographer.bio : `${photographer.bio.slice(0, 150)}...`}
             </p>

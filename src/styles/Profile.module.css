@@ -20,6 +20,10 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
+.blueHeading {
+  color: #2E5090;
+}
+
 .displayName {
   font-size: 24px;
   font-weight: bold;

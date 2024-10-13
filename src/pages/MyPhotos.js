@@ -9,6 +9,7 @@ const MyPhotos = () => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
+  // Fetch photos on component mount
   useEffect(() => {
     const fetchMyPhotos = async () => {
       try {
@@ -22,12 +23,13 @@ const MyPhotos = () => {
     fetchMyPhotos();
   }, []);
 
+  // Date filter function
   const handleDateFilter = async () => {
     try {
       const { data } = await axiosReq.get('/api/photos/photos/my_photos/', {
         params: {
-          start_date: startDate || undefined,
-          end_date: endDate || undefined,
+          created_at__gte: startDate ? `${startDate}T00:00:00` : undefined,  
+          created_at__lte: endDate ? `${endDate}T23:59:59` : undefined,      
         },
       });
       setPhotos(data.results);
@@ -35,6 +37,8 @@ const MyPhotos = () => {
       console.error('Error filtering photos:', error);
     }
   };
+  
+  
 
   return (
     <Container className={styles.myPhotosContainer}>
@@ -61,10 +65,10 @@ const MyPhotos = () => {
           </Form.Group>
         </Col>
         <Col md={4} className="d-flex align-items-end">
-          <Button 
-            variant="primary" 
-            className={styles.filterButton} 
-            onClick={handleDateFilter}
+          <Button
+            variant="primary"
+            className={styles.filterButton}
+            onClick={handleDateFilter} // Trigger filter function
           >
             Filter
           </Button>
