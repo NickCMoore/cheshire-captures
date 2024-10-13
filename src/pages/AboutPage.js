@@ -17,17 +17,17 @@ const AboutPage = () => {
 
         <h2>What We Do</h2>
         <p>
-          We organise meet-ups, photography workshops, and expeditions to some of Cheshire’s most picturesque locations. From the rolling hills and quaint villages to the dynamic skies and vast open fields, there’s no shortage of inspiring spots to capture.
+          We organise meet-ups, photography workshops, and expeditions to some of Cheshire&apos;s most picturesque locations. From the rolling hills and quaint villages to the dynamic skies and vast open fields, there&apos;s no shortage of inspiring spots to capture.
         </p>
 
         <h2>Our Values</h2>
         <p>
-          We are committed to fostering a supportive, inclusive, and respectful community. Whether you're a seasoned professional or just starting with your first camera, you'll find a welcoming space to share your journey. 
+          We are committed to fostering a supportive, inclusive, and respectful community. Whether you&apos;re a seasoned professional or just starting with your first camera, you&apos;ll find a welcoming space to share your journey. 
         </p>
 
         <h2>Join Us</h2>
         <p>
-          Whether you're an experienced photographer or someone who loves the art of capturing the beauty around us, we invite you to join Cheshire Captures. Explore our galleries, connect with fellow photographers, and experience the natural beauty of Cheshire through the lens of our passionate community.
+          Whether you&apos;re an experienced photographer or someone who loves the art of capturing the beauty around us, we invite you to join Cheshire Captures. Explore our galleries, connect with fellow photographers, and experience the natural beauty of Cheshire through the lens of our passionate community.
         </p>
       </div>
     </div>

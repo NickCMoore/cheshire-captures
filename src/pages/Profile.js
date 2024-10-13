@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Row, Col, Card, Image, Button } from 'react-bootstrap';
-import { useCurrentUser } from '../contexts/CurrentUserContext';
 import styles from '../styles/Profile.module.css';
 
 const ProfilePage = () => {
   const { id } = useParams();
-  const currentUser = useCurrentUser();
   const [photographer, setPhotographer] = useState(null);
   const [isBioLong, setIsBioLong] = useState(false);
   const [showFullBio, setShowFullBio] = useState(false);
@@ -30,9 +28,6 @@ const ProfilePage = () => {
   };
 
   if (!photographer) return <p>Loading...</p>;
-
-  // Check if the profile belongs to the current user
-  const isOwnProfile = currentUser?.username === photographer.user?.username;
 
   return (
     <Container className={styles.profileContainer}>
@@ -64,7 +59,6 @@ const ProfilePage = () => {
                 Edit Profile
               </Button>
             )}
-
           </Card>
         </Col>
         <Col md={8}>

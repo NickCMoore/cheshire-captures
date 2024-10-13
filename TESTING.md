@@ -20,19 +20,19 @@ The Cheshire Captures site has been passed through the [W3C HTML Validator](http
 
 No errors were found when the deployed Cheshire Captures URL was passed through the W3C HTML validation checker. Only some informational notes regarding the meta tags in the index.html file were logged.
 
-![W3C HTML Validation](images/html-no-errors.jpg)
+![W3C Results](images/W3C.png)
 
 ### W3C CSS Validation Results
 
 No errors or warnings were found when the deployed Cheshire Captures URL was passed through the W3C CSS validation checker.
 
-![W3C CSS Validation](images/css-no-errors.jpg)
+![W3C CSS Validation](images/W3C%20CSS%20Results.png)
 
 ### ESLint Validation Results
 
-After resolving errors due to unused imports in React files, only warnings related to testing files were left. ESLint was uninstalled afterward to avoid conflicts with other dependencies.
+After resolving errors due to unused imports in React files, only warning remaining was related to use of ReactDOM.render. This project was built on React 17, so introducing this would've caused errors with the running of the application. This was left. ESLint was uninstalled afterward to avoid conflicts with other dependencies.
 
-![ESLint Results](images/eslint-results.png)
+![ESLint Results](images/eslint.png)
 
 ## Automatic Testing
 

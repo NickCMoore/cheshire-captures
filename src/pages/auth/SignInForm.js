@@ -1,3 +1,4 @@
+import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import Form from "react-bootstrap/Form";
@@ -21,12 +22,10 @@ function SignInForm() {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
-  
-  // Use useRef to manage whether the component is mounted
+
   const isMounted = useRef(true);
 
   useEffect(() => {
-    // Cleanup function to mark the component as unmounted
     return () => {
       isMounted.current = false;
     };
@@ -84,6 +83,7 @@ function SignInForm() {
                   placeholder="Enter username"
                   value={username}
                   onChange={handleChange}
+                  required
                 />
               </Form.Group>
               {errors.username?.map((message, idx) => (
@@ -101,6 +101,7 @@ function SignInForm() {
                   placeholder="Password"
                   value={password}
                   onChange={handleChange}
+                  required
                 />
               </Form.Group>
               {errors.password?.map((message, idx) => (
@@ -128,7 +129,7 @@ function SignInForm() {
 
             <Row className="d-flex justify-content-center mt-3">
               <Link className={styles.Link} to="/signup">
-                Don't have an account? <br />
+                Don&apos;t have an account? <br />
                 <span>Sign up now!</span>
               </Link>
             </Row>
@@ -140,3 +141,4 @@ function SignInForm() {
 }
 
 export default SignInForm;
+

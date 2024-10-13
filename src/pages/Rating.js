@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useCurrentUser } from '../contexts/CurrentUserContext';
 import { axiosReq, axiosRes } from '../api/axiosDefaults';
 
@@ -11,8 +12,7 @@ const RatingComponent = ({ photoId }) => {
         const fetchRatings = async () => {
             try {
                 const { data } = await axiosReq.get(`/api/photos/photos/${photoId}/ratings/`);
-                
-  
+
                 if (Array.isArray(data)) {
                     const userRatingData = data.find(r => r.user === currentUser?.id); 
                     if (userRatingData) {
@@ -67,6 +67,11 @@ const RatingComponent = ({ photoId }) => {
             <p>Average Rating: {averageRating !== null ? averageRating.toFixed(2) : "No ratings yet"}</p>
         </div>
     );
+};
+
+// Add prop-types for validation
+RatingComponent.propTypes = {
+    photoId: PropTypes.number.isRequired,
 };
 
 export default RatingComponent;
