@@ -14,9 +14,14 @@ The backend and frontend are deployed separately on Heroku, with the backend pro
    - [Solution](#solution)
 - [Features](#features)
 - [User Stories](#user-stories)
-   - Navigation & Authentication[#navigation-authentication]
+   - [Navigation & Authentication](#navigationauthentication)
    - [Photos](#photos)
-   - [User Stories](#user-stories)
+   - [Likes & Comments](#likescomments)
+   - [Following](#following)
+   - [Reviews](#reviews)
+   - [Profiles](#profiles)
+   - [Messages](#messages)
+- [Agile Approach](#agile-approach)
 - [Technologies Used](#technologies-used)
    - [Backend](#backend)
    - [Frontend](#frontend)
@@ -208,7 +213,7 @@ Cheshire Captures aims to address these challenges by providing a tailored platf
    - User is prompted to confirm before deletion.
    - Deleted photos are removed from the profile and gallery.
 
-## Likes & Comments
+## Likes/Comments
 
 1. **Like Photo:**
 
@@ -443,9 +448,16 @@ For a detailed view of the project management and task progression, refer to the
 - **Login**: `POST /dj-rest-auth/login/`
 - **Logout**: `POST /dj-rest-auth/logout/`
 - **Registration**: `POST /dj-rest-auth/registration/`
+- **Resend Registration Email**: `POST /dj-rest-auth/registration/resend-email/`
+- **Verify Registration Email**: `POST /dj-rest-auth/registration/verify-email/`
 - **Password Change**: `POST /dj-rest-auth/password/change/`
 - **Password Reset**: `POST /dj-rest-auth/password/reset/`
+- **Password Reset Confirm**: `POST /dj-rest-auth/password/reset/confirm/`
 - **Token Refresh**: `POST /dj-rest-auth/token/refresh/`
+- **Token Verify**: `POST /dj-rest-auth/token/verify/`
+- **User Details**: `GET /dj-rest-auth/user/`
+- **Update User**: `PUT /dj-rest-auth/user/`
+- **Partial Update User**: `PATCH /dj-rest-auth/user/`
 
 ### Photos
 
@@ -455,14 +467,20 @@ For a detailed view of the project management and task progression, refer to the
 - **Top-Rated Photos**: `GET /api/photos/photos/top-rated/`
 - **Photo Details**: `GET /api/photos/photos/{id}/`
 - **Edit Photo**: `PUT /api/photos/photos/{id}/`
+- **Partial Update Photo**: `PATCH /api/photos/photos/{id}/`
 - **Delete Photo**: `DELETE /api/photos/photos/{id}/`
 - **Rate Photo**: `POST /api/photos/photos/{id}/rate/`
+- **Get Photo Ratings**: `GET /api/photos/photos/{id}/ratings/`
 - **Like Photo**: `POST /api/photos/photos/{id}/like/`
 - **Unlike Photo**: `POST /api/photos/photos/{id}/unlike/`
+- **Get Photo Comments**: `GET /api/photos/photos/{id}/comments/`
+- **Create Photo Comment**: `POST /api/photos/photos/{id}/comments/`
+- **Get Photo Tags**: `GET /api/photos/tags/`
+- **Create Photo Tag**: `POST /api/photos/tags/`
 
 ### Comments
 
-- **Get Comments**: `GET /api/photos/comments/`
+- **Get All Comments**: `GET /api/photos/comments/`
 - **Create a Comment**: `POST /api/photos/comments/`
 - **Delete a Comment**: `DELETE /api/photos/comments/{id}/`
 
@@ -472,7 +490,26 @@ For a detailed view of the project management and task progression, refer to the
 - **Follow a Photographer**: `POST /api/photographers/follows/`
 - **Unfollow a Photographer**: `POST /api/photographers/follows/{id}/unfollow/`
 
----
+### Photographers
+
+- **Get All Photographers**: `GET /api/photographers/photographers/`
+- **Photographer Details**: `GET /api/photographers/photographers/{id}/`
+- **Update Photographer**: `PUT /api/photographers/photographers/{id}/`
+- **Partial Update Photographer**: `PATCH /api/photographers/photographers/{id}/`
+- **Follow a Photographer**: `POST /api/photographers/photographers/{id}/follow/`
+- **Unfollow a Photographer**: `DELETE /api/photographers/photographers/{id}/follow/`
+- **Get Photographer's Followers**: `GET /api/photographers/photographers/{id}/followers/`
+- **Top Photographers**: `GET /api/photographers/top-photographers/`
+
+### Messages
+
+- **Get All Messages**: `GET /api/messages/messages/`
+- **Create a Message**: `POST /api/messages/messages/`
+- **Message Details**: `GET /api/messages/messages/{id}/`
+- **Update Message**: `PUT /api/messages/messages/{id}/`
+- **Partial Update Message**: `PATCH /api/messages/messages/{id}/`
+- **Delete Message**: `DELETE /api/messages/messages/{id}/`
+
 
 ## Backend Architecture
 
@@ -517,6 +554,13 @@ For a detailed view of the project management and task progression, refer to the
   - `"/profile/:id"`: User profile page.
   - `"/profile/:id/edit"`: Edit profile page.
   - `"/my-photos"`: View and manage photos uploaded by the user.
+  - `"/top-rated"`: Displays top-rated photos.
+  - `"/popular-photographers"`: View popular photographers.
+  - `"/search"`: Search for photos or photographers by keyword.
+  - `"/comments/:photoId"`: View comments for a specific photo.
+  - `"/messages"`: View all messages.
+  - `"/messages/:id"`: View specific message details.
+
 
 ---
 
@@ -538,159 +582,10 @@ For a detailed view of the project management and task progression, refer to the
 
 ### Installation
 
-1. **Clone the Repository**
 
-   ```bash
-   git clone https://github.com/NickCMoore/cheshire-captures-backend.git
-   cd cheshire-captures-backend
-Set Up a Virtual Environment
-
-Create and activate a virtual environment:
-
-    ```bash
-python3 -m venv venv
-source venv/bin/activate  # For Windows use: venv\Scripts\activate
-Install Dependencies
-
-Install the required packages:
-
-    ```bash
-pip install -r requirements.txt```
-
-Set Up the Environment Variables
-
-Create a .env file in the root of the project and add the following:
-
-php
-
-SECRET_KEY=<your-django-secret-key>
-DATABASE_URL=postgres://<username>:<password>@<hostname>:<port>/<database_name>
-DEBUG=True
-ALLOWED_HOSTS=127.0.0.1,localhost
-Apply Migrations
-
-```bash
-python manage.py migrate
-Create a Superuser
-
-```bash
-python manage.py createsuperuser
-Run the Development Server
-
-```bash
-python manage.py runserver
-The backend will be available at http://127.0.0.1:8000.
-
-Deployed Backend
-The backend is also deployed to Heroku for production use. The following configurations are applied in production:
-
-DEBUG=False
-WhiteNoise is used for serving static files.
-PostgreSQL is used as the production database.
-Environment variables are set directly in the Heroku dashboard.
-API Documentation
-The API documentation is available at:
-
-Cheshire Captures API Documentation
-
-Base URL
-arduino
-
-https://8000-nickcmoore-cheshirecapt-1t388js0qvn.ws-eu116.gitpod.io/api/
-Endpoints Overview
-Here is a summary of the available endpoints:
-
-Messages
-
-GET /api/messages/messages/
-POST /api/messages/messages/
-GET /api/messages/messages/{id}/
-PUT /api/messages/messages/{id}/
-PATCH /api/messages/messages/{id}/
-DELETE /api/messages/messages/{id}/
-Photographers
-
-GET /api/photographers/photographers/
-GET /api/photographers/photographers/top/
-GET /api/photographers/photographers/{id}/
-PUT /api/photographers/photographers/{id}/
-PATCH /api/photographers/photographers/{id}/
-Photos
-
-GET /api/photos/photos/
-POST /api/photos/photos/
-GET /api/photos/photos/my_photos/
-GET /api/photos/photos/top-rated/
-GET /api/photos/photos/{id}/
-PUT /api/photos/photos/{id}/
-PATCH /api/photos/photos/{id}/
-DELETE /api/photos/photos/{id}/
-POST /api/photos/photos/{id}/comments/
-POST /api/photos/photos/{id}/like/
-POST /api/photos/photos/{id}/rate/
-POST /api/photos/photos/{id}/unlike/
-Comments
-
-GET /api/photos/comments/
-POST /api/photos/comments/
-GET /api/photos/comments/{id}/
-PUT /api/photos/comments/{id}/
-PATCH /api/photos/comments/{id}/
-DELETE /api/photos/comments/{id}/
-Likes
-
-GET /api/photos/likes/
-POST /api/photos/likes/
-GET /api/photos/likes/{id}/
-PUT /api/photos/likes/{id}/
-PATCH /api/photos/likes/{id}/
-DELETE /api/photos/likes/{id}/
-Authentication Endpoints (dj-rest-auth)
-POST /dj-rest-auth/login/
-POST /dj-rest-auth/logout/
-POST /dj-rest-auth/password/change/
-POST /dj-rest-auth/password/reset/
-POST /dj-rest-auth/password/reset/confirm/
-POST /dj-rest-auth/registration/
-POST /dj-rest-auth/registration/resend-email/
-POST /dj-rest-auth/registration/verify-email/
-POST /dj-rest-auth/token/refresh/
-POST /dj-rest-auth/token/verify/
-GET /dj-rest-auth/user/
-PUT /dj-rest-auth/user/
-PATCH /dj-rest-auth/user/
-Frontend Setup
-Prerequisites
-Node.js 18.x or newer
-npm 8.x or newer
-Git
-Installation
-Clone the Frontend Repository
-
-```bash
-git clone https://github.com/NickCMoore/cheshire-captures-frontend.git
-cd cheshire-captures-frontend
-Install Dependencies
-
-```bash
-npm install
-Environment Variables
-
-Create a .env file in the root of the project and add:
-
-arduino
-
-REACT_APP_API_URL=http://127.0.0.1:8000/api/
-Run the Development Server
-
-```bash
-npm start
-The frontend will be available at http://localhost:3000.
-
-Deployed Frontend
-The frontend is deployed on Heroku as well. The production URL is configured to use the deployed backend.
 
 Features
+
 User Authentication: Users can sign up, log in, and log out.
 View Photos: Users can browse a gallery of photos.
 Search and Filter: Search by title, description, or tags.
@@ -707,47 +602,110 @@ Backend: Django, Django REST Framework, PostgreSQL
 Authentication: dj-rest-auth, JWT
 Deployment: Heroku for both frontend and backend
 Media Storage: Cloudinary for image uploads
-Testing
-To run the Django backend tests:
+
+## Testing
+
+Please click here to read more information about testing Cheshire Captures
+
+# Deployment Guide
+
+## Deployment to Heroku
+
+Once you have set up a new Gitpod workspace and your project is ready, follow the steps below to deploy your application to Heroku.
+
+### Step 1: Create a New Heroku App
+
+1. Log in to your Heroku account.
+2. On the dashboard, click the **Create New App** button.
+3. Choose a **unique name** for your app that relates to your project.
+4. Select the appropriate **region** based on your location.
+5. Click **Create App** to proceed.
+
+### Step 2: Deploy the Application
+
+1. After creating the app, navigate to the **Deploy** tab in Heroku.
+2. In the **Deployment method** section, choose **GitHub**.
+3. Connect your GitHub account (if not already connected) and find your **project repository**.
+4. Once connected, select the branch you wish to deploy (usually `main` or `master`) and click **Deploy Branch**.
+5. Heroku will now start building your application. Wait for the **build succeeded** message.
+6. After the build is complete, click **Open App** to view your application in the browser.
+
+## Connecting React Frontend to the API Backend
+
+Once the basic deployment is complete, follow these steps to connect your React frontend to your API backend for seamless data exchange.
+
+### Step 1: Set Environment Variables in Heroku
+
+1. In your Heroku dashboard, navigate to your **API application's settings**.
+2. Scroll down to the **Config Vars** section and click **Reveal Config Vars**.
+3. Add the following config variables:
+   - **CLIENT_ORIGIN**: This should be the URL of your deployed React application (e.g., `https://myapp-react.herokuapp.com`).
+   - **CLIENT_ORIGIN_DEV**: This is the URL of your Gitpod workspace (e.g., `https://3000-yourproject.gitpod.io`). Make sure to remove any trailing slashes from the URL.
+
+   > **Note:** Gitpod occasionally changes this URL, so make sure to update this config variable as needed during development.
+
+### Step 2: Set Up Axios in React
+
+1. In your React frontend Gitpod workspace, open a terminal and install Axios by running:
 
 ```bash
-python manage.py test
-To test the frontend, use the following:
+npm install axios
+```
 
-```bash
-npm test
-Deployment
-Frontend Deployment to Heroku
-Create a new Heroku app:
+2. Create a folder named API and inside it, create a file called axiosDefaults.js.
 
-```bash
-heroku create cheshire-captures-frontend
-Push to Heroku:
-
-```bash
-git push heroku main
-Set environment variables in Heroku:
-
-```bash
-heroku config:set REACT_APP_API_URL=<backend-production-url>
-Backend Deployment to Heroku
-Create a new Heroku app:
-
-```bash
-heroku create cheshire-captures-backend
-Push to Heroku:
-
-```bash
-git push heroku main
-Set environment variables in Heroku:
+3. In axiosDefaults.js, set up Axios defaults by importing Axios and configuring the base URL for your API:
 
 ```
-heroku config:set SECRET_KEY=<your-django-secret-key>
-heroku config:set DEBUG=False
-License
-This project is licensed under the BSD License. See the LICENSE file for details.
+import axios from 'axios';
 
-Contact
-For questions or support, please reach out to:
+axios.defaults.baseURL = 'https://your-api-backend.herokuapp.com/';
+axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
+axios.defaults.withCredentials = true;
+```
 
-NickCMoore: GitHub Profile
+Note: Replace 'https://your-api-backend.herokuapp.com/' with the actual URL of your deployed API project.
+
+4. To ensure Axios is set up across your React app, import this file into your main App.js file:
+
+```
+import './API/axiosDefaults';
+```
+
+5. Now, your React frontend is ready to communicate with the API backend for sending and receiving data, including handling images with the correct content type.
+
+## Forking the Project Repository
+
+If you'd like to make an independent copy of the project repository, you can fork it on GitHub. Forking allows you to make changes to the repository without affecting the original.
+
+### Steps to Fork a Repository:
+
+1. Log into your GitHub account and navigate to the repository you want to fork.
+2. In the top-right corner of the repository page, click the **Fork** button.
+3. GitHub will create a copy of the original repository under your account, allowing you to modify it independently.
+4. Once forked, you can make changes to your copy without impacting the original project.
+
+## Cloning the Project Repository
+
+A Git clone creates a local copy of a GitHub repository on your machine that stays linked to the original repository. This allows you to pull updates and push changes as needed.
+
+### Steps to Clone a Repository:
+
+1. On the GitHub repository page, click the **Code** button.
+2. In the dropdown, select **Clone** and choose your preferred method:
+   - **HTTPS**: Copy the HTTPS link to clone the repository.
+   - **SSH**: Use SSH for a secure connection if you have it set up.
+3. Open a terminal and run the following command to clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/repository-name.git
+   ```
+
+Note: Replace your-username and repository-name with your GitHub username and the repository name.
+
+4. After cloning, navigate into the project directory:
+
+```
+cd repository-name
+```
+5. You can now make changes to the project locally. Any updates you make can be pushed back to the repository.
