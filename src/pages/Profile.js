@@ -11,7 +11,6 @@ const ProfilePage = () => {
   const [photographer, setPhotographer] = useState(null);
   const [isBioLong, setIsBioLong] = useState(false);
   const [showFullBio, setShowFullBio] = useState(false);
-  const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
     const fetchPhotographer = async () => {
@@ -19,7 +18,6 @@ const ProfilePage = () => {
         const { data } = await axios.get(`/api/photographers/photographers/${id}/`);
         setPhotographer(data);
         setIsBioLong(data.bio.length > 150); // Check if bio is long
-        setIsFollowing(data.is_following);  // Assuming API returns if current user is following the photographer
       } catch (error) {
         console.error('Error fetching photographer:', error);
       }
@@ -27,25 +25,14 @@ const ProfilePage = () => {
     fetchPhotographer();
   }, [id]);
 
-  const handleFollowToggle = async () => {
-    try {
-      if (isFollowing) {
-        await axios.post(`/api/photographers/photographers/${id}/unfollow/`);
-        setIsFollowing(false);
-      } else {
-        await axios.post(`/api/photographers/photographers/${id}/follow/`);
-        setIsFollowing(true);
-      }
-    } catch (error) {
-      console.error('Error following/unfollowing:', error);
-    }
-  };
-
   const toggleBio = () => {
     setShowFullBio(!showFullBio); // Toggle between showing full bio or part of it
   };
 
   if (!photographer) return <p>Loading...</p>;
+
+  // Check if the profile belongs to the current user
+  const isOwnProfile = currentUser?.username === photographer.user?.username;
 
   return (
     <Container className={styles.profileContainer}>
@@ -67,6 +54,7 @@ const ProfilePage = () => {
               </Button>
             )}
 
+            {photographer.is_user && (
               <Button
                 as={Link}
                 to={`/profile/${id}/edit`}
@@ -75,9 +63,8 @@ const ProfilePage = () => {
               >
                 Edit Profile
               </Button>
-            <Button variant={isFollowing ? 'danger' : 'success'} onClick={handleFollowToggle} className="mt-2">
-              {isFollowing ? 'Unfollow' : 'Follow'}
-            </Button>
+            )}
+
           </Card>
         </Col>
         <Col md={8}>

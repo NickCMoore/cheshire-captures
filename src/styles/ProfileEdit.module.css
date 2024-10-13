@@ -2,6 +2,14 @@
     max-width: 800px;
     margin: 0 auto;
   }
+
+  .profileHeading {
+    color: var(--mountbatten-pink);
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
   
 .profileCard {
     background-color:var(--magnolia);

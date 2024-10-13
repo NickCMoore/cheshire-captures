@@ -10,7 +10,6 @@ const ProfileEdit = () => {
   const { id } = useParams();
   const currentUser = useCurrentUser();
   const [photographer, setPhotographer] = useState(null);
-  const [newProfileImage, setNewProfileImage] = useState(null);
   const [displayName, setDisplayName] = useState('');
   const [bio, setBio] = useState('');
   const [website, setWebsite] = useState('');
@@ -42,37 +41,6 @@ const ProfileEdit = () => {
       fetchPhotographer();
     }
   }, [id, currentUser]);
-
-  const handleProfileImageChange = (event) => {
-    if (event.target.files.length) {
-      setNewProfileImage(event.target.files[0]);
-    }
-  };
-
-  const handleProfileImageUpload = async () => {
-    if (!newProfileImage) {
-      setErrorMessage('No image selected for upload.');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('profile_image', newProfileImage);
-
-    try {
-      const { data } = await axios.patch(`/api/photographers/photographers/${id}/`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      setPhotographer(data);
-      setNewProfileImage(null);
-      setSuccessMessage('Profile image updated successfully.');
-      setErrorMessage('');
-    } catch (error) {
-      setErrorMessage('Error uploading profile image.');
-      console.error('Error uploading profile image:', error);
-    }
-  };
 
   const handleProfileUpdate = async (event) => {
     event.preventDefault();
@@ -128,7 +96,7 @@ const ProfileEdit = () => {
           <Row className="gx-5">
             <Col lg={6}>
               <Card className={`p-4 shadow ${styles.profileCard}`}>
-                <h2 className="text-center mb-4">Edit Profile</h2>
+                <h2 className={styles.profileHeading}>Edit Profile</h2> 
                 {successMessage && <Alert variant="success">{successMessage}</Alert>}
                 {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
                 <Form onSubmit={handleProfileUpdate}>
@@ -139,17 +107,6 @@ const ProfileEdit = () => {
                       className={`${styles.profileImage} mb-3`}
                       alt="Profile"
                     />
-                    <Form.Group className="mb-3">
-                      <Form.Control type="file" onChange={handleProfileImageChange} />
-                      <Button
-                        variant="primary"
-                        className="mt-2"
-                        onClick={handleProfileImageUpload}
-                        disabled={!newProfileImage}
-                      >
-                        Upload New Picture
-                      </Button>
-                    </Form.Group>
                   </div>
 
                   <Form.Group controlId="displayName" className="mb-3">
@@ -216,7 +173,7 @@ const ProfileEdit = () => {
 
             <Col lg={6}>
               <Card className={`p-4 shadow ${styles.profileCard}`}>
-                <h3 className="text-center mb-4">Change Password</h3>
+                <h3 className={styles.profileHeading}>Change Password</h3> {/* Updated the class */}
                 {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
                 <Form onSubmit={handleChangePassword}>
                   <Form.Group controlId="currentPassword" className="mb-3">

@@ -1,5 +1,5 @@
 .profileContainer {
-  padding-top: 100px; /* Prevent the content from touching the navbar */
+  padding-top: 100px; 
   padding-bottom: 50px;
 }
 
@@ -24,12 +24,12 @@
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 10px;
-  color: var(--yinmn-blue); /* Use a house color for the name */
+  color: var(--yinmn-blue); 
 }
 
 .bio {
   font-size: 14px;
-  color: var(--battleship-gray); /* Lighter color for bio */
+  color: var(--battleship-gray); 
   margin-bottom: 20px;
 }
 
@@ -43,7 +43,7 @@
 }
 
 .showMoreButton:hover {
-  color: var(--ultra-violet); /* Change color on hover */
+  color: var(--ultra-violet); 
 }
 
 .socialLinks {
