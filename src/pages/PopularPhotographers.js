@@ -7,9 +7,9 @@ import SearchBar from '../components/SearchBar';
 
 const PopularPhotographers = () => {
   const [photographers, setPhotographers] = useState([]);
-  const [filteredPhotographers, setFilteredPhotographers] = useState([]);
-  const currentUser = useCurrentUser();
+  const [filteredPhotographers, setFilteredPhotographers] = useState([]); 
   const [searchQuery, setSearchQuery] = useState('');
+  const currentUser = useCurrentUser(); 
 
   useEffect(() => {
     const fetchPhotographers = async () => {
@@ -42,28 +42,32 @@ const PopularPhotographers = () => {
       <h2 className="my-4">Popular Photographers</h2>
       <SearchBar onSearch={setSearchQuery} />
       <Row className="mt-4">
-        {filteredPhotographers.map((photographer) => (
-          <Col key={photographer.id} md={4} className="mb-4">
-            <Card className="shadow-sm">
-              <Card.Body className="text-left">
-                <Card.Title className="mt-2">{photographer.display_name}</Card.Title>
-                <Card.Text>{photographer.bio}</Card.Text>
-                <Link to={`/profile/${photographer.id}`}>
-                  <Button variant="primary" className="w-100 mt-2">
-                    View Profile
-                  </Button>
-                </Link>
-                {currentUser?.username === photographer.user.username && (
-                  <Link to={`/profile/${photographer.id}/edit`}>
-                    <Button variant="secondary" className="w-100 mt-2">
-                      Edit Profile
+        {Array.isArray(filteredPhotographers) && filteredPhotographers.length > 0 ? (
+          filteredPhotographers.map((photographer) => (
+            <Col key={photographer.id} md={4} className="mb-4">
+              <Card className="shadow-sm">
+                <Card.Body className="text-left">
+                  <Card.Title className="mt-2">{photographer.display_name}</Card.Title>
+                  <Card.Text>{photographer.bio}</Card.Text>
+                  <Link to={`/profile/${photographer.id}`}>
+                    <Button variant="primary" className="w-100 mt-2">
+                      View Profile
                     </Button>
                   </Link>
-                )}
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
+                  {currentUser?.username === photographer.user.username && (
+                    <Link to={`/profile/${photographer.id}/edit`}>
+                      <Button variant="secondary" className="w-100 mt-2">
+                        Edit Profile
+                      </Button>
+                    </Link>
+                  )}
+                </Card.Body>
+              </Card>
+            </Col>
+          ))
+        ) : (
+          <p>No photographers found.</p>
+        )}
       </Row>
     </Container>
   );
