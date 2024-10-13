@@ -425,19 +425,24 @@ For a detailed view of the project management and task progression, refer to the
 
 ### Backend
 
-- **Django**: A Python framework for rapid development.
-- **Django REST Framework**: For creating a RESTful API.
-- **PostgreSQL**: Database for managing user, photo, and interaction data.
-- **Cloudinary**: For handling image uploads and storage.
-- **Heroku**: Deployment platform for the backend.
+- **Django (v5.1.2)**: The core Python web framework used to develop the backend of the application, enabling rapid and secure development.
+- **Django REST Framework (v3.14.0)**: Provides powerful tools to create the RESTful API that connects the backend to the React frontend.
+- **PostgreSQL**: A relational database system used to manage all data related to users, photos, comments, and interactions.
+- **Cloudinary (v1.41.0)**: A cloud-based service used for storing and managing image uploads, making it easier to serve user-uploaded media across the platform.
+- **Heroku**: The cloud platform used for deploying the backend of the project, ensuring scalability and reliable hosting.
+- **Gunicorn (v20.1.0)**: A Python WSGI HTTP server used to run the Django application on Heroku in production.
+- **Whitenoise (v6.7.0)**: Ensures efficient serving of static files directly from the Django application in production environments.
 
 ### Frontend
 
-- **React**: A JavaScript library for building user interfaces.
-- **React-Bootstrap**: For a responsive design.
-- **Axios**: For API requests.
-- **FontAwesome**: For icons throughout the application.
-- **Heroku**: Deployment platform for the frontend.
+- **React**: A JavaScript library used to build the user interface, enabling a dynamic and responsive experience for users.
+- **React-Bootstrap**: Provides pre-built, responsive components to create a clean and visually consistent design across the site.
+- **Axios (v1.4.0)**: Handles API requests between the React frontend and the Django REST API, allowing the front-end to communicate with the back-end seamlessly.
+- **FontAwesome**: A widely-used icon library for adding scalable vector icons throughout the application, enhancing the user experience.
+- **Heroku**: Also used to deploy the frontend of the project, ensuring a fully hosted and easily accessible application.
+- **React Simple Star Rating**: A React component package used to implement the star rating system for photos, allowing users to rate content easily.
+- **React Router Dom**: Used for managing routing and navigation between different pages within the React frontend.
+
 
 ---
 
@@ -740,8 +745,6 @@ This project would not have been possible without the help of several resources,
 - The official documentation for the **Star Rating System** helped me properly install and customize the component to suit the needs of the platform, ensuring seamless integration for rating photos in the **Photo Detail** view.
 
 - The **Code Institute DRF Walkthrough Project** from Code Institute also provided key guidance on structuring the back-end API for Cheshire Captures. By reviewing how Django Rest Framework was used in the walkthrough, I was able to apply similar strategies for user authentication, photo management, and rating systems.
-
-- The **Scroll to Top** button, which significantly improves the user experience, was inspired by an article on [GitConnected](https://www.gitconnected.com). This feature makes navigating long pages, such as the **Gallery** and **Popular Photographers** pages, more manageable and user-friendly.
 
 - A significant portion of the React front-end for this project was built by following Code Institute’s **Moments Walkthrough Project**. This walkthrough was instrumental in helping me understand how to structure a modern front-end with React, including handling authentication, CRUD operations, and state management. The **Moments** project particularly helped in implementing features like the **Gallery Feed**, where users can scroll through a series of images, and the **Profile Page**, where users can manage their photos.
 
