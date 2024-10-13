@@ -6,7 +6,7 @@ import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import SearchBar from '../components/SearchBar';
 
 const PopularPhotographers = () => {
-  const [photographers, setPhotographers] = useState([]);
+  const [photographers, setPhotographers] = useState([]); 
   const [filteredPhotographers, setFilteredPhotographers] = useState([]); 
   const [searchQuery, setSearchQuery] = useState('');
   const currentUser = useCurrentUser(); 
@@ -15,10 +15,19 @@ const PopularPhotographers = () => {
     const fetchPhotographers = async () => {
       try {
         const { data } = await axiosReq.get('/api/photographers/top-photographers/');
-        setPhotographers(data);
-        setFilteredPhotographers(data); 
+        
+        if (Array.isArray(data.results)) { 
+          setPhotographers(data.results);
+          setFilteredPhotographers(data.results);
+        } else {
+          console.error("Expected an array in data.results but received:", data.results);
+          setPhotographers([]);
+          setFilteredPhotographers([]);
+        }
       } catch (err) {
         console.error('Error fetching photographers:', err);
+        setPhotographers([]);
+        setFilteredPhotographers([]);
       }
     };
 
