@@ -1,6 +1,6 @@
 .AboutPage {
     background-color: #f3eaf4;
-    color: var(--rich-black); 
+    color: var(--yinmn-blue); 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -44,7 +44,7 @@
   
   p {
     font-size: 1.2rem;
-    color: var(--magnolia);
+    color: var(--yinmn-blue);
     line-height: 1.6;
     margin-bottom: 20px;
   }

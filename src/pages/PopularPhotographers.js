@@ -6,8 +6,8 @@ import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import SearchBar from '../components/SearchBar';
 
 const PopularPhotographers = () => {
-  const [photographers, setPhotographers] = useState([]); 
-  const [filteredPhotographers, setFilteredPhotographers] = useState([]); 
+  const [photographers, setPhotographers] = useState([]);
+  const [filteredPhotographers, setFilteredPhotographers] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const currentUser = useCurrentUser(); 
 
@@ -15,19 +15,10 @@ const PopularPhotographers = () => {
     const fetchPhotographers = async () => {
       try {
         const { data } = await axiosReq.get('/api/photographers/top-photographers/');
-        
-        if (Array.isArray(data.results)) { 
-          setPhotographers(data.results);
-          setFilteredPhotographers(data.results);
-        } else {
-          console.error("Expected an array in data.results but received:", data.results);
-          setPhotographers([]);
-          setFilteredPhotographers([]);
-        }
+        setPhotographers(data.results);
+        setFilteredPhotographers(data.results);
       } catch (err) {
         console.error('Error fetching photographers:', err);
-        setPhotographers([]);
-        setFilteredPhotographers([]);
       }
     };
 
@@ -54,10 +45,10 @@ const PopularPhotographers = () => {
         {Array.isArray(filteredPhotographers) && filteredPhotographers.length > 0 ? (
           filteredPhotographers.map((photographer) => (
             <Col key={photographer.id} md={4} className="mb-4">
-              <Card className="shadow-sm">
+              <Card className="shadow-sm profile-card">
                 <Card.Body className="text-left">
                   <Card.Title className="mt-2">{photographer.display_name}</Card.Title>
-                  <Card.Text>{photographer.bio}</Card.Text>
+                  <Card.Text>{photographer.bio || 'No bio available'}</Card.Text>
                   <Link to={`/profile/${photographer.id}`}>
                     <Button variant="primary" className="w-100 mt-2">
                       View Profile
