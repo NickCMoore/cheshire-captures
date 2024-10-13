@@ -642,13 +642,14 @@ Once the basic deployment is complete, follow these steps to connect your React 
    - **CLIENT_ORIGIN**: This should be the URL of your deployed React application (e.g., `https://myapp-react.herokuapp.com`).
    - **CLIENT_ORIGIN_DEV**: This is the URL of your Gitpod workspace (e.g., `https://3000-yourproject.gitpod.io`). Make sure to remove any trailing slashes from the URL.
 
+
    > **Note:** Gitpod occasionally changes this URL, so make sure to update this config variable as needed during development.
 
 ### Step 2: Set Up Axios in React
 
 1. In your React frontend Gitpod workspace, open a terminal and install Axios by running:
 
-```bash
+```
 npm install axios
 ```
 
@@ -697,9 +698,9 @@ A Git clone creates a local copy of a GitHub repository on your machine that sta
    - **SSH**: Use SSH for a secure connection if you have it set up.
 3. Open a terminal and run the following command to clone the repository:
 
-   ```bash
-   git clone https://github.com/your-username/repository-name.git
-   ```
+```
+git clone https://github.com/your-username/repository-name.git
+```
 
 Note: Replace your-username and repository-name with your GitHub username and the repository name.
 
@@ -709,3 +710,53 @@ Note: Replace your-username and repository-name with your GitHub username and th
 cd repository-name
 ```
 5. You can now make changes to the project locally. Any updates you make can be pushed back to the repository.
+
+## Credits
+
+This project would not have been possible without the help of several resources, tools, and inspirations that guided my development process. Below is a detailed list of all the elements that contributed to various aspects of this project.
+
+- The background images used on the **Sign In** and **Sign Up** pages were sourced from [Unsplash](https://unsplash.com), an incredible resource for free, high-quality photography. Special thanks to the photographers who shared their work.
+  
+- For the **Upload Image** icons used in the **Create Photo**, **Edit Photo**, and **Profile Edit** pages, I used [Pngtree](https://pngtree.com), which provided the perfect visual elements for these features. Their extensive library made it easy to find icons that matched the aesthetic of the site.
+
+- The **No Results Found** placeholder image, displayed when a user search returns no results, was customized from a template provided by **Hajde/Media**. It ensures that users have a clear visual cue when there’s no matching content.
+
+- The logo for **Cheshire Captures** was designed using [FreeLogoDesign.org](https://www.freelogodesign.org). I started with their free design templates and tailored them to match the unique identity of the platform.
+
+- To refine the branding, I used [Fotor](https://www.fotor.com) to make the logo’s background transparent, allowing it to integrate seamlessly across different color schemes on the site.
+
+- When implementing the **Delete Confirmation Modal** for managing posts and comments, I consulted an insightful article shared by tutor support. It provided a foundational understanding of modal creation in React, which I then adapted to suit the functionality required in this project.
+
+- After building the initial version of the modal, I found a helpful guide on refactoring components to ensure the **Delete Confirmation Modal** became reusable across different sections of the site, such as the photo deletion and profile management areas.
+
+- For implementing the date-based filtering in the **Gallery** section, I relied on an excellent [Stack Overflow thread](https://stackoverflow.com). This allowed me to dynamically filter photos by their upload date and provide users with real-time sorting options based on the latest content.
+
+- Another [Stack Overflow article](https://stackoverflow.com) helped me address a persistent React console warning about the correct usage of component brackets. This fix improved the performance and code readability of the project, especially when handling the **Top-Rated Photos** component.
+
+- The logic for setting a **dynamic date variable** (used for showing the most recent content) was inspired by a tutorial on [ReactGo.com](https://www.reactgo.com). This tutorial provided a simple yet powerful method to ensure the homepage and profile pages always show up-to-date information.
+
+- To implement the **React Simple Star Rating** feature for user reviews, I referred to documentation from the package itself. However, I also took inspiration from my mentor, who used a similar rating system in a previous project, helping me understand how to customize the component for this platform.
+
+- The official documentation for the **Star Rating System** helped me properly install and customize the component to suit the needs of the platform, ensuring seamless integration for rating photos in the **Photo Detail** view.
+
+- The **Code Institute DRF Walkthrough Project** from Code Institute also provided key guidance on structuring the back-end API for Cheshire Captures. By reviewing how Django Rest Framework was used in the walkthrough, I was able to apply similar strategies for user authentication, photo management, and rating systems.
+
+- The **Scroll to Top** button, which significantly improves the user experience, was inspired by an article on [GitConnected](https://www.gitconnected.com). This feature makes navigating long pages, such as the **Gallery** and **Popular Photographers** pages, more manageable and user-friendly.
+
+- A significant portion of the React front-end for this project was built by following Code Institute’s **Moments Walkthrough Project**. This walkthrough was instrumental in helping me understand how to structure a modern front-end with React, including handling authentication, CRUD operations, and state management. The **Moments** project particularly helped in implementing features like the **Gallery Feed**, where users can scroll through a series of images, and the **Profile Page**, where users can manage their photos.
+
+
+## Acknowledgements
+
+This project was developed as part of **Portfolio Project #5** (Advanced Front-End Specialization) for the **Diploma in Full Stack Software Development** at the **Code Institute**. I am incredibly grateful for the support and guidance of my mentor, **Gareth McGirr**, who provided valuable feedback and insight throughout the development process.
+
+A huge thanks to the **Cheshire Captures** community, whose input inspired many of the user-driven features in this platform. Additionally, I’d like to extend my appreciation to my peers and tutors at the Code Institute for their constant encouragement and willingness to answer questions—especially on the **Slack** channels. Your support helped me overcome numerous challenges during the development process.
+
+Lastly, I want to acknowledge the vast array of online resources and communities—particularly **Unsplash**, **Pngtree**, **Stack Overflow**, and **GitConnected**—for offering the tutorials, tools, and assets that helped bring this project to life.
+
+**[Nick Moore]**, [October] [2024]
+
+
+
+
+
