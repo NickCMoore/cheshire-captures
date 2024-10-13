@@ -51,21 +51,18 @@ const PhotoDetails = () => {
     }
 
     try {
-      const { data } = await axiosRes.post('/api/photos/comments/', {
-        photo: id,  // Ensure this is the correct photo ID
-        content: newComment,
+      const { data } = await axiosRes.post(`/api/photos/photos/${id}/comments/`, {
+        content: newComment, 
       });
       setComments((prevComments) => [...prevComments, data]);
       setNewComment('');
       setError(null);
     } catch (err) {
-      if (err.response && err.response.status === 400) {
-        setError("Validation error: Check your input.");
-      } else {
-        setError("Error adding comment.");
-      }
+      setError("Error adding comment.");
       console.error('Error adding comment:', err);
     }
+    
+    
   };
 
   const handleLike = async () => {
