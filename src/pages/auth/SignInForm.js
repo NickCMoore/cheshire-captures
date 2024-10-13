@@ -19,6 +19,7 @@ function SignInForm() {
   });
   const { username, password } = signInData;
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
 
   const handleChange = (e) => {
@@ -30,22 +31,25 @@ function SignInForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
     try {
-      const { data } = await axios.post('/dj-rest-auth/login/', signInData);
+      const { data } = await axios.post("/dj-rest-auth/login/", signInData);
 
       const accessToken = data.access_token;
       const refreshToken = data.refresh_token;
 
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
 
       setCurrentUser(data.user);
 
-      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 
       history.push(`/profile/${data.user.photographer_id}`);
     } catch (err) {
       setErrors(err.response?.data || {});
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -94,8 +98,9 @@ function SignInForm() {
                 <Button
                   className={`${btnStyles.Button} ${styles.Button} mt-3`}
                   type="submit"
+                  disabled={isLoading}
                 >
-                  Sign In
+                  {isLoading ? 'Signing In...' : 'Sign In'}
                 </Button>
               </Row>
 
