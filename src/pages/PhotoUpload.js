@@ -42,7 +42,7 @@ const PhotoUpload = () => {
   return (
     <Container className="d-flex justify-content-center align-items-center min-vh-100">
       <div className={styles.uploadContainer}>
-      <h2 className={styles.blueHeading}>Upload a New Photo</h2>
+        <h2 className={styles.blueHeading}>Upload a New Photo</h2>
         {error && <Alert variant="danger">{error}</Alert>}
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="title">
@@ -70,17 +70,33 @@ const PhotoUpload = () => {
           </Form.Group>
 
           <Form.Group controlId="image">
-            <Form.Label>Upload Image</Form.Label>
-            <Form.Control type="file" onChange={handleImageChange} required disabled={isLoading} />
+            <Form.Label className="d-none">Choose an Image</Form.Label>
+            <input
+              type="file"
+              onChange={handleImageChange}
+              required
+              disabled={isLoading}
+              style={{ display: 'none' }} // Hide the default file input
+              id="upload-button"
+            />
+            <Button
+              as="label"
+              htmlFor="upload-button"
+              variant="secondary"
+              className="w-100 mb-3"
+              disabled={isLoading}
+            >
+              {image ? image.name : 'Choose an Image'}
+            </Button>
           </Form.Group>
 
           <Button variant="primary" type="submit" disabled={isLoading}>
             {isLoading ? (
               <>
-                <Spinner animation="border" size="sm" /> Uploading...
+                <Spinner animation="border" size="sm" /> Saving...
               </>
             ) : (
-              'Upload Photo'
+              'Save Photo'
             )}
           </Button>
         </Form>
