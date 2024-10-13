@@ -38,12 +38,12 @@ const NavBar = () => {
         <i className="fas fa-images"></i>Gallery
       </NavLink>
       <NavLink
-      exact
-      className={styles.NavLink}
-      activeClassName={styles.Active}
-      to="/upload-photo"
+        exact
+        className={styles.NavLink}
+        activeClassName={styles.Active}
+        to="/upload-photo"
       >
-      <i className="fas fa-upload"></i>Upload Photo
+        <i className="fas fa-upload"></i>Upload Photo
       </NavLink>
       <NavLink
         exact
@@ -97,6 +97,7 @@ const NavBar = () => {
       <NavDropdown 
         title={<span><i className="fas fa-user-alt ml-5"></i></span>}
         id="basic-nav-dropdown"
+        aria-label="User dropdown" // Added aria-label for better accessibility
       >
         <NavDropdown.Item 
           id={styles.dropdownItem}

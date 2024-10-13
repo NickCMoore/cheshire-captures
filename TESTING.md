@@ -38,6 +38,12 @@ After resolving errors due to unused imports in React files, only warning remain
 
 The following Jest tests were written to ensure the main components of the Cheshire Captures frontend rendered correctly:
 
+![Automated Testing](images/automatedtesting.png)
+
+Here are some of the results:
+
+![Example Automated Testing Result](images/profiletest.png)
+
 ### NavBar.js
 |  | | |
 |:-------:|:--------|:--------|
