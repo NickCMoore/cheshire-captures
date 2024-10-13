@@ -31,7 +31,7 @@ const PhotoDetails = () => {
 
     const fetchComments = async () => {
       try {
-        const { data } = await axiosReq.get(`/api/photos/comments/?photo=${id}`);
+        const { data } = await axiosReq.get(`/api/photos/photos/${id}/comments`);
         setComments(data.results);
       } catch (err) {
         console.error("Error fetching comments:", err);
