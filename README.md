@@ -29,7 +29,6 @@ The backend and frontend are deployed separately on Heroku, with the backend pro
 - [Backend Architecture](#backend-architecture)
 - [Frontend Architecture](#frontend-architecture)
 - [Setup & Installation](#setup--installation)
-- [Environment Variables](#environment-variables)
 - [Deployment](#deployment)
 - [Testing](#testing)
 - [Troubleshooting & Common Issues](#troubleshooting--common-issues)
@@ -64,7 +63,145 @@ Cheshire Captures aims to address these challenges by providing a tailored platf
 - Organise Portfolios: Create user-friendly profile pages where photographers can curate their best work and provide additional information about their services, making them more accessible to clients and collaborators.
 - By solving these problems, Cheshire Captures aims to enhance the experience for photographers in the Cheshire area, providing them with a dedicated space to connect, collaborate, and showcase their talent. This platform not only enables better portfolio visibility and professional networking but also strengthens the local photography community by bringing photographers together in a more meaningful way.
 
-### Features
+# Features
+
+## Navigation
+
+The navigation bar on the site is designed to be user-friendly and responsive. It adapts based on whether the user is logged in or not. On mobile devices, the navigation collapses into a hamburger menu for ease of access.
+
+![alt text](image.png)
+
+![alt text](image-1.png)
+
+### Logged-out Users:
+When the user is logged out, the following options are visible in the navigation bar:
+
+- **Cheshire Captures Logo**: This is a link to the homepage, displayed on the left-hand side of the navigation bar. It is visible to all users and provides quick access to the homepage.
+
+![alt text](image-2.png)
+
+- **Home**: This menu item links to the homepage.
+
+![alt text](image-3.png)
+
+- **About**: A link to the about page where users can read more about the site, its mission, and the community behind it.
+
+![alt text](image-4.png)
+
+- **Sign In**: This menu item links to the sign-in page, allowing returning users to log in to their accounts.
+
+![alt text](image-5.png)
+
+- **Sign Up**: A link to the sign-up page where new users can create an account to start interacting with the site.
+
+![alt text](image-6.png)
+
+### Logged-in Users:
+Once a user logs in, additional options become available in the navigation bar:
+
+- **Gallery**: Logged-in users can access the gallery page where they can view and interact with other photographers’ images.
+
+![alt text](image-7.png)
+
+- **Popular Photographers**: This link takes the user to a page showing the most-followed and top-rated photographers on the platform.
+
+![alt text](image-8.png)
+
+- **My Photos**: A link where users can view all their uploaded photos in one place.
+
+![alt text](image-9.png)
+
+- **Upload Photo**: This option allows users to upload new photos directly from the navigation bar.
+
+![alt text](image-10.png)
+
+- **Profile**: A link to the user's personal profile page, which includes their uploaded photos, followers, and personal information.
+
+![alt text](image-11.png)
+
+- **Sign Out**: A link that logs the user out of the platform and redirects them to the homepage.
+
+![alt text](image-12.png)
+
+## Authentication
+
+Users who are new to the site can click on the **Sign Up** link to create an account. The sign-up form requests basic information such as a username, email, and password. Existing users can use the **Sign In** link to log in with their credentials. Once signed in, the **Sign Out** button becomes available, allowing users to log out securely.
+
+- **Sign-up Form**: This form includes fields for username, email, and password. Once successfully submitted, the user is redirected to their profile page.
+
+![alt text](image-14.png)
+
+- **Sign-in Form**: The sign-in page asks for the user’s credentials (username and password) to log in. If the credentials are valid, the user is redirected to the homepage.
+
+![alt text](image-13.png)
+
+## Homepage
+
+The homepage consists of a simple heading and strapline, drawing the user in to the site and also provided a way for new users to get signed up with the get started button.
+
+![alt text](image-15.png)
+
+### Popular Photographers
+
+At the top of the homepage, a section showcases the most popular photographers on the platform based on their follower count. This section includes:
+
+- **Profile Image**: Each popular photographer’s avatar is displayed.
+- **Username**: A View Profile button, which links to their profile.
+- **Follow Button**: Logged-in users can follow or unfollow photographers directly from the homepage. If the user is already following the photographer, the button will reflect that status.
+- **Search**: Users can search for popular photographers.
+
+![alt text](image-16.png)
+
+## Profile Page
+
+The profile page is a central feature of the site, where users can view their uploaded photos, update their profile information, and manage their social interactions.
+
+### Profile Information
+
+- **Profile Picture**: Users can upload a profile picture, which is displayed prominently on their profile.
+- **Username**: The user's unique identifier on the platform, displayed at the top of their profile.
+- **Bio**: Users can add a short biography to describe themselves or their photography style.
+- **Website and Social Links**: Users can add external links to their personal website or social media profiles, such as Instagram or Twitter.
+
+### Photo Gallery
+
+All photos uploaded by the user are displayed in a gallery format on their profile. Each photo includes:
+
+- **Photo Title and Description**: A title and optional description that provide context for the image.
+- **Likes and Comments**: Users can see how many likes and comments their photos have received.
+- **Delete/Edit Options**: Users can edit or delete their own photos directly from the profile page.
+
+### Followers and Following
+
+Each profile shows the number of followers the user has and the number of other users they are following. Users can click on these numbers to view a list of their followers and the profiles they follow.
+
+## Upload Photo
+
+Logged-in users can upload photos directly from the navigation bar. The upload form includes fields for:
+
+- **Photo Title**: The name of the photo.
+- **Description**: A short description of the image.
+- **Choose an Image**: Users can upload content from their computers.
+
+![alt text](image-17.png)
+
+## Photo Details Page
+
+Each photo has its own dedicated details page that includes:
+
+- **Full-Size Image**: The photo is displayed in full size with all associated information.
+- **Photographer's Profile Link**: A link back to the photographer’s profile.
+- **Comments Section**: Users can leave comments on the photo. Logged-in users can interact with the comments section, while logged-out users can only view existing comments.
+- **Like Button**: Users can like the photo by clicking the like button, and the like count updates in real-time.
+
+![alt text](image-18.png)
+
+## Comments and Likes
+
+The platform supports commenting and liking features for user interaction. Each photo can receive comments, and users can engage in conversations. The like system allows users to show appreciation for a photo.
+
+- **Real-Time Updates**: Comments and likes update in real-time as users interact with the platform.
+- **Comment Moderation**: Users can delete comments on their own photos if they wish to moderate the discussion.
 
 - **User Authentication:** Secure login, registration, and password resets using JWT and dj-rest-auth.
 **Profile Management:** Users can update profile details and upload profile pictures.
@@ -571,6 +708,10 @@ For a detailed view of the project management and task progression, refer to the
 
 ---
 
+## Testing
+
+Please click ![here](TESTING.md) to read more information about testing Cheshire Captures
+
 ## Setup & Installation
 
 ### Prerequisites
@@ -586,119 +727,6 @@ For a detailed view of the project management and task progression, refer to the
 - Django 4.2 or newer
 - PostgreSQL 13 or newer
 - Git
-
-### Installation
-
-
-# Existing Features
-
-## Navigation
-
-The navigation bar on the site is designed to be user-friendly and responsive. It adapts based on whether the user is logged in or not. On mobile devices, the navigation collapses into a hamburger menu for ease of access.
-
-### Logged-out Users:
-When the user is logged out, the following options are visible in the navigation bar:
-
-- **Cheshire Captures Logo**: This is a link to the homepage, displayed on the left-hand side of the navigation bar. It is visible to all users and provides quick access to the homepage.
-- **Home**: This menu item links to the homepage where all the latest and top-rated photos are displayed. Logged-out users can browse through the public galleries.
-- **About**: A link to the about page where users can read more about the site, its mission, and the community behind it.
-- **Sign In**: This menu item links to the sign-in page, allowing returning users to log in to their accounts.
-- **Sign Up**: A link to the sign-up page where new users can create an account to start interacting with the site.
-
-### Logged-in Users:
-Once a user logs in, additional options become available in the navigation bar:
-
-- **Gallery**: Logged-in users can access the gallery page where they can view and interact with other photographers’ images.
-- **Popular Photographers**: This link takes the user to a page showing the most-followed and top-rated photographers on the platform.
-- **My Photos**: A link where users can view all their uploaded photos in one place.
-- **Upload Photo**: This option allows users to upload new photos directly from the navigation bar.
-- **Profile**: A link to the user's personal profile page, which includes their uploaded photos, followers, and personal information.
-- **Sign Out**: A link that logs the user out of the platform and redirects them to the homepage.
-
-## Authentication
-
-Users who are new to the site can click on the **Sign Up** link to create an account. The sign-up form requests basic information such as a username, email, and password. Existing users can use the **Sign In** link to log in with their credentials. Once signed in, the **Sign Out** button becomes available, allowing users to log out securely.
-
-- **Sign-up Form**: This form includes fields for username, email, and password. Once successfully submitted, the user is redirected to their profile page.
-- **Sign-in Form**: The sign-in page asks for the user’s credentials (username and password) to log in. If the credentials are valid, the user is redirected to the homepage.
-
-## Homepage
-
-The homepage consists of several important components aimed at helping users explore and engage with the platform’s content.
-
-### Popular Photographers
-
-At the top of the homepage, a section showcases the most popular photographers on the platform based on their follower count. This section includes:
-
-- **Profile Image**: Each popular photographer’s avatar is displayed.
-- **Username**: The username of the photographer, which links to their profile.
-- **Follow Button**: Logged-in users can follow or unfollow photographers directly from the homepage. If the user is already following the photographer, the button will reflect that status.
-
-### Photo Feed
-
-Below the popular photographers, the homepage displays a feed of photos uploaded by users. The feed includes:
-
-- **Photo Thumbnail**: A small preview of the image, which can be clicked on to view the full photo.
-- **Photographer's Name**: The name of the photographer who uploaded the photo. Clicking on the name redirects to their profile.
-- **Likes and Comments**: Each photo shows the number of likes and comments it has received. Users can interact with the photo by liking or leaving comments.
-- **Date of Upload**: The date when the photo was uploaded to the platform.
-
-### Search Bar
-
-A search bar is available at the top of the homepage, allowing users to search for photos, photographers, or specific keywords. The search results update in real-time, displaying matching photos and profiles based on the search query.
-
-## Profile Page
-
-The profile page is a central feature of the site, where users can view their uploaded photos, update their profile information, and manage their social interactions.
-
-### Profile Information
-
-- **Profile Picture**: Users can upload a profile picture, which is displayed prominently on their profile.
-- **Username**: The user's unique identifier on the platform, displayed at the top of their profile.
-- **Bio**: Users can add a short biography to describe themselves or their photography style.
-- **Website and Social Links**: Users can add external links to their personal website or social media profiles, such as Instagram or Twitter.
-
-### Photo Gallery
-
-All photos uploaded by the user are displayed in a gallery format on their profile. Each photo includes:
-
-- **Photo Title and Description**: A title and optional description that provide context for the image.
-- **Likes and Comments**: Users can see how many likes and comments their photos have received.
-- **Delete/Edit Options**: Users can edit or delete their own photos directly from the profile page.
-
-### Followers and Following
-
-Each profile shows the number of followers the user has and the number of other users they are following. Users can click on these numbers to view a list of their followers and the profiles they follow.
-
-## Upload Photo
-
-Logged-in users can upload photos directly from the navigation bar. The upload form includes fields for:
-
-- **Photo Title**: The name of the photo.
-- **Description**: A short description of the image.
-- **Tags**: Keywords that help categorize the photo and make it easier to find in search results.
-- **Image File**: The actual photo file that the user wants to upload. The platform supports common image formats like JPEG and PNG.
-
-## Photo Details Page
-
-Each photo has its own dedicated details page that includes:
-
-- **Full-Size Image**: The photo is displayed in full size with all associated information.
-- **Photographer's Profile Link**: A link back to the photographer’s profile.
-- **Comments Section**: Users can leave comments on the photo. Logged-in users can interact with the comments section, while logged-out users can only view existing comments.
-- **Like Button**: Users can like the photo by clicking the like button, and the like count updates in real-time.
-
-## Comments and Likes
-
-The platform supports commenting and liking features for user interaction. Each photo can receive comments, and users can engage in conversations. The like system allows users to show appreciation for a photo.
-
-- **Real-Time Updates**: Comments and likes update in real-time as users interact with the platform.
-- **Comment Moderation**: Users can delete comments on their own photos if they wish to moderate the discussion.
-
-
-## Testing
-
-Please click ![here](TESTING.md) to read more information about testing Cheshire Captures
 
 # Deployment Guide
 
