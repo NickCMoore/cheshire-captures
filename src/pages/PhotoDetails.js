@@ -44,26 +44,29 @@ const PhotoDetails = () => {
 
   const handleAddComment = async (e) => {
     e.preventDefault();
-    
+
     if (!currentUser) {
       setError("You need to be logged in to comment.");
       return;
     }
-  
+
     try {
       const { data } = await axiosRes.post('/api/photos/comments/', {
-        photo: id,  
+        photo: id,  // Ensure this is the correct photo ID
         content: newComment,
       });
       setComments((prevComments) => [...prevComments, data]);
       setNewComment('');
       setError(null);
     } catch (err) {
-      setError("Error adding comment.");
+      if (err.response && err.response.status === 400) {
+        setError("Validation error: Check your input.");
+      } else {
+        setError("Error adding comment.");
+      }
       console.error('Error adding comment:', err);
     }
   };
-  
 
   const handleLike = async () => {
     if (!currentUser) {
