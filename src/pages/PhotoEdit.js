@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Form, Button, Container } from 'react-bootstrap';
-import { axiosReq } from '../api/axiosDefaults';
+import { axiosReq, axiosRes } from '../api/axiosDefaults';
 import styles from '../styles/PhotoEdit.module.css';
 
 const PhotoEdit = () => {
@@ -42,6 +42,19 @@ const PhotoEdit = () => {
     }
   };
 
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this photo?');
+    if (!confirmDelete) return;
+
+    try {
+      await axiosRes.delete(`/api/photos/photos/${id}/`);
+      history.push('/gallery');
+    } catch (error) {
+      console.error('Error deleting photo:', error);
+      setError('Failed to delete photo. Please try again.');
+    }
+  };
+
   return (
     <Container fluid className="d-flex vh-100 justify-content-center align-items-center">
       <div className={`${styles.editContainer} p-5 shadow-lg`}>
@@ -79,8 +92,12 @@ const PhotoEdit = () => {
             </div>
           </Form.Group>
 
-          <Button variant="primary" type="submit" className="w-100">
+          <Button variant="primary" type="submit" className="w-100 mb-3">
             Save Changes
+          </Button>
+
+          <Button variant="danger" className="w-100" onClick={handleDelete}>
+            Delete Photo
           </Button>
         </Form>
       </div>
