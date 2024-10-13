@@ -1,10 +1,10 @@
 # **_Cheshire Captures_**
 
-**Cheshire Captures** is a full-stack photography community platform designed to connect photographers and photo enthusiasts. Built using Django REST Framework and React, it allows users to create accounts, upload photos, rate, comment, and interact with the photography community. Users can filter photos by category, search for photographers or photos, and view top-rated content.
+**Cheshire Captures** is a full-stack photography community platform designed to connect photographers and photo enthusiasts in Cheshire. Built using Django REST Framework for the backend and React for the frontend, it allows users to create accounts, upload photos, rate and comment on photos, and engage with the photography community. Users can search for photographers, filter by categories, and explore top-rated content.
 
-Both the backend and frontend are deployed separately on Heroku, with the backend providing a robust API for data management and the frontend delivering an intuitive and responsive user experience.
+The backend and frontend are deployed separately on Heroku, with the backend providing a robust API for data management and the frontend delivering an intuitive and responsive user experience.
 
-To view the platform, please [click here](https://cheshire-captures-4a500dc7ab0a.herokuapp.com/).
+[View the live platform here](https://cheshire-captures-4a500dc7ab0a.herokuapp.com/).
 
 ## Table of Contents
 
@@ -14,7 +14,12 @@ To view the platform, please [click here](https://cheshire-captures-4a500dc7ab0a
    - [Solution](#solution)
 - [Features](#features)
 - [User Stories](#user-stories)
+   - Navigation & Authentication[#navigation-authentication]
+   - [Photos](#photos)
+   - [User Stories](#user-stories)
 - [Technologies Used](#technologies-used)
+   - [Backend](#backend)
+   - [Frontend](#frontend)
 - [API Endpoints](#api-endpoints)
 - [Backend Architecture](#backend-architecture)
 - [Frontend Architecture](#frontend-architecture)
@@ -31,21 +36,17 @@ To view the platform, please [click here](https://cheshire-captures-4a500dc7ab0a
 
 ## Overview
 
-**Cheshire Captures** is a full-stack photography community platform designed to connect photographers and photo enthusiasts. Built using Django REST Framework and React, it allows users to create accounts, upload photos, rate, comment, and interact with the photography community. Users can filter photos by category, search for photographers or photos, and view top-rated content.
-
-Both the backend and frontend are deployed separately on Heroku, with the backend providing a robust API for data management and the frontend delivering an intuitive and responsive user experience.
+Cheshire Captures is a platform that allows photographers to share their work and engage with the local Cheshire community. Users can upload photos, comment, rate, and interact with others. The backend API supports all functionality, while the frontend offers a smooth, mobile-friendly user experience.
 
 ### Problem Statement
 
-Photographers often struggle to find a platform that caters to their specific needs for showcasing their work and connecting with fellow professionals. General social media platforms can lack the tailored features that photographers require, such as the ability to easily share high-quality images, receive meaningful feedback, and collaborate with peers. Also, existing platforms may not provide effective ways to promote their portfolios to potential clients or collaborators. These challenges can lead to missed networking opportunities, underwhelming portfolio visibility, and a sense of isolation in the photography community.
+Photographers often struggle to find platforms tailored to their needs, specifically for sharing high-quality images and connecting with other photographers and potential clients. General social media platforms lack focused tools, leading to missed opportunities and inadequate portfolio visibility.
 
 ### Target Audience
 
-Cheshire Captures is specifically designed for:
-
-- Photographers: Professionals and enthusiasts who want a platform where they can share their work, receive feedback, and connect with like-minded individuals in the Cheshire area.
-- Photography Enthusiasts: Individuals who are passionate about photography and wish to engage in discussions, discover new photographers, and explore a variety of photographic styles.
-- Potential Clients: Individuals or businesses looking for photographers for events, shoots, or collaborations and need an easy way to browse through photographers' portfolios and contact them.
+- Photographers: Professionals and enthusiasts who want to showcase their work, get feedback, and network with others.
+- Photography Enthusiasts: Individuals passionate about photography looking to discover and engage with local photographers.
+- Potential Clients: Individuals or businesses seeking photographers for events or collaborations.
 
 ### Solution
 
@@ -58,52 +59,362 @@ Cheshire Captures aims to address these challenges by providing a tailored platf
 - Organise Portfolios: Create user-friendly profile pages where photographers can curate their best work and provide additional information about their services, making them more accessible to clients and collaborators.
 - By solving these problems, Cheshire Captures aims to enhance the experience for photographers in the Cheshire area, providing them with a dedicated space to connect, collaborate, and showcase their talent. This platform not only enables better portfolio visibility and professional networking but also strengthens the local photography community by bringing photographers together in a more meaningful way.
 
-## Features
+### Features
 
-- **User Authentication**: Secure login and registration using JWT and dj-rest-auth, with functionality for password resets.
-- **Profile Management**: Users can update profile details, upload profile pictures, and add social media links.
-- **Photo Upload & Management**: Users can upload photos, add titles, descriptions, categories, and tags.
-- **Commenting & Liking**: Users can comment on photos and like/unlike photos to engage with other community members.
-- **Photo Rating**: Users can rate photos, which helps to highlight top-rated photos on the platform.
-- **Following System**: Users can follow other photographers and see their content in a personalised feed.
-- **Filtering & Searching**: Users can search for photos by title, category, or photographer and filter photos by tags or date.
-- **Responsive Design**: Mobile-friendly UI ensures a seamless experience across devices.
-
----
-
-## User Stories
-
-1. **User Authentication**
-   - _As a user, I want to create an account and log in securely so that I can access personalised features._
-
-2. **Photo Gallery**
-   - _As a user, I want to view a gallery of photos so that I can explore different styles of photography._
-
-3. **Upload Photos**
-   - _As a user, I want to upload my photos so that I can share my work with the community._
-
-4. **Photo Rating**
-   - _As a user, I want to rate photos so that I can appreciate the work of other photographers._
-
-5. **Photo Comments**
-   - _As a user, I want to comment on photos so that I can provide feedback and interact with others._
-
-6. **Follow Photographers**
-   - _As a user, I want to follow other photographers so that I can see their latest photos._
-
-7. **Filter Photos**
-   - _As a user, I want to filter photos by category so that I can find photos that match my interests._
-
-8. **Search Functionality**
-   - _As a user, I want to search for photos by title or photographer so that I can find specific content._
-
-9. **Manage My Photos**
-   - _As a user, I want to view and manage all my uploaded photos so that I can edit or delete them._
-
-10. **Top-Rated Photos**
-    - _As a user, I want to see the top-rated photos so that I can discover the best content._
+- **User Authentication:** Secure login, registration, and password resets using JWT and dj-rest-auth.
+**Profile Management:** Users can update profile details and upload profile pictures.
+**Photo Upload & Management: Users can upload photos, add titles, descriptions, categories, and tags.
+**Interaction Features:** Comment, like/unlike, and rate photos to engage with others.
+**Following System:** Users can follow other photographers.
+**Search & Filter:** Search by title, photographer, or category; filter by tags or upload date.
+**Top-Rated Photos:** See the most highly rated photos.
+**Responsive Design:** The site is mobile-friendly and optimized for all devices.
 
 ---
+
+### User Stories
+
+## Navigation/Authentication
+
+1. **Log In:**
+
+   - _Explanation:_ As a user, I can log in so that I can interact fully with the site. `(MUST HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - Log in form is accessible from any page.
+   - User is prompted to enter username and password.
+   - Successful log in redirects to the homepage.
+
+2. **Sign Up:**
+
+   - _Explanation:_ As a user, I can sign up so that I can create an account to upload and share my photos. `(MUST HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - Sign up form is accessible from any page.
+   - User is prompted to enter a username, email, and password.
+   - Successful sign up redirects to a welcome page.
+
+3. **View Gallery:**
+
+   - _Explanation:_ As a user, I can view the homepage gallery so that I can see a curated list of photos. `(MUST HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - Homepage displays a grid of recent photos.
+   - Each photo shows a thumbnail and basic details.
+   - Page loads more photos as the user scrolls.
+
+4. **Photo Details:**
+
+   - _Explanation:_ As a user, I can view details of a single photo so that I can see more information and interactions. `(MUST HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - Clicking on a photo shows the full-size image.
+   - Photo details include title, description, and photographer.
+   - User can see interactions like likes and comments.
+
+5. **Popular Photographers:**
+
+   - _Explanation:_ As a user, I can view popular photographers so that I can discover new talents. `(MUST HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - List of popular photographers based on followers.
+   - User can view profile summary of each photographer.
+   - User can follow photographers from this page.
+
+6. **Top-Rated Photos:**
+
+   - _Explanation:_ As a user, I can view the top-rated photos so that I know which photos are most appreciated. `(MUST HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - Displays photos sorted by average rating.
+   - Shows the number of ratings for each photo.
+   - User can navigate to photo details from here.
+
+7. **Filter Photos:**
+
+   - _Explanation:_ As a user, I can filter photos by category so that I can find photos that match my interests. `(MUST HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - Categories are displayed as a dropdown or list.
+   - User can select one or more categories.
+   - Page updates to show only matching photos.
+
+8. **Search Photos:**
+
+   - _Explanation:_ As a user, I can search photos by keywords, photographer, or location so that I can find specific content. `(MUST HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - Search bar is available on all pages.
+   - User can search by keyword, photographer, or location.
+   - Search results update in real-time.
+
+9. **View Comments:**
+
+   - _Explanation:_ As a user, I can view comments on a photo so that I can see what other users think about it. `(MUST HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - Each photo displays a comment count.
+   - Clicking on the count shows a list of comments.
+   - Comments are sorted by most recent.
+
+## Photos
+
+1. **View My Photos:**
+
+   - _Explanation:_ As a registered user, I can see a list of all my uploaded photos so that I can manage them. `(MUST HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - Displays all photos uploaded by the user.
+   - User can click on a photo to view or edit details.
+   - User can filter photos by upload date.
+
+2. **Upload Photo:**
+
+   - _Explanation:_ As a registered user, I can upload a new photo so that I can share my work with the community. `(MUST HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - Photo upload form is accessible from the user menu.
+   - User can upload an image file and add details.
+   - Successful upload shows the photo in the gallery.
+
+3. **Edit Photo:**
+
+   - _Explanation:_ As a registered user, I can edit my uploaded photo details so that I can update the information. `(MUST HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - User can edit details like title and description.
+   - Changes are saved and updated immediately.
+   - User is notified of successful update.
+
+4. **Delete Photo:**
+
+   - _Explanation:_ As a registered user, I can delete my photos so that I can remove content I no longer want to share. `(MUST HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - Each photo includes an option to delete.
+   - User is prompted to confirm before deletion.
+   - Deleted photos are removed from the profile and gallery.
+
+## Likes & Comments
+
+1. **Like Photo:**
+
+   - _Explanation:_ As a registered user, I can like a photo so that I can show my appreciation for it. `(SHOULD HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - Each photo has a like button for interaction.
+   - User can see the total like count for the photo.
+   - User can only like a photo once.
+
+2. **Remove Like:**
+
+   - _Explanation:_ As a registered user, I can remove my like from a photo so that I can change my interaction. `(SHOULD HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - Liked photos have the like button highlighted.
+   - Clicking again removes the like and updates the count.
+   - User can see all their liked photos in a list.
+
+3. **Add Comment:**
+
+   - _Explanation:_ As a registered user, I can add a comment to a photo so that I can share my thoughts on it. `(SHOULD HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - Each photo has a comment box below it.
+   - User can type a comment and submit.
+   - Submitted comments are immediately visible.
+
+4. **Edit Comment:**
+
+   - _Explanation:_ As a registered user, I can edit my comment so that I can correct or update my opinion. `(SHOULD HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - User can edit their comment by clicking an edit button.
+   - Edited comments show an 'edited' label.
+   - Changes are saved and visible to all users.
+
+5. **Delete Comment:**
+
+   - _Explanation:_ As a registered user, I can delete my comment so that I can remove it if necessary. `(SHOULD HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - Each comment has a delete button for the author.
+   - User is prompted to confirm before deletion.
+   - Deleted comments are removed immediately.
+
+## Following
+
+1. **Follow Photographer:**
+
+   - _Explanation:_ As a registered user, I can follow another photographer so that I can see their new posts in my feed. `(MUST HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - Each photographer profile has a follow button.
+   - Clicking follow adds the photographer to the user feed.
+   - Followed photographers' new posts appear in the feed.
+
+2. **Unfollow Photographer:**
+
+   - _Explanation:_ As a registered user, I can unfollow a photographer so that I no longer see their updates. `(MUST HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - Unfollow button appears for followed photographers.
+   - Clicking unfollow removes them from the user feed.
+   - User is prompted to confirm the unfollow action.
+
+3. **View Following List:**
+
+   - _Explanation:_ As a registered user, I can view all the photographers I follow so that I can manage my list. `(SHOULD HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - List of followed photographers is accessible from the menu.
+   - Shows recent activity of followed photographers.
+   - User can unfollow from this list.
+
+## Reviews
+
+1. **View Top-Rated Photos:**
+
+   - _Explanation:_ As a registered user, I can view all the top-rated photos so that I can discover popular content. `(COULD HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - Displays photos sorted by average rating.
+   - Shows the number of ratings for each photo.
+   - User can navigate to photo details from here.
+
+2. **Rate Photo:**
+
+   - _Explanation:_ As a registered user, I can rate a photo so that I can share my opinion on its quality. `(SHOULD HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - User can rate a photo with stars (1-5).
+   - Rating appears on the photo immediately.
+   - User can edit or delete their rating.
+
+3. **View My Ratings:**
+
+   - _Explanation:_ As a registered user, I can view all my ratings so that I can manage them. `(COULD HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - List of user ratings is accessible from the menu.
+   - User can view or edit their ratings.
+   - User can delete any of their ratings.
+
+## Profiles
+
+1. **View Profile:**
+
+   - _Explanation:_ As a user, I can view the profile page of a photographer so that I can see more details about their work. `(MUST HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - Displays profile information of the photographer.
+   - Shows their photos, bio, and social links.
+   - User can follow/unfollow from the profile page.
+
+2. **Update Profile:**
+
+   - _Explanation:_ As a registered user, I can update my profile information so that I can keep my details up-to-date. `(SHOULD HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - Profile edit form accessible from the user menu.
+   - User can update bio, profile picture, and social links.
+   - Changes are saved and updated immediately.
+
+3. **Change Password:**
+
+   - _Explanation:_ As a registered user, I can change my password so that I can keep my account secure. `(MUST HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - Password change form is accessible from user settings.
+   - User must enter the current password for verification.
+   - User can set a new password after verification.
+
+## Messages
+
+1. **View Messages:**
+
+   - _Explanation:_ As a registered user, I can view messages in my profile page so that I can read messages other users have sent me. `(COULD HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - User can access inbox from the profile page.
+   - Shows list of received messages sorted by date.
+   - User can click on a message to view details.
+
+2. **Send Message:**
+
+   - _Explanation:_ As a registered user, I can send a message to another user so that I can ask a question about their work. `(SHOULD HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - Message form accessible from user profile or photo.
+   - User can type and send a message to another user.
+   - Message appears in the recipient's inbox immediately.
+
+3. **Delete Message:**
+
+   - _Explanation:_ As a registered user, I can delete a message so that I can remove it from my inbox. `(COULD HAVE)`
+
+   **Acceptance Criteria:**
+   
+   - Each message has a delete option.
+   - User is prompted to confirm deletion.
+   - Deleted messages are removed from the inbox.
+
+
+## Agile Approach
+
+The development process for Cheshire Captures followed Agile methodology, emphasising continuous improvement throughout the development lifecycle.
+
+### Project Management
+
+GitHub Projects served as the primary Agile tool for managing the development tasks. While GitHub Projects isn't a specialised Agile tool, it was used with the right tags, project creation, and issue assignments to fit the needs of the project.
+
+![GitHub Projects](/documentation/project-management.png)
+![GitHub Projects (Final)](/documentation/project-managementfinal.png)
+![GitHub Issues](/documentation/issues.png)
+
+### User Stories Mapping
+
+User stories were crucial in mapping out the development progress. They were categorised into EPICs A, B, C, D, E, and F based on user types and content specificity. The user stories were organised on a Kanban board, providing a visual representation of the backlog and the current status of tasks. The MoSCoW method was used to prioritise these stories, categorising them into Must have, Should have, Could have, and Won't have, ensuring that the most critical features were developed first.
+
+### Kanban Board
+
+The basic Kanban board in GitHub Projects (see above) helped visualise the workflow and track the progress of tasks. Tasks moved across columns from the backlog, through development stages, to testing, and finally to completion. This setup provided clarity on the workload and helped in managing the project efficiently.
+
+### Continuous Improvement
+
+Despite working solo on this project, continuous improvement was a key focus. Regular retrospectives allowed reflection on past work, identification of areas for improvement, and thinking through possible solutions. This practice ensured that the development processes and product quality were consistently enhanced.
+
+For a detailed view of the project management and task progression, refer to the [GitHub Project board](https://github.com/users/NickCMoore/projects/2).
+
 
 ## Technologies Used
 
