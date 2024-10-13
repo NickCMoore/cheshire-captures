@@ -26,17 +26,20 @@ const MyPhotos = () => {
   // Date filter function
   const handleDateFilter = async () => {
     try {
+      console.log("Filtering photos between:", startDate, endDate);
       const { data } = await axiosReq.get('/api/photos/photos/my_photos/', {
         params: {
-          created_at__gte: startDate ? `${startDate}T00:00:00` : undefined,  
-          created_at__lte: endDate ? `${endDate}T23:59:59` : undefined,      
+          created_at__gte: startDate ? `${startDate}T00:00:00` : undefined,
+          created_at__lte: endDate ? `${endDate}T23:59:59` : undefined,
         },
       });
+      console.log("API Response:", data);
       setPhotos(data.results);
     } catch (error) {
       console.error('Error filtering photos:', error);
     }
   };
+  
   
   
 

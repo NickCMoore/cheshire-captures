@@ -52,7 +52,8 @@ const PhotoDetails = () => {
 
     try {
       const { data } = await axiosRes.post(`/api/photos/photos/${id}/comments/`, {
-        content: newComment, 
+        content: newComment,
+        photo: id, 
       });
       setComments((prevComments) => [...prevComments, data]);
       setNewComment('');
@@ -70,13 +71,17 @@ const PhotoDetails = () => {
       setError("You need to be logged in to like a photo.");
       return;
     }
-
+  
     try {
       if (hasLiked) {
-        await axiosRes.post(`/api/photos/photos/${id}/unlike/`);
+        await axiosRes.post(`/api/photos/photos/${id}/unlike/`, {
+          photo: id,
+        });
         setLikeCount((prev) => prev - 1);
       } else {
-        await axiosRes.post(`/api/photos/photos/${id}/like/`);
+        await axiosRes.post(`/api/photos/photos/${id}/like/`, {
+          photo: id,
+        });
         setLikeCount((prev) => prev + 1);
       }
       setHasLiked(!hasLiked);
@@ -84,6 +89,7 @@ const PhotoDetails = () => {
       console.error("Error handling like/unlike:", err);
     }
   };
+  
 
   const handleDelete = async () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this photo?");

@@ -1,5 +1,5 @@
 import { Link, useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
@@ -21,6 +21,16 @@ function SignInForm() {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
+  
+  // Use useRef to manage whether the component is mounted
+  const isMounted = useRef(true);
+
+  useEffect(() => {
+    // Cleanup function to mark the component as unmounted
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   const handleChange = (e) => {
     setSignInData({
@@ -35,21 +45,26 @@ function SignInForm() {
     try {
       const { data } = await axios.post("/dj-rest-auth/login/", signInData);
 
-      const accessToken = data.access_token;
-      const refreshToken = data.refresh_token;
+      if (data && isMounted.current) {
+        const accessToken = data.access_token;
+        const refreshToken = data.refresh_token;
 
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("refreshToken", refreshToken);
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
 
-      setCurrentUser(data.user);
+        setCurrentUser(data.user);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 
-      axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-
-      history.push(`/profile/${data.user.photographer_id}`);
+        history.push(`/profile/${data.user.photographer_id}`);
+      }
     } catch (err) {
-      setErrors(err.response?.data || {});
+      if (isMounted.current) {
+        setErrors(err.response?.data || {});
+      }
     } finally {
-      setIsLoading(false);
+      if (isMounted.current) {
+        setIsLoading(false);
+      }
     }
   };
 
