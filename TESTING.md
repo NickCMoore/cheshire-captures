@@ -147,4 +147,4 @@ Google Lighthouse was used to test the site's performance, accessibility, best p
 1. **Average Rating Calculation**: After a review is deleted, the average rating for a photo does not update without refreshing the page. This will be addressed in future iterations.
 2. **Comment Alerts**: Users should receive alerts for invalid or empty comment submissions. The logic is in place but requires further refinement.
 
-All bugs and feature issues were tracked and logged using the GitHub Project Board. For a full list of bugs and their statuses, you can refer to the [GitHub Project Board](https://github.com/users/NickCMoore/projects/2).
+All bugs and feature issues were tracked and logged using the GitHub Project Board. For a full list of bugs and their statuses, you can refer to the [GitHub Project Board](https://github.com/users/NickCMoore/projects/3).
