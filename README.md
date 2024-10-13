@@ -69,59 +69,59 @@ Cheshire Captures aims to address these challenges by providing a tailored platf
 
 The navigation bar on the site is designed to be user-friendly and responsive. It adapts based on whether the user is logged in or not. On mobile devices, the navigation collapses into a hamburger menu for ease of access.
 
-![alt text](image.png)
+![alt text](images/image.png)
 
-![alt text](image-1.png)
+![alt text](images/image-1.png)
 
 ### Logged-out Users:
 When the user is logged out, the following options are visible in the navigation bar:
 
 - **Cheshire Captures Logo**: This is a link to the homepage, displayed on the left-hand side of the navigation bar. It is visible to all users and provides quick access to the homepage.
 
-![alt text](image-2.png)
+![alt text](images/image-2.png)
 
 - **Home**: This menu item links to the homepage.
 
-![alt text](image-3.png)
+![alt text](images/image-3.png)
 
 - **About**: A link to the about page where users can read more about the site, its mission, and the community behind it.
 
-![alt text](image-4.png)
+![alt text](images/image-4.png)
 
 - **Sign In**: This menu item links to the sign-in page, allowing returning users to log in to their accounts.
 
-![alt text](image-5.png)
+![alt text](images/image-5.png)
 
 - **Sign Up**: A link to the sign-up page where new users can create an account to start interacting with the site.
 
-![alt text](image-6.png)
+![alt text](images/image-6.png)
 
 ### Logged-in Users:
 Once a user logs in, additional options become available in the navigation bar:
 
 - **Gallery**: Logged-in users can access the gallery page where they can view and interact with other photographers’ images.
 
-![alt text](image-7.png)
+![alt text](images/image-7.png)
 
 - **Popular Photographers**: This link takes the user to a page showing the most-followed and top-rated photographers on the platform.
 
-![alt text](image-8.png)
+![alt text](images/image-8.png)
 
 - **My Photos**: A link where users can view all their uploaded photos in one place.
 
-![alt text](image-9.png)
+![alt text](images/image-9.png)
 
 - **Upload Photo**: This option allows users to upload new photos directly from the navigation bar.
 
-![alt text](image-10.png)
+![alt text](images/image-10.png)
 
 - **Profile**: A link to the user's personal profile page, which includes their uploaded photos, followers, and personal information.
 
-![alt text](image-11.png)
+![alt text](images/image-11.png)
 
 - **Sign Out**: A link that logs the user out of the platform and redirects them to the homepage.
 
-![alt text](image-12.png)
+![alt text](images/image-12.png)
 
 ## Authentication
 
@@ -129,17 +129,17 @@ Users who are new to the site can click on the **Sign Up** link to create an acc
 
 - **Sign-up Form**: This form includes fields for username, email, and password. Once successfully submitted, the user is redirected to their profile page.
 
-![alt text](image-14.png)
+![alt text](images/image-14.png)
 
 - **Sign-in Form**: The sign-in page asks for the user’s credentials (username and password) to log in. If the credentials are valid, the user is redirected to the homepage.
 
-![alt text](image-13.png)
+![alt text](images/image-13.png)
 
 ## Homepage
 
 The homepage consists of a simple heading and strapline, drawing the user in to the site and also provided a way for new users to get signed up with the get started button.
 
-![alt text](image-15.png)
+![alt text](images/image-15.png)
 
 ### Popular Photographers
 
@@ -150,7 +150,7 @@ At the top of the homepage, a section showcases the most popular photographers o
 - **Follow Button**: Logged-in users can follow or unfollow photographers directly from the homepage. If the user is already following the photographer, the button will reflect that status.
 - **Search**: Users can search for popular photographers.
 
-![alt text](image-16.png)
+![alt text](images/image-16.png)
 
 ## Profile Page
 
