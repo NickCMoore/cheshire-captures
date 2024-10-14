@@ -14,7 +14,6 @@ const PhotoUpload = () => {
 
   const imageInput = useRef(null);
 
-
   const handleImageChange = (event) => {
     if (event.target.files.length) {
       URL.revokeObjectURL(image);
@@ -25,12 +24,19 @@ const PhotoUpload = () => {
     }
   };
 
+  const handleChooseImage = () => {
+    imageInput.current.click();
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
-    formData.append('image', imageInput.current.files[0]);
+
+    if (imageInput?.current?.files[0]) {
+      formData.append('image', imageInput.current.files[0]);
+    }
 
     setIsLoading(true);
     setError('');
@@ -76,18 +82,26 @@ const PhotoUpload = () => {
             />
           </Form.Group>
 
-
           <Form.Group controlId="image">
             <Form.Label className="d-none">Choose an Image</Form.Label>
-              <Form.File
-                id="image-upload"
-                accept="image/*"
-                onChange={handleImageChange}
-                ref={imageInput}
-                className="w-100 mb-3"
+            <input
+              type="file"
+              accept="image/*"
+              ref={imageInput}
+              onChange={handleImageChange}
+              style={{ display: 'none' }} 
+            />
+            <Button
+              variant="secondary"
+              onClick={handleChooseImage}
               disabled={isLoading}
-              />
-              {/* {image ? image.name : 'Choose an Image'} */}
+              className="mb-3"
+            >
+              {image ? 'Change Image' : 'Choose an Image'}
+            </Button>
+            {image && (
+              <p className="text-muted">{imageInput.current?.files[0]?.name}</p>
+            )}
           </Form.Group>
 
           <Button variant="primary" type="submit" disabled={isLoading}>
