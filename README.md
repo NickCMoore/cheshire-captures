@@ -69,43 +69,43 @@ Cheshire Captures aims to address these challenges by providing a tailored platf
 
 The navigation bar on the site is designed to be user-friendly and responsive. It adapts based on whether the user is logged in or not. On mobile devices, the navigation collapses into a hamburger menu for ease of access.
 
-![alt text](images/image.png)
+![alt text]/public/(images/image.png)
 
-![alt text](images/image-1.png)
+![alt text](/public/images/image-1.png)
 
 ### Logged-out Users:
 When the user is logged out, the following options are visible in the navigation bar:
 
 - **Cheshire Captures Logo**: This is a link to the homepage, displayed on the left-hand side of the navigation bar. It is visible to all users and provides quick access to the homepage.
 
-![alt text](images/image-2.png)
+![alt text](/public/images/image-2.png)
 
 - **Home**: This menu item links to the homepage.
 
-![alt text](images/image-3.png)
+![alt text](/public/images/image-3.png)
 
 - **About**: A link to the about page where users can read more about the site, its mission, and the community behind it.
 
-![alt text](images/image-4.png)
+![alt text](/public/images/image-4.png)
 
 - **Sign In**: This menu item links to the sign-in page, allowing returning users to log in to their accounts.
 
-![alt text](images/image-5.png)
+![alt text](/public/images/image-5.png)
 
 - **Sign Up**: A link to the sign-up page where new users can create an account to start interacting with the site.
 
-![alt text](images/image-6.png)
+![alt text](/public/images/image-6.png)
 
 ### Logged-in Users:
 Once a user logs in, additional options become available in the navigation bar:
 
 - **Gallery**: Logged-in users can access the gallery page where they can view and interact with other photographers’ images.
 
-![alt text](images/image-7.png)
+![alt text](/public/images/image-7.png)
 
 - **Popular Photographers**: This link takes the user to a page showing the most-followed and top-rated photographers on the platform.
 
-![alt text](images/image-8.png)
+![alt text](/public/images/image-8.png)
 
 - **My Photos**: A link where users can view all their uploaded photos in one place.
 
@@ -113,15 +113,15 @@ Once a user logs in, additional options become available in the navigation bar:
 
 - **Upload Photo**: This option allows users to upload new photos directly from the navigation bar.
 
-![alt text](images/image-10.png)
+![alt text](/public/images/image-10.png)
 
 - **Profile**: A link to the user's personal profile page, which includes their uploaded photos, followers, and personal information.
 
-![alt text](images/image-11.png)
+![alt text](/public/images/image-11.png)
 
 - **Sign Out**: A link that logs the user out of the platform and redirects them to the homepage.
 
-![alt text](images/image-12.png)
+![alt text](/public/images/image-12.png)
 
 ## Authentication
 
@@ -129,17 +129,17 @@ Users who are new to the site can click on the **Sign Up** link to create an acc
 
 - **Sign-up Form**: This form includes fields for username, email, and password. Once successfully submitted, the user is redirected to their profile page.
 
-![alt text](images/image-14.png)
+![alt text](/public/images/image-14.png)
 
 - **Sign-in Form**: The sign-in page asks for the user’s credentials (username and password) to log in. If the credentials are valid, the user is redirected to the homepage.
 
-![alt text](images/image-13.png)
+![alt text](/public/images/image-13.png)
 
 ## Homepage
 
 The homepage consists of a simple heading and strapline, drawing the user in to the site and also provided a way for new users to get signed up with the get started button.
 
-![alt text](images/image-15.png)
+![alt text](/public/images/image-15.png)
 
 ### Popular Photographers
 
@@ -150,7 +150,7 @@ At the top of the homepage, a section showcases the most popular photographers o
 - **Follow Button**: Logged-in users can follow or unfollow photographers directly from the homepage. If the user is already following the photographer, the button will reflect that status.
 - **Search**: Users can search for popular photographers.
 
-![alt text](images/image-16.png)
+![alt text](/public/images/image-16.png)
 
 ## Profile Page
 
@@ -183,7 +183,7 @@ Logged-in users can upload photos directly from the navigation bar. The upload f
 - **Description**: A short description of the image.
 - **Choose an Image**: Users can upload content from their computers.
 
-![alt text](images/image-17.png)
+![alt text](/public/images/image-17.png)
 
 ## Photo Details Page
 
@@ -194,7 +194,7 @@ Each photo has its own dedicated details page that includes:
 - **Comments Section**: Users can leave comments on the photo. Logged-in users can interact with the comments section, while logged-out users can only view existing comments.
 - **Like Button**: Users can like the photo by clicking the like button, and the like count updates in real-time.
 
-![alt text](images/image-18.png)
+![alt text](/public/images/image-18.png)
 
 ## Comments and Likes
 
@@ -214,126 +214,50 @@ The platform supports commenting and liking features for user interaction. Each 
 
 ---
 
-Wireframes for Cheshire Captures
-1. Homepage
-markdown
-Copy code
-------------------------------------------------
-|                 Navbar                      |
-|---------------------------------------------|
-|  Logo | Home | Gallery | Popular Photographers | Profile | Sign In/Sign Out |
-------------------------------------------------
-|                Full-screen Background Image  |
-|   ----------------------------------------   |
-|   |             Cheshire Captures         |  |
-|   |           [Subheading text]           |  |
-|   |--------------------------------------|  |
-|   |  [Button: Explore Gallery]           |  |
-------------------------------------------------
-|                Footer                      |
-------------------------------------------------
-2. Gallery Page
-scss
-Copy code
-------------------------------------------------
-|                 Navbar                      |
-|---------------------------------------------|
-|   Search Bar [Filter/Search Options]         |
-------------------------------------------------
-|   Grid of Photos (3x3 or 4x4)                |
-|   ----------------------------------------   |
-|   |  [Image Thumbnail] [Title]   [Likes]    |  |
-|   |  [Photographer Name]                   |  |
-|   ----------------------------------------   |
-|   |  [Image Thumbnail] [Title]   [Likes]    |  |
-|   |  [Photographer Name]                   |  |
-|   ----------------------------------------   |
-|    (Pagination for more photos)             |
-------------------------------------------------
-3. Photo Details Page
-css
-Copy code
-------------------------------------------------
-|                 Navbar                      |
-|---------------------------------------------|
-|       Large Photo [Image Full Width]         |
-|---------------------------------------------|
-|       [Title]                                |
-|       [Photographer Name + Link to Profile]  |
-|       [Description]                          |
-|       [Tags]                                 |
-|       [Rating Component]                     |
-------------------------------------------------
-|       [Like Button] [Edit Button if owner]   |
-|       [Delete Button if owner]               |
-------------------------------------------------
-|       [Comments Section]                     |
-|       -------------------------------------  |
-|       | [Username] [Comment]                |  |
-|       | [Edit/Delete Buttons for Owner]     |  |
-|       -------------------------------------  |
-|    [Add a Comment Form]                      |
-------------------------------------------------
-4. Photographer Profile Page
-markdown
-Copy code
-------------------------------------------------
-|                 Navbar                      |
-|---------------------------------------------|
-|      [Profile Picture]                       |
-|      [Display Name]                          |
-|      [Bio (Show more/Show less)]             |
-|      [Follow/Unfollow Button]                |
-------------------------------------------------
-|      [Photos Grid (2x2 or 3x3)]              |
-|   ----------------------------------------   |
-|   |  [Image Thumbnail] [Title]             |  |
-|   ----------------------------------------   |
-|    (Pagination if many photos)               |
-------------------------------------------------
-|      [Social Media Links]                    |
-------------------------------------------------
-5. Photo Upload Page
-css
-Copy code
-------------------------------------------------
-|                 Navbar                      |
-|---------------------------------------------|
-|      Upload a New Photo                      |
-|---------------------------------------------|
-|    [Title Input Field]                       |
-|    [Description Textarea]                    |
-|    [Choose Image Button]                     |
-|    [Save Button]                             |
-------------------------------------------------
-6. Edit Profile Page
-lua
-Copy code
-------------------------------------------------
-|                 Navbar                      |
-|---------------------------------------------|
-|      Edit Profile                            |
-|---------------------------------------------|
-|    [Upload Profile Picture Button]           |
-|    [Bio Textarea]                            |
-|    [Save Button]                             |
-------------------------------------------------
-7. Popular Photographers Page
-lua
-Copy code
-------------------------------------------------
-|                 Navbar                      |
-|---------------------------------------------|
-|      List of Popular Photographers           |
-------------------------------------------------
-|   ----------------------------------------   |
-|   |  [Photographer Picture]  [Name]        |  |
-|   |  [Follow/Unfollow Button]              |  |
-|   ----------------------------------------   |
-|   |  [Photographer Picture]  [Name]        |  |
-|   |  [Follow/Unfollow Button]              |  |
-|   ----------------------------------------   |
-------------------------------------------------
+
+## Wireframes
+
+![alt text](image-1.png)
+
+
+The wireframes were designed to provide a clear, structured layout for the main pages of the photography sharing application. Each wireframe emphasizes a clean, user-friendly interface while ensuring that key elements like photos, user interactions (comments, likes, etc.), and navigation features are prominently displayed.
+
+Key Design Considerations:
+User Experience (UX): The wireframes are designed with user experience in mind. Navigation is intuitive, with clear call-to-action buttons and minimal distractions, allowing users to focus on the content – whether it’s viewing, uploading, or interacting with photos.
+
+Responsiveness: All wireframes are designed to be responsive, ensuring a seamless experience across devices, including desktop, tablet, and mobile views. The layout automatically adjusts to provide the best user experience based on the screen size.
+
+Minimalist Approach: The design follows a minimalist approach, focusing on functionality with minimal use of color. Black, white, and gray shades dominate the interface to provide a neutral background that emphasizes the user-generated content, primarily the photos.
+
+Wireframe Breakdown:
+Homepage Wireframe:
+
+Header: Includes a site logo and navigation bar with links to the gallery, user profile, login, and sign-up options.
+Hero Section: Features a large call-to-action (CTA) button inviting users to explore or upload photos. The background is minimal to allow users to focus on the navigation options.
+Photo Feed: Below the hero section, a grid of photos is displayed, showcasing the latest or most popular images. Each photo is accompanied by details such as the photographer’s name, the number of likes, and a comments section preview.
+Profile Page Wireframe:
+
+Profile Image & Bio: A simple user card displaying the photographer's profile image, display name, bio, and social media links. An "Edit Profile" button is available for the logged-in user to make changes to their profile.
+Photos Section: Below the profile details, the photographer's uploaded photos are showcased in a grid format. Each photo has an "Edit" and "Delete" option (if viewed by the profile owner).
+Photo Upload Wireframe:
+
+Form Layout: A clean, centered form with fields for title, description, and image upload. The image upload button is designed to be prominent to encourage users to upload a photo.
+Preview Section: Once an image is selected, a preview is displayed before the user submits the form, ensuring they can make changes if necessary.
+Photo Detail Wireframe:
+
+Photo Display: The main photo takes center stage, displayed prominently with like and comment buttons below it.
+Photographer Information: Located beside or below the photo is a section highlighting the photographer’s details with a link to their profile.
+Comment Section: Users can view and add comments to the photo. Logged-in users can edit or delete their own comments.
+Interactions: Like and unlike buttons are placed below the photo to allow quick interaction, with a visible counter of likes and comments.
+Login/Sign-up Wireframes:
+
+Form Layout: The login and sign-up forms are simple, with fields for username, password, and optional social media login options. Both forms are centered for focus and ease of use, with clear instructions and feedback mechanisms for incorrect input.
+Wireframe Tools:
+The wireframes were initially conceptualized using basic layout sketches and later refined into a detailed, digital format. The digital wireframes are black and white, emphasizing structure and functionality. All diagrams use simple shapes and line art to represent the structure, providing a clear roadmap for development without overcomplicating the visual details.
+
+The wireframes serve as a reference for both front-end and back-end development, ensuring that the user experience flows as intended and that all functional requirements are met.
+
+
 
 ### User Stories
 
@@ -553,8 +477,7 @@ Copy code
    
    - List of followed photographers is accessible from the menu.
    - Shows recent activity of followed photographers.
-   - User can unfollow from this list.
-
+   - User can unfollow from this list
 ## Reviews
 
 1. **View Top-Rated Photos:**

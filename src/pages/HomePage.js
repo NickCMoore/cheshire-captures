@@ -11,7 +11,7 @@ const HomePage = () => {
       <div className={styles.FullScreenOverlay}></div>
       <div className={styles.FullScreenContent}>
         <h1>Welcome to Cheshire Captures</h1>
-        <p>Capture and share your favourite moments with the community.</p>
+        <p className={styles.WhiteText}>Capture and share your favourite moments with the community.</p>
         {!currentUser && (
           <Link to="/signup">
             <button className={styles.Button} aria-label="Sign up and get started">
