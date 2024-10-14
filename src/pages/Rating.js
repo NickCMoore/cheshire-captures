@@ -3,24 +3,25 @@ import PropTypes from 'prop-types';
 import { useCurrentUser } from '../contexts/CurrentUserContext';
 import { axiosReq, axiosRes } from '../api/axiosDefaults';
 
-const RatingComponent = ({ photoId }) => {
+const RatingComponent = ({ id }) => { // Update prop name here to match 'id'
     const currentUser = useCurrentUser();
-    const [userRating, setUserRating] = useState(null);
-    const [averageRating, setAverageRating] = useState(null);
+    const [userRating, setUserRating] = useState(null); 
+    const [averageRating, setAverageRating] = useState(null); 
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
         const fetchRatings = async () => {
             try {
-                const { data } = await axiosReq.get(`/api/photos/photos/${photoId}/ratings/`);
+                const { data } = await axiosReq.get(`/api/photos/photos/${id}/ratings/`); // Make sure 'id' is used here
 
                 if (Array.isArray(data)) {
-                    const userRatingData = data.find(r => r.user === currentUser?.id); 
+                    const userRatingData = data.find(r => r.user === currentUser?.username);
                     if (userRatingData) {
-                        setUserRating(userRatingData.rating);
+                        setUserRating(userRatingData.rating); 
                     }
                 }
 
-                setAverageRating(data.average_rating || 0); 
+                setAverageRating(data.average_rating || 0);
             } catch (error) {
                 console.error("Error fetching ratings:", error);
             }
@@ -29,7 +30,7 @@ const RatingComponent = ({ photoId }) => {
         if (currentUser) {
             fetchRatings();
         }
-    }, [photoId, currentUser]);
+    }, [id, currentUser]); // 'id' is correctly referenced here
 
     const handleRating = async (newRating) => {
         if (!currentUser) {
@@ -37,8 +38,10 @@ const RatingComponent = ({ photoId }) => {
             return;
         }
 
+        setIsSubmitting(true);
+
         try {
-            const { data } = await axiosRes.post(`/api/photos/${photoId}/rate/`, { rating: newRating });
+            const { data } = await axiosRes.post(`/api/photos/photos${id}/rate/`, { rating: newRating }); // 'id' is used here too
             setUserRating(newRating);
             if (data.new_average_rating !== undefined) {
                 setAverageRating(data.new_average_rating);  
@@ -46,6 +49,8 @@ const RatingComponent = ({ photoId }) => {
             console.log(data.detail);
         } catch (error) {
             console.error("Error submitting rating:", error);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -56,7 +61,7 @@ const RatingComponent = ({ photoId }) => {
                 {[1, 2, 3, 4, 5].map(star => (
                     <span
                         key={star}
-                        onClick={() => handleRating(star)}
+                        onClick={() => !isSubmitting && handleRating(star)}
                         style={{ color: star <= userRating ? 'gold' : 'gray', cursor: 'pointer' }}
                     >
                         ★
@@ -71,7 +76,7 @@ const RatingComponent = ({ photoId }) => {
 
 // Add prop-types for validation
 RatingComponent.propTypes = {
-    photoId: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired, // Ensure that 'id' is passed as a prop
 };
 
 export default RatingComponent;

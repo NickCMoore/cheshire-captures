@@ -3,6 +3,7 @@ import { useParams, Link, useHistory } from "react-router-dom";
 import { useCurrentUser } from '../contexts/CurrentUserContext';
 import { Container, Row, Col, Button, Form, Image } from "react-bootstrap";
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
+import axios from 'axios';
 import styles from "../styles/PhotoDetails.module.css";
 import RatingComponent from "./Rating";
 
@@ -14,7 +15,7 @@ const PhotoDetails = () => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [error, setError] = useState(null);
-  const [likeCount, setLikeCount] = useState(0);
+  const [likeCount, setLikeCount] = useState(0); // Updated name
   const [hasLiked, setHasLiked] = useState(false);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ const PhotoDetails = () => {
       try {
         const { data } = await axiosReq.get(`/api/photos/photos/${id}/`);
         setPhoto(data);
-        setLikeCount(data.likes_count);
+        setLikeCount(data.likes_count); // Use setLikeCount
         setHasLiked(data.user_has_liked);
       } catch (err) {
         setError("Photo not found.");
@@ -62,34 +63,27 @@ const PhotoDetails = () => {
       setError("Error adding comment.");
       console.error('Error adding comment:', err);
     }
-    
-    
   };
 
   const handleLike = async () => {
-    if (!currentUser) {
-      setError("You need to be logged in to like a photo.");
-      return;
-    }
-  
     try {
-      if (hasLiked) {
-        await axiosRes.post(`/api/photos/photos/${id}/unlike/`, {
-          photo: id,
-        });
-        setLikeCount((prev) => prev - 1);
+      if (!hasLiked) {
+        const response = await axios.post(`/api/photos/photos/${id}/like/`);
+        if (response.status === 201) {
+          setLikeCount((prevCount) => prevCount + 1); // Use setLikeCount
+          setHasLiked(true);
+        }
       } else {
-        await axiosRes.post(`/api/photos/photos/${id}/like/`, {
-          photo: id,
-        });
-        setLikeCount((prev) => prev + 1);
+        const response = await axios.post(`/api/photos/photos/${id}/unlike/`);
+        if (response.status === 204) {
+          setLikeCount((prevCount) => prevCount - 1); // Use setLikeCount
+          setHasLiked(false);
+        }
       }
-      setHasLiked(!hasLiked);
-    } catch (err) {
-      console.error("Error handling like/unlike:", err);
+    } catch (error) {
+      console.error("Error liking/unliking the photo:", error);
     }
   };
-  
 
   const handleDelete = async () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this photo?");
@@ -104,7 +98,6 @@ const PhotoDetails = () => {
     }
   };
 
-  // Handle the "Back to Gallery" button click
   const handleBackToGallery = () => {
     history.push("/gallery");
   };
@@ -121,7 +114,6 @@ const PhotoDetails = () => {
     <Container className={`${styles.photoDetailsContainer} d-flex align-items-center justify-content-center vh-100`}>
       <Row className="w-100">
         <Col md={8}>
-          {/* Display the photo */}
           <Image src={photo.image_url} alt={photo.title} className={styles.photoImage} fluid />
         </Col>
         <Col md={4}>
@@ -129,15 +121,14 @@ const PhotoDetails = () => {
             <h2>{photo.title}</h2>
             <p>{photo.description}</p>
             <p>
-            <strong>Photographer:</strong>{" "}
-            <Link to={`/profile/${photo.photographer_id}`}>
-              {photo.photographer_display_name}
-            </Link>
+              <strong>Photographer:</strong>{" "}
+              <Link to={`/profile/${photo.photographer_id}`}>
+                {photo.photographer_display_name}
+              </Link>
             </p>
             <p><strong>Tags:</strong> {photo.tags.map(tag => tag.name).join(', ')}</p>
-            <RatingComponent photoId={id} />
+            <RatingComponent photoId={Number(id)} />
 
-            {/* Buttons for like, edit, and delete */}
             <div className={styles.photoDetailsButtons}>
               <Button
                 variant={hasLiked ? "danger" : "primary"}
@@ -167,7 +158,6 @@ const PhotoDetails = () => {
                 </>
               )}
 
-              {/* Back to Gallery Button */}
               <Button
                 variant="secondary"
                 className={styles.backButton}

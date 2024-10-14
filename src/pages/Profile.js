@@ -13,7 +13,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchPhotographer = async () => {
       try {
-        const { data } = await axios.get(`/api/photographers/photographers/${id}/`);
+        const { data } = await axios.get(`/api/photographers/photographers/${id}/`); // No prepending
         setPhotographer(data);
         setIsBioLong(data.bio.length > 150); // Check if bio is long
       } catch (error) {
@@ -35,7 +35,7 @@ const ProfilePage = () => {
         <Col md={4} className="text-center">
           <Card className="p-4 shadow-sm">
             <Image
-              src={photographer.profile_image}
+              src={photographer.profile_image} // Use profile_image as it is
               roundedCircle
               className={styles.profileImage}
             />
@@ -68,7 +68,7 @@ const ProfilePage = () => {
               {photographer.photos && photographer.photos.length > 0 ? (
                 photographer.photos.map((photo) => (
                   <Col key={photo.id} xs={12} md={6} lg={4} className="mb-3">
-                    <Image src={photo.image_url} fluid className={styles.photo} />
+                    <Image src={photo.image_url} fluid className={styles.photo} /> 
                   </Col>
                 ))
               ) : (
