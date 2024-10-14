@@ -128,7 +128,12 @@ const PhotoDetails = () => {
           <div className={styles.photoDetailsText}>
             <h2>{photo.title}</h2>
             <p>{photo.description}</p>
-            <p><strong>Photographer:</strong> {photo.photographer_display_name}</p>
+            <p>
+            <strong>Photographer:</strong>{" "}
+            <Link to={`/profile/${photo.photographer_id}`}>
+              {photo.photographer_display_name}
+            </Link>
+            </p>
             <p><strong>Tags:</strong> {photo.tags.map(tag => tag.name).join(', ')}</p>
             <RatingComponent photoId={id} />
 

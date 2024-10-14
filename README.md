@@ -183,7 +183,7 @@ Logged-in users can upload photos directly from the navigation bar. The upload f
 - **Description**: A short description of the image.
 - **Choose an Image**: Users can upload content from their computers.
 
-![alt text](image-17.png)
+![alt text](images/image-17.png)
 
 ## Photo Details Page
 
@@ -194,7 +194,7 @@ Each photo has its own dedicated details page that includes:
 - **Comments Section**: Users can leave comments on the photo. Logged-in users can interact with the comments section, while logged-out users can only view existing comments.
 - **Like Button**: Users can like the photo by clicking the like button, and the like count updates in real-time.
 
-![alt text](image-18.png)
+![alt text](images/image-18.png)
 
 ## Comments and Likes
 

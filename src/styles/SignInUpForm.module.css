@@ -1,5 +1,5 @@
 .Background {
-    background-image: url('https://res.cloudinary.com/dwgtce0rh/image/upload/v1721310733/rrnrybzbr0iypcupobfl.jpg');
+    background-image: url('/public/images/BingImageOfTheDay.jpg');
     background-size: cover;
     background-color: var(--yinmn-blue);
     height: 100vh;

@@ -1,10 +1,10 @@
 .FullScreenBackground {
-    background-image: url('https://res.cloudinary.com/dwgtce0rh/image/upload/v1727862662/vestrahorn-mountains-stokksnes-iceland_aoqbtp.jpg');
+    background-image: url('/public/images/vestrahorn-mountains-stokksnes-iceland.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-height: calc(100vh - 70px); 
-    padding-top: 40px; 
+    min-height: calc(100vh - 70px);
+    padding-top: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -12,6 +12,7 @@
     z-index: 1;
     overflow: hidden;
 }
+
 
 .FullScreenOverlay {
     content: '';
