@@ -14,8 +14,10 @@ const PhotoDetails = () => {
   const [photo, setPhoto] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
+  const [editingCommentId, setEditingCommentId] = useState(null); // Track the comment being edited
+  const [editComment, setEditComment] = useState(""); // Track the updated comment content
   const [error, setError] = useState(null);
-  const [likeCount, setLikeCount] = useState(0); // Updated name
+  const [likeCount, setLikeCount] = useState(0); 
   const [hasLiked, setHasLiked] = useState(false);
 
   useEffect(() => {
@@ -23,7 +25,7 @@ const PhotoDetails = () => {
       try {
         const { data } = await axiosReq.get(`/api/photos/photos/${id}/`);
         setPhoto(data);
-        setLikeCount(data.likes_count); // Use setLikeCount
+        setLikeCount(data.likes_count);
         setHasLiked(data.user_has_liked);
       } catch (err) {
         setError("Photo not found.");
@@ -54,7 +56,7 @@ const PhotoDetails = () => {
     try {
       const { data } = await axiosRes.post(`/api/photos/photos/${id}/comments/`, {
         content: newComment,
-        photo: id, 
+        photo: id,
       });
       setComments((prevComments) => [...prevComments, data]);
       setNewComment('');
@@ -65,18 +67,44 @@ const PhotoDetails = () => {
     }
   };
 
+  const handleEditComment = async (commentId) => {
+    try {
+      await axiosRes.put(`/api/photos/photos/comments/${commentId}/`, {
+        content: editComment,
+      });
+      setComments((prevComments) => prevComments.map(comment =>
+        comment.id === commentId ? { ...comment, content: editComment } : comment
+      ));
+      setEditingCommentId(null);
+    } catch (err) {
+      console.error("Error editing comment:", err);
+    }
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this comment?");
+    if (!confirmDelete) return;
+
+    try {
+      await axiosRes.delete(`/api/photos/photos/comments/${commentId}/`);
+      setComments((prevComments) => prevComments.filter(comment => comment.id !== commentId));
+    } catch (err) {
+      console.error("Error deleting comment:", err);
+    }
+  };
+
   const handleLike = async () => {
     try {
       if (!hasLiked) {
         const response = await axios.post(`/api/photos/photos/${id}/like/`);
         if (response.status === 201) {
-          setLikeCount((prevCount) => prevCount + 1); // Use setLikeCount
+          setLikeCount((prevCount) => prevCount + 1);
           setHasLiked(true);
         }
       } else {
         const response = await axios.post(`/api/photos/photos/${id}/unlike/`);
         if (response.status === 204) {
-          setLikeCount((prevCount) => prevCount - 1); // Use setLikeCount
+          setLikeCount((prevCount) => prevCount - 1);
           setHasLiked(false);
         }
       }
@@ -111,13 +139,15 @@ const PhotoDetails = () => {
   }
 
   return (
-    <Container className={`${styles.photoDetailsContainer} d-flex align-items-center justify-content-center vh-100`}>
-      <Row className="w-100">
+    <Container className="my-4">
+      <Row className="justify-content-center">
         <Col md={8}>
-          <Image src={photo.image_url} alt={photo.title} className={styles.photoImage} fluid />
+          <Image src={photo.image_url} alt={photo.title} className="w-100 mb-4" fluid />
         </Col>
-        <Col md={4}>
-          <div className={styles.photoDetailsText}>
+      </Row>
+      <Row className="justify-content-center">
+        <Col md={8}>
+          <div className="p-3 bg-light">
             <h2>{photo.title}</h2>
             <p>{photo.description}</p>
             <p>
@@ -129,7 +159,7 @@ const PhotoDetails = () => {
             <p><strong>Tags:</strong> {photo.tags.map(tag => tag.name).join(', ')}</p>
             <RatingComponent photoId={Number(id)} />
 
-            <div className={styles.photoDetailsButtons}>
+            <div className="mt-3 d-flex justify-content-between mb-4"> {/* Added mb-4 for margin */}
               <Button
                 variant={hasLiked ? "danger" : "primary"}
                 className={styles.likeButton}
@@ -139,7 +169,7 @@ const PhotoDetails = () => {
               </Button>
 
               {currentUser?.username === photo.photographer_display_name && (
-                <>
+                <div className="d-flex gap-3"> {/* Increased gap size between buttons */}
                   <Button
                     variant="warning"
                     className={styles.editButton}
@@ -155,9 +185,8 @@ const PhotoDetails = () => {
                   >
                     Delete Photo
                   </Button>
-                </>
+                </div>
               )}
-
               <Button
                 variant="secondary"
                 className={styles.backButton}
@@ -173,9 +202,39 @@ const PhotoDetails = () => {
             {comments.length > 0 ? (
               comments.map((comment) => (
                 <div key={comment.id} className={styles.comment}>
-                  <p>
-                    <strong>{comment.photographer}:</strong> {comment.content}
-                  </p>
+                  {editingCommentId === comment.id ? (
+                    <>
+                      <Form.Control
+                        as="textarea"
+                        rows={2}
+                        value={editComment}
+                        onChange={(e) => setEditComment(e.target.value)}
+                      />
+                      <Button onClick={() => handleEditComment(comment.id)}>Save</Button>
+                      <Button onClick={() => setEditingCommentId(null)}>Cancel</Button>
+                    </>
+                  ) : (
+                    <p>
+                      <strong>{comment.user}:</strong> {comment.content}
+                      {currentUser?.username === comment.user && (
+                        <>
+                          <Button
+                            className="ms-2"
+                            onClick={() => setEditingCommentId(comment.id)}
+                          >
+                            Edit
+                          </Button>
+                          <Button
+                            className="ms-2"
+                            variant="danger"
+                            onClick={() => handleDeleteComment(comment.id)}
+                          >
+                            Delete
+                          </Button>
+                        </>
+                      )}
+                    </p>
+                  )}
                 </div>
               ))
             ) : (

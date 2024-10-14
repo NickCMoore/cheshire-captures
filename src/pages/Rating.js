@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useCurrentUser } from '../contexts/CurrentUserContext';
 import { axiosReq, axiosRes } from '../api/axiosDefaults';
 
-const RatingComponent = ({ id }) => { // Update prop name here to match 'id'
+const RatingComponent = ({ photoId }) => { // Changed to 'photoId'
     const currentUser = useCurrentUser();
     const [userRating, setUserRating] = useState(null); 
     const [averageRating, setAverageRating] = useState(null); 
@@ -12,7 +12,7 @@ const RatingComponent = ({ id }) => { // Update prop name here to match 'id'
     useEffect(() => {
         const fetchRatings = async () => {
             try {
-                const { data } = await axiosReq.get(`/api/photos/photos/${id}/ratings/`); // Make sure 'id' is used here
+                const { data } = await axiosReq.get(`/api/photos/photos/${photoId}/ratings/`); // Use 'photoId'
 
                 if (Array.isArray(data)) {
                     const userRatingData = data.find(r => r.user === currentUser?.username);
@@ -30,7 +30,7 @@ const RatingComponent = ({ id }) => { // Update prop name here to match 'id'
         if (currentUser) {
             fetchRatings();
         }
-    }, [id, currentUser]); // 'id' is correctly referenced here
+    }, [photoId, currentUser]); // 'photoId' is correctly referenced here
 
     const handleRating = async (newRating) => {
         if (!currentUser) {
@@ -41,7 +41,7 @@ const RatingComponent = ({ id }) => { // Update prop name here to match 'id'
         setIsSubmitting(true);
 
         try {
-            const { data } = await axiosRes.post(`/api/photos/photos${id}/rate/`, { rating: newRating }); // 'id' is used here too
+            const { data } = await axiosRes.post(`/api/photos/photos/${photoId}/rate/`, { rating: newRating }); // 'photoId' is used here
             setUserRating(newRating);
             if (data.new_average_rating !== undefined) {
                 setAverageRating(data.new_average_rating);  
@@ -76,7 +76,7 @@ const RatingComponent = ({ id }) => { // Update prop name here to match 'id'
 
 // Add prop-types for validation
 RatingComponent.propTypes = {
-    id: PropTypes.number.isRequired, // Ensure that 'id' is passed as a prop
+    photoId: PropTypes.number.isRequired, // Ensure 'photoId' is passed as a prop
 };
 
 export default RatingComponent;

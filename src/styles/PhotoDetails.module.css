@@ -4,7 +4,7 @@
   padding-top: 30px;
   padding-bottom: 30px;
   background-color: var(--magnolia); 
-  color: var(--magnolia); 
+  color: #ffffff; 
   width: 100vw;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -12,11 +12,29 @@
 
 .photoDetailsText {
   background-color: var(--yinmn-blue);
-  color: var(--magnolia); 
+  color: #ffffff; /* Change this to a color that contrasts with the background */
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
+
+.comment {
+  color: #ffffff; /* Ensure comment text is visible */
+  margin-bottom: 10px;
+}
+
+.comment strong {
+  color: #ffdf5e; /* To give emphasis to the username */
+}
+
+.comment p {
+  margin: 0;
+}
+
+.commentInput {
+  color: #000000; /* Make sure the text in the input box is visible */
+}
+
 
 .photoDetailsButtons {
   display: flex;
