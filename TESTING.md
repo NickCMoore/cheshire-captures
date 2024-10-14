@@ -20,29 +20,29 @@ The Cheshire Captures site has been passed through the [W3C HTML Validator](http
 
 No errors were found when the deployed Cheshire Captures URL was passed through the W3C HTML validation checker. Only some informational notes regarding the meta tags in the index.html file were logged.
 
-![W3C Results](images/W3C.png)
+![W3C Results](public/images/W3C.png)
 
 ### W3C CSS Validation Results
 
 No errors or warnings were found when the deployed Cheshire Captures URL was passed through the W3C CSS validation checker.
 
-![W3C CSS Validation](images/W3C%20CSS%20Results.png)
+![W3C CSS Validation](public/images/W3C%20CSS%20Results.png)
 
 ### ESLint Validation Results
 
 After resolving errors due to unused imports in React files, only warning remaining was related to use of ReactDOM.render. This project was built on React 17, so introducing this would've caused errors with the running of the application. This was left. ESLint was uninstalled afterward to avoid conflicts with other dependencies.
 
-![ESLint Results](images/eslint.png)
+![ESLint Results](public/images/eslint.png)
 
 ## Automatic Testing
 
 The following Jest tests were written to ensure the main components of the Cheshire Captures frontend rendered correctly:
 
-![Automated Testing](images/automatedtesting.png)
+![Automated Testing](public/images/automatedtesting.png)
 
 Here are some of the results:
 
-![Example Automated Testing Result](images/profiletest.png)
+![Example Automated Testing Result](public/images/profiletest.png)
 
 ### NavBar.js
 |  | | |
