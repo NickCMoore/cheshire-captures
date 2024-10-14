@@ -35,7 +35,7 @@ const ProfilePage = () => {
         <Col md={4} className="text-center">
           <Card className="p-4 shadow-sm">
             <Image
-              src={photographer.profile_image} // Use profile_image as it is
+              src={photographer.profile_image} 
               roundedCircle
               className={styles.profileImage}
             />
