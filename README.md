@@ -214,6 +214,127 @@ The platform supports commenting and liking features for user interaction. Each 
 
 ---
 
+Wireframes for Cheshire Captures
+1. Homepage
+markdown
+Copy code
+------------------------------------------------
+|                 Navbar                      |
+|---------------------------------------------|
+|  Logo | Home | Gallery | Popular Photographers | Profile | Sign In/Sign Out |
+------------------------------------------------
+|                Full-screen Background Image  |
+|   ----------------------------------------   |
+|   |             Cheshire Captures         |  |
+|   |           [Subheading text]           |  |
+|   |--------------------------------------|  |
+|   |  [Button: Explore Gallery]           |  |
+------------------------------------------------
+|                Footer                      |
+------------------------------------------------
+2. Gallery Page
+scss
+Copy code
+------------------------------------------------
+|                 Navbar                      |
+|---------------------------------------------|
+|   Search Bar [Filter/Search Options]         |
+------------------------------------------------
+|   Grid of Photos (3x3 or 4x4)                |
+|   ----------------------------------------   |
+|   |  [Image Thumbnail] [Title]   [Likes]    |  |
+|   |  [Photographer Name]                   |  |
+|   ----------------------------------------   |
+|   |  [Image Thumbnail] [Title]   [Likes]    |  |
+|   |  [Photographer Name]                   |  |
+|   ----------------------------------------   |
+|    (Pagination for more photos)             |
+------------------------------------------------
+3. Photo Details Page
+css
+Copy code
+------------------------------------------------
+|                 Navbar                      |
+|---------------------------------------------|
+|       Large Photo [Image Full Width]         |
+|---------------------------------------------|
+|       [Title]                                |
+|       [Photographer Name + Link to Profile]  |
+|       [Description]                          |
+|       [Tags]                                 |
+|       [Rating Component]                     |
+------------------------------------------------
+|       [Like Button] [Edit Button if owner]   |
+|       [Delete Button if owner]               |
+------------------------------------------------
+|       [Comments Section]                     |
+|       -------------------------------------  |
+|       | [Username] [Comment]                |  |
+|       | [Edit/Delete Buttons for Owner]     |  |
+|       -------------------------------------  |
+|    [Add a Comment Form]                      |
+------------------------------------------------
+4. Photographer Profile Page
+markdown
+Copy code
+------------------------------------------------
+|                 Navbar                      |
+|---------------------------------------------|
+|      [Profile Picture]                       |
+|      [Display Name]                          |
+|      [Bio (Show more/Show less)]             |
+|      [Follow/Unfollow Button]                |
+------------------------------------------------
+|      [Photos Grid (2x2 or 3x3)]              |
+|   ----------------------------------------   |
+|   |  [Image Thumbnail] [Title]             |  |
+|   ----------------------------------------   |
+|    (Pagination if many photos)               |
+------------------------------------------------
+|      [Social Media Links]                    |
+------------------------------------------------
+5. Photo Upload Page
+css
+Copy code
+------------------------------------------------
+|                 Navbar                      |
+|---------------------------------------------|
+|      Upload a New Photo                      |
+|---------------------------------------------|
+|    [Title Input Field]                       |
+|    [Description Textarea]                    |
+|    [Choose Image Button]                     |
+|    [Save Button]                             |
+------------------------------------------------
+6. Edit Profile Page
+lua
+Copy code
+------------------------------------------------
+|                 Navbar                      |
+|---------------------------------------------|
+|      Edit Profile                            |
+|---------------------------------------------|
+|    [Upload Profile Picture Button]           |
+|    [Bio Textarea]                            |
+|    [Save Button]                             |
+------------------------------------------------
+7. Popular Photographers Page
+lua
+Copy code
+------------------------------------------------
+|                 Navbar                      |
+|---------------------------------------------|
+|      List of Popular Photographers           |
+------------------------------------------------
+|   ----------------------------------------   |
+|   |  [Photographer Picture]  [Name]        |  |
+|   |  [Follow/Unfollow Button]              |  |
+|   ----------------------------------------   |
+|   |  [Photographer Picture]  [Name]        |  |
+|   |  [Follow/Unfollow Button]              |  |
+|   ----------------------------------------   |
+------------------------------------------------
+
 ### User Stories
 
 ## Navigation/Authentication
