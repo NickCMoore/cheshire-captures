@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Row, Col, Card, Image, Button } from 'react-bootstrap';
+import { useCurrentUser } from '../contexts/CurrentUserContext'; // Import useCurrentUser
 import styles from '../styles/Profile.module.css';
 
 const ProfilePage = () => {
@@ -9,6 +10,7 @@ const ProfilePage = () => {
   const [photographer, setPhotographer] = useState(null);
   const [isBioLong, setIsBioLong] = useState(false);
   const [showFullBio, setShowFullBio] = useState(false);
+  const currentUser = useCurrentUser(); // Get current logged-in user
 
   useEffect(() => {
     const fetchPhotographer = async () => {
@@ -28,6 +30,9 @@ const ProfilePage = () => {
   };
 
   if (!photographer) return <p>Loading...</p>;
+
+  // Check if the logged-in user is viewing their own profile
+  const isCurrentUser = currentUser?.id === photographer.user_id;
 
   return (
     <Container className={styles.profileContainer}>
@@ -49,7 +54,8 @@ const ProfilePage = () => {
               </Button>
             )}
 
-            {photographer.is_user && (
+            {/* Show Edit Profile button if current user is viewing their own profile */}
+            {isCurrentUser && (
               <Button
                 as={Link}
                 to={`/profile/${id}/edit`}

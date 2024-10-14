@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, Button, Container, Alert, Spinner } from 'react-bootstrap';
 import { axiosReq } from '../api/axiosDefaults';
@@ -12,9 +12,16 @@ const PhotoUpload = () => {
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
 
+  const imageInput = useRef(null);
+
+
   const handleImageChange = (event) => {
     if (event.target.files.length) {
-      setImage(event.target.files[0]);
+      URL.revokeObjectURL(image);
+      setImage({
+        ...image,
+        image: URL.createObjectURL(event.target.files[0]),
+      });
     }
   };
 
@@ -23,7 +30,7 @@ const PhotoUpload = () => {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
-    formData.append('image', image);
+    formData.append('image', imageInput.current.files[0]);
 
     setIsLoading(true);
     setError('');
@@ -69,25 +76,18 @@ const PhotoUpload = () => {
             />
           </Form.Group>
 
+
           <Form.Group controlId="image">
             <Form.Label className="d-none">Choose an Image</Form.Label>
-            <input
-              type="file"
-              onChange={handleImageChange}
-              required
+              <Form.File
+                id="image-upload"
+                accept="image/*"
+                onChange={handleImageChange}
+                ref={imageInput}
+                className="w-100 mb-3"
               disabled={isLoading}
-              style={{ display: 'none' }} // Hide the default file input
-              id="upload-button"
-            />
-            <Button
-              as="label"
-              htmlFor="upload-button"
-              variant="secondary"
-              className="w-100 mb-3"
-              disabled={isLoading}
-            >
-              {image ? image.name : 'Choose an Image'}
-            </Button>
+              />
+              {/* {image ? image.name : 'Choose an Image'} */}
           </Form.Group>
 
           <Button variant="primary" type="submit" disabled={isLoading}>

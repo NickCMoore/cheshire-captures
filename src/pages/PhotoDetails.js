@@ -4,7 +4,6 @@ import { useCurrentUser } from '../contexts/CurrentUserContext';
 import { Container, Row, Col, Button, Form, Image } from "react-bootstrap";
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
 import axios from 'axios';
-import styles from "../styles/PhotoDetails.module.css";
 import RatingComponent from "./Rating";
 
 const PhotoDetails = () => {
@@ -14,8 +13,8 @@ const PhotoDetails = () => {
   const [photo, setPhoto] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  const [editingCommentId, setEditingCommentId] = useState(null); // Track the comment being edited
-  const [editComment, setEditComment] = useState(""); // Track the updated comment content
+  const [editingCommentId, setEditingCommentId] = useState(null); 
+  const [editComment, setEditComment] = useState(""); 
   const [error, setError] = useState(null);
   const [likeCount, setLikeCount] = useState(0); 
   const [hasLiked, setHasLiked] = useState(false);
@@ -148,8 +147,8 @@ const PhotoDetails = () => {
       <Row className="justify-content-center">
         <Col md={8}>
           <div className="p-3 bg-light">
-            <h2>{photo.title}</h2>
-            <p>{photo.description}</p>
+            <h2 className="text-primary">{photo.title}</h2> {/* Changed to blue using Bootstrap */}
+            <p className="text-dark">{photo.description}</p> {/* Changed to black using Bootstrap */}
             <p>
               <strong>Photographer:</strong>{" "}
               <Link to={`/profile/${photo.photographer_id}`}>
@@ -162,7 +161,7 @@ const PhotoDetails = () => {
             <div className="mt-3 d-flex justify-content-between mb-4"> {/* Added mb-4 for margin */}
               <Button
                 variant={hasLiked ? "danger" : "primary"}
-                className={styles.likeButton}
+                className="me-3"
                 onClick={handleLike}
               >
                 {hasLiked ? "Unlike" : "Like"} {likeCount}
@@ -172,7 +171,6 @@ const PhotoDetails = () => {
                 <div className="d-flex gap-3"> {/* Increased gap size between buttons */}
                   <Button
                     variant="warning"
-                    className={styles.editButton}
                     as={Link}
                     to={`/photos/${id}/edit`}
                   >
@@ -180,7 +178,6 @@ const PhotoDetails = () => {
                   </Button>
                   <Button
                     variant="danger"
-                    className={styles.deleteButton}
                     onClick={handleDelete}
                   >
                     Delete Photo
@@ -189,7 +186,6 @@ const PhotoDetails = () => {
               )}
               <Button
                 variant="secondary"
-                className={styles.backButton}
                 onClick={handleBackToGallery}
               >
                 Back to Gallery
@@ -201,7 +197,7 @@ const PhotoDetails = () => {
 
             {comments.length > 0 ? (
               comments.map((comment) => (
-                <div key={comment.id} className={styles.comment}>
+                <div key={comment.id}>
                   {editingCommentId === comment.id ? (
                     <>
                       <Form.Control
@@ -244,22 +240,21 @@ const PhotoDetails = () => {
             {currentUser ? (
               <Form onSubmit={handleAddComment}>
                 <Form.Group controlId="commentContent">
-                  <Form.Label className={styles.commentHeader}>Add a Comment</Form.Label>
+                  <Form.Label>Add a Comment</Form.Label>
                   <Form.Control
                     as="textarea"
                     rows={3}
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
                     placeholder="Write your comment here..."
-                    className={styles.commentInput}
                   />
                 </Form.Group>
-                <Button className={styles.commentButton} type="submit">
+                <Button type="submit">
                   Post Comment
                 </Button>
               </Form>
             ) : (
-              <p className={styles.error}>Please <Link to="/signin">sign in</Link> to add a comment.</p>
+              <p>Please <Link to="/signin">sign in</Link> to add a comment.</p>
             )}
           </div>
         </Col>

@@ -15,6 +15,13 @@
     overflow: hidden;
   }
 
+  p {
+    font-size: 1.2rem;
+    color: var(--yinmn-blue);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
   .AboutContainer {
     min-height: 100vh; 
     background-color: var(--rich-black); 
@@ -44,7 +51,7 @@
   
   p {
     font-size: 1.2rem;
-    color: var(--magnolia);
+    color: var(--yinmn-blue);
     line-height: 1.6;
     margin-bottom: 20px;
   }

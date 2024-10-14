@@ -10,3 +10,7 @@
 .blueHeading {
   color: #2E5090;
 }
+
+input[type="file"] {
+	display: none;
+}
