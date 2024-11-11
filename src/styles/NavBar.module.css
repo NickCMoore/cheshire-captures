@@ -1,24 +1,52 @@
 .NavBar {
     background-color: var(--magnolia);
-    height: 70px; 
+    height: 70px;
     width: 100%;
     position: fixed;
     top: 0;
     z-index: 1000;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 10px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .NavBar a {
-    background-color: var(--magnolia);
     color: var(--yinmn-blue);
-    font-size: 1rem; 
-    padding: 8px 10px;
+    font-size: 1rem;
+    padding: 2px 10px;
     text-decoration: none;
 }
-
 
 .NavBar i {
     font-size: 1.4rem;
 }
 
+.navbar-brand img {
+    height: 55px;
+}
+
+@media (max-width: 768px) {
+    .NavBar {
+        height: 90px; 
+        padding: 15px 20px; 
+    }
+
+    .NavBar a {
+        background-color: var(--magnolia);
+        font-size: 1.2rem; 
+        padding: 4px 12px; 
+    }
+
+    .NavBar i {
+        font-size: 1.6rem; 
+    }
+    .navbar-brand img {
+        height: 65px; 
+    }
+
+    .navbar-toggler {
+        transform: scale(1.2); 
+    }
+}
