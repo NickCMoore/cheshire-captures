@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
@@ -69,7 +68,10 @@ function SignInForm() {
 
   return (
     <Container fluid className={styles.Background}>
-      <Row className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+      <Row
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
         <Col xs={12} md={6} lg={4}>
           <div className={styles.FormContainer}>
             <h1 className={styles.Header}>Sign In</h1>
@@ -84,6 +86,7 @@ function SignInForm() {
                   value={username}
                   onChange={handleChange}
                   required
+                  autoComplete="username" // Added autocomplete
                 />
               </Form.Group>
               {errors.username?.map((message, idx) => (
@@ -102,6 +105,7 @@ function SignInForm() {
                   value={password}
                   onChange={handleChange}
                   required
+                  autoComplete="current-password" // Added autocomplete
                 />
               </Form.Group>
               {errors.password?.map((message, idx) => (
@@ -116,12 +120,16 @@ function SignInForm() {
                   type="submit"
                   disabled={isLoading}
                 >
-                  {isLoading ? 'Signing In...' : 'Sign In'}
+                  {isLoading ? "Signing In..." : "Sign In"}
                 </Button>
               </Row>
 
               {errors.non_field_errors?.map((message, idx) => (
-                <Alert variant="warning" className={`${styles.Alert} mt-3`} key={idx}>
+                <Alert
+                  variant="warning"
+                  className={`${styles.Alert} mt-3`}
+                  key={idx}
+                >
                   {message}
                 </Alert>
               ))}
@@ -141,4 +149,3 @@ function SignInForm() {
 }
 
 export default SignInForm;
-
