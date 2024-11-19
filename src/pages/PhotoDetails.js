@@ -13,10 +13,10 @@ const PhotoDetails = () => {
   const [photo, setPhoto] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  const [editingCommentId, setEditingCommentId] = useState(null); 
-  const [editComment, setEditComment] = useState(""); 
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editComment, setEditComment] = useState("");
   const [error, setError] = useState(null);
-  const [likeCount, setLikeCount] = useState(0); 
+  const [likeCount, setLikeCount] = useState(0);
   const [hasLiked, setHasLiked] = useState(false);
 
   useEffect(() => {
@@ -83,14 +83,16 @@ const PhotoDetails = () => {
   const handleDeleteComment = async (commentId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this comment?");
     if (!confirmDelete) return;
-
+  
     try {
-      await axiosRes.delete(`/api/photos/photos/comments/${commentId}/`);
+      await axiosRes.delete(`/api/comments/${commentId}/`);
       setComments((prevComments) => prevComments.filter(comment => comment.id !== commentId));
     } catch (err) {
-      console.error("Error deleting comment:", err);
+      console.error("Error deleting comment:", err.response || err);
+      alert("Failed to delete the comment. Please try again.");
     }
   };
+  
 
   const handleLike = async () => {
     try {
@@ -130,7 +132,14 @@ const PhotoDetails = () => {
   };
 
   if (error) {
-    return <p>{error}</p>;
+    return (
+      <Container className="text-center my-4">
+        <h2 className="text-danger">{error}</h2>
+        <Button variant="secondary" onClick={handleBackToGallery}>
+          Back to Gallery
+        </Button>
+      </Container>
+    );
   }
 
   if (!photo) {
@@ -141,14 +150,22 @@ const PhotoDetails = () => {
     <Container className="my-4">
       <Row className="justify-content-center">
         <Col md={8}>
-          <Image src={photo.image_url} alt={photo.title} className="w-100 mb-4" fluid />
+          <Image
+            src={
+              photo.image_url ||
+              "https://res.cloudinary.com/dwgtce0rh/image/upload/v1727862662/vestrahorn-mountains-stokksnes-iceland_aoqbtp.jpg"
+            }
+            alt={photo.title}
+            className="w-100 mb-4"
+            fluid
+          />
         </Col>
       </Row>
       <Row className="justify-content-center">
         <Col md={8}>
           <div className="p-3 bg-light">
-            <h2 className="text-primary">{photo.title}</h2> {/* Changed to blue using Bootstrap */}
-            <p className="text-dark">{photo.description}</p> {/* Changed to black using Bootstrap */}
+            <h2 className="text-primary">{photo.title}</h2>
+            <p className="text-dark">{photo.description}</p>
             <p>
               <strong>Photographer:</strong>{" "}
               <Link to={`/profile/${photo.photographer_id}`}>
@@ -158,7 +175,7 @@ const PhotoDetails = () => {
             <p><strong>Tags:</strong> {photo.tags.map(tag => tag.name).join(', ')}</p>
             <RatingComponent photoId={Number(id)} />
 
-            <div className="mt-3 d-flex justify-content-between mb-4"> {/* Added mb-4 for margin */}
+            <div className="mt-3 d-flex justify-content-between mb-4">
               <Button
                 variant={hasLiked ? "danger" : "primary"}
                 className="me-3"
@@ -167,30 +184,23 @@ const PhotoDetails = () => {
                 {hasLiked ? "Unlike" : "Like"} {likeCount}
               </Button>
 
-              {currentUser?.username === photo.photographer_display_name && (
-                <div className="d-flex gap-3"> {/* Increased gap size between buttons */}
-                  <Button
-                    variant="warning"
-                    as={Link}
-                    to={`/photos/${id}/edit`}
-                  >
-                    Edit Photo
-                  </Button>
-                  <Button
-                    variant="danger"
-                    onClick={handleDelete}
-                  >
-                    Delete Photo
-                  </Button>
-                </div>
+              {currentUser?.username && photo.photographer_display_name && 
+                currentUser.username.toLowerCase() === photo.photographer_display_name.toLowerCase() && (
+                  <div className="d-flex gap-3">
+                    <Button variant="warning" as={Link} to={`/photos/${id}/edit`}>
+                      Edit Photo
+                    </Button>
+                    <Button variant="danger" onClick={handleDelete}>
+                      Delete Photo
+                    </Button>
+                  </div>
               )}
-              <Button
-                variant="secondary"
-                onClick={handleBackToGallery}
-              >
+              
+              <Button variant="secondary" onClick={handleBackToGallery}>
                 Back to Gallery
               </Button>
             </div>
+
 
             <hr />
             <h4>Comments</h4>

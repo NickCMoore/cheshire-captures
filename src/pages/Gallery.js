@@ -23,12 +23,16 @@ const Gallery = () => {
           const photos = data.results.map((photo) => ({
             id: photo.id,
             title: photo.title,
-            imageUrl: photo.image_url,
+            imageUrl:
+              photo.image_url ||
+              'https://res.cloudinary.com/dwgtce0rh/image/upload/v1727862662/vestrahorn-mountains-stokksnes-iceland_aoqbtp.jpg',
             photographer: photo.photographer_display_name || 'Unknown',
           }));
           setImages(photos);
 
-          const uniqueCategories = [...new Set(data.results.map(photo => photo.category))];
+          const uniqueCategories = data.results
+            ? [...new Set(data.results.map(photo => photo.category).filter(category => category))]
+            : [];
           setCategories(uniqueCategories);
         } else {
           setImages([]);
@@ -36,6 +40,7 @@ const Gallery = () => {
       } catch (error) {
         console.error('Error fetching photos:', error);
         setImages([]);
+        setCategories([]);
       }
     };
 
