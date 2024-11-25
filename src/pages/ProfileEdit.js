@@ -1,30 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useCurrentUser } from '../contexts/CurrentUserContext';
-import axios from 'axios';
-import { Container, Form, Button, Image, Row, Col, Card, Alert } from 'react-bootstrap';
-import styles from '../styles/Profile.module.css';
-import btnStyles from '../styles/Button.module.css';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useCurrentUser } from "../contexts/CurrentUserContext";
+import axios from "axios";
+import {
+  Container,
+  Form,
+  Button,
+  Image,
+  Row,
+  Col,
+  Card,
+  Alert,
+} from "react-bootstrap";
+import styles from "../styles/Profile.module.css";
+import btnStyles from "../styles/Button.module.css";
 
 const ProfileEdit = () => {
   const { id } = useParams();
   const currentUser = useCurrentUser();
   const [photographer, setPhotographer] = useState(null);
-  const [displayName, setDisplayName] = useState('');
-  const [bio, setBio] = useState('');
-  const [website, setWebsite] = useState('');
-  const [instagram, setInstagram] = useState('');
-  const [twitter, setTwitter] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [displayName, setDisplayName] = useState("");
+  const [bio, setBio] = useState("");
+  const [website, setWebsite] = useState("");
+  const [instagram, setInstagram] = useState("");
+  const [twitter, setTwitter] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
   useEffect(() => {
     const fetchPhotographer = async () => {
       try {
-        const { data } = await axios.get(`/api/photographers/photographers/${id}/`);
+        const { data } = await axios.get(
+          `/api/photographers/photographers/${id}/`
+        );
         setPhotographer(data);
         setDisplayName(data.display_name);
         setBio(data.bio);
@@ -32,8 +43,8 @@ const ProfileEdit = () => {
         setInstagram(data.instagram);
         setTwitter(data.twitter);
       } catch (error) {
-        setErrorMessage('Error fetching photographer data.');
-        console.error('Error fetching photographer data:', error);
+        setErrorMessage("Error fetching photographer data.");
+        console.error("Error fetching photographer data:", error);
       }
     };
 
@@ -46,19 +57,22 @@ const ProfileEdit = () => {
     event.preventDefault();
 
     try {
-      const { data } = await axios.put(`/api/photographers/photographers/${id}/`, {
-        display_name: displayName,
-        bio,
-        website,
-        instagram,
-        twitter,
-      });
+      const { data } = await axios.put(
+        `/api/photographers/photographers/${id}/`,
+        {
+          display_name: displayName,
+          bio,
+          website,
+          instagram,
+          twitter,
+        }
+      );
       setPhotographer(data);
-      setSuccessMessage('Profile updated successfully.');
-      setErrorMessage('');
+      setSuccessMessage("Profile updated successfully.");
+      setErrorMessage("");
     } catch (error) {
-      setErrorMessage('Error updating profile details.');
-      console.error('Error updating profile details:', error);
+      setErrorMessage("Error updating profile details.");
+      console.error("Error updating profile details:", error);
     }
   };
 
@@ -66,24 +80,24 @@ const ProfileEdit = () => {
     e.preventDefault();
 
     if (newPassword !== confirmNewPassword) {
-      setErrorMessage('New passwords do not match.');
+      setErrorMessage("New passwords do not match.");
       return;
     }
 
     try {
-      await axios.post('/dj-rest-auth/password/change/', {
+      await axios.post("/dj-rest-auth/password/change/", {
         old_password: currentPassword,
         new_password1: newPassword,
         new_password2: confirmNewPassword,
       });
-      setSuccessMessage('Password changed successfully.');
-      setErrorMessage('');
-      setCurrentPassword('');
-      setNewPassword('');
-      setConfirmNewPassword('');
+      setSuccessMessage("Password changed successfully.");
+      setErrorMessage("");
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmNewPassword("");
     } catch (error) {
-      setErrorMessage('Error changing password.');
-      console.error('Error changing password:', error);
+      setErrorMessage("Error changing password.");
+      console.error("Error changing password:", error);
     }
   };
 
@@ -96,8 +110,10 @@ const ProfileEdit = () => {
           <Row className="gx-5">
             <Col lg={6}>
               <Card className={`p-4 shadow ${styles.profileCard}`}>
-                <h2 className={styles.profileHeading}>Edit Profile</h2> 
-                {successMessage && <Alert variant="success">{successMessage}</Alert>}
+                <h2 className={styles.profileHeading}>Edit Profile</h2>
+                {successMessage && (
+                  <Alert variant="success">{successMessage}</Alert>
+                )}
                 {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
                 <Form onSubmit={handleProfileUpdate}>
                   <div className="text-center">
@@ -110,7 +126,9 @@ const ProfileEdit = () => {
                   </div>
 
                   <Form.Group controlId="displayName" className="mb-3">
-                    <Form.Label className={styles.formLabel}>Display Name</Form.Label>
+                    <Form.Label className={styles.formLabel}>
+                      Display Name
+                    </Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="Enter display name"
@@ -132,7 +150,9 @@ const ProfileEdit = () => {
                   </Form.Group>
 
                   <Form.Group controlId="website" className="mb-3">
-                    <Form.Label className={styles.formLabel}>Website</Form.Label>
+                    <Form.Label className={styles.formLabel}>
+                      Website
+                    </Form.Label>
                     <Form.Control
                       type="url"
                       placeholder="https://example.com"
@@ -142,7 +162,9 @@ const ProfileEdit = () => {
                   </Form.Group>
 
                   <Form.Group controlId="instagram" className="mb-3">
-                    <Form.Label className={styles.formLabel}>Instagram</Form.Label>
+                    <Form.Label className={styles.formLabel}>
+                      Instagram
+                    </Form.Label>
                     <Form.Control
                       type="url"
                       placeholder="https://instagram.com/yourusername"
@@ -152,7 +174,9 @@ const ProfileEdit = () => {
                   </Form.Group>
 
                   <Form.Group controlId="twitter" className="mb-3">
-                    <Form.Label className={styles.formLabel}>Twitter</Form.Label>
+                    <Form.Label className={styles.formLabel}>
+                      Twitter
+                    </Form.Label>
                     <Form.Control
                       type="url"
                       placeholder="https://twitter.com/yourusername"
@@ -161,8 +185,8 @@ const ProfileEdit = () => {
                     />
                   </Form.Group>
 
-                  <Button 
-                    className={`${btnStyles.Button} w-100 mt-4`} 
+                  <Button
+                    className={`${btnStyles.Button} w-100 mt-4`}
                     type="submit"
                   >
                     Save Changes
@@ -173,9 +197,22 @@ const ProfileEdit = () => {
 
             <Col lg={6}>
               <Card className={`p-4 shadow ${styles.profileCard}`}>
-                <h3 className={styles.profileHeading}>Change Password</h3> {/* Updated the class */}
+                <h3 className={styles.profileHeading}>Change Password</h3>
                 {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
                 <Form onSubmit={handleChangePassword}>
+                  {/* Hidden Username Field for Accessibility */}
+                  <Form.Group controlId="username" className="d-none">
+                    <Form.Label className="visually-hidden">Username</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={currentUser?.username || ''}
+                      readOnly
+                      tabIndex={-1}
+                      autoComplete="username"
+                    />
+                  </Form.Group>
+
+                  {/* Current Password Field */}
                   <Form.Group controlId="currentPassword" className="mb-3">
                     <Form.Label className={styles.formLabel}>Current Password</Form.Label>
                     <Form.Control
@@ -184,9 +221,11 @@ const ProfileEdit = () => {
                       value={currentPassword}
                       onChange={(e) => setCurrentPassword(e.target.value)}
                       required
+                      autoComplete="current-password"
                     />
                   </Form.Group>
 
+                  {/* New Password Field */}
                   <Form.Group controlId="newPassword" className="mb-3">
                     <Form.Label className={styles.formLabel}>New Password</Form.Label>
                     <Form.Control
@@ -195,9 +234,11 @@ const ProfileEdit = () => {
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
                       required
+                      autoComplete="new-password"
                     />
                   </Form.Group>
 
+                  {/* Confirm New Password Field */}
                   <Form.Group controlId="confirmNewPassword" className="mb-3">
                     <Form.Label className={styles.formLabel}>Confirm New Password</Form.Label>
                     <Form.Control
@@ -206,16 +247,18 @@ const ProfileEdit = () => {
                       value={confirmNewPassword}
                       onChange={(e) => setConfirmNewPassword(e.target.value)}
                       required
+                      autoComplete="new-password"
                     />
                   </Form.Group>
 
-                  <Button 
-                    className={`${btnStyles.Button} w-100`}  
+                  <Button
+                    className={`${btnStyles.Button} w-100`}
                     type="submit"
                   >
                     Change Password
                   </Button>
                 </Form>
+
               </Card>
             </Col>
           </Row>
