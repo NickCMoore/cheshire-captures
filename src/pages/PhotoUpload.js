@@ -16,10 +16,16 @@ const PhotoUpload = () => {
 
   const handleImageChange = (event) => {
     if (event.target.files.length) {
+      const file = event.target.files[0];
+      const validTypes = ['image/jpeg', 'image/png'];
+      if (!validTypes.includes(file.type)) {
+        setError('Please upload a valid image file (JPEG or PNG).');
+        return;
+      }
       URL.revokeObjectURL(image);
       setImage({
         ...image,
-        image: URL.createObjectURL(event.target.files[0]),
+        image: URL.createObjectURL(file),
       });
     }
   };
