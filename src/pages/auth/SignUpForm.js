@@ -10,7 +10,7 @@ import Container from "react-bootstrap/Container";
 import styles from "../../styles/SignInUpForm.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
-import { setTokenTimestamp } from "../../utils/Utils";
+import { setTokenTimestamp } from "../../utils/utils";
 import axios from "axios";
 
 function SignUpForm() {

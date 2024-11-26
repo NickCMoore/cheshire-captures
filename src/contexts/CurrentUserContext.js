@@ -1,9 +1,8 @@
-import React, { createContext, useContext, useEffect, useState } from "react"; 
-import PropTypes from "prop-types"; 
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
 import { useHistory } from "react-router";
-import { removeTokenTimestamp, shouldRefreshToken } from "../utils/Utils";
+import { removeTokenTimestamp, shouldRefreshToken } from "../utils/utils";
 
 export const CurrentUserContext = createContext();
 export const SetCurrentUserContext = createContext();
@@ -12,27 +11,28 @@ export const useCurrentUser = () => useContext(CurrentUserContext);
 export const useSetCurrentUser = () => useContext(SetCurrentUserContext);
 
 export const CurrentUserProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(() => {
-    const storedUser = localStorage.getItem("currentUser");
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
+  const [currentUser, setCurrentUser] = useState(null);
   const history = useHistory();
 
-  useEffect(() => {
-    if (currentUser) {
-      localStorage.setItem("currentUser", JSON.stringify(currentUser));
-    } else {
-      localStorage.removeItem("currentUser");
+  const handleMount = async () => {
+    try {
+      const { data } = await axiosRes.get("dj-rest-auth/user/");
+      setCurrentUser(data);
+    } catch (err) {
+      // console.log(err);
     }
-  }, [currentUser]);
+  };
 
   useEffect(() => {
-    const requestInterceptor = axiosReq.interceptors.request.use(
+    handleMount();
+  }, []);
+
+  useMemo(() => {
+    axiosReq.interceptors.request.use(
       async (config) => {
         if (shouldRefreshToken()) {
           try {
-            const { data } = await axios.post("/dj-rest-auth/token/refresh/");
-            axios.defaults.headers.common["Authorization"] = `Bearer ${data.access_token}`;
+            await axios.post("/dj-rest-auth/token/refresh/");
           } catch (err) {
             setCurrentUser((prevCurrentUser) => {
               if (prevCurrentUser) {
@@ -41,7 +41,7 @@ export const CurrentUserProvider = ({ children }) => {
               return null;
             });
             removeTokenTimestamp();
-            return Promise.reject(err);
+            return config;
           }
         }
         return config;
@@ -51,14 +51,12 @@ export const CurrentUserProvider = ({ children }) => {
       }
     );
 
-    const responseInterceptor = axiosRes.interceptors.response.use(
+    axiosRes.interceptors.response.use(
       (response) => response,
       async (err) => {
         if (err.response?.status === 401) {
           try {
-            const { data } = await axios.post("/dj-rest-auth/token/refresh/");
-            axios.defaults.headers.common["Authorization"] = `Bearer ${data.access_token}`;
-            return axiosRes(err.config); 
+            await axios.post("/dj-rest-auth/token/refresh/");
           } catch (err) {
             setCurrentUser((prevCurrentUser) => {
               if (prevCurrentUser) {
@@ -68,16 +66,12 @@ export const CurrentUserProvider = ({ children }) => {
             });
             removeTokenTimestamp();
           }
+          return axios(err.config);
         }
         return Promise.reject(err);
       }
     );
-
-    return () => {
-      axiosReq.interceptors.request.eject(requestInterceptor);
-      axiosRes.interceptors.response.eject(responseInterceptor);
-    };
-  }, [history, setCurrentUser]);
+  }, [history]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -86,9 +80,4 @@ export const CurrentUserProvider = ({ children }) => {
       </SetCurrentUserContext.Provider>
     </CurrentUserContext.Provider>
   );
-};
-
-// PropTypes validation for children
-CurrentUserProvider.propTypes = {
-  children: PropTypes.node.isRequired,
 };

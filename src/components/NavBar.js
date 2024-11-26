@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useCurrentUser, useSetCurrentUser } from '../contexts/CurrentUserContext';
-import { removeTokenTimestamp } from '../utils/Utils';
+import { removeTokenTimestamp } from '../utils/utils';
 import axios from 'axios';
 import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
