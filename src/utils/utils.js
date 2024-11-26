@@ -13,47 +13,52 @@ export const fetchMoreData = async (resource, setResource) => {
           : [...acc, cur];
       }, prevResource.results),
     }));
-  } catch (err) {
-    console.error("Error fetching more data:", err);
-  }
+  } catch (err) {}
 };
-
 
 export const followHelper = (profile, clickedProfile, following_id) => {
   return profile.id === clickedProfile.id
-    ? {
+    ? // This is the profile I clicked on,
+      // update its followers count and set its following id
+      {
         ...profile,
         followers_count: profile.followers_count + 1,
         following_id,
       }
     : profile.is_owner
-    ? { ...profile, following_count: profile.following_count + 1 }
-    : profile;
+    ? // This is the profile of the logged in user
+      // update its following count
+      { ...profile, following_count: profile.following_count + 1 }
+    : // this is not the profile the user clicked on or the profile
+      // the user owns, so just return it unchanged
+      profile;
 };
 
 export const unfollowHelper = (profile, clickedProfile) => {
   return profile.id === clickedProfile.id
-    ? {
+    ? // This is the profile I clicked on,
+      // update its followers count and set its following id
+      {
         ...profile,
         followers_count: profile.followers_count - 1,
         following_id: null,
       }
     : profile.is_owner
-    ? { ...profile, following_count: profile.following_count - 1 }
-    : profile;
+    ? // This is the profile of the logged in user
+      // update its following count
+      { ...profile, following_count: profile.following_count - 1 }
+    : // this is not the profile the user clicked on or the profile
+      // the user owns, so just return it unchanged
+      profile;
 };
 
 export const setTokenTimestamp = (data) => {
-  const refreshTokenTimestamp = jwtDecode(data?.access || data?.access_token)?.exp; 
+  const refreshTokenTimestamp = jwtDecode(data?.refresh_token).exp;
   localStorage.setItem("refreshTokenTimestamp", refreshTokenTimestamp);
 };
 
 export const shouldRefreshToken = () => {
-  const refreshTokenTimestamp = localStorage.getItem("refreshTokenTimestamp");
-  if (!refreshTokenTimestamp) return false;
-
-  const currentTime = Math.floor(Date.now() / 1000); 
-  return currentTime > refreshTokenTimestamp; 
+  return !!localStorage.getItem("refreshTokenTimestamp");
 };
 
 export const removeTokenTimestamp = () => {
