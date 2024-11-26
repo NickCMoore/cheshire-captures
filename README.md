@@ -2,7 +2,7 @@
 
 **Cheshire Captures** is a full-stack photography community platform designed to connect photographers and photo enthusiasts in Cheshire. Built using Django REST Framework for the backend and React for the frontend, it allows users to create accounts, upload photos, rate and comment on photos, and engage with the photography community. Users can search for photographers, filter by categories, and explore top-rated content.
 
-The backend and frontend are deployed separately on Heroku, with the backend providing a robust API for data management and the frontend delivering an intuitive and responsive user experience.
+The backend and frontend are deployed separately on Heroku, with the backend providing an API for data management and the frontend delivering an intuitive and responsive user experience.
 
 [View the live platform here](https://cheshire-captures-4a500dc7ab0a.herokuapp.com/).
 
