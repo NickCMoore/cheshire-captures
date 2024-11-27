@@ -68,7 +68,7 @@ const PhotoDetails = () => {
 
   const handleEditComment = async (commentId) => {
     try {
-      await axiosRes.put(`/api/photos/photos/comments/${commentId}/`, {
+      await axiosRes.put(`/api/photos/photos/${commentId}/comments/`, {
         content: editComment,
       });
       setComments((prevComments) => prevComments.map(comment =>
