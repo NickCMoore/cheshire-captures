@@ -68,17 +68,20 @@ const PhotoDetails = () => {
 
   const handleEditComment = async (commentId) => {
     try {
-      await axiosRes.put(`/api/photos/photos/${commentId}/comments/`, {
-        content: editComment,
+      await axiosRes.put(`/api/comments/${commentId}/`, {
+        content: editComment, 
       });
-      setComments((prevComments) => prevComments.map(comment =>
-        comment.id === commentId ? { ...comment, content: editComment } : comment
-      ));
+      setComments((prevComments) =>
+        prevComments.map((comment) =>
+          comment.id === commentId ? { ...comment, content: editComment } : comment
+        )
+      );
       setEditingCommentId(null);
     } catch (err) {
       console.error("Error editing comment:", err);
     }
   };
+  
 
   const handleDeleteComment = async (commentId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this comment?");
