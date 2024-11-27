@@ -87,7 +87,7 @@ const PhotoDetails = () => {
     if (!confirmDelete) return;
   
     try {
-      await axiosRes.delete(`/api/comments/${commentId}/`);
+      await axiosRes.delete(`/api/photos/comments/${commentId}/`);
       setComments((prevComments) => prevComments.filter(comment => comment.id !== commentId));
     } catch (err) {
       console.error("Error deleting comment:", err.response || err);
