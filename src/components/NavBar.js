@@ -58,7 +58,7 @@ const NavBar = () => {
         exact
         className={styles.NavLink}
         activeClassName={styles.Active}
-        to={`/profile/${currentUser?.photographer_id}`}
+        to={`/profile/${currentUser?.photographer_id}/edit`}
         onClick={() => setToggleNavBar(false)}
       >
         <i className="fas fa-user"></i>Profile
