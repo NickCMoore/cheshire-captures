@@ -46,25 +46,23 @@ const PhotoDetails = () => {
 
   const handleAddComment = async (e) => {
     e.preventDefault();
-
     if (!currentUser) {
       setError("You need to be logged in to comment.");
       return;
     }
-
     try {
       const { data } = await axiosRes.post(`/api/photos/photos/${id}/comments/`, {
         content: newComment,
-        photo: id,
       });
       setComments((prevComments) => [...prevComments, data]);
-      setNewComment('');
+      setNewComment("");
       setError(null);
     } catch (err) {
       setError("Error adding comment.");
-      console.error('Error adding comment:', err);
+      console.error("Error adding comment:", err);
     }
   };
+  
 
   const handleEditComment = async (commentId) => {
     try {
