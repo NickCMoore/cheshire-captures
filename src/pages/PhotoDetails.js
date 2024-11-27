@@ -262,21 +262,20 @@ const PhotoDetails = () => {
                     <p>
                       <strong>{comment.user}:</strong> {comment.content}
                       {currentUser?.username === comment.user && (
-                        <>
+                        <div className="mt-2 d-flex gap-2">
                           <Button
-                            className="ms-2"
+                            variant="warning"
                             onClick={() => setEditingCommentId(comment.id)}
                           >
                             Edit
                           </Button>
                           <Button
-                            className="ms-2"
                             variant="danger"
                             onClick={() => handleDeleteComment(comment.id)}
                           >
                             Delete
                           </Button>
-                        </>
+                        </div>
                       )}
                     </p>
                   )}
