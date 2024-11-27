@@ -196,14 +196,19 @@ const PhotoDetails = () => {
               <h4>Rate this photo:</h4>
               <div>
                 {[1, 2, 3, 4, 5].map((value) => (
-                  <Button
+                  <span
                     key={value}
-                    variant="outline-primary"
-                    className="me-2"
                     onClick={() => handleRating(value)}
+                    style={{
+                      cursor: "pointer",
+                      color: value <= photo.rating ? "gold" : "gray",
+                      fontSize: "1.5rem",
+                    }}
+                    role="button"
+                    aria-label={`Rate ${value} star${value > 1 ? "s" : ""}`}
                   >
-                    {value} Star{value > 1 ? "s" : ""}
-                  </Button>
+                    ★
+                  </span>
                 ))}
               </div>
               {photo.rating && (
