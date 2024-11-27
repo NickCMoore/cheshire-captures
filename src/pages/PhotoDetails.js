@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, useHistory } from "react-router-dom";
-import { useCurrentUser } from '../contexts/CurrentUserContext';
+import { useCurrentUser } from "../contexts/CurrentUserContext";
 import { Container, Row, Col, Button, Form, Image } from "react-bootstrap";
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
-import axios from 'axios';
-import RatingComponent from "./Rating";
+import axios from "axios";
 
 const PhotoDetails = () => {
   const { id } = useParams();
@@ -58,18 +57,18 @@ const PhotoDetails = () => {
         photo: id,
       });
       setComments((prevComments) => [...prevComments, data]);
-      setNewComment('');
+      setNewComment("");
       setError(null);
     } catch (err) {
       setError("Error adding comment.");
-      console.error('Error adding comment:', err);
+      console.error("Error adding comment:", err);
     }
   };
 
   const handleEditComment = async (commentId) => {
     try {
       await axiosRes.put(`/api/photos/comments/${commentId}/`, {
-        content: editComment, 
+        content: editComment,
       });
       setComments((prevComments) =>
         prevComments.map((comment) =>
@@ -81,20 +80,19 @@ const PhotoDetails = () => {
       console.error("Error editing comment:", err);
     }
   };
-  
+
   const handleDeleteComment = async (commentId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this comment?");
     if (!confirmDelete) return;
-  
+
     try {
       await axiosRes.delete(`/api/photos/comments/${commentId}/`);
-      setComments((prevComments) => prevComments.filter(comment => comment.id !== commentId));
+      setComments((prevComments) => prevComments.filter((comment) => comment.id !== commentId));
     } catch (err) {
       console.error("Error deleting comment:", err.response || err);
       alert("Failed to delete the comment. Please try again.");
     }
   };
-  
 
   const handleLike = async () => {
     try {
@@ -113,6 +111,25 @@ const PhotoDetails = () => {
       }
     } catch (error) {
       console.error("Error liking/unliking the photo:", error);
+    }
+  };
+
+  const handleRating = async (ratingValue) => {
+    try {
+      console.log(`Submitting rating: ${ratingValue} for photo: ${id}`);
+      const response = await axios.post(`/api/photos/photos/${id}/rate/`, {
+        rating: ratingValue,
+      });
+      console.log("Rating submitted successfully:", response.data);
+
+      setPhoto((prevPhoto) => ({
+        ...prevPhoto,
+        rating: response.data.rating,
+        rating_count: response.data.rating_count,
+      }));
+    } catch (err) {
+      console.error("Error submitting rating:", err.response || err);
+      alert("Failed to submit rating. Please try again.");
     }
   };
 
@@ -153,10 +170,7 @@ const PhotoDetails = () => {
       <Row className="justify-content-center">
         <Col md={8}>
           <Image
-            src={
-              photo.image_url ||
-              "https://res.cloudinary.com/dwgtce0rh/image/upload/v1727862662/vestrahorn-mountains-stokksnes-iceland_aoqbtp.jpg"
-            }
+            src={photo.image_url}
             alt={photo.title}
             className="w-100 mb-4"
             fluid
@@ -174,8 +188,30 @@ const PhotoDetails = () => {
                 {photo.photographer_display_name}
               </Link>
             </p>
-            <p><strong>Tags:</strong> {photo.tags.map(tag => tag.name).join(', ')}</p>
-            <RatingComponent photoId={Number(id)} />
+            <p>
+              <strong>Tags:</strong> {photo.tags.map((tag) => tag.name).join(", ")}
+            </p>
+
+            <div className="mt-4">
+              <h4>Rate this photo:</h4>
+              <div>
+                {[1, 2, 3, 4, 5].map((value) => (
+                  <Button
+                    key={value}
+                    variant="outline-primary"
+                    className="me-2"
+                    onClick={() => handleRating(value)}
+                  >
+                    {value} Star{value > 1 ? "s" : ""}
+                  </Button>
+                ))}
+              </div>
+              {photo.rating && (
+                <p className="mt-2">
+                  <strong>Average Rating:</strong> {photo.rating.toFixed(1)} ({photo.rating_count} ratings)
+                </p>
+              )}
+            </div>
 
             <div className="mt-3 d-flex justify-content-between mb-4">
               <Button
@@ -186,8 +222,10 @@ const PhotoDetails = () => {
                 {hasLiked ? "Unlike" : "Like"} {likeCount}
               </Button>
 
-              {currentUser?.username && photo.photographer_display_name && 
-                currentUser.username.toLowerCase() === photo.photographer_display_name.toLowerCase() && (
+              {currentUser?.username &&
+                photo.photographer_display_name &&
+                currentUser.username.toLowerCase() ===
+                  photo.photographer_display_name.toLowerCase() && (
                   <div className="d-flex gap-3">
                     <Button variant="warning" as={Link} to={`/photos/${id}/edit`}>
                       Edit Photo
@@ -196,13 +234,12 @@ const PhotoDetails = () => {
                       Delete Photo
                     </Button>
                   </div>
-              )}
-              
+                )}
+
               <Button variant="secondary" onClick={handleBackToGallery}>
                 Back to Gallery
               </Button>
             </div>
-
 
             <hr />
             <h4>Comments</h4>
@@ -261,12 +298,12 @@ const PhotoDetails = () => {
                     placeholder="Write your comment here..."
                   />
                 </Form.Group>
-                <Button type="submit">
-                  Post Comment
-                </Button>
+                <Button type="submit">Post Comment</Button>
               </Form>
             ) : (
-              <p>Please <Link to="/signin">sign in</Link> to add a comment.</p>
+              <p>
+                Please <Link to="/signin">sign in</Link> to add a comment.
+              </p>
             )}
           </div>
         </Col>
