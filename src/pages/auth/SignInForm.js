@@ -53,7 +53,7 @@ function SignInForm() {
         setCurrentUser(data.user);
         axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 
-        history.push(`/profile/${data.user.photographer_id}`);
+        history.push(`/home/`);
       }
     } catch (err) {
       if (isMounted.current) {
