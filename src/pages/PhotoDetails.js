@@ -68,7 +68,7 @@ const PhotoDetails = () => {
 
   const handleEditComment = async (commentId) => {
     try {
-      await axiosRes.put(`/api/comments/${commentId}/`, {
+      await axiosRes.put(`/api/photos/comments/${commentId}/`, {
         content: editComment, 
       });
       setComments((prevComments) =>
@@ -82,7 +82,6 @@ const PhotoDetails = () => {
     }
   };
   
-
   const handleDeleteComment = async (commentId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this comment?");
     if (!confirmDelete) return;
