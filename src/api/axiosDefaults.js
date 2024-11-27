@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "https://8000-nickcmoore-cheshirecapt-i1catxh7zvz.ws-eu116.gitpod.io/";
+axios.defaults.baseURL = "https://cheshire-captures-backend-084aac6d9023.herokuapp.com/";
 axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
 axios.defaults.withCredentials = true;
 
