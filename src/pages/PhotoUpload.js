@@ -4,6 +4,8 @@ import { Form, Button, Container, Alert, Spinner } from 'react-bootstrap';
 import { axiosReq } from '../api/axiosDefaults';
 import styles from '../styles/PhotoUpload.module.css';
 
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
+
 const PhotoUpload = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -18,11 +20,23 @@ const PhotoUpload = () => {
     if (event.target.files.length) {
       const file = event.target.files[0];
       const validTypes = ['image/jpeg', 'image/png'];
+
+      // Check file type
       if (!validTypes.includes(file.type)) {
         setError('Please upload a valid image file (JPEG or PNG).');
+        setImage(null); // Reset the image state if file is invalid
         return;
       }
-      URL.revokeObjectURL(image);
+
+      // Check file size
+      if (file.size > MAX_FILE_SIZE) {
+        setError('File size exceeds 10 MB. Please choose a smaller file.');
+        setImage(null); // Reset the image state if file is too large
+        return;
+      }
+
+      // Clear previous errors and update image preview
+      setError('');
       setImage({
         ...image,
         image: URL.createObjectURL(file),
@@ -95,7 +109,7 @@ const PhotoUpload = () => {
               accept="image/*"
               ref={imageInput}
               onChange={handleImageChange}
-              style={{ display: 'none' }} 
+              style={{ display: 'none' }}
             />
             <Button
               variant="secondary"

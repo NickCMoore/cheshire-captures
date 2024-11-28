@@ -31,7 +31,7 @@ const ChangePassword = () => {
       }, 3000);
     } catch (err) {
       setError(
-        err.response?.data?.old_password?.[0] || 
+        err.response?.data?.old_password?.[0] ||
         err.response?.data?.new_password1?.[0] ||
         'Something went wrong. Please try again.'
       );
