@@ -217,14 +217,19 @@ const PhotoDetails = () => {
               )}
             </div>
 
-            <div className="mt-3 d-flex justify-content-between mb-4">
-              <Button
-                variant={hasLiked ? "danger" : "primary"}
-                className="me-3"
-                onClick={handleLike}
-              >
-                {hasLiked ? "Unlike" : "Like"} {likeCount || 0}
-              </Button>
+            <div className="mt-3 d-flex justify-content-between align-items-center mb-4">
+              <div className="d-flex align-items-center">
+                <span className="me-2">
+                  <strong>Likes:</strong> {likeCount || 0}
+                </span>
+                <Button
+                  variant={hasLiked ? "danger" : "primary"}
+                  className="me-3"
+                  onClick={handleLike}
+                >
+                  {hasLiked ? "Unlike" : "Like"}
+                </Button>
+              </div>
 
               {currentUser?.username &&
                 photo.photographer_display_name &&
