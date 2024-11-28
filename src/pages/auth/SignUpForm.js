@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
@@ -9,12 +8,9 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import styles from "../../styles/SignInUpForm.module.css";
 import btnStyles from "../../styles/Button.module.css";
-import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
-import { setTokenTimestamp } from "../../utils/utils";
 import axios from "axios";
 
 function SignUpForm() {
-  const setCurrentUser = useSetCurrentUser();
   const history = useHistory();
 
   const [signUpData, setSignUpData] = useState({
@@ -38,10 +34,8 @@ function SignUpForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await axios.post("/dj-rest-auth/registration/", signUpData);
-      setCurrentUser(data.user);
-      setTokenTimestamp(data);
-      history.push("/home/");
+      await axios.post("/dj-rest-auth/registration/", signUpData);
+      history.push("/signin"); // Redirect to the sign-in page
     } catch (err) {
       setErrors(err.response?.data || {});
     }
