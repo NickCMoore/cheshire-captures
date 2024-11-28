@@ -17,6 +17,13 @@
     font-size: 1rem;
     padding: 2px 10px;
     text-decoration: none;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.NavBar a:hover {
+    color: var(--lavender-blush);
+    background-color: var(--rich-black);
+    border-radius: 4px; /* Optional: adds a rounded effect */
 }
 
 .NavBar i {
@@ -27,6 +34,36 @@
     height: 55px;
 }
 
+.navbar-toggler {
+    color: var(--yinmn-blue);
+    border: none;
+    transition: transform 0.2s ease;
+}
+
+.navbar-toggler:hover {
+    color: var(--lavender-blush);
+    transform: rotate(90deg); /* Optional: adds a hover effect */
+}
+
+/* Styles for dropdown menu links */
+.navbar-nav .dropdown-menu {
+    background-color: var(--magnolia);
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-nav .dropdown-menu a {
+    color: var(--yinmn-blue);
+    padding: 10px 15px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.navbar-nav .dropdown-menu a:hover {
+    color: var(--magnolia);
+    background-color: var(--yinmn-blue);
+    border-radius: 4px;
+}
+
 @media (max-width: 768px) {
     .NavBar {
         height: 60px; 
@@ -34,7 +71,6 @@
     }
 
     .NavBar a {
-        background-color: var(--magnolia);
         font-size: 1rem; 
         padding: 0px 12px; 
     }
@@ -42,6 +78,7 @@
     .NavBar i {
         font-size: 1.6rem; 
     }
+
     .navbar-brand img {
         height: 65px; 
     }
@@ -50,4 +87,3 @@
         transform: scale(1.2); 
     }
 }
-
