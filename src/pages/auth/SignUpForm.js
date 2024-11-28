@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useHistory } from "react-router-dom";
+import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
@@ -9,7 +10,7 @@ import Container from "react-bootstrap/Container";
 import styles from "../../styles/SignInUpForm.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
-import { setTokenTimestamp } from "../../utils/utils";
+import { setTokenTimestamp } from "../../utils/Utils";
 import axios from "axios";
 
 function SignUpForm() {
@@ -18,12 +19,11 @@ function SignUpForm() {
 
   const [signUpData, setSignUpData] = useState({
     username: "",
-    email: "", // Added email
     password1: "",
     password2: "",
   });
 
-  const { username, email, password1, password2 } = signUpData;
+  const { username, password1, password2 } = signUpData;
   const [errors, setErrors] = useState({});
 
   // Handle input changes
@@ -37,12 +37,6 @@ function SignUpForm() {
   // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    if (password1 !== password2) {
-      setErrors({ password2: ["Passwords do not match."] });
-      return;
-    }
-
     try {
       const { data } = await axios.post("/dj-rest-auth/registration/", signUpData);
       setCurrentUser(data.user);
@@ -60,24 +54,6 @@ function SignUpForm() {
           <div className={styles.FormContainer}>
             <h1 className={styles.Header}>Sign Up</h1>
             <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="email">
-                <Form.Label className="d-none">Email</Form.Label>
-                <Form.Control
-                  className={styles.Input}
-                  type="email"
-                  name="email"
-                  placeholder="Enter email"
-                  value={email}
-                  onChange={handleChange}
-                  required
-                />
-              </Form.Group>
-              {errors.email?.map((message, idx) => (
-                <Alert variant="warning" className={styles.Alert} key={idx}>
-                  {message}
-                </Alert>
-              ))}
-
               <Form.Group controlId="username">
                 <Form.Label className="d-none">Username</Form.Label>
                 <Form.Control
