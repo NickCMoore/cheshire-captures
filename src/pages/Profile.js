@@ -9,15 +9,17 @@ const ProfilePage = () => {
   const [photographer, setPhotographer] = useState(null);
   const [isBioLong, setIsBioLong] = useState(false);
   const [showFullBio, setShowFullBio] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPhotographer = async () => {
       try {
-        const { data } = await axios.get(`/api/photographers/photographers/${id}/`); // No prepending
+        const { data } = await axios.get(`/api/photographers/photographers/${id}/`);
         setPhotographer(data);
         setIsBioLong(data.bio.length > 150); // Check if bio is long
       } catch (error) {
         console.error('Error fetching photographer:', error);
+        setError('There was an issue loading the photographer details. Please try again later.');
       }
     };
     fetchPhotographer();
@@ -27,6 +29,10 @@ const ProfilePage = () => {
     setShowFullBio(!showFullBio); // Toggle between showing full bio or part of it
   };
 
+  if (error) {
+    return <p>{error}</p>;
+  }
+
   if (!photographer) return <p>Loading...</p>;
 
   return (
@@ -35,7 +41,8 @@ const ProfilePage = () => {
         <Col md={4} className="text-center">
           <Card className="p-4 shadow-sm">
             <Image
-              src={photographer.profile_image} 
+              src={photographer.profile_image}
+              alt={`${photographer.display_name}'s profile image`}  // Alt text for accessibility
               roundedCircle
               className={styles.profileImage}
             />
@@ -57,7 +64,7 @@ const ProfilePage = () => {
               {photographer.photos && photographer.photos.length > 0 ? (
                 photographer.photos.map((photo) => (
                   <Col key={photo.id} xs={12} md={6} lg={4} className="mb-3">
-                    <Image src={photo.image_url} fluid className={styles.photo} /> 
+                    <Image src={photo.image} fluid className={styles.photo} alt={photo.title} />
                   </Col>
                 ))
               ) : (
