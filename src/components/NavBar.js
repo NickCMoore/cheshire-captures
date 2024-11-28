@@ -42,6 +42,7 @@ const NavBar = () => {
         className={styles.NavLink}
         activeClassName={styles.Active}
         to="/upload-photo"
+        onClick={() => setToggleNavBar(false)}
       >
         <i className="fas fa-upload"></i>Upload Photo
       </NavLink>
