@@ -99,35 +99,33 @@ const PhotoDetails = () => {
       if (!hasLiked) {
         const response = await axios.post(`/api/photos/photos/${id}/like/`);
         if (response.status === 201) {
-          setLikeCount((prevCount) => (prevCount || 0) + 1);
+          setLikeCount((prevCount) => prevCount + 1);
+          setHasLiked(true);
         }
       } else {
         const response = await axios.post(`/api/photos/photos/${id}/unlike/`);
         if (response.status === 204) {
-          setLikeCount((prevCount) => (prevCount || 1) - 1);
+          setLikeCount((prevCount) => prevCount - 1);
           setHasLiked(false);
         }
       }
     } catch (error) {
-      console.error("Error liking/unliking the photo:", error);
+      console.error("Error liking/unliking the photo:", error.response?.data || error);
     }
   };
 
   const handleRating = async (ratingValue) => {
     try {
-      console.log(`Submitting rating: ${ratingValue} for photo: ${id}`);
-      const response = await axios.post(`/api/photos/photos/${id}/rate/`, {
+      const { data } = await axios.post(`/api/photos/photos/${id}/rate/`, {
         rating: ratingValue,
       });
-      console.log("Rating submitted successfully:", response.data);
-
       setPhoto((prevPhoto) => ({
         ...prevPhoto,
-        rating: response.data.rating,
-        rating_count: response.data.rating_count,
+        rating: data.rating,
+        rating_count: data.rating_count,
       }));
     } catch (err) {
-      console.error("Error submitting rating:", err.response || err);
+      console.error("Error submitting rating:", err.response?.data || err);
       alert("Failed to submit rating. Please try again.");
     }
   };
@@ -218,13 +216,13 @@ const PhotoDetails = () => {
             </div>
 
             <div className="mt-3 d-flex justify-content-between align-items-center mb-4">
-              <div className="d-flex align-items-center">
+              <div className="likeContainer">
                 <span className="me-2">
                   <strong>Likes:</strong> {likeCount || 0}
                 </span>
                 <Button
                   variant={hasLiked ? "danger" : "primary"}
-                  className="me-3"
+                  className="likeButton"
                   onClick={handleLike}
                 >
                   {hasLiked ? "Unlike" : "Like"}
