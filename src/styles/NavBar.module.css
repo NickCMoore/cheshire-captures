@@ -34,7 +34,6 @@
     }
 
     .NavBar a {
-        background-color: var(--magnolia);
         font-size: 1rem; 
         padding: 0px 12px; 
     }
@@ -42,6 +41,7 @@
     .NavBar i {
         font-size: 1.6rem; 
     }
+
     .navbar-brand img {
         height: 65px; 
     }
@@ -49,5 +49,18 @@
     .navbar-toggler {
         transform: scale(1.2); 
     }
+
+    .navbar-nav .dropdown-menu a {
+        color: var(--yinmn-blue);
+        padding: 10px 15px;
+        transition: color 0.3s ease, background-color 0.3s ease;
+    }
+
+    .navbar-nav .dropdown-menu a:hover {
+        color: var(--magnolia);
+        background-color: var(--yinmn-blue);
+        border-radius: 4px;
+    }
 }
+
 
