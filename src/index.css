@@ -6,7 +6,6 @@ body, html {
   width: 100%;
   font-family: "Montserrat", sans-serif;
   background-color: var(--yinmn-blue);
-  color: var(--wisteria);
 }
 
 :root {
