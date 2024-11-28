@@ -35,7 +35,7 @@ const PhotoEdit = () => {
         title,
         description,
       });
-      history.push(`/photos/${id}`);
+      history.push(`/my-photos/${id}`);
     } catch (error) {
       console.error('Error updating photo:', error);
       setError('Failed to update photo. Please try again.');
