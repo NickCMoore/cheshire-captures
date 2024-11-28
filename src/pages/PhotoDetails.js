@@ -23,8 +23,8 @@ const PhotoDetails = () => {
       try {
         const { data } = await axiosReq.get(`/api/photos/photos/${id}/`);
         setPhoto(data);
-        setLikeCount(data.likes_count);
-        setHasLiked(data.user_has_liked);
+        setLikeCount(data.likes_count || 0);
+        setHasLiked(data.user_has_liked || false);
       } catch (err) {
         setError("Photo not found.");
       }
@@ -99,13 +99,12 @@ const PhotoDetails = () => {
       if (!hasLiked) {
         const response = await axios.post(`/api/photos/photos/${id}/like/`);
         if (response.status === 201) {
-          setLikeCount((prevCount) => prevCount + 1);
-          setHasLiked(true);
+          setLikeCount((prevCount) => (prevCount || 0) + 1);
         }
       } else {
         const response = await axios.post(`/api/photos/photos/${id}/unlike/`);
         if (response.status === 204) {
-          setLikeCount((prevCount) => prevCount - 1);
+          setLikeCount((prevCount) => (prevCount || 1) - 1);
           setHasLiked(false);
         }
       }
@@ -224,7 +223,7 @@ const PhotoDetails = () => {
                 className="me-3"
                 onClick={handleLike}
               >
-                {hasLiked ? "Unlike" : "Like"} {likeCount}
+                {hasLiked ? "Unlike" : "Like"} {likeCount || 0}
               </Button>
 
               {currentUser?.username &&
