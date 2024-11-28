@@ -29,6 +29,7 @@
 
 @media (max-width: 768px) {
     .NavBar {
+        background-color: var(--magnolia);
         height: 60px; 
         padding: 0px 10px; 
     }
