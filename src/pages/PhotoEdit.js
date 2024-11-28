@@ -48,7 +48,7 @@ const PhotoEdit = () => {
 
     try {
       await axiosRes.delete(`/api/photos/photos/${id}/`);
-      history.push('/gallery');
+      history.push('/my-photos');
     } catch (error) {
       console.error('Error deleting photo:', error);
       setError('Failed to delete photo. Please try again.');
