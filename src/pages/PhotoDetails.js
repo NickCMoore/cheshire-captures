@@ -219,7 +219,7 @@ const PhotoDetails = () => {
 
             <div className="mt-3 d-flex justify-content-between align-items-center mb-4">
               <div className="d-flex align-items-center">
-                <span className="me-2">
+                <span className="me-4"> {/* Added more spacing using `me-4` */}
                   <strong>Likes:</strong> {likeCount || 0}
                 </span>
                 <Button
@@ -227,7 +227,8 @@ const PhotoDetails = () => {
                   className="me-3"
                   onClick={handleLike}
                 >
-                  {hasLiked ? "Unlike" : "Like"}
+                  <i className={`bi ${hasLiked ? "bi-hand-thumbs-up-fill" : "bi-hand-thumbs-up"}`}></i> {/* Thumbs-Up Icon */}
+                  {hasLiked ? " Unlike" : " Like"} {/* Space before text */}
                 </Button>
               </div>
 
