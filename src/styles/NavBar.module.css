@@ -29,14 +29,13 @@
 
 @media (max-width: 768px) {
     .NavBar {
-        height: 90px; 
-        padding: 15px 20px; 
+        height: 60px; 
+        padding: 0px 10px; 
     }
 
     .NavBar a {
-        background-color: var(--magnolia);
         font-size: 1rem; 
-        padding: 1px 12px; 
+        padding: 0px 12px; 
     }
 
     .NavBar i {
