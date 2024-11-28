@@ -1,58 +1,112 @@
 .AboutPage {
-    background-color: #f3eaf4;
-    color: var(--yinmn-blue); 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    min-height: calc(100vh - 160px); 
-    margin-top: 40px; 
-    margin-bottom: 40px; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
+  background-color: #f3eaf4;
+  color: var(--yinmn-blue); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: calc(100vh - 160px); 
+  margin-top: 40px; 
+  margin-bottom: 40px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+p {
+  font-size: 1.2rem;
+  color: var(--yinmn-blue);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.AboutContainer {
+  min-height: 100vh; 
+  background-color: var(--rich-black); 
+  color: #fff;
+  padding: 20px;
+}
+
+.Container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #374a67ff; 
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.Header {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: var(--lavender-blush);
+}
+
+p {
+  font-size: 1.2rem;
+  color: var(--yinmn-blue);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* Media Queries for Mobile */
+@media (max-width: 768px) {
+  .AboutPage {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      padding: 10px;
   }
 
-  p {
-    font-size: 1.2rem;
-    color: var(--yinmn-blue);
-    line-height: 1.6;
-    margin-bottom: 20px;
-  }
-
-  .AboutContainer {
-    min-height: 100vh; 
-    background-color: var(--rich-black); 
-    color: #fff;
-    padding: 20px;
-  }
-  
   .Container {
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: #374a67ff; 
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
   }
-  
+
   .Header {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+      font-size: 2rem;
+      text-align: center;
   }
-  
+
   h2 {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-    color: var(--lavender-blush);
+      font-size: 1.5rem;
+      text-align: center;
   }
-  
+
   p {
-    font-size: 1.2rem;
-    color: var(--yinmn-blue);
-    line-height: 1.6;
-    margin-bottom: 20px;
+      font-size: 1rem;
+      line-height: 1.4;
   }
-  
+}
+
+@media (max-width: 480px) {
+  .AboutPage {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      padding: 5px;
+  }
+
+  .Container {
+      padding: 15px;
+  }
+
+  .Header {
+      font-size: 1.8rem;
+      text-align: center;
+  }
+
+  h2 {
+      font-size: 1.3rem;
+      text-align: center;
+  }
+
+  p {
+      font-size: 0.9rem;
+      line-height: 1.3;
+  }
+}
