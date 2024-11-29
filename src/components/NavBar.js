@@ -55,15 +55,7 @@ const NavBar = () => {
       >
         <i className="fas fa-users"></i>Popular Photographers
       </NavLink>
-      <NavLink
-        exact
-        className={styles.NavLink}
-        activeClassName={styles.Active}
-        to={`/profile/${currentUser?.photographer_id}`}
-        onClick={() => setToggleNavBar(false)}
-      >
-        <i className="fas fa-user"></i>Profile
-      </NavLink>
+      {/* Removed Profile Link */}
       <NavLink
         exact
         className={styles.NavLink}
@@ -83,6 +75,7 @@ const NavBar = () => {
       </NavLink>
     </>
   );
+  
 
   const loggedOutIcons = (
     <>

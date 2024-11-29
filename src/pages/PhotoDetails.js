@@ -114,22 +114,6 @@ const PhotoDetails = () => {
     }
   };
 
-  const handleRating = async (ratingValue) => {
-    try {
-      const { data } = await axios.post(`/api/photos/photos/${id}/rate/`, {
-        rating: ratingValue,
-      });
-      setPhoto((prevPhoto) => ({
-        ...prevPhoto,
-        rating: data.rating,
-        rating_count: data.rating_count,
-      }));
-    } catch (err) {
-      console.error("Error submitting rating:", err.response?.data || err);
-      alert("Failed to submit rating. Please try again.");
-    }
-  };
-
   const handleDelete = async () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this photo?");
     if (!confirmDelete) return;
@@ -179,74 +163,40 @@ const PhotoDetails = () => {
           <div className="p-3 bg-light">
             <h2 className="text-primary">{photo.title}</h2>
             <p className="text-dark">{photo.description}</p>
-            <p>
-              <strong>Photographer:</strong>{" "}
-              <Link to={`/profile/${photo.photographer_id}`}>
-                {photo.photographer_display_name}
-              </Link>
-            </p>
-            <p>
-              <strong>Tags:</strong> {photo.tags.map((tag) => tag.name).join(", ")}
-            </p>
 
-            <div className="mt-4">
-              <h4>Rate this photo:</h4>
-              <div>
-                {[1, 2, 3, 4, 5].map((value) => (
-                  <span
-                    key={value}
-                    onClick={() => handleRating(value)}
-                    style={{
-                      cursor: "pointer",
-                      color: value <= photo.rating ? "gold" : "gray",
-                      fontSize: "1.5rem",
-                    }}
-                    role="button"
-                    aria-label={`Rate ${value} star${value > 1 ? "s" : ""}`}
-                  >
-                    ★
-                  </span>
-                ))}
-              </div>
-              {photo.rating && (
-                <p className="mt-2">
-                  <strong>Average Rating:</strong> {photo.rating.toFixed(1)} ({photo.rating_count} ratings)
-                </p>
-              )}
-            </div>
-
-            <div className="mt-3 d-flex justify-content-between align-items-center mb-4">
-              <div className="likeContainer">
-                <span className="me-2">
-                  <strong>Likes:</strong> {likeCount || 0}
-                </span>
-                <Button
-                  variant={hasLiked ? "danger" : "primary"}
-                  className="likeButton"
-                  onClick={handleLike}
-                >
-                  {hasLiked ? "Unlike" : "Like"}
-                </Button>
-              </div>
-
-              {currentUser?.username &&
-                photo.photographer_display_name &&
-                currentUser.username.toLowerCase() ===
-                  photo.photographer_display_name.toLowerCase() && (
-                  <div className="d-flex gap-3">
-                    <Button variant="warning" as={Link} to={`/photos/${id}/edit`}>
-                      Edit Photo
-                    </Button>
-                    <Button variant="danger" onClick={handleDelete}>
-                      Delete Photo
-                    </Button>
-                  </div>
-                )}
-
-              <Button variant="secondary" onClick={handleBackToGallery}>
-                Back to Gallery
+            <div className="mt-3 text-center">
+              <p className="mb-1">
+                <strong>Likes:</strong> {likeCount || 0}
+              </p>
+              <Button
+                variant={hasLiked ? "danger" : "primary"}
+                onClick={handleLike}
+              >
+                {hasLiked ? "Unlike" : "Like"}
               </Button>
             </div>
+
+            {currentUser?.username &&
+              photo.photographer_display_name &&
+              currentUser.username.toLowerCase() ===
+                photo.photographer_display_name.toLowerCase() && (
+                <div className="d-flex justify-content-center gap-3 mt-4">
+                  <Button variant="warning" as={Link} to={`/photos/${id}/edit`}>
+                    Edit Photo
+                  </Button>
+                  <Button variant="danger" onClick={handleDelete}>
+                    Delete Photo
+                  </Button>
+                </div>
+              )}
+
+            <Button
+              variant="secondary"
+              onClick={handleBackToGallery}
+              className="mt-3"
+            >
+              Back to Gallery
+            </Button>
 
             <hr />
             <h4>Comments</h4>
@@ -262,8 +212,12 @@ const PhotoDetails = () => {
                         value={editComment}
                         onChange={(e) => setEditComment(e.target.value)}
                       />
-                      <Button onClick={() => handleEditComment(comment.id)}>Save</Button>
-                      <Button onClick={() => setEditingCommentId(null)}>Cancel</Button>
+                      <Button onClick={() => handleEditComment(comment.id)}>
+                        Save
+                      </Button>
+                      <Button onClick={() => setEditingCommentId(null)}>
+                        Cancel
+                      </Button>
                     </>
                   ) : (
                     <p>
@@ -304,7 +258,9 @@ const PhotoDetails = () => {
                     placeholder="Write your comment here..."
                   />
                 </Form.Group>
-                <Button type="submit">Post Comment</Button>
+                <Button type="submit" className="mt-2">
+                  Post Comment
+                </Button>
               </Form>
             ) : (
               <p>
