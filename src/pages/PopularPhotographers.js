@@ -9,7 +9,7 @@ const PopularPhotographers = () => {
   const [photographers, setPhotographers] = useState([]);
   const [filteredPhotographers, setFilteredPhotographers] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const currentUser = useCurrentUser(); 
+  const currentUser = useCurrentUser();
 
   useEffect(() => {
     const fetchPhotographers = async () => {
