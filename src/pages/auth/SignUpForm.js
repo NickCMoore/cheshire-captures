@@ -1,5 +1,6 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
@@ -9,13 +10,12 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import styles from "../../styles/SignInUpForm.module.css";
 import btnStyles from "../../styles/Button.module.css";
-import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
-import { setTokenTimestamp } from "../../utils/utils";
 import axios from "axios";
+import { useRedirect } from "../../hooks/UseRedirect";
 
-function SignUpForm() {
-  const setCurrentUser = useSetCurrentUser();
-  const history = useHistory();
+const SignUpForm = () => {
+
+  useRedirect('loggedIn');
 
   const [signUpData, setSignUpData] = useState({
     username: "",
@@ -25,6 +25,8 @@ function SignUpForm() {
 
   const { username, password1, password2 } = signUpData;
   const [errors, setErrors] = useState({});
+
+  const history = useHistory();
 
   // Handle input changes
   const handleChange = (e) => {
@@ -38,12 +40,10 @@ function SignUpForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await axios.post("/dj-rest-auth/registration/", signUpData);
-      setCurrentUser(data.user);
-      setTokenTimestamp(data);
+      await axios.post("/dj-rest-auth/registration/", signUpData);
       history.push("/signin/");
     } catch (err) {
-      setErrors(err.response?.data || {});
+      setErrors(err.response?.data)
     }
   };
 
