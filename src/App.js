@@ -20,7 +20,6 @@ import PhotoEdit from './pages/PhotoEdit';
 import ChangePassword from './pages/auth/ChangePassword';
 import FollowingList from './pages/FollowerList';
 
-
 function App() {
   const currentUser = useCurrentUser();
 
@@ -34,27 +33,31 @@ function App() {
           <Route exact path="/photos/:id" component={PhotoDetails} />
           <Route exact path="/popular-photographers" component={PopularPhotographers} />
           <Route exact path="/about" component={AboutPage} />
-          <Route path="/profile/:id/edit" component={ProfileEdit} />
+
+          <Route
+            path="/profile/:id/edit"
+            render={() =>
+              currentUser ? <ProfileEdit /> : <Redirect to="/signin" />
+            }
+          />
+          <Route
+            exact
+            path="/profile/:id"
+            render={() =>
+              currentUser ? <Profile /> : <Redirect to="/signin" />
+            }
+          />
+          <Route
+            path="/profile/:id/followers"
+            render={() =>
+              currentUser ? <FollowingList /> : <Redirect to="/signin" />
+            }
+          />
           <Route
             exact
             path="/my-photos"
             render={() =>
               currentUser ? <MyPhotos /> : <Redirect to="/signin" />
-            }
-          />
-
-          <Route
-            exact
-            path="/signin"
-            render={() =>
-              currentUser ? <Redirect to="/" /> : <SignInForm />
-            }
-          />
-          <Route
-            exact
-            path="/signup"
-            render={() =>
-              currentUser ? <Redirect to="/" /> : <SignUpForm />
             }
           />
           <Route
@@ -79,16 +82,17 @@ function App() {
             }
           />
           <Route
-            path="/profile/:id/followers"
+            exact
+            path="/signin"
             render={() =>
-              currentUser ? <FollowingList /> : <Redirect to="/signin" />
+              currentUser ? <Redirect to="/" /> : <SignInForm />
             }
           />
           <Route
             exact
-            path="/profile/:id"
+            path="/signup"
             render={() =>
-              currentUser ? <Profile /> : <Redirect to="/signin" />
+              currentUser ? <Redirect to="/" /> : <SignUpForm />
             }
           />
           <Route render={() => <Redirect to="/" />} />
