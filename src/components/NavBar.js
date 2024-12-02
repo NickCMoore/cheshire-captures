@@ -68,7 +68,7 @@ const NavBar = () => {
         exact
         className={styles.NavLink}
         activeClassName={styles.Active}
-        to="/my-photos"
+        to="/profile/:id/edit"
         onClick={() => setToggleNavBar(false)}
       >
         <i className="fas fa-camera"></i>My Photos
@@ -100,17 +100,17 @@ const NavBar = () => {
         id="basic-nav-dropdown"
         aria-label="User dropdown" // Added aria-label for better accessibility
       >
-        <NavDropdown.Item 
+        <NavDropdown.Item
           id={styles.dropdownItem}
-          as={Link} 
+          as={Link}
           to="/signin"
           onClick={() => setToggleNavBar(false)}
         >
           <i className="fas fa-sign-in-alt"></i>Sign in
         </NavDropdown.Item>
-        <NavDropdown.Item 
+        <NavDropdown.Item
           id={styles.dropdownItem}
-          as={Link} 
+          as={Link}
           to="/signup"
           onClick={() => setToggleNavBar(false)}
         >
@@ -121,9 +121,9 @@ const NavBar = () => {
   );
 
   return (
-    <Navbar 
-      className={styles.NavBar} 
-      expand="md" 
+    <Navbar
+      className={styles.NavBar}
+      expand="md"
       fixed="top"
       expanded={toggleNavBar}
       collapseOnSelect
@@ -134,9 +134,9 @@ const NavBar = () => {
               <img src={logo} alt="logo" height="50"/>
           </Navbar.Brand>
         </NavLink>
-        <Navbar.Toggle 
+        <Navbar.Toggle
           onClick={() => setToggleNavBar(!toggleNavBar)}
-          aria-controls="basic-navbar-nav" 
+          aria-controls="basic-navbar-nav"
         />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
