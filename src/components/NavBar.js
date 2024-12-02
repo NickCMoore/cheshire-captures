@@ -55,7 +55,15 @@ const NavBar = () => {
       >
         <i className="fas fa-users"></i>Popular Photographers
       </NavLink>
-      {/* Removed Profile Link */}
+      <NavLink
+        exact
+        className={styles.NavLink}
+        activeClassName={styles.Active}
+        to="/profile"
+        onClick={() => setToggleNavBar(false)}
+      >
+        <i className="fas fa-user-circle"></i>Profile
+      </NavLink>
       <NavLink
         exact
         className={styles.NavLink}
@@ -75,7 +83,6 @@ const NavBar = () => {
       </NavLink>
     </>
   );
-  
 
   const loggedOutIcons = (
     <>
@@ -88,7 +95,7 @@ const NavBar = () => {
       >
         <i className="fas fa-info-circle"></i>About
       </NavLink>
-      <NavDropdown 
+      <NavDropdown
         title={<span><i className="fas fa-user-alt ml-5"></i></span>}
         id="basic-nav-dropdown"
         aria-label="User dropdown" // Added aria-label for better accessibility
