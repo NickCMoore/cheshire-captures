@@ -11,8 +11,6 @@ import styles from '../styles/NavBar.module.css';
 const NavBar = () => {
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
-  console.log("current user photographer id =",currentUser?.photographer_id)
-  console.log("current user  =",currentUser)
   const history = useHistory();
   const [toggleNavBar, setToggleNavBar] = useState(false);
 
