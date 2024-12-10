@@ -1,6 +1,8 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "https://cheshire-captures-backend-084aac6d9023.herokuapp.com/";
+// Set the base URL directly to the CodeInstitute backend address
+axios.defaults.baseURL = "https://8000-nickcmoore-cheshirecapt-7hlvafv7oid.ws.codeinstitute-ide.net/";
+
 axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
 axios.defaults.withCredentials = true;
 

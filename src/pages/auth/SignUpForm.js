@@ -1,6 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
@@ -14,8 +13,7 @@ import axios from "axios";
 import { useRedirect } from "../../hooks/UseRedirect";
 
 const SignUpForm = () => {
-
-  useRedirect('loggedIn');
+  useRedirect("loggedIn");
 
   const [signUpData, setSignUpData] = useState({
     username: "",
@@ -25,7 +23,6 @@ const SignUpForm = () => {
 
   const { username, password1, password2 } = signUpData;
   const [errors, setErrors] = useState({});
-
   const history = useHistory();
 
   // Handle input changes
@@ -43,7 +40,7 @@ const SignUpForm = () => {
       await axios.post("/dj-rest-auth/registration/", signUpData);
       history.push("/signin");
     } catch (err) {
-      setErrors(err.response?.data)
+      setErrors(err.response?.data || { non_field_errors: ["Something went wrong. Please try again."] });
     }
   };
 
@@ -118,7 +115,11 @@ const SignUpForm = () => {
                 <Alert variant="warning" className={`${styles.Alert} mt-3`} key={idx}>
                   {message}
                 </Alert>
-              ))}
+              )) || (
+                <Alert variant="warning" className={`${styles.Alert} mt-3`}>
+                  Something went wrong. Please try again later.
+                </Alert>
+              )}
             </Form>
 
             <Row className="d-flex justify-content-center mt-3">
@@ -132,6 +133,6 @@ const SignUpForm = () => {
       </Row>
     </Container>
   );
-}
+};
 
 export default SignUpForm;
