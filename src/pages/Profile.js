@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Container, Row, Col, Card, Image, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Image } from 'react-bootstrap';
 import styles from '../styles/Profile.module.css';
 
 const ProfilePage = () => {
   const { id } = useParams();
   const [photographer, setPhotographer] = useState(null);
-  const [isBioLong, setIsBioLong] = useState(false);
-  const [showFullBio, setShowFullBio] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -16,7 +14,6 @@ const ProfilePage = () => {
       try {
         const { data } = await axios.get(`/api/photographers/photographers/${id}/`);
         setPhotographer(data);
-        setIsBioLong(data.bio.length > 150); // Check if bio is long
       } catch (error) {
         console.error('Error fetching photographer:', error);
         setError('There was an issue loading the photographer details. Please try again later.');
@@ -24,10 +21,6 @@ const ProfilePage = () => {
     };
     fetchPhotographer();
   }, [id]);
-
-  const toggleBio = () => {
-    setShowFullBio(!showFullBio); // Toggle between showing full bio or part of it
-  };
 
   if (error) {
     return <p>{error}</p>;
@@ -48,13 +41,8 @@ const ProfilePage = () => {
             />
             <h2 className={styles.blueHeading}>{photographer.display_name}</h2>
             <p className={`${styles.bio} mt-2`}>
-              {showFullBio || !isBioLong ? photographer.bio : `${photographer.bio.slice(0, 150)}...`}
+              {photographer.bio}
             </p>
-            {isBioLong && (
-              <Button variant="link" onClick={toggleBio}>
-                {showFullBio ? 'Show less' : 'Show more'}
-              </Button>
-            )}
           </Card>
         </Col>
         <Col md={8}>
