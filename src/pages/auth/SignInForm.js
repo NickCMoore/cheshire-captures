@@ -43,17 +43,20 @@ function SignInForm() {
     setIsLoading(true);
     try {
       const { data } = await axios.post("/dj-rest-auth/login/", signInData);
-
+  
+      // Log the API response to debug
+      console.log("Login response:", data);
+  
       if (data && isMounted.current) {
         const accessToken = data.access_token;
         const refreshToken = data.refresh_token;
-
+  
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
-
+  
         setCurrentUser(data.user);
         axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-
+  
         history.push(`/profile/${data.user.photographer_id}`);
       }
     } catch (err) {
@@ -66,6 +69,7 @@ function SignInForm() {
       }
     }
   };
+  
 
   return (
     <Container fluid className={styles.Background}>
