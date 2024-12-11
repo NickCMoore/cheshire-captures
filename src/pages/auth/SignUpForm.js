@@ -36,10 +36,12 @@ const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("/dj-rest-auth/registration/", signUpData);
-      history.push("/signin");
+      const { data } = await axios.post("/dj-rest-auth/registration/", signUpData);
+      setCurrentUser(data.user);
+      setTokenTimestamp(data);
+      history.push("/signin/");
     } catch (err) {
-      setErrors(err.response?.data || { non_field_errors: ["Something went wrong. Please try again."] });
+      setErrors(err.response?.data || {});
     }
   };
 
