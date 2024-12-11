@@ -1,77 +1,75 @@
-// React imports
+import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import { useState } from "react";
-// Bootstrap imports
+import { useState, useEffect, useRef } from "react";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
-// CSS imports
 import styles from "../../styles/SignInUpForm.module.css";
 import btnStyles from "../../styles/Button.module.css";
-// Component imports
 import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
-// Axios imports
 import axios from "axios";
 
-
 function SignInForm() {
+  const setCurrentUser = useSetCurrentUser();
+  const [signInData, setSignInData] = useState({
+    username: "",
+    password: "",
+  });
+  const { username, password } = signInData;
+  const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const history = useHistory();
 
-    const setCurrentUser = useSetCurrentUser();
+  const isMounted = useRef(true);
 
-    const [signInData, setSignInData] = useState({
-        username: '',
-        password: '',
-      });
-
-    const {username, password} = signInData;
-    const [errors, setErrors] = useState({});
-    const [isLoading] = useState(false);
-    const history = useHistory();
-
-    const handleChange = (e) => {
-        setSignInData({
-          ...signInData,
-          [e.target.name]: e.target.value,
-        });
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
     };
+  }, []);
 
-    const handleSubmit = async (event) => {
-      event.preventDefault();
-      try {
-          // Log in and get the token
-          const { data } = await axios.post('/dj-rest-auth/login/', signInData);
-  
-          // Save the token (localStorage for this example)
-          localStorage.setItem('authToken', data.key);
-  
-          // Fetch user details
-          const userResponse = await axios.get('/dj-rest-auth/user/', {
-              headers: {
-                  Authorization: `Token ${data.key}`, // Include the token in the request header
-              },
-          });
-  
-          // Set the current user
-          setCurrentUser(userResponse.data);
-  
-          // Redirect the user
-          history.goBack();
-      } catch (err) {
-          setErrors(err.response?.data);
-      }
+  const handleChange = (e) => {
+    setSignInData({
+      ...signInData,
+      [e.target.name]: e.target.value,
+    });
   };
-  
-  
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setIsLoading(true);
+    try {
+      const { data } = await axios.post("/dj-rest-auth/login/", signInData);
+
+      if (data && isMounted.current) {
+        const accessToken = data.access_token;
+        const refreshToken = data.refresh_token;
+
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+
+        setCurrentUser(data.user);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+
+        history.push(`/profile/${data.user.photographer_id}`);
+      }
+    } catch (err) {
+      if (isMounted.current) {
+        setErrors(err.response?.data || {});
+      }
+    } finally {
+      if (isMounted.current) {
+        setIsLoading(false);
+      }
+    }
+  };
 
   return (
     <Container fluid className={styles.Background}>
-      <Row
-        className="d-flex justify-content-center align-items-center"
-        style={{ height: "100vh" }}
-      >
+      <Row className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
         <Col xs={12} md={6} lg={4}>
           <div className={styles.FormContainer}>
             <h1 className={styles.Header}>Sign In</h1>
@@ -86,7 +84,6 @@ function SignInForm() {
                   value={username}
                   onChange={handleChange}
                   required
-                  autoComplete="username" // Added autocomplete
                 />
               </Form.Group>
               {errors.username?.map((message, idx) => (
@@ -105,7 +102,6 @@ function SignInForm() {
                   value={password}
                   onChange={handleChange}
                   required
-                  autoComplete="current-password" // Added autocomplete
                 />
               </Form.Group>
               {errors.password?.map((message, idx) => (
@@ -120,16 +116,12 @@ function SignInForm() {
                   type="submit"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Signing In..." : "Sign In"}
+                  {isLoading ? 'Signing In...' : 'Sign In'}
                 </Button>
               </Row>
 
               {errors.non_field_errors?.map((message, idx) => (
-                <Alert
-                  variant="warning"
-                  className={`${styles.Alert} mt-3`}
-                  key={idx}
-                >
+                <Alert variant="warning" className={`${styles.Alert} mt-3`} key={idx}>
                   {message}
                 </Alert>
               ))}
