@@ -9,10 +9,14 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import styles from "../../styles/SignInUpForm.module.css";
 import btnStyles from "../../styles/Button.module.css";
+import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
+import { setTokenTimestamp } from "../../utils/utils";
 import axios from "axios";
 
 
-const SignUpForm = () => {
+function SignUpForm() {
+  const setCurrentUser = useSetCurrentUser();
+  const history = useHistory();
 
   const [signUpData, setSignUpData] = useState({
     username: "",
@@ -22,7 +26,6 @@ const SignUpForm = () => {
 
   const { username, password1, password2 } = signUpData;
   const [errors, setErrors] = useState({});
-  const history = useHistory();
 
   // Handle input changes
   const handleChange = (e) => {
