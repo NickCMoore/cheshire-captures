@@ -65,6 +65,7 @@ function SignUpForm() {
                   value={username}
                   onChange={handleChange}
                   required
+                  autoComplete="new-password" // Added autocomplete
                 />
               </Form.Group>
               {errors.username?.map((message, idx) => (
@@ -83,6 +84,7 @@ function SignUpForm() {
                   value={password1}
                   onChange={handleChange}
                   required
+                  autoComplete="new-password" // Added autocomplete
                 />
               </Form.Group>
               {errors.password1?.map((message, idx) => (
@@ -101,6 +103,7 @@ function SignUpForm() {
                   value={password2}
                   onChange={handleChange}
                   required
+                  autoComplete="new-password" // Added autocomplete
                 />
               </Form.Group>
               {errors.password2?.map((message, idx) => (
