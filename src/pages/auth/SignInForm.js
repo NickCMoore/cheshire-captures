@@ -44,31 +44,29 @@ function SignInForm() {
     try {
       const { data } = await axios.post("/dj-rest-auth/login/", signInData);
   
-      // Log the API response to debug
-      console.log("Login response:", data);
-  
-      if (data && isMounted.current) {
-        const accessToken = data.access_token;
-        const refreshToken = data.refresh_token;
-  
+      if (data) {
+        const accessToken = data.key;
         localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
+        axios.defaults.headers.common["Authorization"] = `Token ${accessToken}`;
   
-        setCurrentUser(data.user);
-        axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+        // Fetch user details after successful login
+        const userResponse = await axios.get("/dj-rest-auth/user/");
+        const userData = userResponse.data;
   
-        history.push(`/profile/${data.user.photographer_id}`);
+        // Set current user in context
+        setCurrentUser(userData);
+  
+        // Redirect to profile
+        history.push(`/profile/${userData.photographer_id}`);
       }
     } catch (err) {
-      if (isMounted.current) {
-        setErrors(err.response?.data || {});
-      }
+      setErrors(err.response?.data || {});
     } finally {
-      if (isMounted.current) {
-        setIsLoading(false);
-      }
+      setIsLoading(false);
     }
   };
+  
+  
   
 
   return (
