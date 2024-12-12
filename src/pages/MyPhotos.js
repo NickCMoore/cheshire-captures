@@ -9,15 +9,24 @@ const MyPhotos = () => {
   const [photos, setPhotos] = useState([]);
   const [filteredPhotos, setFilteredPhotos] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isLoading, setIsLoading] = useState(true); // Loading state for better UX
+  const [error, setError] = useState(null); // Error handling state
 
   useEffect(() => {
     const fetchMyPhotos = async () => {
       try {
         const { data } = await axiosReq.get('/api/photos/photos/my_photos/');
-        setPhotos(data.results);
-        setFilteredPhotos(data.results);
+        if (data && data.results) {
+          setPhotos(data.results);
+          setFilteredPhotos(data.results);
+        } else {
+          setError('No photos available.');
+        }
       } catch (error) {
         console.error('Error fetching my photos:', error);
+        setError('Error fetching photos, please try again later.');
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -36,12 +45,18 @@ const MyPhotos = () => {
     }
   }, [searchQuery, photos]);
 
+  if (isLoading) {
+    return <div>Loading photos...</div>;
+  }
+
   return (
     <Container className={styles.myPhotosContainer}>
       <h2 className="my-4">My Photos</h2>
       <SearchBar onSearch={setSearchQuery} /> {/* Add the SearchBar */}
+      {error && <p className="text-danger">{error}</p>} {/* Display error if any */}
+
       <Row>
-        {filteredPhotos.length > 0 ? (
+        {filteredPhotos && filteredPhotos.length > 0 ? (
           filteredPhotos.map((photo) => (
             <Col key={photo.id} md={4} className="mb-4">
               <Card className={`shadow-sm ${styles.photoCard}`}>
