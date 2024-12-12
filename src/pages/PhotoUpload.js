@@ -9,7 +9,7 @@ const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
 const PhotoUpload = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState({ file: null, previewUrl: '' });
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
@@ -24,22 +24,22 @@ const PhotoUpload = () => {
       // Check file type
       if (!validTypes.includes(file.type)) {
         setError('Please upload a valid image file (JPEG or PNG).');
-        setImage(null); // Reset the image state if file is invalid
+        setImage({ file: null, previewUrl: '' }); // Reset image state if file is invalid
         return;
       }
 
       // Check file size
       if (file.size > MAX_FILE_SIZE) {
         setError('File size exceeds 10 MB. Please choose a smaller file.');
-        setImage(null); // Reset the image state if file is too large
+        setImage({ file: null, previewUrl: '' }); // Reset image state if file is too large
         return;
       }
 
       // Clear previous errors and update image preview
       setError('');
       setImage({
-        ...image,
-        image: URL.createObjectURL(file),
+        file,
+        previewUrl: URL.createObjectURL(file), // Set preview URL for the selected file
       });
     }
   };
@@ -54,12 +54,12 @@ const PhotoUpload = () => {
     formData.append('title', title);
     formData.append('description', description);
 
-    if (imageInput?.current?.files[0]) {
-      formData.append('image', imageInput.current.files[0]);
+    if (image.file) {
+      formData.append('image', image.file);
     }
 
     setIsLoading(true);
-    setError('');
+    setError(''); // Reset errors before submitting
 
     try {
       await axiosReq.post('/api/photos/photos/', formData);
@@ -117,10 +117,18 @@ const PhotoUpload = () => {
               disabled={isLoading}
               className="mb-3"
             >
-              {image ? 'Change Image' : 'Choose an Image'}
+              {image.previewUrl ? 'Change Image' : 'Choose an Image'}
             </Button>
-            {image && (
-              <p className="text-muted">{imageInput.current?.files[0]?.name}</p>
+            {image.previewUrl && (
+              <div className="mb-3">
+                <img
+                  src={image.previewUrl}
+                  alt="Selected"
+                  style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                  className="mb-2"
+                />
+                <p className="text-muted">{image.file.name}</p>
+              </div>
             )}
           </Form.Group>
 
