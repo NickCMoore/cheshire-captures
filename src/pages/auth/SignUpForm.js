@@ -10,9 +10,7 @@ import Container from "react-bootstrap/Container";
 import styles from "../../styles/SignInUpForm.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
-import { setTokenTimestamp } from "../../utils/utils";
 import axios from "axios";
-
 
 function SignUpForm() {
   const setCurrentUser = useSetCurrentUser();
@@ -35,21 +33,19 @@ function SignUpForm() {
     });
   };
 
-// Handle form submission
-const handleSubmit = async (event) => {
-  event.preventDefault();
-  try {
-    const { data } = await axios.post("/dj-rest-auth/registration/", signUpData);
-    setCurrentUser(data.user);
-    setTokenTimestamp(data);
-    
-    // Redirect to the profile page after successful registration
-    history.push(`/profile/${data.user.username}`);
-  } catch (err) {
-    setErrors(err.response?.data || {});
-  }
-};
-
+  // Handle form submission
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const { data } = await axios.post("/dj-rest-auth/registration/", signUpData);
+      setCurrentUser(data.user);
+      
+      // Redirect to the profile page after successful registration
+      history.push(`/profile/${data.user.username}`);
+    } catch (err) {
+      setErrors(err.response?.data || {});
+    }
+  };
 
   return (
     <Container fluid className={styles.Background}>
