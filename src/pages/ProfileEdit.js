@@ -26,9 +26,7 @@ const ProfileEdit = () => {
   const [twitter, setTwitter] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [profileImage, setProfileImage] = useState(null); // For new profile image
 
   useEffect(() => {
     const fetchPhotographer = async () => {
@@ -56,15 +54,25 @@ const ProfileEdit = () => {
   const handleProfileUpdate = async (event) => {
     event.preventDefault();
 
+    const formData = new FormData();
+    formData.append("display_name", displayName);
+    formData.append("bio", bio);
+    formData.append("website", website);
+    formData.append("instagram", instagram);
+    formData.append("twitter", twitter);
+
+    if (profileImage) {
+      formData.append("profile_image", profileImage); // Append profile image if selected
+    }
+
     try {
       const { data } = await axios.put(
         `/api/photographers/photographers/${id}/`,
+        formData,
         {
-          display_name: displayName,
-          bio,
-          website,
-          instagram,
-          twitter,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
       setPhotographer(data);
@@ -76,28 +84,9 @@ const ProfileEdit = () => {
     }
   };
 
-  const handleChangePassword = async (e) => {
-    e.preventDefault();
-
-    if (newPassword !== confirmNewPassword) {
-      setErrorMessage("New passwords do not match.");
-      return;
-    }
-
-    try {
-      await axios.post("/dj-rest-auth/password/change/", {
-        old_password: currentPassword,
-        new_password1: newPassword,
-        new_password2: confirmNewPassword,
-      });
-      setSuccessMessage("Password changed successfully.");
-      setErrorMessage("");
-      setCurrentPassword("");
-      setNewPassword("");
-      setConfirmNewPassword("");
-    } catch (error) {
-      setErrorMessage("Error changing password.");
-      console.error("Error changing password:", error);
+  const handleImageChange = (e) => {
+    if (e.target.files.length > 0) {
+      setProfileImage(e.target.files[0]); // Set the selected image file
     }
   };
 
@@ -124,6 +113,17 @@ const ProfileEdit = () => {
                       alt="Profile"
                     />
                   </div>
+
+                  <Form.Group controlId="profileImage" className="mb-3">
+                    <Form.Label className={styles.formLabel}>
+                      Upload Profile Image
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                    />
+                  </Form.Group>
 
                   <Form.Group controlId="displayName" className="mb-3">
                     <Form.Label className={styles.formLabel}>
@@ -192,73 +192,6 @@ const ProfileEdit = () => {
                     Save Changes
                   </Button>
                 </Form>
-              </Card>
-            </Col>
-
-            <Col lg={6}>
-              <Card className={`p-4 shadow ${styles.profileCard}`}>
-                <h3 className={styles.profileHeading}>Change Password</h3>
-                {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-                <Form onSubmit={handleChangePassword}>
-                  {/* Hidden Username Field for Accessibility */}
-                  <Form.Group controlId="username" className="d-none">
-                    <Form.Label className="visually-hidden">Username</Form.Label>
-                    <Form.Control
-                      type="text"
-                      value={currentUser?.username || ''}
-                      readOnly
-                      tabIndex={-1}
-                      autoComplete="username"
-                    />
-                  </Form.Group>
-
-                  {/* Current Password Field */}
-                  <Form.Group controlId="currentPassword" className="mb-3">
-                    <Form.Label className={styles.formLabel}>Current Password</Form.Label>
-                    <Form.Control
-                      type="password"
-                      placeholder="Enter current password"
-                      value={currentPassword}
-                      onChange={(e) => setCurrentPassword(e.target.value)}
-                      required
-                      autoComplete="current-password"
-                    />
-                  </Form.Group>
-
-                  {/* New Password Field */}
-                  <Form.Group controlId="newPassword" className="mb-3">
-                    <Form.Label className={styles.formLabel}>New Password</Form.Label>
-                    <Form.Control
-                      type="password"
-                      placeholder="Enter new password"
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
-                      required
-                      autoComplete="new-password"
-                    />
-                  </Form.Group>
-
-                  {/* Confirm New Password Field */}
-                  <Form.Group controlId="confirmNewPassword" className="mb-3">
-                    <Form.Label className={styles.formLabel}>Confirm New Password</Form.Label>
-                    <Form.Control
-                      type="password"
-                      placeholder="Confirm new password"
-                      value={confirmNewPassword}
-                      onChange={(e) => setConfirmNewPassword(e.target.value)}
-                      required
-                      autoComplete="new-password"
-                    />
-                  </Form.Group>
-
-                  <Button
-                    className={`${btnStyles.Button} w-100`}
-                    type="submit"
-                  >
-                    Change Password
-                  </Button>
-                </Form>
-
               </Card>
             </Col>
           </Row>
