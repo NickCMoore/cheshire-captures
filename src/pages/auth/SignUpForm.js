@@ -39,6 +39,8 @@ function SignUpForm() {
     event.preventDefault();
     try {
       const { data } = await axios.post("/dj-rest-auth/registration/", signUpData);
+      localStorage.setItem("accessToken", data.access_token);
+      localStorage.setItem("refreshToken", data.refresh_token);
       setCurrentUser(data.user);
       setTokenTimestamp(data);
       history.push("/signin/");
