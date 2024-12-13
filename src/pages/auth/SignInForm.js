@@ -41,31 +41,29 @@ function SignInForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
-    setErrors({});
     try {
       const { data } = await axios.post("/dj-rest-auth/login/", signInData);
 
-      if (data) {
-        const accessToken = data.key;
+      if (data && isMounted.current) {
+        const accessToken = data.access_token;
+        const refreshToken = data.refresh_token;
+
         localStorage.setItem("accessToken", accessToken);
-        axios.defaults.headers.common["Authorization"] = `Token ${accessToken}`;
+        localStorage.setItem("refreshToken", refreshToken);
 
-        const userResponse = await axios.get("/dj-rest-auth/user/");
-        const userData = userResponse.data;
+        setCurrentUser(data.user);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 
-        setCurrentUser(userData);
-
-        if (userData.photographer_id) {
-          history.push(`/profile/${userData.photographer_id}`);
-        } else {
-          setErrors({ non_field_errors: ["Unable to redirect to profile."] });
-        }
+        history.push(`/profile/${data.user.photographer_id}`);
       }
     } catch (err) {
-      const errorData = err.response?.data || { non_field_errors: ["An error occurred."] };
-      setErrors(errorData);
+      if (isMounted.current) {
+        setErrors(err.response?.data || {});
+      }
     } finally {
-      if (isMounted.current) setIsLoading(false);
+      if (isMounted.current) {
+        setIsLoading(false);
+      }
     }
   };
 
