@@ -119,15 +119,12 @@ function SignUpForm() {
                 </Button>
               </Row>
 
-              {errors.non_field_errors?.map((message, idx) => (
+              {/* Display non-field errors or general error messages */}
+              {errors.non_field_errors && errors.non_field_errors.map((message, idx) => (
                 <Alert variant="warning" className={`${styles.Alert} mt-3`} key={idx}>
                   {message}
                 </Alert>
-              )) || (
-                <Alert variant="warning" className={`${styles.Alert} mt-3`}>
-                  Something went wrong. Please try again later.
-                </Alert>
-              )}
+              ))}
             </Form>
 
             <Row className="d-flex justify-content-center mt-3">
@@ -141,6 +138,6 @@ function SignUpForm() {
       </Row>
     </Container>
   );
-};
+}
 
 export default SignUpForm;
