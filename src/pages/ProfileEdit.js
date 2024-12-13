@@ -114,15 +114,26 @@ const ProfileEdit = () => {
                     />
                   </div>
 
-                  <Form.Group controlId="profileImage" className="mb-3">
+                  <Form.Group controlId="profileImage" className="mb-3 text-center">
                     <Form.Label className={styles.formLabel}>
                       Upload Profile Image
                     </Form.Label>
-                    <Form.Control
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageChange}
-                    />
+                    <div>
+                      <Form.Control
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className="d-none"
+                        id="upload-profile-image"
+                      />
+                      <label
+                        htmlFor="upload-profile-image"
+                        className={`${btnStyles.Button} w-100 mt-3`}
+                        style={{ cursor: "pointer", textAlign: "center" }}
+                      >
+                        Choose Image
+                      </label>
+                    </div>
                   </Form.Group>
 
                   <Form.Group controlId="displayName" className="mb-3">
