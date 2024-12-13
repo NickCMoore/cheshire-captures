@@ -23,7 +23,6 @@ const ProfilePage = () => {
     };
     fetchPhotographer();
   }, [id]);
-  
 
   if (error) {
     return <p>{error}</p>;
@@ -56,18 +55,16 @@ const ProfilePage = () => {
         </Col>
         <Col md={8}>
           <Card className="p-4 shadow-sm mb-4">
-            <h3>Photos</h3>
-            <Row>
-              {photographer.photos && photographer.photos.length > 0 ? (
-                photographer.photos.map((photo) => (
-                  <Col key={photo.id} xs={12} md={6} lg={4} className="mb-3">
-                    <Image src={photo.image} fluid className={styles.photo} alt={photo.title} />
-                  </Col>
-                ))
-              ) : (
-                <p>No photos yet.</p>
-              )}
-            </Row>
+            <h3>About</h3>
+            {photographer.location && (
+              <p><strong>Location:</strong> {photographer.location}</p>
+            )}
+            {photographer.follower_count > 0 && (
+              <p><strong>Followers:</strong> {photographer.follower_count}</p>
+            )}
+            {photographer.total_likes > 0 && (
+              <p><strong>Total Likes:</strong> {photographer.total_likes}</p>
+            )}
           </Card>
           <Card className="p-4 shadow-sm">
             <h3>Social Links</h3>
