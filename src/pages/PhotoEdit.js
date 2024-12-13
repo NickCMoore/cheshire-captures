@@ -43,7 +43,7 @@ const PhotoEdit = () => {
       });
       setSuccessMessage('Photo updated successfully!');
       setTimeout(() => setSuccessMessage(''), 3000); // Hide success message after 3 seconds
-      history.push(`/my-photos/${id}`);
+      history.push('/my-photos');  // Redirect to the user's photo gallery
     } catch (error) {
       console.error('Error updating photo:', error);
       setError('Failed to update photo. Please try again.');
@@ -51,6 +51,7 @@ const PhotoEdit = () => {
       setUpdating(false); // Set updating to false after submission
     }
   };
+  
 
   const handleDelete = async () => {
     const confirmDelete = window.confirm('Are you sure you want to delete this photo?');
