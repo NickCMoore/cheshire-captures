@@ -10,6 +10,7 @@ import Container from "react-bootstrap/Container";
 import styles from "../../styles/SignInUpForm.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
+import { setTokenTimestamp } from "../../utils/utils";
 import axios from "axios";
 
 function SignUpForm() {
@@ -39,9 +40,8 @@ function SignUpForm() {
     try {
       const { data } = await axios.post("/dj-rest-auth/registration/", signUpData);
       setCurrentUser(data.user);
-      
-      // Redirect to the profile page after successful registration
-      history.push(`/profile/${data.user.username}`);
+      setTokenTimestamp(data);
+      history.push("/signin/");
     } catch (err) {
       setErrors(err.response?.data || {});
     }
