@@ -41,43 +41,50 @@ function SignInForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
+    setErrors({});
     try {
       const { data } = await axios.post("/dj-rest-auth/login/", signInData);
-  
+
       if (data) {
         const accessToken = data.key;
         localStorage.setItem("accessToken", accessToken);
         axios.defaults.headers.common["Authorization"] = `Token ${accessToken}`;
-  
-        // Fetch user details after successful login
+
         const userResponse = await axios.get("/dj-rest-auth/user/");
         const userData = userResponse.data;
-  
-        // Set current user in context
+
         setCurrentUser(userData);
-  
-        // Redirect to profile
-        history.push(`/profile/${userData.photographer_id}`);
+
+        if (userData.photographer_id) {
+          history.push(`/profile/${userData.photographer_id}`);
+        } else {
+          setErrors({ non_field_errors: ["Unable to redirect to profile."] });
+        }
       }
     } catch (err) {
-      setErrors(err.response?.data || {});
+      const errorData = err.response?.data || { non_field_errors: ["An error occurred."] };
+      setErrors(errorData);
     } finally {
-      setIsLoading(false);
+      if (isMounted.current) setIsLoading(false);
     }
   };
-  
-  
-  
 
   return (
     <Container fluid className={styles.Background}>
-      <Row className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+      <Row className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
         <Col xs={12} md={6} lg={4}>
           <div className={styles.FormContainer}>
             <h1 className={styles.Header}>Sign In</h1>
+            {errors.non_field_errors && (
+              <Alert variant="danger" className={`${styles.Alert} mt-3`}>
+                {errors.non_field_errors.map((message, idx) => (
+                  <div key={idx}>{message}</div>
+                ))}
+              </Alert>
+            )}
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="username">
-                <Form.Label className="d-none">Username</Form.Label>
+                <Form.Label className="d-none" aria-label="Username">Username</Form.Label>
                 <Form.Control
                   className={styles.Input}
                   type="text"
@@ -86,7 +93,7 @@ function SignInForm() {
                   value={username}
                   onChange={handleChange}
                   required
-                  autoComplete="username" // Added autocomplete
+                  autoComplete="username"
                 />
               </Form.Group>
               {errors.username?.map((message, idx) => (
@@ -96,7 +103,7 @@ function SignInForm() {
               ))}
 
               <Form.Group controlId="password">
-                <Form.Label className="d-none">Password</Form.Label>
+                <Form.Label className="d-none" aria-label="Password">Password</Form.Label>
                 <Form.Control
                   className={styles.Input}
                   type="password"
@@ -105,7 +112,7 @@ function SignInForm() {
                   value={password}
                   onChange={handleChange}
                   required
-                  autoComplete="new-password" // Added autocomplete
+                  autoComplete="new-password"
                 />
               </Form.Group>
               {errors.password?.map((message, idx) => (
@@ -120,15 +127,9 @@ function SignInForm() {
                   type="submit"
                   disabled={isLoading}
                 >
-                  {isLoading ? 'Signing In...' : 'Sign In'}
+                  {isLoading ? "Signing In..." : "Sign In"}
                 </Button>
               </Row>
-
-              {errors.non_field_errors?.map((message, idx) => (
-                <Alert variant="warning" className={`${styles.Alert} mt-3`} key={idx}>
-                  {message}
-                </Alert>
-              ))}
             </Form>
 
             <Row className="d-flex justify-content-center mt-3">
