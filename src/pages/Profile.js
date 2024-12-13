@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import { Container, Row, Col, Card, Image } from 'react-bootstrap';
+import { Container, Row, Col, Card, Image, Button } from 'react-bootstrap';
 import styles from '../styles/Profile.module.css';
+import { useCurrentUser } from '../contexts/CurrentUserContext';
 
 const ProfilePage = () => {
   const { id } = useParams();
+  const currentUser = useCurrentUser();
   const [photographer, setPhotographer] = useState(null);
   const [error, setError] = useState(null);
 
@@ -35,14 +37,20 @@ const ProfilePage = () => {
           <Card className="p-4 shadow-sm">
             <Image
               src={photographer.profile_image}
-              alt={`${photographer.display_name}'s profile image`}  // Alt text for accessibility
+              alt={`${photographer.display_name}'s profile image`}
               roundedCircle
               className={styles.profileImage}
             />
             <h2 className={styles.blueHeading}>{photographer.display_name}</h2>
-            <p className={`${styles.bio} mt-2`}>
-              {photographer.bio}
-            </p>
+            <p className={`${styles.bio} mt-2`}>{photographer.bio}</p>
+            {/* Show Edit Profile Button if the logged-in user matches the profile */}
+            {currentUser?.id === photographer.id && (
+              <Link to={`/profile/${id}/edit`}>
+                <Button className={`${styles.editButton} mt-3`} variant="primary">
+                  Edit Profile
+                </Button>
+              </Link>
+            )}
           </Card>
         </Col>
         <Col md={8}>
