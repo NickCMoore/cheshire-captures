@@ -59,11 +59,19 @@ const NavBar = () => {
         exact
         className={styles.NavLink}
         activeClassName={styles.Active}
-        // to="/profile"
         to={`/profile/${currentUser?.photographer_id}`}
         onClick={() => setToggleNavBar(false)}
       >
         <i className="fas fa-user-circle"></i>Profile
+      </NavLink>
+      <NavLink
+        exact
+        className={styles.NavLink}
+        activeClassName={styles.Active}
+        to={`/profile/${currentUser?.photographer_id}/edit`}  // Edit Profile link
+        onClick={() => setToggleNavBar(false)}
+      >
+        <i className="fas fa-edit"></i>Edit Profile
       </NavLink>
       <NavLink
         exact
