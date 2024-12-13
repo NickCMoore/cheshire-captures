@@ -10,6 +10,7 @@ const PhotoDetails = () => {
   const history = useHistory();
   const currentUser = useCurrentUser();
   const [photo, setPhoto] = useState(null);
+  const [photographer] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [editingCommentId, setEditingCommentId] = useState(null);
@@ -203,7 +204,16 @@ const PhotoDetails = () => {
 
             {comments.length > 0 ? (
               comments.map((comment) => (
-                <div key={comment.id}>
+                <div key={comment.id} className="d-flex align-items-center mb-3">
+                {/* User Profile Picture */}
+                <Image
+                  src={photographer.profile_image}
+                  alt={`${photographer.display_name}'s profile image`}
+                  roundedCircle
+                  width={40}  // Adjust size as needed
+                  height={40}
+                  className="me-3"
+                />
                   {editingCommentId === comment.id ? (
                     <>
                       <Form.Control
