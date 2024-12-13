@@ -26,7 +26,7 @@ const ProfileEdit = () => {
   const [twitter, setTwitter] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [profileImage, setProfileImage] = useState(null); // For new profile image
+  const [profileImage, setProfileImage] = useState(null);
 
   useEffect(() => {
     const fetchPhotographer = async () => {
@@ -62,7 +62,7 @@ const ProfileEdit = () => {
     formData.append("twitter", twitter);
 
     if (profileImage) {
-      formData.append("profile_image", profileImage); // Append profile image if selected
+      formData.append("profile_image", profileImage);
     }
 
     try {
@@ -86,7 +86,7 @@ const ProfileEdit = () => {
 
   const handleImageChange = (e) => {
     if (e.target.files.length > 0) {
-      setProfileImage(e.target.files[0]); // Set the selected image file
+      setProfileImage(e.target.files[0]);
     }
   };
 
@@ -103,7 +103,9 @@ const ProfileEdit = () => {
                 {successMessage && (
                   <Alert variant="success">{successMessage}</Alert>
                 )}
-                {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+                {errorMessage && (
+                  <Alert variant="danger">{errorMessage}</Alert>
+                )}
                 <Form onSubmit={handleProfileUpdate}>
                   <div className="text-center">
                     <Image
@@ -115,11 +117,8 @@ const ProfileEdit = () => {
                   </div>
 
                   <Form.Group controlId="profileImage" className="mb-3 text-center">
-                    <Form.Label className={styles.formLabel}>
-                      Upload Profile Image
-                    </Form.Label>
                     <div>
-                      <Form.Control
+                      <input
                         type="file"
                         accept="image/*"
                         onChange={handleImageChange}
@@ -128,10 +127,10 @@ const ProfileEdit = () => {
                       />
                       <label
                         htmlFor="upload-profile-image"
-                        className={`${btnStyles.Button} w-100 mt-3`}
-                        style={{ cursor: "pointer", textAlign: "center" }}
+                        className="btn btn-warning text-white fw-bold px-4 py-2"
+                        style={{ cursor: "pointer" }}
                       >
-                        Choose Image
+                        Change Profile Image
                       </label>
                     </div>
                   </Form.Group>
@@ -197,7 +196,7 @@ const ProfileEdit = () => {
                   </Form.Group>
 
                   <Button
-                    className={`${btnStyles.Button} w-100 mt-4`}
+                    className={`${btnStyles.Button} w-100 mt-3`}
                     type="submit"
                   >
                     Save Changes
