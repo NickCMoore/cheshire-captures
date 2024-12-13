@@ -99,7 +99,7 @@ const ProfileEdit = () => {
           <Row className="gx-5">
             <Col lg={6}>
               <Card className={`p-4 shadow ${styles.profileCard}`}>
-                <h2 className={styles.profileHeading}>Edit Profile</h2>
+                <h2 className={styles.blueHeading}>Edit Profile</h2>
                 {successMessage && (
                   <Alert variant="success">{successMessage}</Alert>
                 )}
@@ -127,7 +127,7 @@ const ProfileEdit = () => {
                       />
                       <label
                         htmlFor="upload-profile-image"
-                        className="btn btn-warning text-white fw-bold px-4 py-2"
+                        className="d-none"
                         style={{ cursor: "pointer" }}
                       >
                         Change Profile Image
