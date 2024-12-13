@@ -16,13 +16,6 @@ const ProfilePage = () => {
       try {
         const { data } = await axios.get(`/api/photographers/photographers/${id}/`);
         setPhotographer(data);
-        
-        // Fetch the photographer's photos separately
-        const { data: photosData } = await axios.get(`/api/photos/photos/${id}/`);
-        setPhotographer(prevPhotographer => ({
-          ...prevPhotographer,
-          photos: photosData.results,  // Assuming photosData contains the list of photos
-        }));
       } catch (error) {
         console.error('Error fetching photographer:', error);
         setError('There was an issue loading the photographer details. Please try again later.');
