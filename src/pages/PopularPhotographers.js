@@ -47,6 +47,17 @@ const PopularPhotographers = () => {
             <Col key={photographer.id} md={4} className="mb-4">
               <Card className="shadow-sm profile-card">
                 <Card.Body className="text-left">
+                  {/* Display profile picture */}
+                  {photographer.profile_image ? (
+                    <Card.Img
+                      variant="top"
+                      src={photographer.profile_image}
+                      alt={`${photographer.display_name}'s profile`}
+                      className="profile-picture"
+                    />
+                  ) : (
+                    <div className="profile-picture-placeholder">No Picture</div>
+                  )}
                   <Card.Title className="mt-2">{photographer.display_name}</Card.Title>
                   <Card.Text>{photographer.bio || 'No bio available'}</Card.Text>
                   <Link to={`/profile/${photographer.id}`}>
