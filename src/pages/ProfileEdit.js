@@ -95,7 +95,7 @@ const ProfileEdit = () => {
   return (
     <Container className={`${styles.profileEditContainer} vh-100`}>
       <Row className="justify-content-center align-items-center h-100">
-        <Col md={8} lg={6} xl={4}>
+        <Col md={10} lg={8} xl={6}> {/* Adjusted the size here */}
           <Card className={`p-4 shadow ${styles.profileCard}`}>
             <h2 className={styles.blueHeading}>Edit Profile</h2>
             {successMessage && <Alert variant="success">{successMessage}</Alert>}
