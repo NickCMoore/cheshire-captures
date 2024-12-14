@@ -84,7 +84,7 @@ const MyPhotos = () => {
 
       {/* Filters */}
       <Form className="mb-4">
-        <Row>
+        <Row className="align-items-end">
           <Col md={4}>
             <Form.Group controlId="categoryFilter">
               <Form.Label className="text-white">Category</Form.Label>
@@ -113,7 +113,8 @@ const MyPhotos = () => {
               />
             </Form.Group>
           </Col>
-          <Col md={4} className="d-flex align-items-end">
+
+          <Col md={4} className="d-flex align-items-center justify-content-end">
             <Button
               variant="warning"
               className="w-100"
