@@ -14,13 +14,13 @@
 
 .NavBar a {
     color: var(--yinmn-blue);
-    font-size: 1rem;
+    font-size: 0.9rem; 
     padding: 10px 10px;
     text-decoration: none;
 }
 
 .NavBar i {
-    font-size: 1.4rem;
+    font-size: 1.2rem; 
 }
 
 .navbar-brand img {
@@ -35,12 +35,12 @@
 
     .NavBar a {
         background-color: var(--magnolia);
-        font-size: 1rem; 
+        font-size: 0.9rem;
         padding: 0px 12px; 
     }
 
     .NavBar i {
-        font-size: 1.6rem; 
+        font-size: 1.3rem; 
     }
 
     .navbar-brand img {
@@ -51,5 +51,3 @@
         transform: scale(1.2); 
     }
 }
-
-
