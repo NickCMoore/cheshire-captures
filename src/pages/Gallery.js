@@ -106,7 +106,7 @@ const Gallery = () => {
         <Row>
           <Col md={4}>
             <Form.Group controlId="searchFilter">
-              <Form.Label>Search</Form.Label>
+              <Form.Label className="text-white">Search</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Search photos..."
@@ -118,7 +118,7 @@ const Gallery = () => {
 
           <Col md={4}>
             <Form.Group controlId="categoryFilter">
-              <Form.Label>Category</Form.Label>
+              <Form.Label className="text-white">Category</Form.Label>
               <Form.Control
                 as="select"
                 value={selectedCategory}
@@ -136,7 +136,7 @@ const Gallery = () => {
 
           <Col md={4}>
             <Form.Group controlId="dateFilter">
-              <Form.Label>Date</Form.Label>
+              <Form.Label className="text-white">Date</Form.Label>
               <Form.Control
                 type="date"
                 value={dateFilter}
@@ -172,7 +172,7 @@ const Gallery = () => {
                 <Card.Body>
                   <Card.Title>{photo.title}</Card.Title>
                   <Card.Text>By: {photo.photographer || 'Unknown'}</Card.Text>
-                  <Card.Text>Date: {new Date(photo.created_at).toLocaleDateString()}</Card.Text>
+                  <Card.Text className="text-primary">Date: {new Date(photo.created_at).toLocaleDateString()}</Card.Text>
                 </Card.Body>
               </Card>
             </Col>
