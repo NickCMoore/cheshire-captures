@@ -37,43 +37,46 @@ const ProfilePage = () => {
           <Card className="p-4 shadow-sm">
             <Image
               src={photographer.profile_image}
-              alt={`${photographer.display_name}'s profile image`}
               roundedCircle
-              className={styles.profileImage}
+              alt="Profile"
+              className={`${styles.profileImage} mb-3`}
             />
-            <h2 className={styles.blueHeading}>{photographer.display_name}</h2>
-            <p className={`${styles.bio} mt-2`}>{photographer.bio}</p>
-            {/* Show Edit Profile Button if the logged-in user matches the profile */}
-            {currentUser?.id === photographer.id && (
-              <Link to={`/profile/${id}/edit`}>
-                <Button className={`${styles.editButton} mt-3`} variant="primary">
-                  Edit Profile
-                </Button>
-              </Link>
-            )}
+            <h3>{photographer.display_name}</h3>
+            <p>{photographer.bio ? photographer.bio : 'This photographer has not provided a bio.'}</p>
+            <Button variant="primary" as={Link} to={`/profile/edit/${id}`}>
+              Edit Profile
+            </Button>
           </Card>
         </Col>
-        <Col md={8}>
-          <Card className="p-4 shadow-sm mb-4">
-            <h3>About</h3>
-            {photographer.location && (
-              <p><strong>Location:</strong> {photographer.location}</p>
-            )}
-            {photographer.follower_count > 0 && (
-              <p><strong>Followers:</strong> {photographer.follower_count}</p>
-            )}
-            {photographer.total_likes > 0 && (
-              <p><strong>Total Likes:</strong> {photographer.total_likes}</p>
-            )}
-          </Card>
-          <Card className="p-4 shadow-sm">
-            <h3>Social Links</h3>
-            <ul className={styles.socialLinks}>
-              {photographer.website && <li><a href={photographer.website} target="_blank" rel="noopener noreferrer">Website</a></li>}
-              {photographer.instagram && <li><a href={photographer.instagram} target="_blank" rel="noopener noreferrer">Instagram</a></li>}
-              {photographer.twitter && <li><a href={photographer.twitter} target="_blank" rel="noopener noreferrer">Twitter</a></li>}
-            </ul>
-          </Card>
+      </Row>
+
+      {/* Additional section for photographer's social links */}
+      <Row className="my-4">
+        <Col>
+          {photographer.website && (
+            <p>
+              <strong>Website: </strong>
+              <a href={photographer.website} target="_blank" rel="noopener noreferrer">
+                {photographer.website}
+              </a>
+            </p>
+          )}
+          {photographer.instagram && (
+            <p>
+              <strong>Instagram: </strong>
+              <a href={photographer.instagram} target="_blank" rel="noopener noreferrer">
+                {photographer.instagram}
+              </a>
+            </p>
+          )}
+          {photographer.twitter && (
+            <p>
+              <strong>Twitter: </strong>
+              <a href={photographer.twitter} target="_blank" rel="noopener noreferrer">
+                {photographer.twitter}
+              </a>
+            </p>
+          )}
         </Col>
       </Row>
     </Container>
