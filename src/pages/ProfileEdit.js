@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useCurrentUser } from "../contexts/CurrentUserContext";
 import axios from "axios";
 import {
@@ -18,7 +18,6 @@ import btnStyles from "../styles/Button.module.css";
 const ProfileEdit = () => {
   const { id } = useParams();
   const currentUser = useCurrentUser();
-  const history = useHistory(); // To redirect if necessary
   const [photographer, setPhotographer] = useState(null);
   const [displayName, setDisplayName] = useState("");
   const [bio, setBio] = useState("");
@@ -30,11 +29,6 @@ const ProfileEdit = () => {
   const [profileImage, setProfileImage] = useState(null);
 
   useEffect(() => {
-    // Redirect if the logged-in user does not match the profile ID
-    if (currentUser && currentUser.id !== parseInt(id)) {
-      history.push("/"); // Redirect to homepage or wherever appropriate
-    }
-
     const fetchPhotographer = async () => {
       try {
         const { data } = await axios.get(
@@ -55,7 +49,7 @@ const ProfileEdit = () => {
     if (currentUser) {
       fetchPhotographer();
     }
-  }, [id, currentUser, history]);
+  }, [id, currentUser]);
 
   const handleProfileUpdate = async (event) => {
     event.preventDefault();
