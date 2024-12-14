@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap';
 import { axiosReq } from '../api/axiosDefaults';
 import SearchBar from '../components/SearchBar'; // Import the SearchBar component
 import styles from '../styles/MyPhotos.module.css';
@@ -9,6 +9,8 @@ const MyPhotos = () => {
   const [photos, setPhotos] = useState([]);
   const [filteredPhotos, setFilteredPhotos] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState(''); // Category filter
+  const [dateFilter, setDateFilter] = useState(''); // Date filter
   const [isLoading, setIsLoading] = useState(true); // Loading state for better UX
   const [error, setError] = useState(null); // Error handling state
 
@@ -34,16 +36,34 @@ const MyPhotos = () => {
   }, []);
 
   useEffect(() => {
+    // Apply filters: search, category, and date
+    let filtered = photos;
+
+    // Filter by title search
     if (searchQuery) {
-      setFilteredPhotos(
-        photos.filter((photo) =>
-          photo.title.toLowerCase().includes(searchQuery.toLowerCase())
-        )
+      filtered = filtered.filter((photo) =>
+        photo.title.toLowerCase().includes(searchQuery.toLowerCase())
       );
-    } else {
-      setFilteredPhotos(photos);
     }
-  }, [searchQuery, photos]);
+
+    // Filter by category
+    if (categoryFilter) {
+      filtered = filtered.filter((photo) =>
+        photo.category.toLowerCase().includes(categoryFilter.toLowerCase())
+      );
+    }
+
+    // Filter by date
+    if (dateFilter) {
+      filtered = filtered.filter((photo) => {
+        const photoDate = new Date(photo.created_at);
+        const filterDate = new Date(dateFilter);
+        return photoDate.toDateString() === filterDate.toDateString();
+      });
+    }
+
+    setFilteredPhotos(filtered);
+  }, [searchQuery, photos, categoryFilter, dateFilter]);
 
   if (isLoading) {
     return <div>Loading photos...</div>;
@@ -52,8 +72,36 @@ const MyPhotos = () => {
   return (
     <Container className={styles.myPhotosContainer}>
       <h2 className="my-4">My Photos</h2>
-      <SearchBar onSearch={setSearchQuery} /> {/* Add the SearchBar */}
-      {error && <p className="text-danger">{error}</p>} {/* Display error if any */}
+      <SearchBar onSearch={setSearchQuery} /> 
+      {error && <p className="text-danger">{error}</p>} 
+
+      {/* Filters */}
+      <Form className="mb-4">
+        <Row>
+          <Col md={4}>
+            <Form.Group controlId="categoryFilter">
+              <Form.Label>Category</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Filter by category"
+                value={categoryFilter}
+                onChange={(e) => setCategoryFilter(e.target.value)}
+              />
+            </Form.Group>
+          </Col>
+
+          <Col md={4}>
+            <Form.Group controlId="dateFilter">
+              <Form.Label>Date</Form.Label>
+              <Form.Control
+                type="date"
+                value={dateFilter}
+                onChange={(e) => setDateFilter(e.target.value)}
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+      </Form>
 
       <Row>
         {filteredPhotos && filteredPhotos.length > 0 ? (
