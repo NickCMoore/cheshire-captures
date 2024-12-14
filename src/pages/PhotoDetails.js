@@ -12,19 +12,20 @@ const PhotoDetails = () => {
   const [photo, setPhoto] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  const [editingCommentId, setEditingCommentId] = useState(null);
-  const [editComment, setEditComment] = useState("");
   const [error, setError] = useState(null);
-  const [likeCount, setLikeCount] = useState(0);
-  const [hasLiked, setHasLiked] = useState(false);
+  const [photographer, setPhotographer] = useState(null);
 
   useEffect(() => {
     const fetchPhotoDetails = async () => {
       try {
         const { data } = await axiosReq.get(`/api/photos/photos/${id}/`);
         setPhoto(data);
-        setLikeCount(data.likes_count || 0);
-        setHasLiked(data.user_has_liked || false);
+
+        // Fetch photographer details
+        const photographerResponse = await axios.get(
+          `/api/photographers/photographers/${data.photographer_id}/`
+        );
+        setPhotographer(photographerResponse.data);
       } catch (err) {
         setError("Photo not found.");
       }
@@ -65,84 +66,18 @@ const PhotoDetails = () => {
     }
   };
 
-  const handleEditComment = async (commentId) => {
-    try {
-      await axiosRes.put(`/api/photos/comments/${commentId}/`, {
-        content: editComment,
-      });
-      setComments((prevComments) =>
-        prevComments.map((comment) =>
-          comment.id === commentId ? { ...comment, content: editComment } : comment
-        )
-      );
-      setEditingCommentId(null);
-    } catch (err) {
-      console.error("Error editing comment:", err);
-    }
-  };
-
-  const handleDeleteComment = async (commentId) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this comment?");
-    if (!confirmDelete) return;
-
-    try {
-      await axiosRes.delete(`/api/photos/comments/${commentId}/`);
-      setComments((prevComments) => prevComments.filter((comment) => comment.id !== commentId));
-    } catch (err) {
-      console.error("Error deleting comment:", err.response || err);
-      alert("Failed to delete the comment. Please try again.");
-    }
-  };
-
-  const handleLike = async () => {
-    try {
-      if (!hasLiked) {
-        const response = await axios.post(`/api/photos/photos/${id}/like/`);
-        if (response.status === 201) {
-          setLikeCount((prevCount) => prevCount + 1);
-          setHasLiked(true);
-        }
-      } else {
-        const response = await axios.post(`/api/photos/photos/${id}/unlike/`);
-        if (response.status === 204) {
-          setLikeCount((prevCount) => prevCount - 1);
-          setHasLiked(false);
-        }
-      }
-    } catch (error) {
-      console.error("Error liking/unliking the photo:", error.response?.data || error);
-    }
-  };
-
-  const handleDelete = async () => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this photo?");
-    if (!confirmDelete) return;
-
-    try {
-      await axiosRes.delete(`/api/photos/photos/${id}/`);
-      history.push("/gallery");
-    } catch (err) {
-      setError("Error deleting photo.");
-      console.error("Error deleting photo:", err);
-    }
-  };
-
-  const handleBackToGallery = () => {
-    history.push("/gallery");
-  };
-
   if (error) {
     return (
       <Container className="text-center my-4">
         <h2 className="text-danger">{error}</h2>
-        <Button variant="secondary" onClick={handleBackToGallery}>
+        <Button variant="secondary" onClick={() => history.push("/gallery")}>
           Back to Gallery
         </Button>
       </Container>
     );
   }
 
-  if (!photo) {
+  if (!photo || !photographer) {
     return <p>Loading...</p>;
   }
 
@@ -150,124 +85,57 @@ const PhotoDetails = () => {
     <Container className="my-4">
       <Row className="justify-content-center">
         <Col md={8}>
-          <Image
-            src={photo.image_url}
-            alt={photo.title}
-            className="w-100 mb-4"
-            fluid
-          />
+          <Image src={photo.image_url} alt={photo.title} className="w-100 mb-4" fluid />
+          <h2>{photo.title}</h2>
+          <p>{photo.description}</p>
+          <div className="d-flex align-items-center mb-3">
+            <Image
+              src={photographer.profile_image}
+              alt={`${photographer.display_name}'s profile`}
+              roundedCircle
+              width="50"
+              height="50"
+              className="me-2"
+            />
+            <Link to={`/photographer/${photographer.id}`} className="text-dark fw-bold">
+              {photographer.display_name}
+            </Link>
+          </div>
         </Col>
       </Row>
       <Row className="justify-content-center">
         <Col md={8}>
-          <div className="p-3 bg-light">
-            <h2 className="text-primary">{photo.title}</h2>
-            <p className="text-dark">{photo.description}</p>
-
-            <div className="mt-3 text-center">
-              <p className="mb-1">
-                <strong>Likes:</strong> {likeCount || 0}
-              </p>
-              <Button
-                variant={hasLiked ? "danger" : "primary"}
-                onClick={handleLike}
-              >
-                {hasLiked ? "Unlike" : "Like"}
-              </Button>
-            </div>
-
-            {currentUser?.username &&
-              photo.photographer_display_name &&
-              currentUser.username.toLowerCase() ===
-                photo.photographer_display_name.toLowerCase() && (
-                <div className="d-flex justify-content-center gap-3 mt-4">
-                  <Button variant="warning" as={Link} to={`/photos/${id}/edit`}>
-                    Edit Photo
-                  </Button>
-                  <Button variant="danger" onClick={handleDelete}>
-                    Delete Photo
-                  </Button>
-                </div>
-              )}
-
-            <Button
-              variant="secondary"
-              onClick={handleBackToGallery}
-              className="mt-3"
-            >
-              Back to Gallery
+          <Form onSubmit={handleAddComment}>
+            <Form.Group controlId="newComment">
+              <Form.Label>Add a Comment:</Form.Label>
+              <Form.Control
+                type="text"
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                placeholder="Write your comment..."
+              />
+            </Form.Group>
+            <Button type="submit" className="mt-2">
+              Submit
             </Button>
-
-            <hr />
-            <h4>Comments</h4>
-
-            {comments.length > 0 ? (
-              comments.map((comment) => (
-                <div key={comment.id}>
-                  {editingCommentId === comment.id ? (
-                    <>
-                      <Form.Control
-                        as="textarea"
-                        rows={2}
-                        value={editComment}
-                        onChange={(e) => setEditComment(e.target.value)}
-                      />
-                      <Button onClick={() => handleEditComment(comment.id)}>
-                        Save
-                      </Button>
-                      <Button onClick={() => setEditingCommentId(null)}>
-                        Cancel
-                      </Button>
-                    </>
-                  ) : (
-                    <p>
-                      <strong>{comment.user}:</strong> {comment.content}
-                      {currentUser?.username === comment.user && (
-                        <div className="mt-2 d-flex gap-2">
-                          <Button
-                            variant="warning"
-                            onClick={() => setEditingCommentId(comment.id)}
-                          >
-                            Edit
-                          </Button>
-                          <Button
-                            variant="danger"
-                            onClick={() => handleDeleteComment(comment.id)}
-                          >
-                            Delete
-                          </Button>
-                        </div>
-                      )}
-                    </p>
-                  )}
-                </div>
-              ))
-            ) : (
-              <p>No comments yet.</p>
-            )}
-
-            {currentUser ? (
-              <Form onSubmit={handleAddComment}>
-                <Form.Group controlId="commentContent">
-                  <Form.Label>Add a Comment</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={3}
-                    value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)}
-                    placeholder="Write your comment here..."
-                  />
-                </Form.Group>
-                <Button type="submit" className="mt-2">
-                  Post Comment
-                </Button>
-              </Form>
-            ) : (
-              <p>
-                Please <Link to="/signin">sign in</Link> to add a comment.
-              </p>
-            )}
-          </div>
+          </Form>
+          <h3>Comments</h3>
+          {comments.map((comment) => (
+            <div key={comment.id} className="d-flex align-items-center my-3">
+              <Image
+                src={comment.user_profile_image}
+                alt={`${comment.user}'s profile`}
+                roundedCircle
+                width="40"
+                height="40"
+                className="me-2"
+              />
+              <div>
+                <p className="mb-1 fw-bold">{comment.user}</p>
+                <p className="mb-0">{comment.content}</p>
+              </div>
+            </div>
+          ))}
         </Col>
       </Row>
     </Container>
