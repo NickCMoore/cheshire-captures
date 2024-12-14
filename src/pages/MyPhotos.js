@@ -2,17 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap';
 import { axiosReq } from '../api/axiosDefaults';
-import SearchBar from '../components/SearchBar'; // Import the SearchBar component
+import SearchBar from '../components/SearchBar';
 import styles from '../styles/MyPhotos.module.css';
 
 const MyPhotos = () => {
   const [photos, setPhotos] = useState([]);
   const [filteredPhotos, setFilteredPhotos] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState(''); // Category filter
-  const [dateFilter, setDateFilter] = useState(''); // Date filter
-  const [isLoading, setIsLoading] = useState(true); // Loading state for better UX
-  const [error, setError] = useState(null); // Error handling state
+  const [categoryFilter, setCategoryFilter] = useState('');
+  const [dateFilter, setDateFilter] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Static list of categories for the dropdown (customize as needed)
+  const categories = ['Nature', 'Urban', 'Portraits', 'Animals', 'Travel', 'Architecture'];
 
   useEffect(() => {
     const fetchMyPhotos = async () => {
@@ -36,7 +39,6 @@ const MyPhotos = () => {
   }, []);
 
   useEffect(() => {
-    // Apply filters: search, category, and date
     let filtered = photos;
 
     // Filter by title search
@@ -72,27 +74,33 @@ const MyPhotos = () => {
   return (
     <Container className={styles.myPhotosContainer}>
       <h2 className="my-4">My Photos</h2>
-      <SearchBar onSearch={setSearchQuery} /> 
-      {error && <p className="text-danger">{error}</p>} 
+      <SearchBar onSearch={setSearchQuery} />
+      {error && <p className="text-danger">{error}</p>}
 
       {/* Filters */}
       <Form className="mb-4">
         <Row>
           <Col md={4}>
             <Form.Group controlId="categoryFilter">
-              <Form.Label>Category</Form.Label>
+              <Form.Label className="text-white">Category</Form.Label>
               <Form.Control
-                type="text"
-                placeholder="Filter by category"
+                as="select"
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-              />
+              >
+                <option value="">All Categories</option>
+                {categories.map((category, index) => (
+                  <option key={index} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </Form.Control>
             </Form.Group>
           </Col>
 
           <Col md={4}>
             <Form.Group controlId="dateFilter">
-              <Form.Label>Date</Form.Label>
+              <Form.Label className="text-white">Date</Form.Label>
               <Form.Control
                 type="date"
                 value={dateFilter}
