@@ -90,17 +90,6 @@ const ProfileEdit = () => {
     }
   };
 
-  const constructUrl = (platform, username) => {
-    if (platform === "instagram") {
-      return `https://instagram.com/${username}`;
-    } else if (platform === "twitter") {
-      return `https://twitter.com/${username}`;
-    } else if (platform === "website") {
-      return username.includes("http") ? username : `https://${username}`;
-    }
-    return "";
-  };
-
   if (!photographer) return <p>Loading...</p>;
 
   return (
@@ -172,37 +161,37 @@ const ProfileEdit = () => {
 
                   <Form.Group controlId="website" className="mb-3">
                     <Form.Label className={styles.formLabel}>
-                      Website (e.g., example.com)
+                      Website
                     </Form.Label>
                     <Form.Control
-                      type="text"
-                      placeholder="example.com"
+                      type="url"
+                      placeholder="https://example.com"
                       value={website}
-                      onChange={(e) => setWebsite(constructUrl("website", e.target.value))}
+                      onChange={(e) => setWebsite(e.target.value)}
                     />
                   </Form.Group>
 
                   <Form.Group controlId="instagram" className="mb-3">
                     <Form.Label className={styles.formLabel}>
-                      Instagram (e.g., yourusername)
+                      Instagram
                     </Form.Label>
                     <Form.Control
-                      type="text"
-                      placeholder="yourusername"
+                      type="url"
+                      placeholder="https://instagram.com/yourusername"
                       value={instagram}
-                      onChange={(e) => setInstagram(constructUrl("instagram", e.target.value))}
+                      onChange={(e) => setInstagram(e.target.value)}
                     />
                   </Form.Group>
 
                   <Form.Group controlId="twitter" className="mb-3">
                     <Form.Label className={styles.formLabel}>
-                      Twitter (e.g., yourusername)
+                      Twitter
                     </Form.Label>
                     <Form.Control
-                      type="text"
-                      placeholder="yourusername"
+                      type="url"
+                      placeholder="https://twitter.com/yourusername"
                       value={twitter}
-                      onChange={(e) => setTwitter(constructUrl("twitter", e.target.value))}
+                      onChange={(e) => setTwitter(e.target.value)}
                     />
                   </Form.Group>
 
