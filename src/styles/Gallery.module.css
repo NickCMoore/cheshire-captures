@@ -2,8 +2,7 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  padding: 20px 0 100px; /* Combined padding-top and padding-bottom */
-  background-color: #f9f9f9; /* Light background for better contrast */
+  padding: 20px 0 100px; 
 }
 
 .image {
@@ -12,34 +11,34 @@
   object-fit: cover;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease; /* Added hover effect */
+  transition: transform 0.3s ease; 
 }
 
 .image:hover {
-  transform: scale(1.02); /* Slight zoom-in effect */
+  transform: scale(1.02); 
 }
 
 .carouselCaption {
   background-color: rgba(0, 0, 0, 0.6);
-  padding: 15px; /* Increased padding for better spacing */
+  padding: 15px;
   border-radius: 10px;
   text-align: center;
 }
 
 .carouselCaption h5 {
-  font-size: 1.1rem; /* Slightly larger font for better readability */
+  font-size: 1.1rem; 
   color: #ffffff;
-  margin-bottom: 5px; /* Added spacing between title and text */
+  margin-bottom: 5px; 
 }
 
 .carouselCaption p {
-  font-size: 0.95rem; /* Adjusted font size for readability */
-  color: #dcdcdc; /* Softer contrast */
+  font-size: 0.95rem; 
+  color: #dcdcdc; 
 }
 
 @media (max-width: 768px) {
   .image {
-    height: 400px; /* Adjusted for smaller screens */
+    height: 400px;
   }
 
   .carouselCaption h5 {
@@ -53,7 +52,7 @@
 
 @media (max-width: 480px) {
   .image {
-    height: 300px; /* Further adjustment for very small screens */
+    height: 300px; 
   }
 
   .carouselCaption {
