@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Form, Row, Col, Button, Card } from 'react-bootstrap';
+import { Container, Form, Row, Col, Button, Card, Carousel } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { axiosReq } from '../api/axiosDefaults';
 import styles from '../styles/Gallery.module.css';
@@ -81,6 +81,25 @@ const Gallery = () => {
     <Container className={styles.galleryContainer}>
       <h2 className="my-4">Photo Gallery</h2>
       {error && <p className="text-danger text-center">{error}</p>}
+
+      {/* Carousel */}
+      <Carousel className="mb-4">
+        {images.slice(0, 5).map((photo) => (
+          <Carousel.Item key={photo.id}>
+            <Link to={`/photos/${photo.id}`}>
+              <img
+                className={`d-block w-100 ${styles.carouselImage}`}
+                src={photo.image_url}
+                alt={photo.title}
+              />
+            </Link>
+            <Carousel.Caption>
+              <h5>{photo.title}</h5>
+              <p>By: {photo.photographer || 'Unknown'}</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+        ))}
+      </Carousel>
 
       {/* Filters */}
       <Form className="mb-4">
