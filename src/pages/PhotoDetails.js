@@ -164,8 +164,8 @@ const PhotoDetails = () => {
             <h2 className="text-primary">{photo.title}</h2>
             <p className="text-dark">{photo.description}</p>
 
-            <div className="mt-3 text-center text-dark">
-              <p className="mb-1">
+            <div className="mt-3 text-center">
+              <p className="mb-1" style={{ color: 'black' }}>
                 <strong>Likes:</strong> {likeCount || 0}
               </p>
               <Button
@@ -203,7 +203,7 @@ const PhotoDetails = () => {
 
             {comments.length > 0 ? (
               comments.map((comment) => (
-                <div key={comment.id} className="mb-3">
+                <div key={comment.id}>
                   {editingCommentId === comment.id ? (
                     <>
                       <Form.Control
@@ -213,45 +213,36 @@ const PhotoDetails = () => {
                         onChange={(e) => setEditComment(e.target.value)}
                       />
                       <Button onClick={() => handleEditComment(comment.id)}>Save</Button>
-                      <Button onClick={() => setEditingCommentId(null)}>Cancel</Button>
+                      <Button variant="danger" onClick={() => setEditingCommentId(null)}>
+                        Cancel
+                      </Button>
                     </>
                   ) : (
-                    <div className="d-flex align-items-start">
-                      <Image
-                        src={comment.profile_image || "default-avatar.jpg"} 
-                        alt={comment.user}
-                        className="rounded-circle"
-                        width={40}
-                        height={40}
-                        style={{ marginRight: "10px" }}
-                      />
-                      <div>
-                        <strong style={{ color: 'black' }}>{comment.user}:</strong> {comment.content}
-                        {currentUser?.username === comment.user && (
-                          <div className="mt-2 d-flex gap-2">
-                            <Button
-                              variant="warning"
-                              onClick={() => setEditingCommentId(comment.id)}
-                            >
-                              Edit
-                            </Button>
-                            <Button
-                              variant="danger"
-                              onClick={() => handleDeleteComment(comment.id)}
-                            >
-                              Delete
-                            </Button>
-                          </div>
-                        )}
-                      </div>
-                    </div>
+                    <p>
+                      <strong style={{ color: 'black' }}>{comment.user}:</strong> {comment.content}
+                      {currentUser?.username === comment.user && (
+                        <div className="mt-2 d-flex gap-2">
+                          <Button
+                            variant="warning"
+                            onClick={() => setEditingCommentId(comment.id)}
+                          >
+                            Edit
+                          </Button>
+                          <Button
+                            variant="danger"
+                            onClick={() => handleDeleteComment(comment.id)}
+                          >
+                            Delete
+                          </Button>
+                        </div>
+                      )}
+                    </p>
                   )}
                 </div>
               ))
             ) : (
               <p>No comments yet.</p>
             )}
-
 
             {currentUser ? (
               <Form onSubmit={handleAddComment}>
@@ -265,14 +256,10 @@ const PhotoDetails = () => {
                     placeholder="Write your comment here..."
                   />
                 </Form.Group>
-                <Button type="submit" className="mt-2">
-                  Post Comment
-                </Button>
+                <Button type="submit">Add Comment</Button>
               </Form>
             ) : (
-              <p>
-                Please <Link to="/signin">sign in</Link> to add a comment.
-              </p>
+              <p>Please log in to add a comment.</p>
             )}
           </div>
         </Col>
