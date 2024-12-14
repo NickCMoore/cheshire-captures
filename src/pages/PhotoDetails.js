@@ -218,25 +218,35 @@ const PhotoDetails = () => {
                       </Button>
                     </>
                   ) : (
-                    <p>
-                      <strong style={{ color: 'black' }}>{comment.user}:</strong> {comment.content}
-                      {currentUser?.username === comment.user && (
-                        <div className="mt-2 d-flex gap-2">
-                          <Button
-                            variant="warning"
-                            onClick={() => setEditingCommentId(comment.id)}
-                          >
-                            Edit
-                          </Button>
-                          <Button
-                            variant="danger"
-                            onClick={() => handleDeleteComment(comment.id)}
-                          >
-                            Delete
-                          </Button>
-                        </div>
-                      )}
-                    </p>
+                    <div className="d-flex align-items-start mb-3">
+                      <Image
+                        src={comment.profile_image}
+                        alt={`${comment.user}'s profile`}
+                        roundedCircle
+                        width={40}
+                        height={40}
+                        className="mr-3"
+                      />
+                      <p style={{ color: 'black' }}>
+                        <strong>{comment.user}:</strong> {comment.content}
+                        {currentUser?.username === comment.user && (
+                          <div className="mt-2 d-flex gap-2">
+                            <Button
+                              variant="warning"
+                              onClick={() => setEditingCommentId(comment.id)}
+                            >
+                              Edit
+                            </Button>
+                            <Button
+                              variant="danger"
+                              onClick={() => handleDeleteComment(comment.id)}
+                            >
+                              Delete
+                            </Button>
+                          </div>
+                        )}
+                      </p>
+                    </div>
                   )}
                 </div>
               ))
@@ -256,10 +266,12 @@ const PhotoDetails = () => {
                     placeholder="Write your comment here..."
                   />
                 </Form.Group>
-                <Button type="submit">Add Comment</Button>
+                <Button type="submit" variant="primary">
+                  Add Comment
+                </Button>
               </Form>
             ) : (
-              <p>Please log in to add a comment.</p>
+              <p>You need to be logged in to comment.</p>
             )}
           </div>
         </Col>
