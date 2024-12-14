@@ -23,10 +23,8 @@ const Gallery = () => {
           const photos = data.results.map((photo) => ({
             id: photo.id,
             title: photo.title,
-            imageUrl:
-              photo.image_url ||
-              'https://res.cloudinary.com/dwgtce0rh/image/upload/v1727862662/vestrahorn-mountains-stokksnes-iceland_aoqbtp.jpg',
-            photographer: photo.photographer_display_name || 'Unknown',
+            imageUrl: photo.image_url,
+            photographer: photo.photographer?.display_name || 'Unknown',
           }));
           setImages(photos);
 
