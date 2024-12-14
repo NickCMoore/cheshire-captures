@@ -3,11 +3,9 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Row, Col, Card, Image, Button } from 'react-bootstrap';
 import styles from '../styles/Profile.module.css';
-import { useCurrentUser } from '../contexts/CurrentUserContext';
 
 const ProfilePage = () => {
   const { id } = useParams();
-  const currentUser = useCurrentUser();
   const [photographer, setPhotographer] = useState(null);
   const [error, setError] = useState(null);
 
