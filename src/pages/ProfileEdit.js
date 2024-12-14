@@ -27,6 +27,7 @@ const ProfileEdit = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [profileImage, setProfileImage] = useState(null);
+  const [isSaving, setIsSaving] = useState(false); // New state to track the save process
 
   useEffect(() => {
     const fetchPhotographer = async () => {
@@ -65,6 +66,8 @@ const ProfileEdit = () => {
       formData.append("profile_image", profileImage);
     }
 
+    setIsSaving(true); // Set saving to true when starting the save process
+
     try {
       const { data } = await axios.put(
         `/api/photographers/photographers/${id}/`,
@@ -81,6 +84,8 @@ const ProfileEdit = () => {
     } catch (error) {
       setErrorMessage("Error updating profile details.");
       console.error("Error updating profile details:", error);
+    } finally {
+      setIsSaving(false); // Set saving to false once the save process is complete
     }
   };
 
@@ -95,7 +100,7 @@ const ProfileEdit = () => {
   return (
     <Container className={`${styles.profileEditContainer} vh-100`}>
       <Row className="justify-content-center align-items-center h-100">
-        <Col md={10} lg={8} xl={6}> {/* Adjusted the size here */}
+        <Col md={8} lg={6} xl={4}>
           <Card className={`p-4 shadow ${styles.profileCard}`}>
             <h2 className={styles.blueHeading}>Edit Profile</h2>
             {successMessage && <Alert variant="success">{successMessage}</Alert>}
@@ -184,8 +189,9 @@ const ProfileEdit = () => {
               <Button
                 className={`${btnStyles.Button} w-100 mt-3`}
                 type="submit"
+                disabled={isSaving} // Disable the button while saving
               >
-                Save Changes
+                {isSaving ? "Saving..." : "Save Changes"} {/* Show "Saving..." while saving */}
               </Button>
             </Form>
           </Card>
