@@ -66,6 +66,12 @@ const MyPhotos = () => {
     setFilteredPhotos(filtered);
   }, [searchQuery, photos, categoryFilter, dateFilter]);
 
+  const clearFilters = () => {
+    setSearchQuery('');
+    setCategoryFilter('');
+    setDateFilter('');
+  };
+
   if (isLoading) {
     return <div>Loading photos...</div>;
   }
@@ -106,6 +112,15 @@ const MyPhotos = () => {
                 onChange={(e) => setDateFilter(e.target.value)}
               />
             </Form.Group>
+          </Col>
+          <Col md={4} className="d-flex align-items-end">
+            <Button
+              variant="warning"
+              className="w-100"
+              onClick={clearFilters}
+            >
+              Clear All Filters
+            </Button>
           </Col>
         </Row>
       </Form>
