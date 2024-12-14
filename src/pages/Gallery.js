@@ -21,19 +21,19 @@ const Gallery = () => {
         });
 
         if (data.results && data.results.length > 0) {
-          // Fetch photographer details for each photo if photographer data is missing or incomplete
           const photos = await Promise.all(
             data.results.map(async (photo) => {
               let photographerName = 'Unknown';
 
               if (photo.photographer) {
-                // If photographer information exists, use it directly
                 photographerName = photo.photographer.display_name || 'Unknown';
               } else {
-                // If photographer information is not in photo, fetch it separately
                 try {
-                  const photographerResponse = await axiosReq.get(`/api/photographers/photographers/${photo.photographer_id}`);
-                  photographerName = photographerResponse.data.display_name || 'Unknown';
+                  const photographerResponse = await axiosReq.get(
+                    `/api/photographers/photographers/${photo.photographer_id}`
+                  );
+                  photographerName =
+                    photographerResponse.data.display_name || 'Unknown';
                 } catch (error) {
                   console.error('Error fetching photographer:', error);
                 }
@@ -51,7 +51,7 @@ const Gallery = () => {
           setImages(photos);
 
           const uniqueCategories = data.results
-            ? [...new Set(data.results.map(photo => photo.category).filter(category => category))] 
+            ? [...new Set(data.results.map(photo => photo.category).filter(category => category))]
             : [];
           setCategories(uniqueCategories);
         } else {
@@ -123,7 +123,9 @@ const Gallery = () => {
           selectedCategory || searchTerm ? (
             <p className="text-center">No photos found.</p>
           ) : (
-            <p className="text-center">Loading photos...</p>
+            <div className={styles.loadingContainer}>
+              <p>Loading photos...</p>
+            </div>
           )
         )}
       </Carousel>
@@ -132,3 +134,4 @@ const Gallery = () => {
 };
 
 export default Gallery;
+
