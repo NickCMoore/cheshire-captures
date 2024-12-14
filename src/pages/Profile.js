@@ -3,8 +3,10 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Row, Col, Card, Image, Button } from 'react-bootstrap';
 import styles from '../styles/Profile.module.css';
+import { useCurrentUser } from '../contexts/CurrentUserContext';
 
 const ProfilePage = () => {
+  const currentUser = useCurrentUser();
   const { id } = useParams();
   const [photographer, setPhotographer] = useState(null);
   const [error, setError] = useState(null);
@@ -41,7 +43,7 @@ const ProfilePage = () => {
             />
             <h3>{photographer.display_name}</h3>
             <p>{photographer.bio ? photographer.bio : 'This photographer has not provided a bio.'}</p>
-            <Button variant="primary" as={Link} to={`/profile/edit/${id}`}>
+            <Button variant="primary" as={Link} to={`/profile/${currentUser?.photographer_id}/edit`}>
               Edit Profile
             </Button>
           </Card>
