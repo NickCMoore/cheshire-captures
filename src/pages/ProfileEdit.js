@@ -14,7 +14,6 @@ import {
 } from "react-bootstrap";
 import styles from "../styles/Profile.module.css";
 import btnStyles from "../styles/Button.module.css";
-import { useHistory } from "react-router-dom"; // Import useHistory from react-router-dom
 
 const ProfileEdit = () => {
   const { id } = useParams();
@@ -29,7 +28,6 @@ const ProfileEdit = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [profileImage, setProfileImage] = useState(null);
   const [isSaving, setIsSaving] = useState(false); // New state to track the save process
-  const history = useHistory(); // Initialize history hook
 
   useEffect(() => {
     const fetchPhotographer = async () => {
@@ -94,21 +92,6 @@ const ProfileEdit = () => {
   const handleImageChange = (e) => {
     if (e.target.files.length > 0) {
       setProfileImage(e.target.files[0]);
-    }
-  };
-
-  // Function to delete the profile
-  const handleDeleteProfile = async () => {
-    if (window.confirm("Are you sure you want to delete your profile?")) {
-      try {
-        await axios.delete(`/api/photographers/photographers/${id}/`);
-        // Log out the user (you should implement this based on your auth setup)
-        // Example: log out and redirect to homepage
-        history.push("/"); // Redirect to homepage after deletion
-      } catch (error) {
-        console.error("Error deleting profile:", error);
-        setErrorMessage("There was an error deleting the profile.");
-      }
     }
   };
 
@@ -211,15 +194,6 @@ const ProfileEdit = () => {
                 {isSaving ? "Saving..." : "Save Changes"} {/* Show "Saving..." while saving */}
               </Button>
             </Form>
-
-            {/* Delete Profile Button */}
-            <Button
-              className={`${btnStyles.Button} w-100 mt-3`}
-              variant="danger"
-              onClick={handleDeleteProfile}
-            >
-              Delete Profile
-            </Button>
           </Card>
         </Col>
       </Row>
