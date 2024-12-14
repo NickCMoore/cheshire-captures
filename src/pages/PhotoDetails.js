@@ -203,7 +203,7 @@ const PhotoDetails = () => {
 
             {comments.length > 0 ? (
               comments.map((comment) => (
-                <div key={comment.id}>
+                <div key={comment.id} className="mb-3">
                   {editingCommentId === comment.id ? (
                     <>
                       <Form.Control
@@ -212,39 +212,46 @@ const PhotoDetails = () => {
                         value={editComment}
                         onChange={(e) => setEditComment(e.target.value)}
                       />
-                      <Button onClick={() => handleEditComment(comment.id)}>
-                        Save
-                      </Button>
-                      <Button onClick={() => setEditingCommentId(null)}>
-                        Cancel
-                      </Button>
+                      <Button onClick={() => handleEditComment(comment.id)}>Save</Button>
+                      <Button onClick={() => setEditingCommentId(null)}>Cancel</Button>
                     </>
                   ) : (
-                    <p>
-                      <strong style={{ color: 'black' }}>{comment.user}:</strong> {comment.content}
-                      {currentUser?.username === comment.user && (
-                        <div className="mt-2 d-flex gap-2">
-                          <Button
-                            variant="warning"
-                            onClick={() => setEditingCommentId(comment.id)}
-                          >
-                            Edit
-                          </Button>
-                          <Button
-                            variant="danger"
-                            onClick={() => handleDeleteComment(comment.id)}
-                          >
-                            Delete
-                          </Button>
-                        </div>
-                      )}
-                    </p>
+                    <div className="d-flex align-items-start">
+                      <Image
+                        src={comment.profile_image || "default-avatar.jpg"} 
+                        alt={comment.user}
+                        className="rounded-circle"
+                        width={40}
+                        height={40}
+                        style={{ marginRight: "10px" }}
+                      />
+                      <div>
+                        <strong style={{ color: 'black' }}>{comment.user}:</strong> {comment.content}
+                        {currentUser?.username === comment.user && (
+                          <div className="mt-2 d-flex gap-2">
+                            <Button
+                              variant="warning"
+                              onClick={() => setEditingCommentId(comment.id)}
+                            >
+                              Edit
+                            </Button>
+                            <Button
+                              variant="danger"
+                              onClick={() => handleDeleteComment(comment.id)}
+                            >
+                              Delete
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   )}
                 </div>
               ))
             ) : (
               <p>No comments yet.</p>
             )}
+
 
             {currentUser ? (
               <Form onSubmit={handleAddComment}>
