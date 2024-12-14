@@ -19,10 +19,9 @@
 }
 
 .carouselCaption {
-  background-color: rgba(0, 0, 0, 0.6);
-  padding: 15px;
-  border-radius: 10px;
-  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5); 
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .carouselCaption h5 {

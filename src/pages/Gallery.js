@@ -93,9 +93,9 @@ const Gallery = () => {
                 alt={photo.title}
               />
             </Link>
-            <Carousel.Caption>
+            <Carousel.Caption className={styles.carouselCaption}>
               <h5>{photo.title}</h5>
-              <p>By: {photo.photographer || 'Unknown'}</p>
+              <p>By: {photo.photographer?.display_name || 'Unknown'}</p>
             </Carousel.Caption>
           </Carousel.Item>
         ))}
@@ -171,8 +171,14 @@ const Gallery = () => {
                 </Link>
                 <Card.Body>
                   <Card.Title>{photo.title}</Card.Title>
-                  <Card.Text>By: {photo.photographer || 'Unknown'}</Card.Text>
-                  <Card.Text className="text-primary">Date: {new Date(photo.created_at).toLocaleDateString()}</Card.Text>
+                  <Card.Text>By: {photo.photographer?.display_name || 'Unknown'}</Card.Text>
+                  <Card.Text className="text-primary">
+                    Date: {new Date(photo.created_at).toLocaleDateString('en-GB', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                    })}
+                  </Card.Text>
                 </Card.Body>
               </Card>
             </Col>
