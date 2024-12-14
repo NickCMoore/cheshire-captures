@@ -19,17 +19,39 @@ const Gallery = () => {
             search: searchTerm || undefined,
           },
         });
+
         if (data.results && data.results.length > 0) {
-          const photos = data.results.map((photo) => ({
-            id: photo.id,
-            title: photo.title,
-            imageUrl: photo.image_url,
-            photographer: photo.photographer?.display_name || 'Unknown',
-          }));
+          // Fetch photographer details for each photo if photographer data is missing or incomplete
+          const photos = await Promise.all(
+            data.results.map(async (photo) => {
+              let photographerName = 'Unknown';
+
+              if (photo.photographer) {
+                // If photographer information exists, use it directly
+                photographerName = photo.photographer.display_name || 'Unknown';
+              } else {
+                // If photographer information is not in photo, fetch it separately
+                try {
+                  const photographerResponse = await axiosReq.get(`/api/photographers/photographers/${photo.photographer_id}`);
+                  photographerName = photographerResponse.data.display_name || 'Unknown';
+                } catch (error) {
+                  console.error('Error fetching photographer:', error);
+                }
+              }
+
+              return {
+                id: photo.id,
+                title: photo.title,
+                imageUrl: photo.image_url,
+                photographer: photographerName,
+              };
+            })
+          );
+
           setImages(photos);
 
           const uniqueCategories = data.results
-            ? [...new Set(data.results.map(photo => photo.category).filter(category => category))]
+            ? [...new Set(data.results.map(photo => photo.category).filter(category => category))] 
             : [];
           setCategories(uniqueCategories);
         } else {
