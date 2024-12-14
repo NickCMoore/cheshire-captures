@@ -4,6 +4,7 @@ import { axiosReq } from '../api/axiosDefaults';
 import { useCurrentUser } from '../contexts/CurrentUserContext';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import SearchBar from '../components/SearchBar';
+import styles from '../styles/PopularPhotographers.module.css';
 
 const PopularPhotographers = () => {
   const [photographers, setPhotographers] = useState([]);
@@ -46,17 +47,17 @@ const PopularPhotographers = () => {
           filteredPhotographers.map((photographer) => (
             <Col key={photographer.id} md={4} className="mb-4">
               <Card className="shadow-sm profile-card">
-                <Card.Body className="text-left">
+                <Card.Body className="text-center">
                   {/* Display profile picture */}
                   {photographer.profile_image ? (
                     <Card.Img
                       variant="top"
                       src={photographer.profile_image}
                       alt={`${photographer.display_name}'s profile`}
-                      className="profile-picture"
+                      className={styles.profilePicture}
                     />
                   ) : (
-                    <div className="profile-picture-placeholder">No Picture</div>
+                    <div className={styles.profilePicturePlaceholder}>No Picture</div>
                   )}
                   <Card.Title className="mt-2">{photographer.display_name}</Card.Title>
                   <Card.Text>{photographer.bio || 'No bio available'}</Card.Text>
