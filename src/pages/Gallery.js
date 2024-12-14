@@ -9,7 +9,8 @@ const Gallery = () => {
   const [filteredImages, setFilteredImages] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [dateFilter, setDateFilter] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -55,22 +56,24 @@ const Gallery = () => {
       );
     }
 
-    // Filter by date
-    if (dateFilter) {
+    // Filter by date range
+    if (startDate && endDate) {
       filtered = filtered.filter((photo) => {
         const photoDate = new Date(photo.created_at);
-        const filterDate = new Date(dateFilter);
-        return photoDate.toDateString() === filterDate.toDateString();
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        return photoDate >= start && photoDate <= end;
       });
     }
 
     setFilteredImages(filtered);
-  }, [searchTerm, selectedCategory, dateFilter, images]);
+  }, [searchTerm, selectedCategory, startDate, endDate, images]);
 
   const clearFilters = () => {
     setSearchTerm('');
     setSelectedCategory('');
-    setDateFilter('');
+    setStartDate('');
+    setEndDate('');
   };
 
   if (isLoading) {
@@ -135,12 +138,23 @@ const Gallery = () => {
           </Col>
 
           <Col md={4}>
-            <Form.Group controlId="dateFilter">
-              <Form.Label className="text-white">Date</Form.Label>
+            <Form.Group controlId="startDateFilter">
+              <Form.Label className="text-white">Start Date</Form.Label>
               <Form.Control
                 type="date"
-                value={dateFilter}
-                onChange={(e) => setDateFilter(e.target.value)}
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+            </Form.Group>
+          </Col>
+
+          <Col md={4}>
+            <Form.Group controlId="endDateFilter">
+              <Form.Label className="text-white">End Date</Form.Label>
+              <Form.Control
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
               />
             </Form.Group>
           </Col>
