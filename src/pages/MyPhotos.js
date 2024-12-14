@@ -14,8 +14,7 @@ const MyPhotos = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Static list of categories for the dropdown (customize as needed)
-  const categories = ['Nature', 'Urban', 'Portraits', 'Animals', 'Travel', 'Architecture'];
+  const categories = ['Nature', 'Urban', 'Portrait', 'Event', 'Landscape'];
 
   useEffect(() => {
     const fetchMyPhotos = async () => {
@@ -126,7 +125,7 @@ const MyPhotos = () => {
                 </Link>
                 <Card.Body className={styles.cardBody}>
                   <Card.Title className={styles.cardTitle}>{photo.title}</Card.Title>
-                  <Card.Text>{photo.created_at}</Card.Text>
+                  <Card.Text className={styles.dateText}>{photo.created_at}</Card.Text>
                   <Link to={`/photos/${photo.id}/edit`}>
                     <Button variant="secondary" className="w-100">
                       Edit

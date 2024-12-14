@@ -59,4 +59,9 @@
   .p {
     color: var(--yinmn-blue);
   }
+
+  .dateText {
+    color: blue;
+  }
+  
   
