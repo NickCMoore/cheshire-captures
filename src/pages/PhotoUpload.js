@@ -9,6 +9,7 @@ const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
 const PhotoUpload = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [category, setCategory] = useState(''); // State for category
   const [image, setImage] = useState({ file: null, previewUrl: '' });
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -53,6 +54,7 @@ const PhotoUpload = () => {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
+    formData.append('category', category); // Append category to form data
 
     if (image.file) {
       formData.append('image', image.file);
@@ -100,6 +102,24 @@ const PhotoUpload = () => {
               onChange={(e) => setDescription(e.target.value)}
               disabled={isLoading}
             />
+          </Form.Group>
+
+          <Form.Group controlId="category">
+            <Form.Label>Category</Form.Label>
+            <Form.Control
+              as="select"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              required
+              disabled={isLoading}
+            >
+              <option value="">Select a category</option>
+              <option value="Nature">Nature</option>
+              <option value="Urban">Urban</option>
+              <option value="Portrait">Portrait</option>
+              <option value="Event">Event</option>
+              <option value="Landscape">Landscape</option>
+            </Form.Control>
           </Form.Group>
 
           <Form.Group controlId="image">
