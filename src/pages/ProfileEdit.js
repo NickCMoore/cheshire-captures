@@ -95,116 +95,100 @@ const ProfileEdit = () => {
   return (
     <Container className={`${styles.profileEditContainer} vh-100`}>
       <Row className="justify-content-center align-items-center h-100">
-        <Col md={10}>
-          <Row className="gx-5">
-            <Col lg={6}>
-              <Card className={`p-4 shadow ${styles.profileCard}`}>
-                <h2 className={styles.blueHeading}>Edit Profile</h2>
-                {successMessage && (
-                  <Alert variant="success">{successMessage}</Alert>
-                )}
-                {errorMessage && (
-                  <Alert variant="danger">{errorMessage}</Alert>
-                )}
-                <Form onSubmit={handleProfileUpdate}>
-                  <div className="text-center">
-                    <Image
-                      src={photographer.profile_image}
-                      roundedCircle
-                      className={`${styles.profileImage} mb-3`}
-                      alt="Profile"
-                    />
-                  </div>
+        <Col md={8} lg={6} xl={4}>
+          <Card className={`p-4 shadow ${styles.profileCard}`}>
+            <h2 className={styles.blueHeading}>Edit Profile</h2>
+            {successMessage && <Alert variant="success">{successMessage}</Alert>}
+            {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+            <Form onSubmit={handleProfileUpdate}>
+              <div className="text-center">
+                <Image
+                  src={photographer.profile_image}
+                  roundedCircle
+                  className={`${styles.profileImage} mb-3`}
+                  alt="Profile"
+                />
+              </div>
 
-                  <Form.Group controlId="profileImage" className="mb-3 text-center">
-                    <div>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageChange}
-                        className="d-none"
-                        id="upload-profile-image"
-                      />
-                      <label
-                        htmlFor="upload-profile-image"
-                        className="btn btn-warning fw-bold px-4 py-2"
-                        style={{ cursor: "pointer" }}
-                      >
-                        Change Profile Image
-                      </label>
-                    </div>
-                  </Form.Group>
-
-                  <Form.Group controlId="displayName" className="mb-3">
-                    <Form.Label className={styles.formLabel}>
-                      Display Name
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter display name"
-                      value={displayName}
-                      onChange={(e) => setDisplayName(e.target.value)}
-                      required
-                    />
-                  </Form.Group>
-
-                  <Form.Group controlId="bio" className="mb-3">
-                    <Form.Label className={styles.formLabel}>Bio</Form.Label>
-                    <Form.Control
-                      as="textarea"
-                      rows={3}
-                      placeholder="Tell us about yourself"
-                      value={bio}
-                      onChange={(e) => setBio(e.target.value)}
-                    />
-                  </Form.Group>
-
-                  <Form.Group controlId="website" className="mb-3">
-                    <Form.Label className={styles.formLabel}>
-                      Website
-                    </Form.Label>
-                    <Form.Control
-                      type="url"
-                      placeholder="https://example.com"
-                      value={website}
-                      onChange={(e) => setWebsite(e.target.value)}
-                    />
-                  </Form.Group>
-
-                  <Form.Group controlId="instagram" className="mb-3">
-                    <Form.Label className={styles.formLabel}>
-                      Instagram
-                    </Form.Label>
-                    <Form.Control
-                      type="url"
-                      placeholder="https://instagram.com/yourusername"
-                      value={instagram}
-                      onChange={(e) => setInstagram(e.target.value)}
-                    />
-                  </Form.Group>
-
-                  <Form.Group controlId="twitter" className="mb-3">
-                    <Form.Label className={styles.formLabel}>
-                      Twitter
-                    </Form.Label>
-                    <Form.Control
-                      type="url"
-                      placeholder="https://twitter.com/yourusername"
-                      value={twitter}
-                      onChange={(e) => setTwitter(e.target.value)}
-                    />
-                  </Form.Group>
-
-                  <Button
-                    className={`${btnStyles.Button} w-100 mt-3`}
-                    type="submit"
+              <Form.Group controlId="profileImage" className="mb-3 text-center">
+                <div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="d-none"
+                    id="upload-profile-image"
+                  />
+                  <label
+                    htmlFor="upload-profile-image"
+                    className="btn btn-warning fw-bold px-4 py-2"
+                    style={{ cursor: "pointer" }}
                   >
-                    Save Changes
-                  </Button>
-                </Form>
-              </Card>
-            </Col>
-          </Row>
+                    Change Profile Image
+                  </label>
+                </div>
+              </Form.Group>
+
+              <Form.Group controlId="displayName" className="mb-3">
+                <Form.Label className={styles.formLabel}>Display Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter display name"
+                  value={displayName}
+                  onChange={(e) => setDisplayName(e.target.value)}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group controlId="bio" className="mb-3">
+                <Form.Label className={styles.formLabel}>Bio</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  placeholder="Tell us about yourself"
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group controlId="website" className="mb-3">
+                <Form.Label className={styles.formLabel}>Website</Form.Label>
+                <Form.Control
+                  type="url"
+                  placeholder="https://example.com"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group controlId="instagram" className="mb-3">
+                <Form.Label className={styles.formLabel}>Instagram</Form.Label>
+                <Form.Control
+                  type="url"
+                  placeholder="https://instagram.com/yourusername"
+                  value={instagram}
+                  onChange={(e) => setInstagram(e.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group controlId="twitter" className="mb-3">
+                <Form.Label className={styles.formLabel}>Twitter</Form.Label>
+                <Form.Control
+                  type="url"
+                  placeholder="https://twitter.com/yourusername"
+                  value={twitter}
+                  onChange={(e) => setTwitter(e.target.value)}
+                />
+              </Form.Group>
+
+              <Button
+                className={`${btnStyles.Button} w-100 mt-3`}
+                type="submit"
+              >
+                Save Changes
+              </Button>
+            </Form>
+          </Card>
         </Col>
       </Row>
     </Container>
