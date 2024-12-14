@@ -127,7 +127,7 @@ const ProfileEdit = () => {
                       />
                       <label
                         htmlFor="upload-profile-image"
-                        className="btn btn-warning text-white fw-bold px-4 py-2"
+                        className="btn btn-warning fw-bold px-4 py-2"
                         style={{ cursor: "pointer" }}
                       >
                         Change Profile Image
