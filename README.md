@@ -67,19 +67,19 @@ Cheshire Captures aims to address these challenges by providing a tailored platf
 
 Cheshire Captures was built using React and several supporting libraries to create a fast, responsive, and user-friendly experience. Key implemented features included:
 
-- Smooth Navigation with React Router
+**Smooth Navigation with React Router**
 
 I utilised react-router-dom for client-side routing, enabling smooth transitions between pages without full-page reloads. This approach significantly improved navigation speed and user engagement.
 
-- Dynamic and Responsive Photo Feed
+**Dynamic and Responsive Photo Feed**
 
 The photo feed leveraged React's component-based architecture and hooks to deliver an Instagram-style infinite scroll. Users could browse a continuous stream of photos effortlessly, ensuring an interactive and modern browsing experience.
 
-- Real-Time Updates for Interactions
+**Real-Time Updates for Interactions**
 
 The platform employed React's state management to enable real-time updates for likes, ratings, and comments. This eliminated the need for page reloads, offering immediate feedback and enhancing community interaction.
 
-- Customisable User Profiles
+**Customisable User Profiles**
 
 Dynamic components in React allowed users to create and personalize their profile pages. Photographers could showcase their best work, add details about their services, and organise their portfolios, ensuring a professional and tailored presentation.
 
@@ -226,25 +226,22 @@ The platform supports commenting and liking features for user interaction. Each 
 - **Comment Moderation**: Users can delete comments on their own photos if they wish to moderate the discussion.
 
 - **User Authentication:** Secure login, registration, and password resets using JWT and dj-rest-auth.
-**Profile Management:** Users can update profile details and upload profile pictures.
-**Photo Upload & Management: Users can upload photos, add titles, descriptions, categories, and tags.
-**Interaction Features:** Comment, like/unlike, and rate photos to engage with others.
-**Following System:** Users can follow other photographers.
-**Search & Filter:** Search by title, photographer, or category; filter by tags or upload date.
-**Top-Rated Photos:** See the most highly rated photos.
-**Responsive Design:** The site is mobile-friendly and optimized for all devices.
+- **Profile Management:** Users can update profile details and upload profile pictures.
+-  **Photo Upload & Management:** Users can upload photos, add titles, descriptions, categories, and tags.
+- **Interaction Features:** Comment, like/unlike, and rate photos to engage with others.
+- **Following System:** Users can follow other photographers.
+- **Search & Filter:** Search by title, photographer, or category; filter by tags or upload date.
+- **Top-Rated Photos:** See the most highly rated photos.
+- **Responsive Design:** The site is mobile-friendly and optimized for all devices.
 
 ---
 
 
 ## Wireframes
 
-![alt text](/public/images/image-12.png)
-
-
 The wireframes were designed to provide a clear, structured layout for the main pages of the photography sharing application. Each wireframe emphasizes a clean, user-friendly interface while ensuring that key elements like photos, user interactions (comments, likes, etc.), and navigation features are prominently displayed.
 
-Key Design Considerations:
+**Key Design Considerations:**
 
 - User Experience (UX): The wireframes are designed with user experience in mind. Navigation is intuitive, with clear call-to-action buttons and minimal distractions, allowing users to focus on the content – whether it’s viewing, uploading, or interacting with photos.
 
@@ -252,46 +249,46 @@ Key Design Considerations:
 
 - Minimalist Approach: The design follows a minimalist approach, focusing on functionality with minimal use of colour. Black, white, and gray shades dominate the interface to provide a neutral background that emphasizes the user-generated content, primarily the photos.
 
-Wireframe Breakdown:
-
-Homepage Wireframe:
+**Homepage Wireframe:**
 
 Header: Includes a site logo and navigation bar with links to the gallery, user profile, login, and sign-up options.
 Hero Section: Features a large call-to-action (CTA) button inviting users to explore or upload photos. The background is minimal to allow users to focus on the navigation options.
 Photo Feed: Below the hero section, a grid of photos is displayed, showcasing the latest or most popular images. Each photo is accompanied by details such as the photographer’s name, the number of likes, and a comments section preview.
 
-Profile Page Wireframe:
+**Profile Page Wireframe:**
 
 Profile Image & Bio: A simple user card displaying the photographer's profile image, display name, bio, and social media links. An "Edit Profile" button is available for the logged-in user to make changes to their profile.
 Photos Section: Below the profile details, the photographer's uploaded photos are showcased in a grid format. Each photo has an "Edit" and "Delete" option (if viewed by the profile owner).
 
-Photo Upload Wireframe:
+**Photo Upload Wireframe:**
 
 Form Layout: A clean, centered form with fields for title, description, and image upload. The image upload button is designed to be prominent to encourage users to upload a photo.
 Preview Section: Once an image is selected, a preview is displayed before the user submits the form, ensuring they can make changes if necessary.
 
-Photo Detail Wireframe:
+**Photo Detail Wireframe:**
 
 Photo Display: The main photo takes center stage, displayed prominently with like and comment buttons below it.
 Photographer Information: Located beside or below the photo is a section highlighting the photographer’s details with a link to their profile.
 Comment Section: Users can view and add comments to the photo. Logged-in users can edit or delete their own comments.
 Interactions: Like and unlike buttons are placed below the photo to allow quick interaction, with a visible counter of likes and comments.
 
-Login/Sign-up Wireframes:
+**Login/Sign-up Wireframes:**
 
 Form Layout: The login and sign-up forms are simple, with fields for username, password, and optional social media login options. Both forms are centered for focus and ease of use, with clear instructions and feedback mechanisms for incorrect input.
 
-Wireframe Tools:
+**Wireframe Tools:**
 
-The wireframes were initially conceptualized using basic layout sketches and later refined into a detailed, digital format. The digital wireframes are black and white, emphasizing structure and functionality. All diagrams use simple shapes and line art to represent the structure, providing a clear roadmap for development without overcomplicating the visual details.
+The wireframes were initially conceptualised using basic layout sketches and later refined into a detailed, digital format. The digital wireframes are black and white, emphasising structure and functionality. All diagrams use simple shapes and line art to represent the structure, providing a clear roadmap for development without overcomplicating the visual details.
 
 The wireframes serve as a reference for both front-end and back-end development, ensuring that the user experience flows as intended and that all functional requirements are met.
 
-Design Overview:
+## Design Overview:
 
 The design of this website adopts a modern, minimalist aesthetic, emphasizing user-generated content (primarily photos) while maintaining a clean, cohesive visual theme. The colours, fonts, and layout elements are carefully selected to create an elegant, approachable experience for users. The overall structure leverages a neutral yet vibrant colour scheme that balances professionalism and creativity.
 
 ## Colour Scheme:
+
+![alt text](/public/images/Screenshot%202024-12-15%20142248.png)
 
 The following colours are central to the design, creating a harmonious and visually appealing atmosphere:
 
@@ -647,9 +644,7 @@ The development process for Cheshire Captures followed Agile methodology, emphas
 
 GitHub Projects served as the primary Agile tool for managing the development tasks. While GitHub Projects isn't a specialised Agile tool, it was used with the right tags, project creation, and issue assignments to fit the needs of the project.
 
-![GitHub Projects](/documentation/project-management.png)
-![GitHub Projects (Final)](/documentation/project-managementfinal.png)
-![GitHub Issues](/documentation/issues.png)
+![Kanban Board](project_workflow.png)
 
 ### User Stories Mapping
 
@@ -818,7 +813,7 @@ For a detailed view of the project management and task progression, refer to the
 
 ## Testing
 
-Please click ![here](TESTING.md) to read more information about testing Cheshire Captures
+Please click [here](TESTING.md) to read more information about testing Cheshire Captures
 
 ## Setup & Installation
 
@@ -981,7 +976,7 @@ A huge thanks to the **Cheshire Captures** community, whose input inspired many 
 
 Lastly, I want to acknowledge the vast array of online resources and communities—particularly **Unsplash**, **Pngtree**, **Stack Overflow**, and **GitConnected**—for offering the tutorials, tools, and assets that helped bring this project to life.
 
-**[Nick Moore]**, [October] [2024]
+**[Nick Moore]**, December 2024
 
 
 
