@@ -99,25 +99,20 @@ const PhotoDetails = () => {
       if (!hasLiked) {
         const response = await axios.post(`/api/photos/photos/${id}/like/`);
         if (response.status === 201) {
-          // Fetch updated data to ensure consistency
-          const { data } = await axiosReq.get(`/api/photos/photos/${id}/`);
-          setLikeCount(data.likes_count || 0);
-          setHasLiked(data.user_has_liked || false);
+          setLikeCount((prevCount) => prevCount + 1);
+          setHasLiked(true);
         }
       } else {
         const response = await axios.post(`/api/photos/photos/${id}/unlike/`);
         if (response.status === 204) {
-          // Fetch updated data to ensure consistency
-          const { data } = await axiosReq.get(`/api/photos/photos/${id}/`);
-          setLikeCount(data.likes_count || 0);
-          setHasLiked(data.user_has_liked || false);
+          setLikeCount((prevCount) => prevCount - 1);
+          setHasLiked(false);
         }
       }
     } catch (error) {
       console.error("Error liking/unliking the photo:", error.response?.data || error);
     }
   };
-  
 
   const handleDelete = async () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this photo?");
