@@ -7,6 +7,7 @@ import {
   Button,
   Card,
   Carousel,
+  Pagination,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { axiosReq } from "../api/axiosDefaults";
@@ -22,6 +23,8 @@ const Gallery = () => {
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(9); // 9 items per page
 
   useEffect(() => {
     const fetchPhotos = async () => {
@@ -91,9 +94,21 @@ const Gallery = () => {
     setEndDate("");
   };
 
+  // Pagination: Get current photos to display based on the page and items per page
+  const indexOfLastPhoto = currentPage * itemsPerPage;
+  const indexOfFirstPhoto = indexOfLastPhoto - itemsPerPage;
+  const currentPhotos = filteredImages.slice(indexOfFirstPhoto, indexOfLastPhoto);
+
+  // Change page handler
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   if (isLoading) {
     return <div className="text-center">Loading photos...</div>;
   }
+
+  const totalPages = Math.ceil(filteredImages.length / itemsPerPage);
 
   return (
     <Container className={styles.galleryContainer}>
@@ -185,8 +200,8 @@ const Gallery = () => {
 
       {/* Photo Grid */}
       <Row>
-        {filteredImages.length > 0 ? (
-          filteredImages.map((photo) => (
+        {currentPhotos.length > 0 ? (
+          currentPhotos.map((photo) => (
             <Col key={photo.id} md={4} className="mb-4">
               <Card className={`shadow-sm ${styles.photoCard}`}>
                 <Link to={`/photos/${photo.id}`}>
@@ -216,6 +231,29 @@ const Gallery = () => {
           <p className="text-center">No photos found.</p>
         )}
       </Row>
+
+      {/* Pagination */}
+      <div className="d-flex justify-content-center mt-4">
+        <Pagination>
+          <Pagination.Prev
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          />
+          {[...Array(totalPages)].map((_, index) => (
+            <Pagination.Item
+              key={index}
+              active={index + 1 === currentPage}
+              onClick={() => handlePageChange(index + 1)}
+            >
+              {index + 1}
+            </Pagination.Item>
+          ))}
+          <Pagination.Next
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          />
+        </Pagination>
+      </div>
     </Container>
   );
 };
