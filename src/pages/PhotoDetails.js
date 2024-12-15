@@ -95,31 +95,29 @@ const PhotoDetails = () => {
   };
 
   const handleLike = async () => {
+    if (!currentUser) {
+      alert("You need to be logged in to like a photo.");
+      return;
+    }
+  
     try {
       if (!hasLiked) {
-        const response = await axios.post(`/api/photos/photos/${id}/like/`);
-        if (response.status === 201) {
-          // Increment like count and set hasLiked to true
-          setLikeCount((prevCount) => prevCount + 1);
-          setHasLiked(true);
-        }
+        // Like the photo
+        await axios.post(`/api/photos/photos/${id}/like/`);
+        setLikeCount((prevCount) => prevCount + 1);
+        setHasLiked(true);
       } else {
-        const response = await axios.post(`/api/photos/photos/${id}/unlike/`);
-        if (response.status === 204) {
-          // Decrement like count and set hasLiked to false
-          setLikeCount((prevCount) => prevCount - 1);
-          setHasLiked(false);
-        }
+        // Unlike the photo
+        await axios.post(`/api/photos/photos/${id}/unlike/`);
+        setLikeCount((prevCount) => Math.max(prevCount - 1, 0)); // Ensure count doesn't go below 0
+        setHasLiked(false);
       }
-      // Optionally refetch photo details to ensure consistency
-      const { data } = await axiosReq.get(`/api/photos/photos/${id}/`);
-      setPhoto(data);
-      setLikeCount(data.likes_count || 0);
-      setHasLiked(data.user_has_liked || false);
     } catch (error) {
-      console.error("Error liking/unliking the photo:", error.response?.data || error);
+      console.error("Error toggling like:", error.response?.data || error);
+      alert("An error occurred while trying to like/unlike the photo.");
     }
   };
+  
   
 
   const handleDelete = async () => {
@@ -176,17 +174,15 @@ const PhotoDetails = () => {
             <p className="text-dark">{photo.description}</p>
 
             <div className="mt-3 text-center">
-            <p className="mb-1" style={{ color: "black" }}>
-              <strong>Likes:</strong> {likeCount || 0}
-            </p>
-            {!hasLiked && (
-              <Button variant="primary" onClick={handleLike}>
-                Like
+              <p className="mb-1" style={{ color: "black" }}>
+                <strong>{likeCount}</strong> {likeCount === 1 ? "Like" : "Likes"}
+              </p>
+              <Button
+                variant={hasLiked ? "danger" : "primary"}
+                onClick={handleLike}
+              >
+                {hasLiked ? "Unlike" : "Like"}
               </Button>
-            )}
-            {hasLiked && (
-              <p className="text-success">You liked this photo!</p>
-            )}
             </div>
 
             {currentUser?.username &&
