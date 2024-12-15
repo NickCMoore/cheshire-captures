@@ -217,7 +217,7 @@ The platform supports commenting and liking features for user interaction. Each 
 
 ## Wireframes
 
-![alt text](image-1.png)
+![alt text](/public/images/image-12.png)
 
 
 The wireframes were designed to provide a clear, structured layout for the main pages of the photography sharing application. Each wireframe emphasizes a clean, user-friendly interface while ensuring that key elements like photos, user interactions (comments, likes, etc.), and navigation features are prominently displayed.
@@ -301,9 +301,9 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
 - Button Styling: Buttons are designed with rounded corners, subtle shadows, and transitions to enhance user interaction. The primary button has a base colour of Mountbatten Pink with a hover effect transitioning to Ultra Violet.
 - Image Frames: Images, including photos and icons, are given soft borders (Ultra Violet) and gentle box shadows for a modern, elevated look. Hover effects are applied to give a sense of interaction.
 
-### User Stories
+## User Stories
 
-## Navigation/Authentication
+### Navigation/Authentication
 
 1. **Log In:**
 

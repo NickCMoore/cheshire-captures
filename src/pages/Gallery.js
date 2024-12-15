@@ -82,7 +82,6 @@ const Gallery = () => {
 
   return (
     <Container className={styles.galleryContainer}>
-      <h2 className="my-4">Photo Gallery</h2>
       {error && <p className="text-danger text-center">{error}</p>}
 
       {/* Carousel */}
