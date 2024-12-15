@@ -168,15 +168,17 @@ const PhotoDetails = () => {
             <p className="text-dark">{photo.description}</p>
 
             <div className="mt-3 text-center">
-              <p className="mb-1" style={{ color: 'black' }}>
-                <strong>Likes:</strong> {likeCount || 0}
-              </p>
-              <Button
-                variant={hasLiked ? "danger" : "primary"}
-                onClick={handleLike}
-              >
-                {hasLiked ? "Unlike" : "Like"}
+            <p className="mb-1" style={{ color: "black" }}>
+              <strong>Likes:</strong> {likeCount || 0}
+            </p>
+            {!hasLiked && (
+              <Button variant="primary" onClick={handleLike}>
+                Like
               </Button>
+            )}
+            {hasLiked && (
+              <p className="text-success">You liked this photo!</p>
+            )}
             </div>
 
             {currentUser?.username &&
