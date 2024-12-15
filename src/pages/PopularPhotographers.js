@@ -33,7 +33,6 @@ const PopularPhotographers = () => {
           `/api/photographers/top-photographers/?page=${currentPage}&page_size=${photographersPerPage}`
         );
         setPhotographers(data.results);
-        setFilteredPhotographers(data.results);
         setTotalPages(Math.ceil(data.count / photographersPerPage)); // Calculate total pages
       } catch (err) {
         console.error("Error fetching photographers:", err);
@@ -44,18 +43,20 @@ const PopularPhotographers = () => {
   }, [currentPage]);
 
   useEffect(() => {
-    if (searchQuery) {
-      setFilteredPhotographers(
-        photographers.filter((photographer) =>
+    const filteredData = searchQuery
+      ? photographers.filter((photographer) =>
           photographer.display_name
             .toLowerCase()
             .includes(searchQuery.toLowerCase())
         )
-      );
-    } else {
-      setFilteredPhotographers(photographers);
-    }
-  }, [searchQuery, photographers]);
+      : photographers;
+
+    // Paginate filtered photographers (6 per page)
+    const startIndex = (currentPage - 1) * photographersPerPage;
+    const endIndex = startIndex + photographersPerPage;
+
+    setFilteredPhotographers(filteredData.slice(startIndex, endIndex));
+  }, [searchQuery, photographers, currentPage]);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
