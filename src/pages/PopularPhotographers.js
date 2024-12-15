@@ -6,6 +6,12 @@ import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import SearchBar from '../components/SearchBar';
 import styles from '../styles/PopularPhotographers.module.css';
 
+// Function to generate a random location
+const getRandomLocation = () => {
+  const locations = ['New York, USA', 'Los Angeles, USA', 'Chicago, USA', 'Houston, USA', 'Phoenix, USA'];
+  return locations[Math.floor(Math.random() * locations.length)];
+};
+
 const PopularPhotographers = () => {
   const [photographers, setPhotographers] = useState([]);
   const [filteredPhotographers, setFilteredPhotographers] = useState([]);
@@ -44,39 +50,47 @@ const PopularPhotographers = () => {
       <SearchBar onSearch={setSearchQuery} />
       <Row className="mt-4">
         {Array.isArray(filteredPhotographers) && filteredPhotographers.length > 0 ? (
-          filteredPhotographers.map((photographer) => (
-            <Col key={photographer.id} md={4} className="mb-4">
-              <Card className="shadow-sm profile-card">
-                <Card.Body className="text-center">
-                  {/* Display profile picture */}
-                  {photographer.profile_image ? (
-                    <Card.Img
-                      variant="top"
-                      src={photographer.profile_image}
-                      alt={`${photographer.display_name}'s profile`}
-                      className={styles.profilePicture}
-                    />
-                  ) : (
-                    <div className={styles.profilePicturePlaceholder}>No Picture</div>
-                  )}
-                  <Card.Title className="mt-2">{photographer.display_name}</Card.Title>
-                  <Card.Text>{photographer.bio || 'No bio available'}</Card.Text>
-                  <Link to={`/profile/${photographer.id}`}>
-                    <Button variant="primary" className="w-100 mt-2">
-                      View Profile
-                    </Button>
-                  </Link>
-                  {currentUser?.username === photographer.user.username && (
-                    <Link to={`/profile/${photographer.id}/edit`}>
-                      <Button variant="secondary" className="w-100 mt-2">
-                        Edit Profile
+          filteredPhotographers.map((photographer) => {
+            // Set location to either the photographer's location or a random one
+            const location = photographer.location || getRandomLocation();
+            return (
+              <Col key={photographer.id} md={4} className="mb-4">
+                <Card className="shadow-sm profile-card">
+                  <Card.Body className="text-center">
+                    {/* Display profile picture */}
+                    {photographer.profile_image ? (
+                      <Card.Img
+                        variant="top"
+                        src={photographer.profile_image}
+                        alt={`${photographer.display_name}'s profile`}
+                        className={styles.profilePicture}
+                      />
+                    ) : (
+                      <div className={styles.profilePicturePlaceholder}>No Picture</div>
+                    )}
+                    <Card.Title className="mt-2">{photographer.display_name}</Card.Title>
+                    <Card.Text>{photographer.bio || 'No bio available'}</Card.Text>
+                    {/* Display location */}
+                    <Card.Text>
+                      <strong>Location:</strong> {location}
+                    </Card.Text>
+                    <Link to={`/profile/${photographer.id}`}>
+                      <Button variant="primary" className="w-100 mt-2">
+                        View Profile
                       </Button>
                     </Link>
-                  )}
-                </Card.Body>
-              </Card>
-            </Col>
-          ))
+                    {currentUser?.username === photographer.user.username && (
+                      <Link to={`/profile/${photographer.id}/edit`}>
+                        <Button variant="secondary" className="w-100 mt-2">
+                          Edit Profile
+                        </Button>
+                      </Link>
+                    )}
+                  </Card.Body>
+                </Card>
+              </Col>
+            );
+          })
         ) : (
           <p>No photographers found.</p>
         )}
