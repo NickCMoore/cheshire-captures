@@ -6,31 +6,20 @@ import { Container, Row, Col, Card, Button, Pagination } from "react-bootstrap";
 import SearchBar from "../components/SearchBar";
 import styles from "../styles/PopularPhotographers.module.css";
 
-const getRandomLocation = () => {
-  const locations = [
-    "New York, USA",
-    "Los Angeles, USA",
-    "Chicago, USA",
-    "Houston, USA",
-    "Phoenix, USA",
-  ];
-  return locations[Math.floor(Math.random() * locations.length)];
-};
-
 const PopularPhotographers = () => {
   const [photographers, setPhotographers] = useState([]);
   const [filteredPhotographers, setFilteredPhotographers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [photographersPerPage, setPhotographersPerPage] = useState(6); // Number of photographers per page
   const [totalPages, setTotalPages] = useState(1);
   const currentUser = useCurrentUser();
-  const photographersPerPage = 6;  // Number of photographers per page
 
   useEffect(() => {
     const fetchPhotographers = async () => {
       try {
         const { data } = await axiosReq.get(
-          `/api/photographers/top-photographers/?page=${currentPage}&page_size=${photographersPerPage}`
+          `/api/photographers/top-photographers/`
         );
         setPhotographers(data.results);
         setTotalPages(Math.ceil(data.count / photographersPerPage)); // Calculate total pages
@@ -40,24 +29,30 @@ const PopularPhotographers = () => {
     };
 
     fetchPhotographers();
-  }, [currentPage]);
+  }, [photographersPerPage]);
 
   useEffect(() => {
-    const filteredData = searchQuery
-      ? photographers.filter((photographer) =>
-          photographer.display_name
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase())
-        )
-      : photographers;
+    let filtered = photographers;
 
-    // Paginate filtered photographers (6 per page)
-    const startIndex = (currentPage - 1) * photographersPerPage;
-    const endIndex = startIndex + photographersPerPage;
+    // Filter by search query
+    if (searchQuery) {
+      filtered = filtered.filter((photographer) =>
+        photographer.display_name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
 
-    setFilteredPhotographers(filteredData.slice(startIndex, endIndex));
-  }, [searchQuery, photographers, currentPage]);
+    setFilteredPhotographers(filtered);
+  }, [searchQuery, photographers]);
 
+  // Pagination: Get the photographers to display based on current page and items per page
+  const indexOfLastPhotographer = currentPage * photographersPerPage;
+  const indexOfFirstPhotographer = indexOfLastPhotographer - photographersPerPage;
+  const currentPhotographers = filteredPhotographers.slice(
+    indexOfFirstPhotographer,
+    indexOfLastPhotographer
+  );
+
+  // Change page handler
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -67,52 +62,48 @@ const PopularPhotographers = () => {
       <h2 className="my-4">Popular Photographers</h2>
       <SearchBar onSearch={setSearchQuery} />
       <Row className="mt-4">
-        {Array.isArray(filteredPhotographers) &&
-        filteredPhotographers.length > 0 ? (
-          filteredPhotographers.map((photographer) => {
-            const location = photographer.location || getRandomLocation();
-            return (
-              <Col key={photographer.id} md={4} className="mb-4">
-                <Card className="shadow-sm profile-card">
-                  <Card.Body className="text-center">
-                    {photographer.profile_image ? (
-                      <Card.Img
-                        variant="top"
-                        src={photographer.profile_image}
-                        alt={`${photographer.display_name}'s profile`}
-                        className={styles.profilePicture}
-                      />
-                    ) : (
-                      <div className={styles.profilePicturePlaceholder}>
-                        No Picture
-                      </div>
-                    )}
-                    <Card.Title className="mt-2">
-                      {photographer.display_name}
-                    </Card.Title>
-                    <Card.Text>
-                      {photographer.bio || "No bio available"}
-                    </Card.Text>
-                    <Card.Text style={{ color: "black" }}>
-                      <strong>Location:</strong> {location}
-                    </Card.Text>
-                    <Link to={`/profile/${photographer.id}`}>
-                      <Button variant="primary" className="w-100 mt-2">
-                        View Profile
+        {currentPhotographers.length > 0 ? (
+          currentPhotographers.map((photographer) => (
+            <Col key={photographer.id} md={4} className="mb-4">
+              <Card className="shadow-sm profile-card">
+                <Card.Body className="text-center">
+                  {photographer.profile_image ? (
+                    <Card.Img
+                      variant="top"
+                      src={photographer.profile_image}
+                      alt={`${photographer.display_name}'s profile`}
+                      className={styles.profilePicture}
+                    />
+                  ) : (
+                    <div className={styles.profilePicturePlaceholder}>
+                      No Picture
+                    </div>
+                  )}
+                  <Card.Title className="mt-2">
+                    {photographer.display_name}
+                  </Card.Title>
+                  <Card.Text>
+                    {photographer.bio || "No bio available"}
+                  </Card.Text>
+                  <Card.Text style={{ color: "black" }}>
+                    <strong>Location:</strong> {photographer.location}
+                  </Card.Text>
+                  <Link to={`/profile/${photographer.id}`}>
+                    <Button variant="primary" className="w-100 mt-2">
+                      View Profile
+                    </Button>
+                  </Link>
+                  {currentUser?.username === photographer.user.username && (
+                    <Link to={`/profile/${photographer.id}/edit`}>
+                      <Button variant="secondary" className="w-100 mt-2">
+                        Edit Profile
                       </Button>
                     </Link>
-                    {currentUser?.username === photographer.user.username && (
-                      <Link to={`/profile/${photographer.id}/edit`}>
-                        <Button variant="secondary" className="w-100 mt-2">
-                          Edit Profile
-                        </Button>
-                      </Link>
-                    )}
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })
+                  )}
+                </Card.Body>
+              </Card>
+            </Col>
+          ))
         ) : (
           <p>No photographers found.</p>
         )}
