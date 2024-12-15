@@ -131,8 +131,6 @@ Once a user logs in, additional options become available in the navigation bar:
 
 - **My Photos**: A link where users can view all their uploaded photos in one place.
 
-![alt text](images/image-9.png)
-
 - **Upload Photo**: This option allows users to upload new photos directly from the navigation bar.
 
 ![alt text](/public/images/image-10.png)
@@ -976,7 +974,7 @@ A huge thanks to the **Cheshire Captures** community, whose input inspired many 
 
 Lastly, I want to acknowledge the vast array of online resources and communities—particularly **Unsplash**, **Pngtree**, **Stack Overflow**, and **GitConnected**—for offering the tutorials, tools, and assets that helped bring this project to life.
 
-**[Nick Moore]**, December 2024
+**Nick Moore**, December 2024
 
 
 
