@@ -227,7 +227,43 @@ User Experience (UX): The wireframes are designed with user experience in mind. 
 
 Responsiveness: All wireframes are designed to be responsive, ensuring a seamless experience across devices, including desktop, tablet, and mobile views. The layout automatically adjusts to provide the best user experience based on the screen size.
 
-Minimalist Approach: The design follows a minimalist approach, focusing on functionality with minimal use of color. Black, white, and gray shades dominate the interface to provide a neutral background that emphasizes the user-generated content, primarily the photos.
+Minimalist Approach: The design follows a minimalist approach, focusing on functionality with minimal use of colour. Black, white, and gray shades dominate the interface to provide a neutral background that emphasizes the user-generated content, primarily the photos.
+
+Design Overview:
+The design of this website adopts a modern, minimalist aesthetic, emphasizing user-generated content (primarily photos) while maintaining a clean, cohesive visual theme. The colours, fonts, and layout elements are carefully selected to create an elegant, approachable experience for users. The overall structure leverages a neutral yet vibrant colour scheme that balances professionalism and creativity.
+
+Colour Scheme:
+
+The following colours are central to the design, creating a harmonious and visually appealing atmosphere:
+
+Rich Black (#0e1116): Used for the background of scrollbars and some structural elements, providing a deep, neutral base.
+Yinmn Blue (#374a67): This cool blue shade is the dominant background colour, evoking a calm, professional atmosphere.
+Ultra Violet (#616283): A subtle yet distinct accent colour for borders, shadows, and hover states on certain buttons and images.
+Mountbatten Pink (#9e7b9b): Applied to links, buttons, and some icon hover effects, this colour adds a touch of elegance and attention to user interaction points.
+Wisteria (#cb9cf2): A soft lavender shade used primarily for the hover state of links and buttons, providing a contrast with the Mountbatten Pink and creating a fresh, engaging feel.
+Rose Quartz (#bca3ac): A muted, warm pink used in background elements, contributing to a soft, approachable aesthetic.
+Thistle (#e5cedc): A light pastel shade, incorporated in areas requiring subtle contrasts.
+Magnolia (#f3eaf4): A pale yellowish-pink used for headings and key content elements to create emphasis and readability.
+Lavender Blush (#eadde1): A light pastel used in specific accents to provide a delicate, refined touch.
+
+Typography:
+
+The typography has been chosen to balance modernity with readability:
+
+Font Family: The primary typeface used across the site is Montserrat, a clean and versatile sans-serif font that enhances clarity and legibility.
+Font Size and Weight:
+Headings (h1) are prominent at 2.5rem, providing a strong visual hierarchy.
+Body text is set at 1rem, ensuring ease of reading across all devices.
+Bold text is used sparingly, for emphasis on key elements, especially headings and buttons.
+
+Layout and Styling:
+
+The layout is driven by simplicity and user interaction. The use of Bootstrap for responsive grid design ensures the site is optimized for all screen sizes. Key UI elements like buttons, images, and forms are styled with a minimal yet polished approach to guide users through the interface.
+
+Main Container: The .Main class introduces padding to adjust the layout for various screen sizes and ensures elements do not touch the edges of the viewport.
+Button Styling: Buttons are designed with rounded corners, subtle shadows, and transitions to enhance user interaction. The primary button has a base colour of Mountbatten Pink with a hover effect transitioning to Ultra Violet.
+Image Frames: Images, including photos and icons, are given soft borders (Ultra Violet) and gentle box shadows for a modern, elevated look. Hover effects are applied to give a sense of interaction.
+
 
 Wireframe Breakdown:
 Homepage Wireframe:
@@ -888,7 +924,7 @@ This project would not have been possible without the help of several resources,
 
 - The logo for **Cheshire Captures** was designed using [FreeLogoDesign.org](https://www.freelogodesign.org). I started with their free design templates and tailored them to match the unique identity of the platform.
 
-- To refine the branding, I used [Fotor](https://www.fotor.com) to make the logo’s background transparent, allowing it to integrate seamlessly across different color schemes on the site.
+- To refine the branding, I used [Fotor](https://www.fotor.com) to make the logo’s background transparent, allowing it to integrate seamlessly across different colour schemes on the site.
 
 - When implementing the **Delete Confirmation Modal** for managing posts and comments, I consulted an insightful article shared by tutor support. It provided a foundational understanding of modal creation in React, which I then adapted to suit the functionality required in this project.
 
