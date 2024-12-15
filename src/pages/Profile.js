@@ -54,10 +54,7 @@ const ProfilePage = () => {
         </Col>
         <Col md={8}>
           <Card className="p-4 shadow-sm mb-4">
-            <p><strong>Location:</strong> {location}</p> {/* Display location or default location */}
-            {photographer.total_likes > 0 && (
-              <p><strong>Total Likes:</strong> {photographer.total_likes}</p>
-            )}
+            <p style={{ color: 'black' }}><strong>Location:</strong> {location}</p>
           </Card>
           <Card className="p-4 shadow-sm">
             <h3>Social Links</h3>
