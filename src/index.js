@@ -9,10 +9,10 @@ import { CurrentUserProvider } from "./contexts/CurrentUserContext";
 ReactDOM.render(
   <Router>
     <CurrentUserProvider>
-        <App />
+      <App />
     </CurrentUserProvider>
   </Router>,
-  document.getElementById("root")
+  document.getElementById("root"),
 );
 
 reportWebVitals();

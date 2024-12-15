@@ -1,42 +1,40 @@
 .photographerCard {
-    background-color: var(--yinmn-blue);
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
-  
-  .profilePicture {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 10px;
-  }
+  background-color: var(--yinmn-blue);
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
 
-  .profilePicturePlaceholder {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background-color: #d3d3d3;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-  }
-  
+.profilePicture {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
 
-  .error {
-    color: red;
-    text-align: center;
-  }
-  
-  .photographerCol {
-    margin-bottom: 20px;
-  }
+.profilePicturePlaceholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #d3d3d3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
 
-  .h5 {
-    color: var(--yinmn-blue);
-  }
-  
+.error {
+  color: red;
+  text-align: center;
+}
+
+.photographerCol {
+  margin-bottom: 20px;
+}
+
+.h5 {
+  color: var(--yinmn-blue);
+}

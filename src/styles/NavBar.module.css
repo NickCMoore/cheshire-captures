@@ -1,53 +1,53 @@
 .NavBar {
-    background-color: var(--magnolia);
-    height: 70px;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 10px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  background-color: var(--magnolia);
+  height: 70px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .NavBar a {
-    color: var(--yinmn-blue);
-    font-size: 0.9rem; 
-    padding: 10px 10px;
-    text-decoration: none;
+  color: var(--yinmn-blue);
+  font-size: 0.9rem;
+  padding: 10px 10px;
+  text-decoration: none;
 }
 
 .NavBar i {
-    font-size: 1.2rem; 
+  font-size: 1.2rem;
 }
 
 .navbar-brand img {
-    height: 55px;
+  height: 55px;
 }
 
 @media (max-width: 768px) {
-    .NavBar {
-        height: 60px; 
-        padding: 0px 10px; 
-    }
+  .NavBar {
+    height: 60px;
+    padding: 0px 10px;
+  }
 
-    .NavBar a {
-        background-color: var(--magnolia);
-        font-size: 0.9rem;
-        padding: 0px 12px; 
-    }
+  .NavBar a {
+    background-color: var(--magnolia);
+    font-size: 0.9rem;
+    padding: 0px 12px;
+  }
 
-    .NavBar i {
-        font-size: 1.3rem; 
-    }
+  .NavBar i {
+    font-size: 1.3rem;
+  }
 
-    .navbar-brand img {
-        height: 65px; 
-    }
+  .navbar-brand img {
+    height: 65px;
+  }
 
-    .navbar-toggler {
-        transform: scale(1.2); 
-    }
+  .navbar-toggler {
+    transform: scale(1.2);
+  }
 }

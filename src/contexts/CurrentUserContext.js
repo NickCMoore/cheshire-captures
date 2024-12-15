@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+} from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
@@ -33,7 +39,7 @@ export const CurrentUserProvider = ({ children }) => {
       setCurrentUser(null);
       history.push("/signin");
     },
-    [history, setCurrentUser]
+    [history, setCurrentUser],
   );
 
   useEffect(() => {
@@ -56,7 +62,7 @@ export const CurrentUserProvider = ({ children }) => {
         }
         return config;
       },
-      (err) => Promise.reject(err)
+      (err) => Promise.reject(err),
     );
 
     const responseInterceptor = axiosRes.interceptors.response.use(
@@ -79,7 +85,7 @@ export const CurrentUserProvider = ({ children }) => {
           }
         }
         return Promise.reject(err);
-      }
+      },
     );
 
     return () => {

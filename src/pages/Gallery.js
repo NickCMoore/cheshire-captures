@@ -1,16 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Form, Row, Col, Button, Card, Carousel } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { axiosReq } from '../api/axiosDefaults';
-import styles from '../styles/Gallery.module.css';
+import React, { useState, useEffect } from "react";
+import {
+  Container,
+  Form,
+  Row,
+  Col,
+  Button,
+  Card,
+  Carousel,
+} from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { axiosReq } from "../api/axiosDefaults";
+import styles from "../styles/Gallery.module.css";
 
 const Gallery = () => {
   const [images, setImages] = useState([]);
   const [filteredImages, setFilteredImages] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -18,19 +26,25 @@ const Gallery = () => {
   useEffect(() => {
     const fetchPhotos = async () => {
       try {
-        const { data } = await axiosReq.get('/api/photos/photos');
+        const { data } = await axiosReq.get("/api/photos/photos");
         if (data && data.results) {
           setImages(data.results);
           setFilteredImages(data.results);
 
-          const uniqueCategories = [...new Set(data.results.map(photo => photo.category).filter(category => category))];
+          const uniqueCategories = [
+            ...new Set(
+              data.results
+                .map((photo) => photo.category)
+                .filter((category) => category),
+            ),
+          ];
           setCategories(uniqueCategories);
         } else {
-          setError('No photos available.');
+          setError("No photos available.");
         }
       } catch (err) {
-        console.error('Error fetching photos:', err);
-        setError('Error fetching photos, please try again later.');
+        console.error("Error fetching photos:", err);
+        setError("Error fetching photos, please try again later.");
       } finally {
         setIsLoading(false);
       }
@@ -45,14 +59,15 @@ const Gallery = () => {
     // Filter by search term
     if (searchTerm) {
       filtered = filtered.filter((photo) =>
-        photo.title.toLowerCase().includes(searchTerm.toLowerCase())
+        photo.title.toLowerCase().includes(searchTerm.toLowerCase()),
       );
     }
 
     // Filter by category
     if (selectedCategory) {
-      filtered = filtered.filter((photo) =>
-        photo.category?.toLowerCase() === selectedCategory.toLowerCase()
+      filtered = filtered.filter(
+        (photo) =>
+          photo.category?.toLowerCase() === selectedCategory.toLowerCase(),
       );
     }
 
@@ -70,10 +85,10 @@ const Gallery = () => {
   }, [searchTerm, selectedCategory, startDate, endDate, images]);
 
   const clearFilters = () => {
-    setSearchTerm('');
-    setSelectedCategory('');
-    setStartDate('');
-    setEndDate('');
+    setSearchTerm("");
+    setSelectedCategory("");
+    setStartDate("");
+    setEndDate("");
   };
 
   if (isLoading) {
@@ -97,7 +112,7 @@ const Gallery = () => {
             </Link>
             <Carousel.Caption className={styles.carouselCaption}>
               <h5>{photo.title}</h5>
-              <p>By: {photo.photographer || 'Unknown'}</p>
+              <p>By: {photo.photographer || "Unknown"}</p>
             </Carousel.Caption>
           </Carousel.Item>
         ))}
@@ -184,12 +199,13 @@ const Gallery = () => {
                 </Link>
                 <Card.Body>
                   <Card.Title>{photo.title}</Card.Title>
-                  <Card.Text>By: {photo.photographer || 'Unknown'}</Card.Text>
+                  <Card.Text>By: {photo.photographer || "Unknown"}</Card.Text>
                   <Card.Text className="text-primary">
-                    Date: {new Date(photo.created_at).toLocaleDateString('en-GB', {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
+                    Date:{" "}
+                    {new Date(photo.created_at).toLocaleDateString("en-GB", {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
                     })}
                   </Card.Text>
                 </Card.Body>

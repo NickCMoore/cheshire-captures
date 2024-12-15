@@ -1,5 +1,5 @@
 .profileContainer {
-  padding-top: 100px; 
+  padding-top: 100px;
   padding-bottom: 50px;
 }
 
@@ -21,19 +21,19 @@
 }
 
 .blueHeading {
-  color: #2E5090;
+  color: #2e5090;
 }
 
 .displayName {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 10px;
-  color: var(--yinmn-blue); 
+  color: var(--yinmn-blue);
 }
 
 .bio {
   font-size: 14px;
-  color: var(--battleship-gray); 
+  color: var(--battleship-gray);
   margin-bottom: 20px;
 }
 
@@ -47,7 +47,7 @@
 }
 
 .showMoreButton:hover {
-  color: var(--ultra-violet); 
+  color: var(--ultra-violet);
 }
 
 .socialLinks {

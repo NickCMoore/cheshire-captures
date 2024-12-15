@@ -32,7 +32,9 @@ const PhotoDetails = () => {
 
     const fetchComments = async () => {
       try {
-        const { data } = await axiosReq.get(`/api/photos/photos/${id}/comments`);
+        const { data } = await axiosReq.get(
+          `/api/photos/photos/${id}/comments`,
+        );
         setComments(data.results);
       } catch (err) {
         console.error("Error fetching comments:", err);
@@ -52,10 +54,13 @@ const PhotoDetails = () => {
     }
 
     try {
-      const { data } = await axiosRes.post(`/api/photos/photos/${id}/comments/`, {
-        content: newComment,
-        photo: id,
-      });
+      const { data } = await axiosRes.post(
+        `/api/photos/photos/${id}/comments/`,
+        {
+          content: newComment,
+          photo: id,
+        },
+      );
       setComments((prevComments) => [...prevComments, data]);
       setNewComment("");
       setError(null);
@@ -72,8 +77,10 @@ const PhotoDetails = () => {
       });
       setComments((prevComments) =>
         prevComments.map((comment) =>
-          comment.id === commentId ? { ...comment, content: editComment } : comment
-        )
+          comment.id === commentId
+            ? { ...comment, content: editComment }
+            : comment,
+        ),
       );
       setEditingCommentId(null);
     } catch (err) {
@@ -82,12 +89,16 @@ const PhotoDetails = () => {
   };
 
   const handleDeleteComment = async (commentId) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this comment?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this comment?",
+    );
     if (!confirmDelete) return;
 
     try {
       await axiosRes.delete(`/api/photos/comments/${commentId}/`);
-      setComments((prevComments) => prevComments.filter((comment) => comment.id !== commentId));
+      setComments((prevComments) =>
+        prevComments.filter((comment) => comment.id !== commentId),
+      );
     } catch (err) {
       console.error("Error deleting comment:", err.response || err);
       alert("Failed to delete the comment. Please try again.");
@@ -99,7 +110,7 @@ const PhotoDetails = () => {
       alert("You need to be logged in to like a photo.");
       return;
     }
-  
+
     try {
       if (!hasLiked) {
         // Like the photo
@@ -108,7 +119,7 @@ const PhotoDetails = () => {
         // Unlike the photo
         await axios.post(`/api/photos/photos/${id}/unlike/`);
       }
-  
+
       // Refetch photo details to get the latest likes count and like state
       const { data } = await axiosReq.get(`/api/photos/photos/${id}/`);
       setPhoto(data);
@@ -119,12 +130,11 @@ const PhotoDetails = () => {
       alert("An error occurred. You already like this photo.");
     }
   };
-  
-  
-  
 
   const handleDelete = async () => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this photo?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this photo?",
+    );
     if (!confirmDelete) return;
 
     try {
@@ -178,7 +188,8 @@ const PhotoDetails = () => {
 
             <div className="mt-3 text-center">
               <p className="mb-1" style={{ color: "black" }}>
-                <strong>{likeCount}</strong> {likeCount === 1 ? "Like" : "Likes"}
+                <strong>{likeCount}</strong>{" "}
+                {likeCount === 1 ? "Like" : "Likes"}
               </p>
               <Button
                 variant={hasLiked ? "danger" : "primary"}
@@ -224,14 +235,19 @@ const PhotoDetails = () => {
                         value={editComment}
                         onChange={(e) => setEditComment(e.target.value)}
                       />
-                      <Button onClick={() => handleEditComment(comment.id)}>Save</Button>
-                      <Button variant="danger" onClick={() => setEditingCommentId(null)}>
+                      <Button onClick={() => handleEditComment(comment.id)}>
+                        Save
+                      </Button>
+                      <Button
+                        variant="danger"
+                        onClick={() => setEditingCommentId(null)}
+                      >
                         Cancel
                       </Button>
                     </>
                   ) : (
                     <div className="d-flex align-items-start mb-3">
-                      <p style={{ color: 'black' }}>
+                      <p style={{ color: "black" }}>
                         <strong>{comment.user}:</strong> {comment.content}
                         {currentUser?.username === comment.user && (
                           <div className="mt-2 d-flex gap-2">

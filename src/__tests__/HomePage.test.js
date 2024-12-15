@@ -1,42 +1,40 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import HomePage from '../pages/HomePage'; 
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import { BrowserRouter as Router } from "react-router-dom";
+import HomePage from "../pages/HomePage";
 
-describe('HomePage', () => {
-  test('renders the homepage with welcome message', () => {
+describe("HomePage", () => {
+  test("renders the homepage with welcome message", () => {
     render(
       <Router>
         <HomePage />
-      </Router>
+      </Router>,
     );
 
- 
-    const welcomeMessage = screen.getByText(/welcome to cheshire captures/i); 
+    const welcomeMessage = screen.getByText(/welcome to cheshire captures/i);
     expect(welcomeMessage).toBeInTheDocument();
   });
 
-  test('renders featured sections', () => {
+  test("renders featured sections", () => {
     render(
       <Router>
         <HomePage />
-      </Router>
+      </Router>,
     );
 
-
-    const featuredSection = screen.getByText(/featured photos/i); 
+    const featuredSection = screen.getByText(/featured photos/i);
     expect(featuredSection).toBeInTheDocument();
   });
 
-  test('renders navigation links', () => {
+  test("renders navigation links", () => {
     render(
       <Router>
         <HomePage />
-      </Router>
+      </Router>,
     );
 
-    const galleryLink = screen.getByRole('link', { name: /gallery/i });
-    const aboutLink = screen.getByRole('link', { name: /about/i });
+    const galleryLink = screen.getByRole("link", { name: /gallery/i });
+    const aboutLink = screen.getByRole("link", { name: /about/i });
 
     expect(galleryLink).toBeInTheDocument();
     expect(aboutLink).toBeInTheDocument();

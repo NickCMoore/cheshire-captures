@@ -9,22 +9,22 @@ The backend and frontend are deployed separately on Heroku, with the backend pro
 ## Table of Contents
 
 - [Overview](#overview)
-   - [Problem Statement](#problem-statement)
-   - [Target Audience](#target-audience)
-   - [Solution](#solution)
+  - [Problem Statement](#problem-statement)
+  - [Target Audience](#target-audience)
+  - [Solution](#solution)
 - [Features](#features)
 - [User Stories](#user-stories)
-   - [Navigation & Authentication](#navigationauthentication)
-   - [Photos](#photos)
-   - [Likes & Comments](#likescomments)
-   - [Following](#following)
-   - [Reviews](#reviews)
-   - [Profiles](#profiles)
-   - [Messages](#messages)
+  - [Navigation & Authentication](#navigationauthentication)
+  - [Photos](#photos)
+  - [Likes & Comments](#likescomments)
+  - [Following](#following)
+  - [Reviews](#reviews)
+  - [Profiles](#profiles)
+  - [Messages](#messages)
 - [Agile Approach](#agile-approach)
 - [Technologies Used](#technologies-used)
-   - [Backend](#backend)
-   - [Frontend](#frontend)
+  - [Backend](#backend)
+  - [Frontend](#frontend)
 - [API Endpoints](#api-endpoints)
 - [Backend Architecture](#backend-architecture)
 - [Frontend Architecture](#frontend-architecture)
@@ -56,7 +56,7 @@ Photographers often struggle to find platforms tailored to their needs, specific
 
 Cheshire Captures aims to address these challenges by providing a tailored platform where photographers and enthusiasts can:
 
--  Showcase Work: Easily upload and share high-quality photos, allowing photographers to present their portfolios in an appealing, professional manner.
+- Showcase Work: Easily upload and share high-quality photos, allowing photographers to present their portfolios in an appealing, professional manner.
 - Receive Feedback: Enable community engagement through likes, ratings, and comments on photos, fostering a space for constructive criticism and appreciation.
 - Network and Collaborate: Connect with fellow photographers through follow features, direct messaging, and discussions, making it easier to collaborate on projects and grow professional networks.
 - Promote and Discover: Facilitate a search and filter feature to help users find photographers based on style, location, and popularity, making it easier for potential clients to discover local talent.
@@ -96,6 +96,7 @@ The navigation bar on the site is designed to be user-friendly and responsive. I
 ![alt text](/public/images/image-1.png)
 
 ### Logged-out Users:
+
 When the user is logged out, the following options are visible in the navigation bar:
 
 - **Cheshire Captures Logo**: This is a link to the homepage, displayed on the left-hand side of the navigation bar. It is visible to all users and provides quick access to the homepage.
@@ -119,6 +120,7 @@ When the user is logged out, the following options are visible in the navigation
 ![alt text](/public/images/image-6.png)
 
 ### Logged-in Users:
+
 Once a user logs in, additional options become available in the navigation bar:
 
 - **Gallery**: Logged-in users can access the gallery page where they can view and interact with other photographers’ images.
@@ -225,7 +227,7 @@ The platform supports commenting and liking features for user interaction. Each 
 
 - **User Authentication:** Secure login, registration, and password resets using JWT and dj-rest-auth.
 - **Profile Management:** Users can update profile details and upload profile pictures.
--  **Photo Upload & Management:** Users can upload photos, add titles, descriptions, categories, and tags.
+- **Photo Upload & Management:** Users can upload photos, add titles, descriptions, categories, and tags.
 - **Interaction Features:** Comment, like/unlike, and rate photos to engage with others.
 - **Following System:** Users can follow other photographers.
 - **Search & Filter:** Search by title, photographer, or category; filter by tags or upload date.
@@ -233,7 +235,6 @@ The platform supports commenting and liking features for user interaction. Each 
 - **Responsive Design:** The site is mobile-friendly and optimized for all devices.
 
 ---
-
 
 ## Wireframes
 
@@ -297,7 +298,7 @@ The following colours are central to the design, creating a harmonious and visua
 - Wisteria (#cb9cf2): A soft lavender shade used primarily for the hover state of links and buttons, providing a contrast with the Mountbatten Pink and creating a fresh, engaging feel.
 - Rose Quartz (#bca3ac): A muted, warm pink used in background elements, contributing to a soft, approachable aesthetic.
 - Thistle (#e5cedc): A light pastel shade, incorporated in areas requiring subtle contrasts.
-Magnolia (#f3eaf4): A pale yellowish-pink used for headings and key content elements to create emphasis and readability.
+  Magnolia (#f3eaf4): A pale yellowish-pink used for headings and key content elements to create emphasis and readability.
 - Lavender Blush (#eadde1): A light pastel used in specific accents to provide a delicate, refined touch.
 
 ## Typography:
@@ -306,9 +307,9 @@ The typography has been chosen to balance modernity with readability:
 
 - Font Family: The primary typeface used across the site is Montserrat, a clean and versatile sans-serif font that enhances clarity and legibility.
 - Font Size and Weight:
-Headings (h1) are prominent at 2.5rem, providing a strong visual hierarchy.
-Body text is set at 1rem, ensuring ease of reading across all devices.
-Bold text is used sparingly, for emphasis on key elements, especially headings and buttons.
+  Headings (h1) are prominent at 2.5rem, providing a strong visual hierarchy.
+  Body text is set at 1rem, ensuring ease of reading across all devices.
+  Bold text is used sparingly, for emphasis on key elements, especially headings and buttons.
 
 ## Layout and Styling:
 
@@ -327,7 +328,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a user, I can log in so that I can interact fully with the site. `(MUST HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - Log in form is accessible from any page.
    - User is prompted to enter username and password.
    - Successful log in redirects to the homepage.
@@ -337,7 +338,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a user, I can sign up so that I can create an account to upload and share my photos. `(MUST HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - Sign up form is accessible from any page.
    - User is prompted to enter a username, email, and password.
    - Successful sign up redirects to a welcome page.
@@ -347,7 +348,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a user, I can view the homepage gallery so that I can see a curated list of photos. `(MUST HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - Homepage displays a grid of recent photos.
    - Each photo shows a thumbnail and basic details.
    - Page loads more photos as the user scrolls.
@@ -357,7 +358,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a user, I can view details of a single photo so that I can see more information and interactions. `(MUST HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - Clicking on a photo shows the full-size image.
    - Photo details include title, description, and photographer.
    - User can see interactions like likes and comments.
@@ -367,7 +368,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a user, I can view popular photographers so that I can discover new talents. `(MUST HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - List of popular photographers based on followers.
    - User can view profile summary of each photographer.
    - User can follow photographers from this page.
@@ -377,7 +378,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a user, I can view the top-rated photos so that I know which photos are most appreciated. `(MUST HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - Displays photos sorted by average rating.
    - Shows the number of ratings for each photo.
    - User can navigate to photo details from here.
@@ -387,7 +388,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a user, I can filter photos by category so that I can find photos that match my interests. `(MUST HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - Categories are displayed as a dropdown or list.
    - User can select one or more categories.
    - Page updates to show only matching photos.
@@ -397,7 +398,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a user, I can search photos by keywords, photographer, or location so that I can find specific content. `(MUST HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - Search bar is available on all pages.
    - User can search by keyword, photographer, or location.
    - Search results update in real-time.
@@ -407,7 +408,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a user, I can view comments on a photo so that I can see what other users think about it. `(MUST HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - Each photo displays a comment count.
    - Clicking on the count shows a list of comments.
    - Comments are sorted by most recent.
@@ -419,7 +420,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a registered user, I can see a list of all my uploaded photos so that I can manage them. `(MUST HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - Displays all photos uploaded by the user.
    - User can click on a photo to view or edit details.
    - User can filter photos by upload date.
@@ -429,7 +430,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a registered user, I can upload a new photo so that I can share my work with the community. `(MUST HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - Photo upload form is accessible from the user menu.
    - User can upload an image file and add details.
    - Successful upload shows the photo in the gallery.
@@ -439,7 +440,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a registered user, I can edit my uploaded photo details so that I can update the information. `(MUST HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - User can edit details like title and description.
    - Changes are saved and updated immediately.
    - User is notified of successful update.
@@ -449,7 +450,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a registered user, I can delete my photos so that I can remove content I no longer want to share. `(MUST HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - Each photo includes an option to delete.
    - User is prompted to confirm before deletion.
    - Deleted photos are removed from the profile and gallery.
@@ -461,7 +462,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a registered user, I can like a photo so that I can show my appreciation for it. `(SHOULD HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - Each photo has a like button for interaction.
    - User can see the total like count for the photo.
    - User can only like a photo once.
@@ -471,7 +472,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a registered user, I can remove my like from a photo so that I can change my interaction. `(SHOULD HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - Liked photos have the like button highlighted.
    - Clicking again removes the like and updates the count.
    - User can see all their liked photos in a list.
@@ -481,7 +482,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a registered user, I can add a comment to a photo so that I can share my thoughts on it. `(SHOULD HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - Each photo has a comment box below it.
    - User can type a comment and submit.
    - Submitted comments are immediately visible.
@@ -491,7 +492,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a registered user, I can edit my comment so that I can correct or update my opinion. `(SHOULD HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - User can edit their comment by clicking an edit button.
    - Edited comments show an 'edited' label.
    - Changes are saved and visible to all users.
@@ -501,7 +502,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a registered user, I can delete my comment so that I can remove it if necessary. `(SHOULD HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - Each comment has a delete button for the author.
    - User is prompted to confirm before deletion.
    - Deleted comments are removed immediately.
@@ -513,7 +514,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a registered user, I can follow another photographer so that I can see their new posts in my feed. `(MUST HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - Each photographer profile has a follow button.
    - Clicking follow adds the photographer to the user feed.
    - Followed photographers' new posts appear in the feed.
@@ -523,7 +524,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a registered user, I can unfollow a photographer so that I no longer see their updates. `(MUST HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - Unfollow button appears for followed photographers.
    - Clicking unfollow removes them from the user feed.
    - User is prompted to confirm the unfollow action.
@@ -533,10 +534,11 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a registered user, I can view all the photographers I follow so that I can manage my list. `(SHOULD HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - List of followed photographers is accessible from the menu.
    - Shows recent activity of followed photographers.
    - User can unfollow from this list
+
 ## Reviews
 
 1. **View Top-Rated Photos:**
@@ -544,7 +546,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a registered user, I can view all the top-rated photos so that I can discover popular content. `(COULD HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - Displays photos sorted by average rating.
    - Shows the number of ratings for each photo.
    - User can navigate to photo details from here.
@@ -554,7 +556,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a registered user, I can rate a photo so that I can share my opinion on its quality. `(SHOULD HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - User can rate a photo with stars (1-5).
    - Rating appears on the photo immediately.
    - User can edit or delete their rating.
@@ -564,7 +566,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a registered user, I can view all my ratings so that I can manage them. `(COULD HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - List of user ratings is accessible from the menu.
    - User can view or edit their ratings.
    - User can delete any of their ratings.
@@ -576,7 +578,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a user, I can view the profile page of a photographer so that I can see more details about their work. `(MUST HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - Displays profile information of the photographer.
    - Shows their photos, bio, and social links.
    - User can follow/unfollow from the profile page.
@@ -586,7 +588,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a registered user, I can update my profile information so that I can keep my details up-to-date. `(SHOULD HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - Profile edit form accessible from the user menu.
    - User can update bio, profile picture, and social links.
    - Changes are saved and updated immediately.
@@ -596,7 +598,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a registered user, I can change my password so that I can keep my account secure. `(MUST HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - Password change form is accessible from user settings.
    - User must enter the current password for verification.
    - User can set a new password after verification.
@@ -608,7 +610,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a registered user, I can view messages in my profile page so that I can read messages other users have sent me. `(COULD HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - User can access inbox from the profile page.
    - Shows list of received messages sorted by date.
    - User can click on a message to view details.
@@ -618,7 +620,7 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a registered user, I can send a message to another user so that I can ask a question about their work. `(SHOULD HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - Message form accessible from user profile or photo.
    - User can type and send a message to another user.
    - Message appears in the recipient's inbox immediately.
@@ -628,11 +630,10 @@ The layout is driven by simplicity and user interaction. The use of Bootstrap fo
    - _Explanation:_ As a registered user, I can delete a message so that I can remove it from my inbox. `(COULD HAVE)`
 
    **Acceptance Criteria:**
-   
+
    - Each message has a delete option.
    - User is prompted to confirm deletion.
    - Deleted messages are removed from the inbox.
-
 
 ## Agile Approach
 
@@ -660,7 +661,6 @@ Despite working solo on this project, continuous improvement was a key focus. Re
 
 For a detailed view of the project management and task progression, refer to the [GitHub Project board](https://github.com/NickCMoore/cheshire-captures/projects?query=is%3Aopen).
 
-
 ## Technologies Used
 
 ### Backend
@@ -682,7 +682,6 @@ For a detailed view of the project management and task progression, refer to the
 - **Heroku**: Also used to deploy the frontend of the project, ensuring a fully hosted and easily accessible application.
 - **React Simple Star Rating**: A React component package used to implement the star rating system for photos, allowing users to rate content easily.
 - **React Router Dom**: Used for managing routing and navigation between different pages within the React frontend.
-
 
 ---
 
@@ -755,7 +754,6 @@ For a detailed view of the project management and task progression, refer to the
 - **Partial Update Message**: `PATCH /api/messages/messages/{id}/`
 - **Delete Message**: `DELETE /api/messages/messages/{id}/`
 
-
 ## Backend Architecture
 
 ### Models
@@ -805,7 +803,6 @@ For a detailed view of the project management and task progression, refer to the
   - `"/comments/:photoId"`: View comments for a specific photo.
   - `"/messages"`: View all messages.
   - `"/messages/:id"`: View specific message details.
-
 
 ---
 
@@ -861,9 +858,9 @@ Once the basic deployment is complete, follow these steps to connect your React 
 1. In your Heroku dashboard, navigate to your **API application's settings**.
 2. Scroll down to the **Config Vars** section and click **Reveal Config Vars**.
 3. Add the following config variables:
+
    - **CLIENT_ORIGIN**: This should be the URL of your deployed React application (e.g., `https://myapp-react.herokuapp.com`).
    - **CLIENT_ORIGIN_DEV**: This is the URL of your Gitpod workspace (e.g., `https://3000-yourproject.gitpod.io`). Make sure to remove any trailing slashes from the URL.
-
 
    > **Note:** Gitpod occasionally changes this URL, so make sure to update this config variable as needed during development.
 
@@ -931,6 +928,7 @@ Note: Replace your-username and repository-name with your GitHub username and th
 ```
 cd repository-name
 ```
+
 5. You can now make changes to the project locally. Any updates you make can be pushed back to the repository.
 
 ## Credits
@@ -938,7 +936,6 @@ cd repository-name
 This project would not have been possible without the help of several resources, tools, and inspirations that guided my development process. Below is a detailed list of all the elements that contributed to various aspects of this project.
 
 - The background images used on the **Sign In** and **Sign Up** pages were sourced from [Unsplash](https://unsplash.com), an incredible resource for free, high-quality photography. Special thanks to the photographers who shared their work.
-  
 - For the **Upload Image** icons used in the **Create Photo**, **Edit Photo**, and **Profile Edit** pages, I used [Pngtree](https://pngtree.com), which provided the perfect visual elements for these features. Their extensive library made it easy to find icons that matched the aesthetic of the site.
 
 - The **No Results Found** placeholder image, displayed when a user search returns no results, was customized from a template provided by **Hajde/Media**. It ensures that users have a clear visual cue when there’s no matching content.
@@ -965,7 +962,6 @@ This project would not have been possible without the help of several resources,
 
 - A significant portion of the React front-end for this project was built by following Code Institute’s **Moments Walkthrough Project**. This walkthrough was instrumental in helping me understand how to structure a modern front-end with React, including handling authentication, CRUD operations, and state management. The **Moments** project particularly helped in implementing features like the **Gallery Feed**, where users can scroll through a series of images, and the **Profile Page**, where users can manage their photos.
 
-
 ## Acknowledgements
 
 This project was developed as part of **Portfolio Project #5** (Advanced Front-End Specialization) for the **Diploma in Full Stack Software Development** at the **Code Institute**. I am incredibly grateful for the support and guidance of my mentor, **Gareth McGirr**, who provided valuable feedback and insight throughout the development process.
@@ -975,8 +971,3 @@ A huge thanks to the **Cheshire Captures** community, whose input inspired many 
 Lastly, I want to acknowledge the vast array of online resources and communities—particularly **Unsplash**, **Pngtree**, **Stack Overflow**, and **GitConnected**—for offering the tutorials, tools, and assets that helped bring this project to life.
 
 **Nick Moore**, December 2024
-
-
-
-
-

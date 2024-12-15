@@ -11,14 +11,14 @@ import Gallery from "./pages/Gallery";
 import PhotoDetails from "./pages/PhotoDetails";
 import AboutPage from "./pages/AboutPage";
 import Profile from "./pages/Profile";
-import ProfileEdit from './pages/ProfileEdit';
-import MyPhotos from './pages/MyPhotos';
+import ProfileEdit from "./pages/ProfileEdit";
+import MyPhotos from "./pages/MyPhotos";
 import { useCurrentUser } from "./contexts/CurrentUserContext";
-import PopularPhotographers from './pages/PopularPhotographers';
-import PhotoUpload from './pages/PhotoUpload';
-import PhotoEdit from './pages/PhotoEdit';
-import ChangePassword from './pages/auth/ChangePassword';
-import FollowingList from './pages/FollowerList';
+import PopularPhotographers from "./pages/PopularPhotographers";
+import PhotoUpload from "./pages/PhotoUpload";
+import PhotoEdit from "./pages/PhotoEdit";
+import ChangePassword from "./pages/auth/ChangePassword";
+import FollowingList from "./pages/FollowerList";
 
 function App() {
   const currentUser = useCurrentUser();
@@ -31,7 +31,11 @@ function App() {
           <Route exact path="/" component={HomePage} />
           <Route exact path="/gallery" component={Gallery} />
           <Route exact path="/photos/:id" component={PhotoDetails} />
-          <Route exact path="/popular-photographers" component={PopularPhotographers} />
+          <Route
+            exact
+            path="/popular-photographers"
+            component={PopularPhotographers}
+          />
           <Route exact path="/about" component={AboutPage} />
 
           <Route
@@ -84,16 +88,12 @@ function App() {
           <Route
             exact
             path="/signin"
-            render={() =>
-              currentUser ? <Redirect to="/" /> : <SignInForm />
-            }
+            render={() => (currentUser ? <Redirect to="/" /> : <SignInForm />)}
           />
           <Route
             exact
             path="/signup"
-            render={() =>
-              currentUser ? <Redirect to="/" /> : <SignUpForm />
-            }
+            render={() => (currentUser ? <Redirect to="/" /> : <SignUpForm />)}
           />
           <Route render={() => <Redirect to="/" />} />
         </Switch>

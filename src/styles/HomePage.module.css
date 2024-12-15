@@ -1,62 +1,60 @@
 .FullScreenBackground {
-    background-image: url('https://res.cloudinary.com/dwgtce0rh/image/upload/v1734298019/vestrahorn-mountains-stokksnes-iceland_yfeu8i.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    min-height: calc(100vh - 70px);
-    padding-top: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
+  background-image: url("https://res.cloudinary.com/dwgtce0rh/image/upload/v1734298019/vestrahorn-mountains-stokksnes-iceland_yfeu8i.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: calc(100vh - 70px);
+  padding-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
 }
 
-
 .FullScreenOverlay {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.4);
-    z-index: -1;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: -1;
 }
 
 .FullScreenContent {
-    z-index: 2;
-    color: var(--wisteria);
-    text-align: center;
+  z-index: 2;
+  color: var(--wisteria);
+  text-align: center;
 }
 
 .WhiteText {
-    color: white;
-  }
-  
+  color: white;
+}
 
 h1 {
-    font-size: 3rem;
-    margin-bottom: 20px;
+  font-size: 3rem;
+  margin-bottom: 20px;
 }
 
 p {
-    font-size: 1.5rem;
-    margin-bottom: 30px;
+  font-size: 1.5rem;
+  margin-bottom: 30px;
 }
 
 .Button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    background-color: var(--ultra-violet);
-    color: white;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: var(--ultra-violet);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .Button:hover {
-    background-color: var(--mountbatten-pink);
+  background-color: var(--mountbatten-pink);
 }

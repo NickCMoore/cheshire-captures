@@ -52,7 +52,8 @@ function SignInForm() {
         localStorage.setItem("refreshToken", refreshToken);
 
         setCurrentUser(data.user);
-        axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+        axios.defaults.headers.common["Authorization"] =
+          `Bearer ${accessToken}`;
 
         history.push(`/profile/${data.user.photographer_id}`);
       }
@@ -69,7 +70,10 @@ function SignInForm() {
 
   return (
     <Container fluid className={styles.Background}>
-      <Row className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+      <Row
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
         <Col xs={12} md={6} lg={4}>
           <div className={styles.FormContainer}>
             <h1 className={styles.Header}>Sign In</h1>
@@ -82,7 +86,9 @@ function SignInForm() {
             )}
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="username">
-                <Form.Label className="d-none" aria-label="Username">Username</Form.Label>
+                <Form.Label className="d-none" aria-label="Username">
+                  Username
+                </Form.Label>
                 <Form.Control
                   className={styles.Input}
                   type="text"
@@ -101,7 +107,9 @@ function SignInForm() {
               ))}
 
               <Form.Group controlId="password">
-                <Form.Label className="d-none" aria-label="Password">Password</Form.Label>
+                <Form.Label className="d-none" aria-label="Password">
+                  Password
+                </Form.Label>
                 <Form.Control
                   className={styles.Input}
                   type="password"

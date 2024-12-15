@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useCurrentUser } from '../contexts/CurrentUserContext';
-import axios from 'axios';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useCurrentUser } from "../contexts/CurrentUserContext";
+import axios from "axios";
+import { Container, Row, Col, Card } from "react-bootstrap";
 
 const FollowerList = () => {
   const { id } = useParams();
@@ -16,8 +16,8 @@ const FollowerList = () => {
         const { data } = await axios.get(`/api/photographers/${id}/followers/`);
         setFollowers(data.results);
       } catch (error) {
-        setError('Error fetching followers.');
-        console.error('Error fetching followers:', error);
+        setError("Error fetching followers.");
+        console.error("Error fetching followers:", error);
       }
     };
 

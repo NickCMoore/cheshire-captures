@@ -34,7 +34,7 @@ const ProfileEdit = () => {
     const fetchPhotographer = async () => {
       try {
         const { data } = await axios.get(
-          `/api/photographers/photographers/${id}/`
+          `/api/photographers/photographers/${id}/`,
         );
         setPhotographer(data);
         setDisplayName(data.display_name);
@@ -79,7 +79,7 @@ const ProfileEdit = () => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-        }
+        },
       );
       setPhotographer(data);
       setSuccessMessage("Profile updated successfully.");
@@ -106,7 +106,9 @@ const ProfileEdit = () => {
         <Col md={10} lg={8} xl={6}>
           <Card className={`p-4 shadow ${styles.profileCard}`}>
             <h2 className={styles.blueHeading}>Edit Profile</h2>
-            {successMessage && <Alert variant="success">{successMessage}</Alert>}
+            {successMessage && (
+              <Alert variant="success">{successMessage}</Alert>
+            )}
             {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
             <Form onSubmit={handleProfileUpdate}>
               <div className="text-center">
@@ -138,7 +140,9 @@ const ProfileEdit = () => {
               </Form.Group>
 
               <Form.Group controlId="displayName" className="mb-3">
-                <Form.Label className={styles.formLabel}>Display Name</Form.Label>
+                <Form.Label className={styles.formLabel}>
+                  Display Name
+                </Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Enter display name"

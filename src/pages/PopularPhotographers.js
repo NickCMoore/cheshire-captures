@@ -1,31 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { axiosReq } from '../api/axiosDefaults';
-import { useCurrentUser } from '../contexts/CurrentUserContext';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import SearchBar from '../components/SearchBar';
-import styles from '../styles/PopularPhotographers.module.css';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { axiosReq } from "../api/axiosDefaults";
+import { useCurrentUser } from "../contexts/CurrentUserContext";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import SearchBar from "../components/SearchBar";
+import styles from "../styles/PopularPhotographers.module.css";
 
 // Function to generate a random location
 const getRandomLocation = () => {
-  const locations = ['New York, USA', 'Los Angeles, USA', 'Chicago, USA', 'Houston, USA', 'Phoenix, USA'];
+  const locations = [
+    "New York, USA",
+    "Los Angeles, USA",
+    "Chicago, USA",
+    "Houston, USA",
+    "Phoenix, USA",
+  ];
   return locations[Math.floor(Math.random() * locations.length)];
 };
 
 const PopularPhotographers = () => {
   const [photographers, setPhotographers] = useState([]);
   const [filteredPhotographers, setFilteredPhotographers] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const currentUser = useCurrentUser();
 
   useEffect(() => {
     const fetchPhotographers = async () => {
       try {
-        const { data } = await axiosReq.get('/api/photographers/top-photographers/');
+        const { data } = await axiosReq.get(
+          "/api/photographers/top-photographers/",
+        );
         setPhotographers(data.results);
         setFilteredPhotographers(data.results);
       } catch (err) {
-        console.error('Error fetching photographers:', err);
+        console.error("Error fetching photographers:", err);
       }
     };
 
@@ -36,8 +44,10 @@ const PopularPhotographers = () => {
     if (searchQuery) {
       setFilteredPhotographers(
         photographers.filter((photographer) =>
-          photographer.display_name.toLowerCase().includes(searchQuery.toLowerCase())
-        )
+          photographer.display_name
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()),
+        ),
       );
     } else {
       setFilteredPhotographers(photographers);
@@ -49,7 +59,8 @@ const PopularPhotographers = () => {
       <h2 className="my-4">Popular Photographers</h2>
       <SearchBar onSearch={setSearchQuery} />
       <Row className="mt-4">
-        {Array.isArray(filteredPhotographers) && filteredPhotographers.length > 0 ? (
+        {Array.isArray(filteredPhotographers) &&
+        filteredPhotographers.length > 0 ? (
           filteredPhotographers.map((photographer) => {
             // Set location to either the photographer's location or a random one
             const location = photographer.location || getRandomLocation();
@@ -66,12 +77,18 @@ const PopularPhotographers = () => {
                         className={styles.profilePicture}
                       />
                     ) : (
-                      <div className={styles.profilePicturePlaceholder}>No Picture</div>
+                      <div className={styles.profilePicturePlaceholder}>
+                        No Picture
+                      </div>
                     )}
-                    <Card.Title className="mt-2">{photographer.display_name}</Card.Title>
-                    <Card.Text>{photographer.bio || 'No bio available'}</Card.Text>
+                    <Card.Title className="mt-2">
+                      {photographer.display_name}
+                    </Card.Title>
+                    <Card.Text>
+                      {photographer.bio || "No bio available"}
+                    </Card.Text>
                     {/* Display location with inline style */}
-                    <Card.Text style={{ color: 'black' }}>
+                    <Card.Text style={{ color: "black" }}>
                       <strong>Location:</strong> {location}
                     </Card.Text>
                     <Link to={`/profile/${photographer.id}`}>

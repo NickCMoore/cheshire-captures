@@ -1,35 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap';
-import { axiosReq } from '../api/axiosDefaults';
-import SearchBar from '../components/SearchBar';
-import styles from '../styles/MyPhotos.module.css';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
+import { axiosReq } from "../api/axiosDefaults";
+import SearchBar from "../components/SearchBar";
+import styles from "../styles/MyPhotos.module.css";
 
 const MyPhotos = () => {
   const [photos, setPhotos] = useState([]);
   const [filteredPhotos, setFilteredPhotos] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState('');
-  const [startDateFilter, setStartDateFilter] = useState('');
-  const [endDateFilter, setEndDateFilter] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [startDateFilter, setStartDateFilter] = useState("");
+  const [endDateFilter, setEndDateFilter] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const categories = ['Nature', 'Urban', 'Portrait', 'Event', 'Landscape'];
+  const categories = ["Nature", "Urban", "Portrait", "Event", "Landscape"];
 
   useEffect(() => {
     const fetchMyPhotos = async () => {
       try {
-        const { data } = await axiosReq.get('/api/photos/photos/my_photos/');
+        const { data } = await axiosReq.get("/api/photos/photos/my_photos/");
         if (data && data.results) {
           setPhotos(data.results);
           setFilteredPhotos(data.results);
         } else {
-          setError('No photos available.');
+          setError("No photos available.");
         }
       } catch (error) {
-        console.error('Error fetching my photos:', error);
-        setError('Error fetching photos, please try again later.');
+        console.error("Error fetching my photos:", error);
+        setError("Error fetching photos, please try again later.");
       } finally {
         setIsLoading(false);
       }
@@ -44,14 +44,14 @@ const MyPhotos = () => {
     // Filter by title search
     if (searchQuery) {
       filtered = filtered.filter((photo) =>
-        photo.title.toLowerCase().includes(searchQuery.toLowerCase())
+        photo.title.toLowerCase().includes(searchQuery.toLowerCase()),
       );
     }
 
     // Filter by category
     if (categoryFilter) {
       filtered = filtered.filter((photo) =>
-        photo.category.toLowerCase().includes(categoryFilter.toLowerCase())
+        photo.category.toLowerCase().includes(categoryFilter.toLowerCase()),
       );
     }
 
@@ -73,10 +73,10 @@ const MyPhotos = () => {
   }, [searchQuery, photos, categoryFilter, startDateFilter, endDateFilter]);
 
   const clearFilters = () => {
-    setSearchQuery('');
-    setCategoryFilter('');
-    setStartDateFilter('');
-    setEndDateFilter('');
+    setSearchQuery("");
+    setCategoryFilter("");
+    setStartDateFilter("");
+    setEndDateFilter("");
   };
 
   if (isLoading) {
@@ -133,11 +133,7 @@ const MyPhotos = () => {
           </Col>
 
           <Col md={4} className="d-flex align-items-center justify-content-end">
-            <Button
-              variant="warning"
-              className="w-100"
-              onClick={clearFilters}
-            >
+            <Button variant="warning" className="w-100" onClick={clearFilters}>
               Clear All Filters
             </Button>
           </Col>
@@ -158,8 +154,12 @@ const MyPhotos = () => {
                   />
                 </Link>
                 <Card.Body className={styles.cardBody}>
-                  <Card.Title className={styles.cardTitle}>{photo.title}</Card.Title>
-                  <Card.Text className={styles.dateText}>{photo.created_at}</Card.Text>
+                  <Card.Title className={styles.cardTitle}>
+                    {photo.title}
+                  </Card.Title>
+                  <Card.Text className={styles.dateText}>
+                    {photo.created_at}
+                  </Card.Text>
                   <Link to={`/photos/${photo.id}/edit`}>
                     <Button variant="secondary" className="w-100">
                       Edit
@@ -170,7 +170,9 @@ const MyPhotos = () => {
             </Col>
           ))
         ) : (
-          <p className={styles.noPhotosMessage}>You have not uploaded any photos yet.</p>
+          <p className={styles.noPhotosMessage}>
+            You have not uploaded any photos yet.
+          </p>
         )}
       </Row>
     </Container>

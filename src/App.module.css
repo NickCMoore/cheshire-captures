@@ -1,12 +1,11 @@
 .ContainerWithBg {
-    background-image: url('/public/images/vestrahorn-mountains-stokksnes-iceland.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    filter: brightness(0.7);
-  }
-  
+  background-image: url("/public/images/vestrahorn-mountains-stokksnes-iceland.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  filter: brightness(0.7);
+}

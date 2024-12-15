@@ -32,9 +32,8 @@
 }
 
 .commentInput {
-  color: #000000; 
+  color: #000000;
 }
-
 
 .photoDetailsButtons {
   display: flex;
@@ -68,7 +67,6 @@
   background-color: #fff;
   color: var(--battleship-gray);
 }
-
 
 .editButton {
   background-color: var(--ultra-violet);

@@ -1,38 +1,39 @@
 .Button {
-    font-size: 0.9rem;
-    align-self: center;
-    border-radius: 50px;
-    border: none;
-    padding: 8px 16px;
-    margin: 5px 10px;
-    min-width: 90px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  font-size: 0.9rem;
+  align-self: center;
+  border-radius: 50px;
+  border: none;
+  padding: 8px 16px;
+  margin: 5px 10px;
+  min-width: 90px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition:
+    opacity 0.3s ease-in-out,
+    transform 0.3s ease-in-out;
 }
 
 .Button:hover {
-    opacity: 0.85;
-    cursor: pointer;
-    transform: scale(1.05);
+  opacity: 0.85;
+  cursor: pointer;
+  transform: scale(1.05);
 }
 
 .Bright {
-    background-color: var(--mountbatten-pink);
-    color: #ffffff;
+  background-color: var(--mountbatten-pink);
+  color: #ffffff;
 }
 
 .Bright:hover {
-    background-color: var(--wisteria);
-    color: #ffffff;
+  background-color: var(--wisteria);
+  color: #ffffff;
 }
 
 .Wide {
-    padding: 12px 60px;
-    width: 70%;
-    margin: 15px auto;
-    border-radius: 25px;
+  padding: 12px 60px;
+  width: 70%;
+  margin: 15px auto;
+  border-radius: 25px;
 }
-

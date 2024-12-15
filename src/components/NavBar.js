@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useCurrentUser, useSetCurrentUser } from '../contexts/CurrentUserContext';
-import { removeTokenTimestamp } from '../utils/utils';
-import axios from 'axios';
-import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap';
-import { Link, useHistory } from 'react-router-dom';
-import logo from '../assets/cc-logo.png';
-import styles from '../styles/NavBar.module.css';
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
+import {
+  useCurrentUser,
+  useSetCurrentUser,
+} from "../contexts/CurrentUserContext";
+import { removeTokenTimestamp } from "../utils/utils";
+import axios from "axios";
+import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Link, useHistory } from "react-router-dom";
+import logo from "../assets/cc-logo.png";
+import styles from "../styles/NavBar.module.css";
 
 const NavBar = () => {
   const currentUser = useCurrentUser();
@@ -16,11 +19,11 @@ const NavBar = () => {
 
   const handleSignOut = async () => {
     try {
-      await axios.post('dj-rest-auth/logout/');
+      await axios.post("dj-rest-auth/logout/");
       setCurrentUser(null);
       setToggleNavBar(false);
       removeTokenTimestamp();
-      history.push('/');
+      history.push("/");
     } catch (err) {
       console.log(err);
     }
@@ -68,7 +71,7 @@ const NavBar = () => {
         exact
         className={styles.NavLink}
         activeClassName={styles.Active}
-        to={`/profile/${currentUser?.photographer_id}/edit`}  // Edit Profile link
+        to={`/profile/${currentUser?.photographer_id}/edit`} // Edit Profile link
         onClick={() => setToggleNavBar(false)}
       >
         <i className="fas fa-edit"></i>Edit Profile
@@ -82,12 +85,7 @@ const NavBar = () => {
       >
         <i className="fas fa-camera"></i>My Photos
       </NavLink>
-      <NavLink
-        exact
-        className={styles.NavLink}
-        to="/"
-        onClick={handleSignOut}
-      >
+      <NavLink exact className={styles.NavLink} to="/" onClick={handleSignOut}>
         <i className="fas fa-sign-out-alt"></i>Sign out
       </NavLink>
     </>
@@ -105,7 +103,11 @@ const NavBar = () => {
         <i className="fas fa-info-circle"></i>About
       </NavLink>
       <NavDropdown
-        title={<span><i className="fas fa-user-alt ml-5"></i></span>}
+        title={
+          <span>
+            <i className="fas fa-user-alt ml-5"></i>
+          </span>
+        }
         id="basic-nav-dropdown"
         aria-label="User dropdown" // Added aria-label for better accessibility
       >
@@ -140,7 +142,7 @@ const NavBar = () => {
       <Container>
         <NavLink to="/">
           <Navbar.Brand>
-              <img src={logo} alt="logo" height="50"/>
+            <img src={logo} alt="logo" height="50" />
           </Navbar.Brand>
         </NavLink>
         <Navbar.Toggle

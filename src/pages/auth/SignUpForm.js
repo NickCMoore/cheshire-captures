@@ -38,7 +38,10 @@ function SignUpForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await axios.post("/dj-rest-auth/registration/", signUpData);
+      const { data } = await axios.post(
+        "/dj-rest-auth/registration/",
+        signUpData,
+      );
       localStorage.setItem("accessToken", data.access_token);
       localStorage.setItem("refreshToken", data.refresh_token);
       setCurrentUser(data.user);
@@ -51,7 +54,10 @@ function SignUpForm() {
 
   return (
     <Container fluid className={styles.Background}>
-      <Row className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+      <Row
+        className="d-flex justify-content-center align-items-center"
+        style={{ height: "100vh" }}
+      >
         <Col xs={12} md={6} lg={4}>
           <div className={styles.FormContainer}>
             <h1 className={styles.Header}>Sign Up</h1>
@@ -114,17 +120,25 @@ function SignUpForm() {
               ))}
 
               <Row className="d-flex justify-content-center">
-                <Button className={`${btnStyles.Button} ${styles.Button} mt-3`} type="submit">
+                <Button
+                  className={`${btnStyles.Button} ${styles.Button} mt-3`}
+                  type="submit"
+                >
                   Sign Up
                 </Button>
               </Row>
 
               {/* Display non-field errors or general error messages */}
-              {errors.non_field_errors && errors.non_field_errors.map((message, idx) => (
-                <Alert variant="warning" className={`${styles.Alert} mt-3`} key={idx}>
-                  {message}
-                </Alert>
-              ))}
+              {errors.non_field_errors &&
+                errors.non_field_errors.map((message, idx) => (
+                  <Alert
+                    variant="warning"
+                    className={`${styles.Alert} mt-3`}
+                    key={idx}
+                  >
+                    {message}
+                  </Alert>
+                ))}
             </Form>
 
             <Row className="d-flex justify-content-center mt-3">

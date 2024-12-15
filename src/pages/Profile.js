@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { Container, Row, Col, Card, Image } from 'react-bootstrap';
-import styles from '../styles/Profile.module.css';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { Container, Row, Col, Card, Image } from "react-bootstrap";
+import styles from "../styles/Profile.module.css";
 
 const ProfilePage = () => {
   const { id } = useParams();
@@ -12,11 +12,15 @@ const ProfilePage = () => {
   useEffect(() => {
     const fetchPhotographer = async () => {
       try {
-        const { data } = await axios.get(`/api/photographers/photographers/${id}/`);
+        const { data } = await axios.get(
+          `/api/photographers/photographers/${id}/`,
+        );
         setPhotographer(data);
       } catch (error) {
-        console.error('Error fetching photographer:', error);
-        setError('There was an issue loading the photographer details. Please try again later.');
+        console.error("Error fetching photographer:", error);
+        setError(
+          "There was an issue loading the photographer details. Please try again later.",
+        );
       }
     };
     fetchPhotographer();
@@ -24,8 +28,16 @@ const ProfilePage = () => {
 
   // Generate a random default location in the US
   const getDefaultLocation = () => {
-    const defaultLocations = ['New York, USA', 'Los Angeles, USA', 'Chicago, USA', 'Houston, USA', 'Phoenix, USA'];
-    return defaultLocations[Math.floor(Math.random() * defaultLocations.length)];
+    const defaultLocations = [
+      "New York, USA",
+      "Los Angeles, USA",
+      "Chicago, USA",
+      "Houston, USA",
+      "Phoenix, USA",
+    ];
+    return defaultLocations[
+      Math.floor(Math.random() * defaultLocations.length)
+    ];
   };
 
   if (error) {
@@ -54,14 +66,46 @@ const ProfilePage = () => {
         </Col>
         <Col md={8}>
           <Card className="p-4 shadow-sm mb-4">
-            <p style={{ color: 'black' }}><strong>Location:</strong> {location}</p>
+            <p style={{ color: "black" }}>
+              <strong>Location:</strong> {location}
+            </p>
           </Card>
           <Card className="p-4 shadow-sm">
             <h3>Social Links</h3>
             <ul className={styles.socialLinks}>
-              {photographer.website && <li><a href={photographer.website} target="_blank" rel="noopener noreferrer">Website</a></li>}
-              {photographer.instagram && <li><a href={photographer.instagram} target="_blank" rel="noopener noreferrer">Instagram</a></li>}
-              {photographer.twitter && <li><a href={photographer.twitter} target="_blank" rel="noopener noreferrer">Twitter</a></li>}
+              {photographer.website && (
+                <li>
+                  <a
+                    href={photographer.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Website
+                  </a>
+                </li>
+              )}
+              {photographer.instagram && (
+                <li>
+                  <a
+                    href={photographer.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Instagram
+                  </a>
+                </li>
+              )}
+              {photographer.twitter && (
+                <li>
+                  <a
+                    href={photographer.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Twitter
+                  </a>
+                </li>
+              )}
             </ul>
           </Card>
         </Col>

@@ -2,7 +2,7 @@
   position: relative;
   z-index: 2;
   width: 100%;
-  padding: 20px 0 100px; 
+  padding: 20px 0 100px;
 }
 
 .image {
@@ -11,37 +11,39 @@
   object-fit: cover;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease; 
+  transition: transform 0.3s ease;
 }
 
 .image:hover {
-  transform: scale(1.02); 
+  transform: scale(1.02);
 }
 
 .carouselCaption {
-  background-color: rgba(0, 0, 0, 0.5); 
+  background-color: rgba(0, 0, 0, 0.5);
   padding: 10px;
   border-radius: 5px;
 }
 
 .carouselCaption h5 {
-  font-size: 1.1rem; 
+  font-size: 1.1rem;
   color: #ffffff;
-  margin-bottom: 5px; 
+  margin-bottom: 5px;
 }
 
 .carouselCaption p {
-  font-size: 0.95rem; 
-  color: #dcdcdc; 
+  font-size: 0.95rem;
+  color: #dcdcdc;
 }
 
 .photoCard {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .photoCard:hover {
-  transform: scale(1.05); 
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .photoImage {
@@ -49,7 +51,7 @@
 }
 
 .photoCard:hover .photoImage {
-  opacity: 0.9; 
+  opacity: 0.9;
 }
 
 @media (max-width: 768px) {
@@ -68,7 +70,7 @@
 
 @media (max-width: 480px) {
   .image {
-    height: 300px; 
+    height: 300px;
   }
 
   .carouselCaption {

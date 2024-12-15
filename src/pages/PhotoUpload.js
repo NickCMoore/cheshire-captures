@@ -1,17 +1,17 @@
-import React, { useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { Form, Button, Container, Alert, Spinner } from 'react-bootstrap';
-import { axiosReq } from '../api/axiosDefaults';
-import styles from '../styles/PhotoUpload.module.css';
+import React, { useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { Form, Button, Container, Alert, Spinner } from "react-bootstrap";
+import { axiosReq } from "../api/axiosDefaults";
+import styles from "../styles/PhotoUpload.module.css";
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
 
 const PhotoUpload = () => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [category, setCategory] = useState(''); // State for category
-  const [image, setImage] = useState({ file: null, previewUrl: '' });
-  const [error, setError] = useState('');
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState(""); // State for category
+  const [image, setImage] = useState({ file: null, previewUrl: "" });
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
 
@@ -20,24 +20,24 @@ const PhotoUpload = () => {
   const handleImageChange = (event) => {
     if (event.target.files.length) {
       const file = event.target.files[0];
-      const validTypes = ['image/jpeg', 'image/png'];
+      const validTypes = ["image/jpeg", "image/png"];
 
       // Check file type
       if (!validTypes.includes(file.type)) {
-        setError('Please upload a valid image file (JPEG or PNG).');
-        setImage({ file: null, previewUrl: '' }); // Reset image state if file is invalid
+        setError("Please upload a valid image file (JPEG or PNG).");
+        setImage({ file: null, previewUrl: "" }); // Reset image state if file is invalid
         return;
       }
 
       // Check file size
       if (file.size > MAX_FILE_SIZE) {
-        setError('File size exceeds 10 MB. Please choose a smaller file.');
-        setImage({ file: null, previewUrl: '' }); // Reset image state if file is too large
+        setError("File size exceeds 10 MB. Please choose a smaller file.");
+        setImage({ file: null, previewUrl: "" }); // Reset image state if file is too large
         return;
       }
 
       // Clear previous errors and update image preview
-      setError('');
+      setError("");
       setImage({
         file,
         previewUrl: URL.createObjectURL(file), // Set preview URL for the selected file
@@ -52,23 +52,23 @@ const PhotoUpload = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
-    formData.append('title', title);
-    formData.append('description', description);
-    formData.append('category', category); // Append category to form data
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("category", category); // Append category to form data
 
     if (image.file) {
-      formData.append('image', image.file);
+      formData.append("image", image.file);
     }
 
     setIsLoading(true);
-    setError(''); // Reset errors before submitting
+    setError(""); // Reset errors before submitting
 
     try {
-      await axiosReq.post('/api/photos/photos/', formData);
-      history.push('/gallery');
+      await axiosReq.post("/api/photos/photos/", formData);
+      history.push("/gallery");
     } catch (error) {
-      setError('Error uploading photo. Please try again.');
-      console.error('Error uploading photo:', error);
+      setError("Error uploading photo. Please try again.");
+      console.error("Error uploading photo:", error);
     } finally {
       setIsLoading(false);
     }
@@ -129,7 +129,7 @@ const PhotoUpload = () => {
               accept="image/*"
               ref={imageInput}
               onChange={handleImageChange}
-              style={{ display: 'none' }}
+              style={{ display: "none" }}
             />
             <Button
               variant="secondary"
@@ -137,14 +137,18 @@ const PhotoUpload = () => {
               disabled={isLoading}
               className="mb-3"
             >
-              {image.previewUrl ? 'Change Image' : 'Choose an Image'}
+              {image.previewUrl ? "Change Image" : "Choose an Image"}
             </Button>
             {image.previewUrl && (
               <div className="mb-3">
                 <img
                   src={image.previewUrl}
                   alt="Selected"
-                  style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    objectFit: "cover",
+                  }}
                   className="mb-2"
                 />
                 <p className="text-muted">{image.file.name}</p>
@@ -158,7 +162,7 @@ const PhotoUpload = () => {
                 <Spinner animation="border" size="sm" /> Saving...
               </>
             ) : (
-              'Save Photo'
+              "Save Photo"
             )}
           </Button>
         </Form>

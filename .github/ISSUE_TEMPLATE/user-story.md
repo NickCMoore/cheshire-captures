@@ -1,16 +1,15 @@
 ---
 name: User Story
 about: Standard User Story template
-title: 'USER STORY: '
-labels: ''
+title: "USER STORY: "
+labels: ""
 assignees: NickCMoore
-
 ---
 
 As a **role** I can **capability** so that **received benefit**
 
 ## Acceptance Criteria:
 
-* Acceptance Criteria 1:
-* Acceptance Criteria 2:
-* Acceptance Criteria 3:
+- Acceptance Criteria 1:
+- Acceptance Criteria 2:
+- Acceptance Criteria 3:

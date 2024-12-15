@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Form, FormControl, Button } from 'react-bootstrap';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import { Form, FormControl, Button } from "react-bootstrap";
+import PropTypes from "prop-types";
 
 const SearchBar = ({ onSearch }) => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
 
   const handleSearch = (event) => {
     event.preventDefault();

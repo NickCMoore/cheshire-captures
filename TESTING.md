@@ -4,15 +4,15 @@
 
 ## Table of Contents
 
-* [**Testing**](<#testing>)
-    * [Code Validation](<#code-validation>)
-    * [Automatic Testing](<#automatic-testing>)
-    * [Manual Testing](<#manual-testing>)
-    * [Responsiveness Testing](<#responsiveness-testing>)
-    * [Lighthouse Testing](<#lighthouse-testing>)
-    * [Known Bugs](<#known-bugs>)
+- [**Testing**](#testing)
+  - [Code Validation](#code-validation)
+  - [Automatic Testing](#automatic-testing)
+  - [Manual Testing](#manual-testing)
+  - [Responsiveness Testing](#responsiveness-testing)
+  - [Lighthouse Testing](#lighthouse-testing)
+  - [Known Bugs](#known-bugs)
 
-## Code Validation 
+## Code Validation
 
 The Cheshire Captures site has been passed through the [W3C HTML Validator](https://validator.w3.org/), the [W3C CSS Validator](https://jigsaw.w3.org/css-validator/), and the [ESLint Validator](https://eslint.org/docs/latest/use/getting-started#next-steps) to ensure code quality and syntax standards.
 
@@ -45,54 +45,57 @@ Here are some of the results:
 ![Example Automated Testing Result](public/images/profiletest.png)
 
 ### NavBar.js
-|  | | |
-|:-------:|:--------|:--------|
-| Renders Navbar Home link| &check; |
-| Renders link to the gallery feed for a logged-in user | &check; |
+
+|                                                            |         |     |
+| :--------------------------------------------------------: | :------ | :-- |
+|                  Renders Navbar Home link                  | &check; |
+|   Renders link to the gallery feed for a logged-in user    | &check; |
 | Renders link to popular photographers for a logged-in user | &check; |
 
 ### NotFound.js
-|  | | |
-|:-------:|:--------|:--------|
+
+|                                  |         |     |
+| :------------------------------: | :------ | :-- |
 | Go Back to homepage link renders | &check; |
 
 ### Profile.js
-|  | | |
-|:-------:|:--------|:--------|
-| Profile component renders | &check; |
+
+|                                |         |     |
+| :----------------------------: | :------ | :-- |
+|   Profile component renders    | &check; |
 | Profile owner's details render | &check; |
 
 ## Manual Testing
 
 In addition to the automated tests, the following manual tests were conducted to ensure functionality aligns with user stories:
 
-| Status | **Authentication - User Logged Out**
-|:-------:|:--------|
-| &check; | Attempting to visit a protected URL (e.g., `/gallery`) redirects to the homepage.
-| &check; | The login and sign-up forms are displayed correctly on both desktop and mobile.
-| &check; | Invalid login attempts display appropriate error messages.
+| Status  | **Authentication - User Logged Out**                                              |
+| :-----: | :-------------------------------------------------------------------------------- |
+| &check; | Attempting to visit a protected URL (e.g., `/gallery`) redirects to the homepage. |
+| &check; | The login and sign-up forms are displayed correctly on both desktop and mobile.   |
+| &check; | Invalid login attempts display appropriate error messages.                        |
 
-| Status | **Navigation - User Logged Out**
-|:-------:|:--------|
-| &check; | Clicking the brand logo in the navbar navigates to the homepage.
-| &check; | Navbar links for login and sign-up are visible for logged-out users.
-| &check; | Users can't see profile or gallery feed links in the navbar.
+| Status  | **Navigation - User Logged Out**                                     |
+| :-----: | :------------------------------------------------------------------- |
+| &check; | Clicking the brand logo in the navbar navigates to the homepage.     |
+| &check; | Navbar links for login and sign-up are visible for logged-out users. |
+| &check; | Users can't see profile or gallery feed links in the navbar.         |
 
-| Status | **Homepage - User Logged Out**
-|:-------:|:--------|
-| &check; | Popular photographers and top-rated photos display on the homepage.
-| &check; | Clicking on a photographer's profile or photo redirects to the respective detail page.
-| &check; | Users can search for photographers by name or filter photos by category.
+| Status  | **Homepage - User Logged Out**                                                         |
+| :-----: | :------------------------------------------------------------------------------------- |
+| &check; | Popular photographers and top-rated photos display on the homepage.                    |
+| &check; | Clicking on a photographer's profile or photo redirects to the respective detail page. |
+| &check; | Users can search for photographers by name or filter photos by category.               |
 
-| Status | **Event Detail Page - User Logged Out**
-|:-------:|:--------|
-| &check; | Users can view details of photos, including ratings and comments.
-| &check; | Users can see comments but can't post without logging in.
+| Status  | **Event Detail Page - User Logged Out**                           |
+| :-----: | :---------------------------------------------------------------- |
+| &check; | Users can view details of photos, including ratings and comments. |
+| &check; | Users can see comments but can't post without logging in.         |
 
-| Status | **Profile Page - User Logged In**
-|:-------:|:--------|
-| &check; | Users can view their profile and update details, including bio and social links.
-| &check; | Users can follow or unfollow other photographers.
+| Status  | **Profile Page - User Logged In**                                                |
+| :-----: | :------------------------------------------------------------------------------- |
+| &check; | Users can view their profile and update details, including bio and social links. |
+| &check; | Users can follow or unfollow other photographers.                                |
 
 ## Responsiveness Testing
 
@@ -100,29 +103,29 @@ The site was manually tested across different device sizes using Google Chrome D
 
 ### Mobile Devices
 
-||<p>iPhone 11</p><p>414 x 896</p>|<p>Samsung Galaxy S10</p><p>360 x 740</p>|<p>Google Pixel 4</p><p>411 x 823</p>|
-| :- | :-: | :-: | :-: |
-| Render | Pass | Pass | Pass |
-| Images | Pass | Pass | Pass |
-| Links | Pass | Pass | Pass |
+|        | <p>iPhone 11</p><p>414 x 896</p> | <p>Samsung Galaxy S10</p><p>360 x 740</p> | <p>Google Pixel 4</p><p>411 x 823</p> |
+| :----- | :------------------------------: | :---------------------------------------: | :-----------------------------------: |
+| Render |               Pass               |                   Pass                    |                 Pass                  |
+| Images |               Pass               |                   Pass                    |                 Pass                  |
+| Links  |               Pass               |                   Pass                    |                 Pass                  |
 
 ### Tablet Devices
 
-||<p>Apple iPad</p><p>768 x 1024</p>|<p>Samsung Galaxy Tab S6</p><p>800 x 1280</p>|<p>Amazon Kindle Fire</p><p>600 x 1024</p>|
-| :- | :-: | :-: | :-: |
-| Render | Pass | Pass | Pass |
-| Images | Pass | Pass | Pass |
-| Links | Pass | Pass | Pass |
+|        | <p>Apple iPad</p><p>768 x 1024</p> | <p>Samsung Galaxy Tab S6</p><p>800 x 1280</p> | <p>Amazon Kindle Fire</p><p>600 x 1024</p> |
+| :----- | :--------------------------------: | :-------------------------------------------: | :----------------------------------------: |
+| Render |                Pass                |                     Pass                      |                    Pass                    |
+| Images |                Pass                |                     Pass                      |                    Pass                    |
+| Links  |                Pass                |                     Pass                      |                    Pass                    |
 
 ### Desktop Devices
 
-||<p>24" Desktop</p><p>1920 x 1080</p>|<p>15" Laptop</p><p>1440 x 900</p>|<p>13" Notebook</p><p>1280 x 800</p>|
-| :- | :-: | :-: | :-: |
-| Render | Pass | Pass | Pass |
-| Images | Pass | Pass | Pass |
-| Links | Pass | Pass | Pass |
+|        | <p>24" Desktop</p><p>1920 x 1080</p> | <p>15" Laptop</p><p>1440 x 900</p> | <p>13" Notebook</p><p>1280 x 800</p> |
+| :----- | :----------------------------------: | :--------------------------------: | :----------------------------------: |
+| Render |                 Pass                 |                Pass                |                 Pass                 |
+| Images |                 Pass                 |                Pass                |                 Pass                 |
+| Links  |                 Pass                 |                Pass                |                 Pass                 |
 
-### Browser Compatibility 
+### Browser Compatibility
 
 Cheshire Captures was tested on the following browsers:
 
@@ -136,7 +139,7 @@ The site worked consistently across these browsers, though minor layout discrepa
 
 Google Lighthouse was used to test the site's performance, accessibility, best practices, and SEO:
 
-* Homepage Performance: 85, Accessibility: 90, Best Practices: 89, SEO: 95
+- Homepage Performance: 85, Accessibility: 90, Best Practices: 89, SEO: 95
 
 ![Lighthouse Result](images/lighthouse-homepage.jpg)
 

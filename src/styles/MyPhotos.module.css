@@ -1,67 +1,64 @@
-
 .myPhotosContainer {
-    margin-top: 20px;
-  }
-  
-  .filterRow {
-    margin-bottom: 20px;
-  }
-  
-  .filterCol {
-    margin-bottom: 10px;
-  }
-  
-  .photoCard {
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
-  }
-  
-  .photoCard:hover {
-    transform: scale(1.02);
-  }
-  
-  .photoImage {
-    object-fit: cover;
-    height: 200px;
-    width: 100%;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-  }
-  
-  .cardBody {
-    padding: 15px;
-    background-color: #f9f9f9;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-  }
-  
-  .cardTitle {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .filterButton {
-    background-color: #007bff;
-    color: white;
-    width: 100%;
-    margin-top: 5px;
-  }
-  
-  .noPhotosMessage {
-    color: white;
-    text-align: center;
-    font-size: 1.5rem;
-    margin-top: 20px;
-  }
-  
-  .p {
-    color: var(--yinmn-blue);
-  }
+  margin-top: 20px;
+}
 
-  .dateText {
-    color: blue;
-  }
-  
-  
+.filterRow {
+  margin-bottom: 20px;
+}
+
+.filterCol {
+  margin-bottom: 10px;
+}
+
+.photoCard {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.photoCard:hover {
+  transform: scale(1.02);
+}
+
+.photoImage {
+  object-fit: cover;
+  height: 200px;
+  width: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.cardBody {
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.cardTitle {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.filterButton {
+  background-color: #007bff;
+  color: white;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.noPhotosMessage {
+  color: white;
+  text-align: center;
+  font-size: 1.5rem;
+  margin-top: 20px;
+}
+
+.p {
+  color: var(--yinmn-blue);
+}
+
+.dateText {
+  color: blue;
+}

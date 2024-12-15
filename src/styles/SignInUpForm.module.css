@@ -1,78 +1,78 @@
 .Background {
-    background-image: url('/public/images/BingImageOfTheDay.jpg');
-    background-size: cover;
-    background-color: var(--yinmn-blue);
-    height: 100vh;
+  background-image: url("/public/images/BingImageOfTheDay.jpg");
+  background-size: cover;
+  background-color: var(--yinmn-blue);
+  height: 100vh;
 }
 
 .FormContainer {
-    background-color: var(--yinmn-blue);
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    color: var(--wisteria);
-    width: 100%;
-    max-width: 500px;
-    min-width: 300px;
+  background-color: var(--yinmn-blue);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  color: var(--wisteria);
+  width: 100%;
+  max-width: 500px;
+  min-width: 300px;
 }
 
 .Header {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--mountbatten-pink);
-    margin-bottom: 20px;
-    text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--mountbatten-pink);
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .Input {
-    background-color: white; 
-    border: none;
-    border-radius: 5px;
-    color: var(--wisteria);
-    padding: 10px;
-    margin-bottom: 15px;
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  color: var(--wisteria);
+  padding: 10px;
+  margin-bottom: 15px;
 }
 
 .Input:focus {
-    background-color: white; 
-    outline: none;
-    box-shadow: 0 0 5px var(--wisteria);
+  background-color: white;
+  outline: none;
+  box-shadow: 0 0 5px var(--wisteria);
 }
 
 .Input::placeholder {
-    color: var(--wisteria); 
+  color: var(--wisteria);
 }
 
 .Button {
-    background-color: var(--mountbatten-pink); 
-    color: white; 
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
-    font-size: 1.2rem;
-    width: 100%;
-    transition: background-color 0.3s ease-in-out;
+  background-color: var(--mountbatten-pink);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 1.2rem;
+  width: 100%;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .Button:hover {
-    background-color: var(--ultra-violet); 
-    color: white;
+  background-color: var(--ultra-violet);
+  color: white;
 }
 
 .Link {
-    color: var(--wisteria);
-    text-align: center;
-    display: block;
-    margin-top: 15px;
+  color: var(--wisteria);
+  text-align: center;
+  display: block;
+  margin-top: 15px;
 }
 
 .Link span {
-    font-weight: bold;
-    color: var(--mountbatten-pink);
+  font-weight: bold;
+  color: var(--mountbatten-pink);
 }
 
 .Alert {
-    background-color: var(--ultra-violet);
-    border: none;
-    color: #fff;
+  background-color: var(--ultra-violet);
+  border: none;
+  color: #fff;
 }
