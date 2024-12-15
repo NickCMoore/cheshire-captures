@@ -110,26 +110,25 @@ const PhotoDetails = () => {
       alert("You need to be logged in to like a photo.");
       return;
     }
-
+  
     try {
       if (!hasLiked) {
         // Like the photo
         await axios.post(`/api/photos/photos/${id}/like/`);
+        setLikeCount((prevCount) => prevCount + 1);  // Immediately update the like count
+        setHasLiked(true);  // Mark as liked
       } else {
         // Unlike the photo
         await axios.post(`/api/photos/photos/${id}/unlike/`);
+        setLikeCount((prevCount) => prevCount - 1);  // Immediately update the like count
+        setHasLiked(false);  // Mark as unliked
       }
-
-      // Refetch photo details to get the latest likes count and like state
-      const { data } = await axiosReq.get(`/api/photos/photos/${id}/`);
-      setPhoto(data);
-      setLikeCount(data.likes_count || 0);
-      setHasLiked(data.user_has_liked || false);
     } catch (error) {
       console.error("Error toggling like:", error.response?.data || error);
-      alert("An error occurred. You already like this photo.");
+      alert("An error occurred while updating the like status.");
     }
   };
+  
 
   const handleDelete = async () => {
     const confirmDelete = window.confirm(
