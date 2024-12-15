@@ -45,7 +45,6 @@ const ProfilePage = () => {
         </Col>
         <Col md={8}>
           <Card className="p-4 shadow-sm mb-4">
-            <h3>About</h3>
             {photographer.location && (
               <p><strong>Location:</strong> {photographer.location}</p>
             )}
