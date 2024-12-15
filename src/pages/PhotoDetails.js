@@ -16,7 +16,6 @@ const PhotoDetails = () => {
   const [editComment, setEditComment] = useState("");
   const [error, setError] = useState(null);
   const [likeCount, setLikeCount] = useState(0);
-  const [photographer, setPhotographer] = useState(null);
   const [hasLiked, setHasLiked] = useState(false);
 
   useEffect(() => {
@@ -24,7 +23,6 @@ const PhotoDetails = () => {
       try {
         const { data } = await axiosReq.get(`/api/photos/photos/${id}/`);
         setPhoto(data);
-        setPhotographer(data.photographer);
         setLikeCount(data.likes_count || 0);
         setHasLiked(data.user_has_liked || false);
       } catch (err) {
@@ -164,6 +162,9 @@ const PhotoDetails = () => {
         <Col md={8}>
           <div className="p-3 bg-light">
             <h2 className="text-primary">{photo.title}</h2>
+            <p className="text-dark">
+              <strong>{photo.photographer_display_name}</strong>
+            </p>
             <p className="text-dark">{photo.description}</p>
 
             <div className="mt-3 text-center">
@@ -221,14 +222,6 @@ const PhotoDetails = () => {
                     </>
                   ) : (
                     <div className="d-flex align-items-start mb-3">
-                      <Image
-                        src={photographer.profile_image}
-                        alt="Profile"
-                        roundedCircle
-                        width={40}
-                        height={40}
-                        className="mr-3"
-                      />
                       <p style={{ color: 'black' }}>
                         <strong>{comment.user}:</strong> {comment.content}
                         {currentUser?.username === comment.user && (
@@ -256,25 +249,18 @@ const PhotoDetails = () => {
               <p>No comments yet.</p>
             )}
 
-            {currentUser ? (
-              <Form onSubmit={handleAddComment}>
-                <Form.Group controlId="commentContent">
-                  <Form.Label>Add a Comment</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={3}
-                    value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)}
-                    placeholder="Write your comment here..."
-                  />
-                </Form.Group>
-                <Button type="submit" variant="primary">
-                  Add Comment
-                </Button>
-              </Form>
-            ) : (
-              <p>You need to be logged in to comment.</p>
-            )}
+            <Form onSubmit={handleAddComment} className="mt-4">
+              <Form.Control
+                as="textarea"
+                rows={3}
+                placeholder="Add a comment..."
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+              />
+              <Button type="submit" variant="primary" className="mt-2">
+                Add Comment
+              </Button>
+            </Form>
           </div>
         </Col>
       </Row>
