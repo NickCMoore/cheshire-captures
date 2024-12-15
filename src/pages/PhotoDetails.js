@@ -16,6 +16,7 @@ const PhotoDetails = () => {
   const [editComment, setEditComment] = useState("");
   const [error, setError] = useState(null);
   const [likeCount, setLikeCount] = useState(0);
+  const [photographer, setPhotographer] = useState(null);
   const [hasLiked, setHasLiked] = useState(false);
 
   useEffect(() => {
@@ -23,6 +24,7 @@ const PhotoDetails = () => {
       try {
         const { data } = await axiosReq.get(`/api/photos/photos/${id}/`);
         setPhoto(data);
+        setPhotographer(data.photographer);
         setLikeCount(data.likes_count || 0);
         setHasLiked(data.user_has_liked || false);
       } catch (err) {
@@ -220,8 +222,8 @@ const PhotoDetails = () => {
                   ) : (
                     <div className="d-flex align-items-start mb-3">
                       <Image
-                        src={comment.profile_image}
-                        alt={`${comment.user}'s profile`}
+                        src={photographer.profile_image}
+                        alt="Profile"
                         roundedCircle
                         width={40}
                         height={40}
