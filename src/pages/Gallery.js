@@ -85,8 +85,8 @@ const Gallery = () => {
       {error && <p className="text-danger text-center">{error}</p>}
 
       {/* Carousel */}
-      <Carousel className="mb-4">
-        {images.slice(0, 5).map((photo) => (
+      <Carousel className="mb-4" interval={4000} wrap>
+        {images.map((photo) => (
           <Carousel.Item key={photo.id}>
             <Link to={`/photos/${photo.id}`}>
               <img
