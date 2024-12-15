@@ -24,10 +24,11 @@ const ProfileEdit = () => {
   const [website, setWebsite] = useState("");
   const [instagram, setInstagram] = useState("");
   const [twitter, setTwitter] = useState("");
+  const [location, setLocation] = useState(""); // New state for location
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [profileImage, setProfileImage] = useState(null);
-  const [isSaving, setIsSaving] = useState(false); // New state to track the save process
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     const fetchPhotographer = async () => {
@@ -41,6 +42,7 @@ const ProfileEdit = () => {
         setWebsite(data.website);
         setInstagram(data.instagram);
         setTwitter(data.twitter);
+        setLocation(data.location || ""); // Initialize location from data if available
       } catch (error) {
         setErrorMessage("Error fetching photographer data.");
         console.error("Error fetching photographer data:", error);
@@ -61,12 +63,13 @@ const ProfileEdit = () => {
     formData.append("website", website);
     formData.append("instagram", instagram);
     formData.append("twitter", twitter);
+    formData.append("location", location); // Append location to form data
 
     if (profileImage) {
       formData.append("profile_image", profileImage);
     }
 
-    setIsSaving(true); // Set saving to true when starting the save process
+    setIsSaving(true);
 
     try {
       const { data } = await axios.put(
@@ -85,7 +88,7 @@ const ProfileEdit = () => {
       setErrorMessage("Error updating profile details.");
       console.error("Error updating profile details:", error);
     } finally {
-      setIsSaving(false); // Set saving to false once the save process is complete
+      setIsSaving(false);
     }
   };
 
@@ -186,12 +189,23 @@ const ProfileEdit = () => {
                 />
               </Form.Group>
 
+              {/* Location input field */}
+              <Form.Group controlId="location" className="mb-3">
+                <Form.Label className={styles.formLabel}>Location</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter your location"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                />
+              </Form.Group>
+
               <Button
                 className={`${btnStyles.Button} w-100 mt-3`}
                 type="submit"
-                disabled={isSaving} // Disable the button while saving
+                disabled={isSaving}
               >
-                {isSaving ? "Saving..." : "Save Changes"} {/* Show "Saving..." while saving */}
+                {isSaving ? "Saving..." : "Save Changes"}
               </Button>
             </Form>
           </Card>

@@ -49,9 +49,6 @@ const ProfilePage = () => {
             {photographer.location && (
               <p><strong>Location:</strong> {photographer.location}</p>
             )}
-            {photographer.follower_count > 0 && (
-              <p><strong>Followers:</strong> {photographer.follower_count}</p>
-            )}
             {photographer.total_likes > 0 && (
               <p><strong>Total Likes:</strong> {photographer.total_likes}</p>
             )}

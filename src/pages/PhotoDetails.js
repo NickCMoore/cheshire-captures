@@ -116,7 +116,7 @@ const PhotoDetails = () => {
       setHasLiked(data.user_has_liked || false);
     } catch (error) {
       console.error("Error toggling like:", error.response?.data || error);
-      alert("An error occurred. Please try again.");
+      alert("An error occurred. You already like this photo.");
     }
   };
   
