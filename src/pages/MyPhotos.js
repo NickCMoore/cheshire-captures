@@ -25,7 +25,7 @@ const MyPhotos = () => {
           setPhotos(data.results);
           setFilteredPhotos(data.results);
         } else {
-          setError("No photos available.");
+          setPhotos([]); // Ensure photos is set to an empty array if no photos are returned
         }
       } catch (error) {
         console.error("Error fetching my photos:", error);
@@ -44,14 +44,14 @@ const MyPhotos = () => {
     // Filter by title search
     if (searchQuery) {
       filtered = filtered.filter((photo) =>
-        photo.title.toLowerCase().includes(searchQuery.toLowerCase()),
+        photo.title.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
 
     // Filter by category
     if (categoryFilter) {
       filtered = filtered.filter((photo) =>
-        photo.category.toLowerCase().includes(categoryFilter.toLowerCase()),
+        photo.category.toLowerCase().includes(categoryFilter.toLowerCase())
       );
     }
 
@@ -87,6 +87,7 @@ const MyPhotos = () => {
     <Container className={styles.myPhotosContainer}>
       <h2 className="my-4">My Photos</h2>
       <SearchBar onSearch={setSearchQuery} />
+      {/* Only show the error message if there was a real error */}
       {error && <p className="text-danger">{error}</p>}
 
       {/* Filters */}
