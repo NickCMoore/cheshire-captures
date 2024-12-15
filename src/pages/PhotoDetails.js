@@ -104,19 +104,22 @@ const PhotoDetails = () => {
       if (!hasLiked) {
         // Like the photo
         await axios.post(`/api/photos/photos/${id}/like/`);
-        setLikeCount((prevCount) => prevCount + 1);
-        setHasLiked(true);
       } else {
         // Unlike the photo
         await axios.post(`/api/photos/photos/${id}/unlike/`);
-        setLikeCount((prevCount) => Math.max(prevCount - 1, 0)); // Ensure count doesn't go below 0
-        setHasLiked(false);
       }
+  
+      // Refetch photo details to get the latest likes count and like state
+      const { data } = await axiosReq.get(`/api/photos/photos/${id}/`);
+      setPhoto(data);
+      setLikeCount(data.likes_count || 0);
+      setHasLiked(data.user_has_liked || false);
     } catch (error) {
       console.error("Error toggling like:", error.response?.data || error);
-      alert("An error occurred while trying to like/unlike the photo.");
+      alert("An error occurred. Please try again.");
     }
   };
+  
   
   
 
