@@ -22,11 +22,20 @@ const ProfilePage = () => {
     fetchPhotographer();
   }, [id]);
 
+  // Generate a random default location in the US
+  const getDefaultLocation = () => {
+    const defaultLocations = ['New York, USA', 'Los Angeles, USA', 'Chicago, USA', 'Houston, USA', 'Phoenix, USA'];
+    return defaultLocations[Math.floor(Math.random() * defaultLocations.length)];
+  };
+
   if (error) {
     return <p>{error}</p>;
   }
 
   if (!photographer) return <p>Loading...</p>;
+
+  // Set location to a default if none exists
+  const location = photographer.location || getDefaultLocation();
 
   return (
     <Container className={styles.profileContainer}>
@@ -45,9 +54,7 @@ const ProfilePage = () => {
         </Col>
         <Col md={8}>
           <Card className="p-4 shadow-sm mb-4">
-            {photographer.location && (
-              <p><strong>Location:</strong> {photographer.location}</p>
-            )}
+            <p><strong>Location:</strong> {location}</p> {/* Display location or default location */}
             {photographer.total_likes > 0 && (
               <p><strong>Total Likes:</strong> {photographer.total_likes}</p>
             )}
