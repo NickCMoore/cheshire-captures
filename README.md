@@ -63,13 +63,35 @@ Cheshire Captures aims to address these challenges by providing a tailored platf
 - Organise Portfolios: Create user-friendly profile pages where photographers can curate their best work and provide additional information about their services, making them more accessible to clients and collaborators.
 - By solving these problems, Cheshire Captures aims to enhance the experience for photographers in the Cheshire area, providing them with a dedicated space to connect, collaborate, and showcase their talent. This platform not only enables better portfolio visibility and professional networking but also strengthens the local photography community by bringing photographers together in a more meaningful way.
 
+### Key Technologies and Contributions to User Experience
+
+Cheshire Captures was built using React and several supporting libraries to create a fast, responsive, and user-friendly experience. Key implemented features included:
+
+- Smooth Navigation with React Router
+
+I utilised react-router-dom for client-side routing, enabling smooth transitions between pages without full-page reloads. This approach significantly improved navigation speed and user engagement.
+
+- Dynamic and Responsive Photo Feed
+
+The photo feed leveraged React's component-based architecture and hooks to deliver an Instagram-style infinite scroll. Users could browse a continuous stream of photos effortlessly, ensuring an interactive and modern browsing experience.
+
+- Real-Time Updates for Interactions
+
+The platform employed React's state management to enable real-time updates for likes, ratings, and comments. This eliminated the need for page reloads, offering immediate feedback and enhancing community interaction.
+
+- Customisable User Profiles
+
+Dynamic components in React allowed users to create and personalize their profile pages. Photographers could showcase their best work, add details about their services, and organise their portfolios, ensuring a professional and tailored presentation.
+
+- Performance Optimisation
+
+React's virtual DOM was instrumental in optimising performance. The application rendered only the components that required updates, ensuring a fast and responsive interface even when users navigated large galleries of high-resolution images.
+
 # Features
 
 ## Navigation
 
 The navigation bar on the site is designed to be user-friendly and responsive. It adapts based on whether the user is logged in or not. On mobile devices, the navigation collapses into a hamburger menu for ease of access.
-
-![alt text]/public/(images/image.png)
 
 ![alt text](/public/images/image-1.png)
 
