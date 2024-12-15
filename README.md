@@ -223,77 +223,83 @@ The platform supports commenting and liking features for user interaction. Each 
 The wireframes were designed to provide a clear, structured layout for the main pages of the photography sharing application. Each wireframe emphasizes a clean, user-friendly interface while ensuring that key elements like photos, user interactions (comments, likes, etc.), and navigation features are prominently displayed.
 
 Key Design Considerations:
-User Experience (UX): The wireframes are designed with user experience in mind. Navigation is intuitive, with clear call-to-action buttons and minimal distractions, allowing users to focus on the content – whether it’s viewing, uploading, or interacting with photos.
 
-Responsiveness: All wireframes are designed to be responsive, ensuring a seamless experience across devices, including desktop, tablet, and mobile views. The layout automatically adjusts to provide the best user experience based on the screen size.
+- User Experience (UX): The wireframes are designed with user experience in mind. Navigation is intuitive, with clear call-to-action buttons and minimal distractions, allowing users to focus on the content – whether it’s viewing, uploading, or interacting with photos.
 
-Minimalist Approach: The design follows a minimalist approach, focusing on functionality with minimal use of colour. Black, white, and gray shades dominate the interface to provide a neutral background that emphasizes the user-generated content, primarily the photos.
+- Responsiveness: All wireframes are designed to be responsive, ensuring a seamless experience across devices, including desktop, tablet, and mobile views. The layout automatically adjusts to provide the best user experience based on the screen size.
 
-Design Overview:
-The design of this website adopts a modern, minimalist aesthetic, emphasizing user-generated content (primarily photos) while maintaining a clean, cohesive visual theme. The colours, fonts, and layout elements are carefully selected to create an elegant, approachable experience for users. The overall structure leverages a neutral yet vibrant colour scheme that balances professionalism and creativity.
-
-Colour Scheme:
-
-The following colours are central to the design, creating a harmonious and visually appealing atmosphere:
-
-Rich Black (#0e1116): Used for the background of scrollbars and some structural elements, providing a deep, neutral base.
-Yinmn Blue (#374a67): This cool blue shade is the dominant background colour, evoking a calm, professional atmosphere.
-Ultra Violet (#616283): A subtle yet distinct accent colour for borders, shadows, and hover states on certain buttons and images.
-Mountbatten Pink (#9e7b9b): Applied to links, buttons, and some icon hover effects, this colour adds a touch of elegance and attention to user interaction points.
-Wisteria (#cb9cf2): A soft lavender shade used primarily for the hover state of links and buttons, providing a contrast with the Mountbatten Pink and creating a fresh, engaging feel.
-Rose Quartz (#bca3ac): A muted, warm pink used in background elements, contributing to a soft, approachable aesthetic.
-Thistle (#e5cedc): A light pastel shade, incorporated in areas requiring subtle contrasts.
-Magnolia (#f3eaf4): A pale yellowish-pink used for headings and key content elements to create emphasis and readability.
-Lavender Blush (#eadde1): A light pastel used in specific accents to provide a delicate, refined touch.
-
-Typography:
-
-The typography has been chosen to balance modernity with readability:
-
-Font Family: The primary typeface used across the site is Montserrat, a clean and versatile sans-serif font that enhances clarity and legibility.
-Font Size and Weight:
-Headings (h1) are prominent at 2.5rem, providing a strong visual hierarchy.
-Body text is set at 1rem, ensuring ease of reading across all devices.
-Bold text is used sparingly, for emphasis on key elements, especially headings and buttons.
-
-Layout and Styling:
-
-The layout is driven by simplicity and user interaction. The use of Bootstrap for responsive grid design ensures the site is optimized for all screen sizes. Key UI elements like buttons, images, and forms are styled with a minimal yet polished approach to guide users through the interface.
-
-Main Container: The .Main class introduces padding to adjust the layout for various screen sizes and ensures elements do not touch the edges of the viewport.
-Button Styling: Buttons are designed with rounded corners, subtle shadows, and transitions to enhance user interaction. The primary button has a base colour of Mountbatten Pink with a hover effect transitioning to Ultra Violet.
-Image Frames: Images, including photos and icons, are given soft borders (Ultra Violet) and gentle box shadows for a modern, elevated look. Hover effects are applied to give a sense of interaction.
-
+- Minimalist Approach: The design follows a minimalist approach, focusing on functionality with minimal use of colour. Black, white, and gray shades dominate the interface to provide a neutral background that emphasizes the user-generated content, primarily the photos.
 
 Wireframe Breakdown:
+
 Homepage Wireframe:
 
 Header: Includes a site logo and navigation bar with links to the gallery, user profile, login, and sign-up options.
 Hero Section: Features a large call-to-action (CTA) button inviting users to explore or upload photos. The background is minimal to allow users to focus on the navigation options.
 Photo Feed: Below the hero section, a grid of photos is displayed, showcasing the latest or most popular images. Each photo is accompanied by details such as the photographer’s name, the number of likes, and a comments section preview.
+
 Profile Page Wireframe:
 
 Profile Image & Bio: A simple user card displaying the photographer's profile image, display name, bio, and social media links. An "Edit Profile" button is available for the logged-in user to make changes to their profile.
 Photos Section: Below the profile details, the photographer's uploaded photos are showcased in a grid format. Each photo has an "Edit" and "Delete" option (if viewed by the profile owner).
+
 Photo Upload Wireframe:
 
 Form Layout: A clean, centered form with fields for title, description, and image upload. The image upload button is designed to be prominent to encourage users to upload a photo.
 Preview Section: Once an image is selected, a preview is displayed before the user submits the form, ensuring they can make changes if necessary.
+
 Photo Detail Wireframe:
 
 Photo Display: The main photo takes center stage, displayed prominently with like and comment buttons below it.
 Photographer Information: Located beside or below the photo is a section highlighting the photographer’s details with a link to their profile.
 Comment Section: Users can view and add comments to the photo. Logged-in users can edit or delete their own comments.
 Interactions: Like and unlike buttons are placed below the photo to allow quick interaction, with a visible counter of likes and comments.
+
 Login/Sign-up Wireframes:
 
 Form Layout: The login and sign-up forms are simple, with fields for username, password, and optional social media login options. Both forms are centered for focus and ease of use, with clear instructions and feedback mechanisms for incorrect input.
+
 Wireframe Tools:
+
 The wireframes were initially conceptualized using basic layout sketches and later refined into a detailed, digital format. The digital wireframes are black and white, emphasizing structure and functionality. All diagrams use simple shapes and line art to represent the structure, providing a clear roadmap for development without overcomplicating the visual details.
 
 The wireframes serve as a reference for both front-end and back-end development, ensuring that the user experience flows as intended and that all functional requirements are met.
 
+Design Overview:
 
+The design of this website adopts a modern, minimalist aesthetic, emphasizing user-generated content (primarily photos) while maintaining a clean, cohesive visual theme. The colours, fonts, and layout elements are carefully selected to create an elegant, approachable experience for users. The overall structure leverages a neutral yet vibrant colour scheme that balances professionalism and creativity.
+
+## Colour Scheme:
+
+The following colours are central to the design, creating a harmonious and visually appealing atmosphere:
+
+- Rich Black (#0e1116): Used for the background of scrollbars and some structural elements, providing a deep, neutral base.
+- Yinmn Blue (#374a67): This cool blue shade is the dominant background colour, evoking a calm, professional atmosphere.
+- Ultra Violet (#616283): A subtle yet distinct accent colour for borders, shadows, and hover states on certain buttons and images.
+- Mountbatten Pink (#9e7b9b): Applied to links, buttons, and some icon hover effects, this colour adds a touch of elegance and attention to user interaction points.
+- Wisteria (#cb9cf2): A soft lavender shade used primarily for the hover state of links and buttons, providing a contrast with the Mountbatten Pink and creating a fresh, engaging feel.
+- Rose Quartz (#bca3ac): A muted, warm pink used in background elements, contributing to a soft, approachable aesthetic.
+- Thistle (#e5cedc): A light pastel shade, incorporated in areas requiring subtle contrasts.
+Magnolia (#f3eaf4): A pale yellowish-pink used for headings and key content elements to create emphasis and readability.
+- Lavender Blush (#eadde1): A light pastel used in specific accents to provide a delicate, refined touch.
+
+## Typography:
+
+The typography has been chosen to balance modernity with readability:
+
+- Font Family: The primary typeface used across the site is Montserrat, a clean and versatile sans-serif font that enhances clarity and legibility.
+- Font Size and Weight:
+Headings (h1) are prominent at 2.5rem, providing a strong visual hierarchy.
+Body text is set at 1rem, ensuring ease of reading across all devices.
+Bold text is used sparingly, for emphasis on key elements, especially headings and buttons.
+
+## Layout and Styling:
+
+The layout is driven by simplicity and user interaction. The use of Bootstrap for responsive grid design ensures the site is optimized for all screen sizes. Key UI elements like buttons, images, and forms are styled with a minimal yet polished approach to guide users through the interface.
+
+- Main Container: The .Main class introduces padding to adjust the layout for various screen sizes and ensures elements do not touch the edges of the viewport.
+- Button Styling: Buttons are designed with rounded corners, subtle shadows, and transitions to enhance user interaction. The primary button has a base colour of Mountbatten Pink with a hover effect transitioning to Ultra Violet.
+- Image Frames: Images, including photos and icons, are given soft borders (Ultra Violet) and gentle box shadows for a modern, elevated look. Hover effects are applied to give a sense of interaction.
 
 ### User Stories
 
