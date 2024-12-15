@@ -97,7 +97,7 @@ const Gallery = () => {
             </Link>
             <Carousel.Caption className={styles.carouselCaption}>
               <h5>{photo.title}</h5>
-              <p>By: {photo.photographer?.display_name || 'Unknown'}</p>
+              <p>By: {photo.photographer || 'Unknown'}</p>
             </Carousel.Caption>
           </Carousel.Item>
         ))}
