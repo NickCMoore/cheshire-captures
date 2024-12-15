@@ -70,8 +70,8 @@ const PopularPhotographers = () => {
                     )}
                     <Card.Title className="mt-2">{photographer.display_name}</Card.Title>
                     <Card.Text>{photographer.bio || 'No bio available'}</Card.Text>
-                    {/* Display location */}
-                    <Card.Text>
+                    {/* Display location with inline style */}
+                    <Card.Text style={{ color: 'black' }}>
                       <strong>Location:</strong> {location}
                     </Card.Text>
                     <Link to={`/profile/${photographer.id}`}>
