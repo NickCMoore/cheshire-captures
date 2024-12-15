@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { axiosReq } from "../api/axiosDefaults";
 import { useCurrentUser } from "../contexts/CurrentUserContext";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Pagination } from "react-bootstrap";
 import SearchBar from "../components/SearchBar";
 import styles from "../styles/PopularPhotographers.module.css";
 
-// Function to generate a random location
 const getRandomLocation = () => {
   const locations = [
     "New York, USA",
@@ -22,23 +21,27 @@ const PopularPhotographers = () => {
   const [photographers, setPhotographers] = useState([]);
   const [filteredPhotographers, setFilteredPhotographers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const currentUser = useCurrentUser();
+  const photographersPerPage = 6;  // Number of photographers per page
 
   useEffect(() => {
     const fetchPhotographers = async () => {
       try {
         const { data } = await axiosReq.get(
-          "/api/photographers/top-photographers/",
+          `/api/photographers/top-photographers/?page=${currentPage}&page_size=${photographersPerPage}`
         );
         setPhotographers(data.results);
         setFilteredPhotographers(data.results);
+        setTotalPages(Math.ceil(data.count / photographersPerPage)); // Calculate total pages
       } catch (err) {
         console.error("Error fetching photographers:", err);
       }
     };
 
     fetchPhotographers();
-  }, []);
+  }, [currentPage]);
 
   useEffect(() => {
     if (searchQuery) {
@@ -46,13 +49,17 @@ const PopularPhotographers = () => {
         photographers.filter((photographer) =>
           photographer.display_name
             .toLowerCase()
-            .includes(searchQuery.toLowerCase()),
-        ),
+            .includes(searchQuery.toLowerCase())
+        )
       );
     } else {
       setFilteredPhotographers(photographers);
     }
   }, [searchQuery, photographers]);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <Container>
@@ -62,13 +69,11 @@ const PopularPhotographers = () => {
         {Array.isArray(filteredPhotographers) &&
         filteredPhotographers.length > 0 ? (
           filteredPhotographers.map((photographer) => {
-            // Set location to either the photographer's location or a random one
             const location = photographer.location || getRandomLocation();
             return (
               <Col key={photographer.id} md={4} className="mb-4">
                 <Card className="shadow-sm profile-card">
                   <Card.Body className="text-center">
-                    {/* Display profile picture */}
                     {photographer.profile_image ? (
                       <Card.Img
                         variant="top"
@@ -87,7 +92,6 @@ const PopularPhotographers = () => {
                     <Card.Text>
                       {photographer.bio || "No bio available"}
                     </Card.Text>
-                    {/* Display location with inline style */}
                     <Card.Text style={{ color: "black" }}>
                       <strong>Location:</strong> {location}
                     </Card.Text>
@@ -112,6 +116,29 @@ const PopularPhotographers = () => {
           <p>No photographers found.</p>
         )}
       </Row>
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <Pagination className="justify-content-center mt-4">
+          <Pagination.Prev
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          />
+          {[...Array(totalPages)].map((_, index) => (
+            <Pagination.Item
+              key={index + 1}
+              active={index + 1 === currentPage}
+              onClick={() => handlePageChange(index + 1)}
+            >
+              {index + 1}
+            </Pagination.Item>
+          ))}
+          <Pagination.Next
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          />
+        </Pagination>
+      )}
     </Container>
   );
 };
