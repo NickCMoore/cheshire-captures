@@ -184,7 +184,7 @@ const Gallery = () => {
                 </Link>
                 <Card.Body>
                   <Card.Title>{photo.title}</Card.Title>
-                  <Card.Text>By: {photo.photographer?.display_name || 'Unknown'}</Card.Text>
+                  <Card.Text>By: {photo.photographer || 'Unknown'}</Card.Text>
                   <Card.Text className="text-primary">
                     Date: {new Date(photo.created_at).toLocaleDateString('en-GB', {
                       year: 'numeric',

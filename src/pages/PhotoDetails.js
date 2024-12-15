@@ -163,7 +163,7 @@ const PhotoDetails = () => {
           <div className="p-3 bg-light">
             <h2 className="text-primary">{photo.title}</h2>
             <p className="text-dark">
-              <strong>{photo.photographer_display_name}</strong>
+              <strong>{photo.photographer}</strong>
             </p>
             <p className="text-dark">{photo.description}</p>
 
